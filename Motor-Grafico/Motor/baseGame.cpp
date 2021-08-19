@@ -10,7 +10,7 @@ namespace engine
     }
     baseGame::~baseGame()
     {
-
+        delete currentWindow;
     }
     bool baseGame::init()
     {
@@ -32,7 +32,6 @@ namespace engine
     void baseGame::deinit()
     {
         glfwTerminate();
-        delete currentWindow;
     }
     void baseGame::update()
     {
