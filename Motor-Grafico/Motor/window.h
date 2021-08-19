@@ -1,11 +1,19 @@
 #pragma once
+#include "glfw3.h"
+#include <string>
 
 class window
 {
 public:
-	window();
+	window(int width, int height, std::string windowName);
 	~window();
+	void init();
+	GLFWwindow* getWindow();
+	int getWidth();
+	int getHeight();
 
 private:
-
+	GLFWwindow* _window;
+	int _width;
+	int _height;
 };
