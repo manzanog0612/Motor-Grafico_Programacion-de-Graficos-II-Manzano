@@ -1,12 +1,28 @@
 #pragma once
+#include "window.h"
 
-class baseGame
+namespace engine
 {
-public:
-	baseGame();
-	~baseGame();
 
-private:
+#ifdef BASEGAME_EXPORTS
+#define BASEGAME_API __declspec(dllexport)
+#else
+#define BASEGAME_API __declspec(dllimport)
+#endif
 
-};
+	class baseGame
+	{
+	public:
+		baseGame();
+		~baseGame();
+		BASEGAME_API bool init();
+		BASEGAME_API void update();
+		BASEGAME_API void deinit();
+		BASEGAME_API bool windowExitEvent();
 
+	private:
+		window* currentWindow;
+		bool windowShouldClose;
+	};
+
+}
