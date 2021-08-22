@@ -13,6 +13,11 @@ window::~window()
 void window::init()
 {
 	glfwMakeContextCurrent(_window);
+
+	if (glewInit() != GLEW_OK) // tiene que ir despues de la creacion del contexto de glfw si o si
+	{
+		std::cout << "Glew error" << std::endl;
+	}
 }
 GLFWwindow* window::getWindow()
 {

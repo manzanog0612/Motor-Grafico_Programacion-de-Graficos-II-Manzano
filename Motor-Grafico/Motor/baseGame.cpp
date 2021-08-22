@@ -27,6 +27,7 @@ namespace engine
         }
 
         currentWindow->init();
+
         return true;
     }
     void baseGame::deinit()
