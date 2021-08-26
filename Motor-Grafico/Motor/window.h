@@ -1,7 +1,5 @@
 #pragma once
 #include "exports.h"
-#include "glew.h"
-#include "glfw3.h"
 #include <string>
 #include <iostream>
 

@@ -1,5 +1,8 @@
 #pragma once
 
+#include "glew.h"
+#include "glfw3.h"
+
 namespace engine
 {
 	#ifdef ENGINE_EXPORTS
