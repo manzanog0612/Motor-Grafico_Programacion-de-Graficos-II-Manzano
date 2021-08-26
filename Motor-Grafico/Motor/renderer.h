@@ -1,11 +1,19 @@
 #pragma once
+#include "exports.h"
+#include "window.h"
 
-class renderer
+namespace engine
 {
-public:
-	renderer();
-	~renderer();
+	class ENGINE_API renderer
+	{
+	public:
+		renderer();
+		renderer(window* window);
+		~renderer();
+		void setCurrentWindow(window* window);
+		void draw();
 
-private:
-
-};
+	private:
+		window* currentWindow;
+	};
+}

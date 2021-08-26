@@ -1,4 +1,3 @@
-#include "pch.h" // use stdafx.h in Visual Studio 2017 and earlier
 #include "baseGame.h"
 
 namespace engine
@@ -6,6 +5,7 @@ namespace engine
     baseGame::baseGame()
     {
         currentWindow = NULL;
+        currentRenderer = NULL;
         windowShouldClose = false;
     }
     baseGame::~baseGame()
@@ -28,6 +28,8 @@ namespace engine
 
         currentWindow->init();
 
+        currentRenderer = new renderer(currentWindow);
+
         return true;
     }
     void baseGame::deinit()
@@ -36,13 +38,7 @@ namespace engine
     }
     void baseGame::update()
     {
-        /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        /* Swap front and back buffers */
-        glfwSwapBuffers(currentWindow->getWindow());
-
-        /* Poll for and process events */
+        currentRenderer->draw();
         glfwPollEvents();
     }
     bool baseGame::windowExitEvent()

@@ -1,15 +1,15 @@
-#include "../Motor/baseGame.h"
+#include "game.h"
 
 int main(void)
 {
-	engine::baseGame* gameEngine = new engine::baseGame();
-	gameEngine->init();
+	game* gameVariable = new game();
+	gameVariable->init();
 
-	while(!gameEngine->windowExitEvent())
+	while(!gameVariable->windowExitEvent())
 	{
-		gameEngine->update();
+		gameVariable->update();
 	}
 
-	gameEngine->deinit();
-	delete gameEngine;
+	gameVariable->deinit();
+	delete gameVariable;
 }

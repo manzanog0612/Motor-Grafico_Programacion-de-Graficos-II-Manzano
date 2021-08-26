@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="baseGame.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -25,12 +22,6 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="renderer.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,10 +35,7 @@
     <ClInclude Include="renderer.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="framework.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="exports.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
