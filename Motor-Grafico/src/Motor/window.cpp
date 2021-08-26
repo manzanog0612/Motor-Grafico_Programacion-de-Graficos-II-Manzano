@@ -1,5 +1,9 @@
 #include "window.h"
 
+#include "glew.h"
+#include "glfw3.h"
+
+
 namespace engine
 {
 	window::window(int width, int height, std::string windowName)

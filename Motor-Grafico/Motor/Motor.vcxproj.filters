@@ -15,27 +15,30 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="baseGame.cpp">
+    <ClCompile Include="..\src\Motor\baseGame.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="window.cpp">
+    <ClCompile Include="..\src\Motor\renderer.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="renderer.cpp">
+    <ClCompile Include="..\src\Motor\window.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="baseGame.h">
+    <ClInclude Include="..\src\Motor\baseGame.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="window.h">
+    <ClInclude Include="..\src\Motor\exports.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="renderer.h">
+    <ClInclude Include="..\src\Motor\framework.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="exports.h">
+    <ClInclude Include="..\src\Motor\renderer.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\window.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

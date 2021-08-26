@@ -1,5 +1,8 @@
 #include "baseGame.h"
 
+#include "glew.h"
+#include "glfw3.h"
+
 namespace engine
 {
     baseGame::baseGame()

@@ -1,7 +1,11 @@
 #pragma once
 #include "exports.h"
+
 #include <string>
 #include <iostream>
+
+struct GLFWwindow;
+//struct GLFWmonitor;
 
 namespace engine
 {
