@@ -11,9 +11,13 @@ namespace engine
 		renderer(window* window);
 		~renderer();
 		void setCurrentWindow(window* window);
+		void compileShaders();
 		void draw();
 
 	private:
 		window* currentWindow;
+		unsigned int shaderProgram;
+		unsigned int buffer;
+		unsigned int VBO, VAO, EBO;
 	};
 }
