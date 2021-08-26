@@ -15,5 +15,6 @@ namespace engine
 
 	private:
 		window* currentWindow;
+		unsigned int buffer;
 	};
 }
