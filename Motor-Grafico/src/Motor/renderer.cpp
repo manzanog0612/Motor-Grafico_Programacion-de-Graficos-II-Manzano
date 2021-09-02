@@ -23,7 +23,6 @@ namespace engine
 		currentWindow = NULL;
 		buffer = 0;
 		shaderProgram = 0;
-		EBO = 0;
 		VAO = 0;
 		VBO = 0;
 	}
@@ -57,7 +56,6 @@ namespace engine
 	{
 		glDeleteVertexArrays(1, &VAO);
 		glDeleteBuffers(1, &VBO);
-		glDeleteBuffers(1, &EBO);
 		glDeleteProgram(shaderProgram);
 	}
 	void renderer::setCurrentWindow(window* window)
