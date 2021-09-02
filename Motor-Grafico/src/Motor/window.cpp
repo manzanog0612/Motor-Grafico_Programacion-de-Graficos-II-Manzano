@@ -25,7 +25,7 @@ namespace engine
 			std::cout << "Glew error" << std::endl;
 		}
 	}
-	GLFWwindow* window::getWindow()
+	GLFWwindow* window::getGLFWwindow()
 	{
 		return _window;
 	}

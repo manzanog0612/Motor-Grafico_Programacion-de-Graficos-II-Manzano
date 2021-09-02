@@ -15,7 +15,7 @@ namespace engine
 		window(int width, int height, std::string windowName);
 		~window();
 		void init();
-		GLFWwindow* getWindow();
+		GLFWwindow* getGLFWwindow();
 		int getWidth();
 		int getHeight();
 

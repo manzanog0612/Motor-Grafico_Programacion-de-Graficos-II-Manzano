@@ -22,7 +22,7 @@ namespace engine
 
         currentWindow = new window(800, 600, "Hello World");
 
-        if (!currentWindow->getWindow())
+        if (!currentWindow->getGLFWwindow())
         {
             glfwTerminate();
             return false;
@@ -46,6 +46,6 @@ namespace engine
     }
     bool baseGame::windowExitEvent()
     {
-        return glfwWindowShouldClose(currentWindow->getWindow());
+        return glfwWindowShouldClose(currentWindow->getGLFWwindow());
     }
 }
