@@ -18,6 +18,6 @@ namespace engine
 		window* currentWindow;
 		unsigned int shaderProgram;
 		unsigned int buffer;
-		unsigned int VBO, VAO;
+		unsigned int VBO, VAO, EBO;
 	};
 }
