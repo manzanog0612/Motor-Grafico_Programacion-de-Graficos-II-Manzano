@@ -5,7 +5,7 @@ in vec3 ourColor;
 uniform float r;
 uniform float g;
 uniform float b;
-uniform float a;
+uniform float a = 1.0f;
 
 void main()
 {
