@@ -1,6 +1,7 @@
 #pragma once
 #include "exports.h"
 #include "window.h"
+#include "shader.h"
 
 namespace engine
 {
@@ -11,13 +12,12 @@ namespace engine
 		renderer(window* window);
 		~renderer();
 		void setCurrentWindow(window* window);
-		void compileShaders();
 		void draw();
 
 	private:
+		float lastTime = 0;
 		window* currentWindow;
-		unsigned int shaderProgram;
-		unsigned int buffer;
+		Shader solidShader = Shader("../src/Motor/Shaders/SolidVertex.shader", "../src/Motor/Shaders/SolidFragment.shader");
 		unsigned int VBO, VAO, EBO;
 	};
 }

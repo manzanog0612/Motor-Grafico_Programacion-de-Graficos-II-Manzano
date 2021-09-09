@@ -20,15 +20,26 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Motor\baseGame.cpp" />
+    <ClCompile Include="..\src\Motor\entity.cpp" />
+    <ClCompile Include="..\src\Motor\entity2D.cpp" />
     <ClCompile Include="..\src\Motor\renderer.cpp" />
+    <ClCompile Include="..\src\Motor\shader.cpp" />
+    <ClCompile Include="..\src\Motor\shape.cpp" />
     <ClCompile Include="..\src\Motor\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Motor\baseGame.h" />
+    <ClInclude Include="..\src\Motor\entity.h" />
+    <ClInclude Include="..\src\Motor\entity2D.h" />
     <ClInclude Include="..\src\Motor\exports.h" />
-    <ClInclude Include="..\src\Motor\framework.h" />
     <ClInclude Include="..\src\Motor\renderer.h" />
+    <ClInclude Include="..\src\Motor\shader.h" />
+    <ClInclude Include="..\src\Motor\shape.h" />
     <ClInclude Include="..\src\Motor\window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\Motor\Shaders\SolidFragment.shader" />
+    <None Include="..\src\Motor\Shaders\SolidVertex.shader" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
