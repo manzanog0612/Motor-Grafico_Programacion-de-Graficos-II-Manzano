@@ -42,6 +42,8 @@ namespace engine
 
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0); 
+
+
 	}
 	renderer::~renderer()
 	{
@@ -60,7 +62,7 @@ namespace engine
 		glClearColor(0, 1, 0, 1);
 
 		solidShader.use();
-		
+
 		glBindVertexArray(VAO);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
