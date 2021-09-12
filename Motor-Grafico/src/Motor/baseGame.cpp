@@ -42,7 +42,6 @@ namespace engine
     void baseGame::update()
     {
         currentRenderer->draw();
-        glfwPollEvents();
     }
     bool baseGame::windowExitEvent()
     {

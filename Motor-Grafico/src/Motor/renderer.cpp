@@ -60,7 +60,6 @@ namespace engine
 	}
 	void renderer::draw()
 	{
-
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glClearColor(0, 0, 0, 1);
