@@ -84,7 +84,8 @@ namespace engine
 		matrixTRS = glm::mat4(1.0f);
 		matrixTRS = glm::translate(matrixTRS, glm::vec3(0.0f, -0.45f, 0.0f));
 		matrixTRS = glm::rotate(matrixTRS, (float)glfwGetTime() * 2, glm::vec3(0.0f, 0.0f, 1.0f));
-		matrixTRS = glm::scale(matrixTRS, glm::vec3(0.75f, .75f, .75f));
+		float scaleAmount = sin(glfwGetTime());
+		matrixTRS = glm::scale(matrixTRS, glm::vec3(scaleAmount, scaleAmount, scaleAmount));
 
 		transformLoc = glGetUniformLocation(solidShader.ID, "transform");
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(matrixTRS));
