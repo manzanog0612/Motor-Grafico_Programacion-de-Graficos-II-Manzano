@@ -2,6 +2,9 @@
 
 #include "glew.h"
 #include "glfw3.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 namespace engine
 {
@@ -65,6 +68,38 @@ namespace engine
 		glClearColor(0, 0, 0, 1);
 
 		solidShader.use();
+
+		glm::mat4 matrixTRS = glm::mat4(1.0f);
+		matrixTRS = glm::translate(matrixTRS, glm::vec3(0.3f, 0.5f, 0.0f));
+		matrixTRS = glm::rotate(matrixTRS, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+		matrixTRS = glm::scale(matrixTRS, glm::vec3(0.25f, .25f, .25f));
+
+		unsigned int transformLoc = glGetUniformLocation(solidShader.ID, "transform");
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(matrixTRS));
+
+		glBindVertexArray(VAO);
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+		matrixTRS = glm::mat4(1.0f);
+		matrixTRS = glm::translate(matrixTRS, glm::vec3(0.0f, -0.45f, 0.0f));
+		matrixTRS = glm::rotate(matrixTRS, (float)glfwGetTime() * 2, glm::vec3(0.0f, 0.0f, 1.0f));
+		matrixTRS = glm::scale(matrixTRS, glm::vec3(0.75f, .75f, .75f));
+
+		transformLoc = glGetUniformLocation(solidShader.ID, "transform");
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(matrixTRS));
+
+		glBindVertexArray(VAO);
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+		matrixTRS = glm::mat4(1.0f);
+		matrixTRS = glm::translate(matrixTRS, glm::vec3(-0.3f, 0.5f, 0.0f));
+		matrixTRS = glm::rotate(matrixTRS, (float)glfwGetTime() * -1, glm::vec3(0.0f, 0.0f, 1.0f));
+		matrixTRS = glm::scale(matrixTRS, glm::vec3(0.5f, .5f, .5f));
+
+		transformLoc = glGetUniformLocation(solidShader.ID, "transform");
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(matrixTRS));
 
 		glBindVertexArray(VAO);
 
