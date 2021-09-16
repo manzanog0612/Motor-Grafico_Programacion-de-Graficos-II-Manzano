@@ -4,7 +4,7 @@
 
 namespace engine
 {
-	class ENGINE_API shape : public entity2D
+	class ENGINE_API shape abstract : public entity2D
 	{
 	public:
 		shape();
