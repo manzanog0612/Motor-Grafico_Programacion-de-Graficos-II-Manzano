@@ -9,9 +9,10 @@ namespace engine
 	public:
 		entity();
 		~entity();
+		void assingRenderer(renderer* _renderer);
 
 	protected:
-		renderer* renderer;
+		renderer* _renderer;
 
 		glm::vec3 v3pos;
 		glm::vec3 v3rot;
@@ -25,11 +26,11 @@ namespace engine
 		glm::mat4 rotateZ;
 		glm::mat4 scale;
 
-		void UpdateModelMatrix();
-		void SetRotX(float x);
-		void SetRotY(float y);
-		void SetRotZ(float z);
-		void SetScale(float x, float y, float z);
+		void updateModelMatrix();
+		void setRotX(float x);
+		void setRotY(float y);
+		void setRotZ(float z);
+		void setScale(float x, float y, float z);
 
 	private:
 

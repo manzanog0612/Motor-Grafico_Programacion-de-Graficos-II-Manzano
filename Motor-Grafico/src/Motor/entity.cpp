@@ -4,7 +4,21 @@ namespace engine
 {
 	entity::entity()
 	{
+		_renderer = NULL;
 
+		v3pos = glm::vec3();
+		v3rot = glm::vec3();
+		v3scale = glm::vec3();
+
+		model = glm::mat4();
+
+		translate = glm::mat4();
+		rotateX = glm::mat4();
+		rotateY = glm::mat4();
+		rotateZ = glm::mat4();
+		scale = glm::mat4();
+
+		updateModelMatrix();
 	}
 
 	entity::~entity()
@@ -12,12 +26,17 @@ namespace engine
 
 	}
 
-	void entity::UpdateModelMatrix()
+	void entity::assingRenderer(renderer* _renderer)
+	{
+		this->_renderer = _renderer;
+	}
+
+	void entity::updateModelMatrix()
 	{
 		model = translate * rotateX * rotateY * rotateZ * scale;
 	}
 
-	void entity::SetRotX(float x)
+	void entity::setRotX(float x)
 	{
 		v3rot[0] = x;
 
@@ -27,10 +46,10 @@ namespace engine
 		axis[0] = 1.0f;
 
 		rotateX = glm::rotate(glm::mat4(1.0f), x, axis);
-		UpdateModelMatrix();
+		updateModelMatrix();
 	}
 
-	void entity::SetRotY(float y)
+	void entity::setRotY(float y)
 	{
 		v3rot[1] = y;
 
@@ -40,10 +59,10 @@ namespace engine
 		axis[1] = 1.0f;
 
 		rotateY = glm::rotate(glm::mat4(1.0f), y, axis);
-		UpdateModelMatrix();
+		updateModelMatrix();
 	}
 
-	void entity::SetRotZ(float z)
+	void entity::setRotZ(float z)
 	{
 		v3rot[2] = z;
 
@@ -53,16 +72,16 @@ namespace engine
 		axis[2] = 1.0f;
 
 		rotateZ = glm::rotate(glm::mat4(1.0f), z, axis);
-		UpdateModelMatrix();
+		updateModelMatrix();
 	}
 
-	void entity::SetScale(float x, float y, float z)
+	void entity::setScale(float x, float y, float z)
 	{
 		v3scale[0] = x;
 		v3scale[1] = y;
 		v3scale[2] = z;
 
 		translate = glm::translate(glm::mat4(1.0f), v3pos);
-		UpdateModelMatrix();
+		updateModelMatrix();
 	}
 }
