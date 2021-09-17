@@ -7,3 +7,8 @@ game::game()
 game::~game()
 {
 }
+
+void game::update()
+{
+
+}

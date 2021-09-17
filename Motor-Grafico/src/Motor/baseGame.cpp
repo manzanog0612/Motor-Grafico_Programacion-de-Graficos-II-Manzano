@@ -9,7 +9,6 @@ namespace engine
     {
         currentWindow = NULL;
         currentRenderer = NULL;
-        windowShouldClose = false;
     }
     baseGame::~baseGame()
     {
@@ -39,10 +38,16 @@ namespace engine
     {
         glfwTerminate();
     }
-    void baseGame::update()
+    void baseGame::play()
     {
-        currentRenderer->draw();
-        glfwPollEvents();
+        init();
+        while(!windowExitEvent())
+        {
+            currentRenderer->draw();
+            update();
+            glfwPollEvents();
+        }
+        deinit();
     }
     bool baseGame::windowExitEvent()
     {

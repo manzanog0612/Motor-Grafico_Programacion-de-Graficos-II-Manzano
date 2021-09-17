@@ -11,15 +11,15 @@ namespace engine
 	public:
 		baseGame();
 		~baseGame();
-		bool init();
-		void update();
-		void deinit();
-		bool windowExitEvent();
+		void play();
+		virtual void update() = 0;
+
 
 	private:
+		bool init();
+		void deinit();
 		window* currentWindow;
 		renderer* currentRenderer;
-		bool windowShouldClose;
+		bool windowExitEvent();
 	};
-
 }

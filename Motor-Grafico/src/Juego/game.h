@@ -6,6 +6,7 @@ class game : public engine::baseGame
 public:
 	game();
 	~game();
+	void update() override;
 
 private:
 

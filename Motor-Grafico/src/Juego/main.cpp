@@ -3,13 +3,8 @@
 int main(void)
 {
 	game* gameVariable = new game();
-	gameVariable->init();
 
-	while(!gameVariable->windowExitEvent())
-	{
-		gameVariable->update();
-	}
+	gameVariable->play();
 
-	gameVariable->deinit();
 	delete gameVariable;
 }
