@@ -16,7 +16,9 @@ namespace engine
 		renderer(window* window);
 		~renderer();
 		void setCurrentWindow(window* window);
-		void drawRequest(glm::mat4 model, unsigned int id, unsigned int vertices);
+		void bindRequest(unsigned int &VAO, unsigned int& VBO, unsigned int& EBO, float vertices[], unsigned int indices[]);
+		void drawRequest(glm::mat4 model, unsigned int VAO, unsigned int vertices);
+		void unbindRequest(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
 		void startDraw();
 		void endDraw();
 
@@ -24,8 +26,7 @@ namespace engine
 		float lastTime = 0;
 		window* currentWindow;
 		Shader solidShader = Shader("../src/Motor/Shaders/SolidVertex.shader", "../src/Motor/Shaders/SolidFragment.shader");
-		unsigned int VBO, VAO, EBO, VAO2;
-		//glm::mat4 viewMatrix;
-		//glm::mat4 cameraMatrix;
+		glm::mat4 viewMatrix;
+		glm::mat4 cameraMatrix;
 	};
 }
