@@ -7,6 +7,9 @@ public:
 	game();
 	~game();
 	void update() override;
+	void draw() override;
+	void init() override;
+	void deInit() override;
 
 private:
 

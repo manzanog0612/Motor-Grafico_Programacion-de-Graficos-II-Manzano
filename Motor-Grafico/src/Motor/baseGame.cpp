@@ -2,6 +2,8 @@
 
 #include "glew.h"
 #include "glfw3.h"
+#include "window.h"
+#include "renderer.h"
 
 namespace engine
 {
@@ -14,7 +16,7 @@ namespace engine
     {
         delete currentWindow;
     }
-    bool baseGame::init()
+    bool baseGame::init_Internal()
     {
         if (!glfwInit())
             return false;
@@ -32,22 +34,29 @@ namespace engine
 
         currentRenderer = new renderer(currentWindow);
 
+        init();
+
         return true;
     }
-    void baseGame::deinit()
+    void baseGame::deinit_Internal()
     {
+
+        deInit();
+
         glfwTerminate();
     }
     void baseGame::play()
     {
-        init();
+        init_Internal();
         while(!windowExitEvent())
         {
-            currentRenderer->draw();
-            update();
+            currentRenderer->startDraw();
+            draw();
+            currentRenderer->endDraw();
             glfwPollEvents();
+            update();
         }
-        deinit();
+        deinit_Internal();
     }
     bool baseGame::windowExitEvent()
     {

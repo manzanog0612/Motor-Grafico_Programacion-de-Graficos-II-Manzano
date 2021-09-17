@@ -2,9 +2,6 @@
 
 #include "glew.h"
 #include "glfw3.h"
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-#include "glm/gtc/type_ptr.hpp"
 
 namespace engine
 {
@@ -56,6 +53,39 @@ namespace engine
 		glEnableVertexAttribArray(0); 
 		glEnableVertexAttribArray(1);
 
+
+		float vertices2[] =
+		{
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 1.0f, // top right
+			 0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,  // bottom right
+			-0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,  // bottom left
+			-0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 1.0f   // top left 
+		};
+		unsigned int indices2[] =
+		{  // note that we start from 0!
+			0, 1, 3,   // first triangle
+			1, 2, 3    // second triangle
+		};
+
+		glGenVertexArrays(1, &VAO2);
+		glGenBuffers(1, &VBO);
+		glGenBuffers(1, &EBO);
+
+		glBindVertexArray(VAO2);
+
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices2), vertices2, GL_STATIC_DRAW);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices2), indices2, GL_STATIC_DRAW);
+
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+
+
 	}
 	renderer::~renderer()
 	{
@@ -66,7 +96,7 @@ namespace engine
 	{
 		currentWindow = window;
 	}
-	void renderer::draw()
+	void renderer::startDraw()
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -98,7 +128,7 @@ namespace engine
 		transformLoc = glGetUniformLocation(solidShader.ID, "transform");
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(matrixTRS));
 
-		glBindVertexArray(VAO);
+		glBindVertexArray(VAO2);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -114,8 +144,14 @@ namespace engine
 		glBindVertexArray(VAO);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
+	}
+	void renderer::endDraw()
+	{
 		glfwSwapBuffers(currentWindow->getGLFWwindow());
+	}
+	void renderer::drawRequest(glm::mat4 model, unsigned int id, unsigned int vertices)
+	{
+
 	}
 
 }

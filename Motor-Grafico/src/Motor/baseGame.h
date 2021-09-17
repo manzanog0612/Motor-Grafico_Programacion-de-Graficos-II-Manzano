@@ -1,10 +1,11 @@
 #pragma once
 #include "exports.h"
-#include "window.h"
-#include "renderer.h"
 
 namespace engine
 {
+
+	class window;
+	class renderer;
 
 	class ENGINE_API baseGame
 	{
@@ -13,11 +14,14 @@ namespace engine
 		~baseGame();
 		void play();
 		virtual void update() = 0;
+		virtual void draw() = 0;
+		virtual void init() = 0;
+		virtual void deInit() = 0;
 
 
 	private:
-		bool init();
-		void deinit();
+		bool init_Internal();
+		void deinit_Internal();
 		window* currentWindow;
 		renderer* currentRenderer;
 		bool windowExitEvent();
