@@ -22,6 +22,7 @@
     <ClCompile Include="..\src\Motor\baseGame.cpp" />
     <ClCompile Include="..\src\Motor\entity.cpp" />
     <ClCompile Include="..\src\Motor\entity2D.cpp" />
+    <ClCompile Include="..\src\Motor\input.cpp" />
     <ClCompile Include="..\src\Motor\renderer.cpp" />
     <ClCompile Include="..\src\Motor\shader.cpp" />
     <ClCompile Include="..\src\Motor\shape.cpp" />
@@ -32,6 +33,7 @@
     <ClInclude Include="..\src\Motor\entity.h" />
     <ClInclude Include="..\src\Motor\entity2D.h" />
     <ClInclude Include="..\src\Motor\exports.h" />
+    <ClInclude Include="..\src\Motor\input.h" />
     <ClInclude Include="..\src\Motor\renderer.h" />
     <ClInclude Include="..\src\Motor\shader.h" />
     <ClInclude Include="..\src\Motor\shape.h" />

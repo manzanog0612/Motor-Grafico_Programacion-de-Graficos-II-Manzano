@@ -18,14 +18,17 @@ namespace engine
 		virtual void draw() = 0;
 		virtual void init() = 0;
 		virtual void deInit() = 0;
-
+		
+		//input
+		bool isKeyPressed(int keycode);
+		bool isKeyDown(int keycode);
 
 	private:
 		bool init_Internal();
 		void deinit_Internal();
 		window* currentWindow;
 		renderer* currentRenderer;
-		input* input;
+		input* currentInput;
 		bool windowExitEvent();
 	};
 }

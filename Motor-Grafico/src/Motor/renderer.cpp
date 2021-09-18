@@ -5,7 +5,6 @@
 
 namespace engine
 {
-
 	renderer::renderer()
 	{
 		currentWindow = NULL;

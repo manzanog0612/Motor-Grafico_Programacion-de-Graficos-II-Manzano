@@ -4,6 +4,7 @@
 #include "glfw3.h"
 #include "window.h"
 #include "renderer.h"
+#include "input.h"
 
 namespace engine
 {
@@ -11,11 +12,13 @@ namespace engine
     {
         currentWindow = NULL;
         currentRenderer = NULL;
+        currentInput = NULL;
     }
     baseGame::~baseGame()
     {
         delete currentWindow;
         delete currentRenderer;
+        delete currentInput;
     }
     bool baseGame::init_Internal()
     {
@@ -33,6 +36,9 @@ namespace engine
 
         currentWindow->init();
         currentRenderer = new renderer(currentWindow);
+
+        currentInput = new input(currentWindow);
+
         init();
 
         return true;
@@ -58,5 +64,13 @@ namespace engine
     bool baseGame::windowExitEvent()
     {
         return glfwWindowShouldClose(currentWindow->getGLFWwindow());
+    }
+    bool baseGame::isKeyPressed(int keycode)
+    {
+        return currentInput->isKeyPressed(keycode, currentWindow);
+    }
+    bool baseGame::isKeyDown(int keycode)
+    {
+        return currentInput->isKeyDown(keycode, currentWindow);
     }
 }
