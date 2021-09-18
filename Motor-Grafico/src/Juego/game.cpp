@@ -2,7 +2,7 @@
 
 game::game()
 {
-
+	
 }
 
 game::~game()
@@ -12,7 +12,7 @@ game::~game()
 
 void game::draw()
 {
-	
+
 }
 
 void game::update()

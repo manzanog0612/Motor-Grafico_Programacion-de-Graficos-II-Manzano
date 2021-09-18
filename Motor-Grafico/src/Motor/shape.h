@@ -4,12 +4,14 @@
 
 namespace engine
 {
-	class ENGINE_API shape abstract : public entity2D
+	class ENGINE_API shape : public entity2D
 	{
 	public:
-		shape();
+		shape(unsigned int vertices);
 		~shape();
+		void draw();
 
-	private:
+	protected:
+		unsigned int VAO, VBO, EBO, _vertices;
 	};
 }

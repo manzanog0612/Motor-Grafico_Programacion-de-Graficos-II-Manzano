@@ -15,6 +15,7 @@ namespace engine
     baseGame::~baseGame()
     {
         delete currentWindow;
+        delete currentRenderer;
     }
     bool baseGame::init_Internal()
     {
@@ -31,18 +32,14 @@ namespace engine
         }
 
         currentWindow->init();
-
         currentRenderer = new renderer(currentWindow);
-
         init();
 
         return true;
     }
     void baseGame::deinit_Internal()
     {
-
         deInit();
-
         glfwTerminate();
     }
     void baseGame::play()

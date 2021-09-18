@@ -19,19 +19,6 @@ namespace engine
 		viewMatrix = glm::translate(glm::mat4(), glm::vec3(-3.0f, 0.0f, 0.0f));
 		cameraMatrix = glm::lookAt(glm::vec3(0, 0, 0), glm::vec3(0, 1, 0), glm::vec3(0, 1, 0));
 
-		float vertices[] = 
-		{
-			 0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-			 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f,
-			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
-			-0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 0.0f 
-		};
-		unsigned int indices[] = 
-		{  
-			0, 1, 3,   
-			1, 2, 3    
-		};
-
 	}
 	renderer::~renderer()
 	{

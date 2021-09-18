@@ -4,6 +4,9 @@
 
 namespace engine
 {
+
+	renderer;
+
 	class ENGINE_API entity
 	{
 	public:

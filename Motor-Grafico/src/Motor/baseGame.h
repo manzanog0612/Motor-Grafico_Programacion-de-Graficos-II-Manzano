@@ -6,6 +6,7 @@ namespace engine
 
 	class window;
 	class renderer;
+	class input;
 
 	class ENGINE_API baseGame
 	{
@@ -24,6 +25,7 @@ namespace engine
 		void deinit_Internal();
 		window* currentWindow;
 		renderer* currentRenderer;
+		input* input;
 		bool windowExitEvent();
 	};
 }
