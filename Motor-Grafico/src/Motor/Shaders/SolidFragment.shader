@@ -2,12 +2,11 @@
 out vec4 FragColor;
 in vec3 ourColor;
 
-uniform float r;
-uniform float g;
-uniform float b;
+uniform vec3 color;
+
 uniform float a = 1.0f;
 
 void main()
 {
-   FragColor = vec4(ourColor.r + r, ourColor.g + g, ourColor.b + b, a);
+   FragColor = vec4(ourColor.x + color.x, ourColor.y + color.y, ourColor.z + color.z, a);
 }

@@ -29,11 +29,14 @@ namespace engine
 		glm::mat4 rotateZ;
 		glm::mat4 scale;
 
+		glm::vec4 color;
+
 		void updateModelMatrix();
 		void setRotX(float x);
 		void setRotY(float y);
 		void setRotZ(float z);
 		void setScale(float x, float y, float z);
+		void setColor(glm::vec4 newColor);
 
 	private:
 

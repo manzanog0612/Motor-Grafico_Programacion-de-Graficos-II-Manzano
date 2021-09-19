@@ -16,6 +16,7 @@ namespace engine
 
 	input::~input()
 	{
+
 	}
 
 	bool input::isKeyPressed(int keycode, window* window)

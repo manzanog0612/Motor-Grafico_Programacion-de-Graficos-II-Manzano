@@ -39,11 +39,19 @@ namespace engine
 	{
 		glfwSwapBuffers(currentWindow->getGLFWwindow());
 	}
-	void renderer::drawRequest(glm::mat4 modelMatrix, unsigned int VAO, unsigned int vertices)
+	void renderer::drawRequest(glm::mat4 modelMatrix, glm::vec4 color, unsigned int VAO, unsigned int vertices)
 	{
 		modelMatrix *= viewMatrix * cameraMatrix;
 		unsigned int transformLoc = glGetUniformLocation(solidShader.ID, "transform");
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+
+		glm::vec3 newColor = glm::vec3(color.a, color.b, color.g);
+		unsigned int colorLoc = glGetUniformLocation(solidShader.ID, "color");
+		glUniform3fv(colorLoc, 1, glm::value_ptr(newColor));
+
+		unsigned int alphaLoc = glGetUniformLocation(solidShader.ID, "a");
+		glUniform1fv(alphaLoc, 1, &(color.a));
+
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
 	}

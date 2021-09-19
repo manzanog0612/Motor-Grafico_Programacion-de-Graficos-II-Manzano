@@ -7,7 +7,7 @@ namespace engine
 
 	class window;
 
-	class input
+	class ENGINE_API input
 	{
 	public:
 		input(window* window);

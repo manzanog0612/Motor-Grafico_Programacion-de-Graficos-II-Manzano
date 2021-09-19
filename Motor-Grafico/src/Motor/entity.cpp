@@ -18,6 +18,8 @@ namespace engine
 		rotateZ = glm::mat4();
 		scale = glm::mat4();
 
+		color = glm::vec4(1, 1, 1, 1);
+
 		updateModelMatrix();
 	}
 
@@ -83,5 +85,9 @@ namespace engine
 
 		translate = glm::translate(glm::mat4(1.0f), v3pos);
 		updateModelMatrix();
+	}
+	void entity::setColor(glm::vec4 newColor)
+	{
+		color = newColor;
 	}
 }

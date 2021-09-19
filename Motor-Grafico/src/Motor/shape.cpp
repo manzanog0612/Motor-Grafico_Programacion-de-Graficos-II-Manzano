@@ -16,9 +16,9 @@ namespace engine
 		{
 			vertex = new float[18]
 			{
-				 0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-				 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f
+				 0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+				 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f
 			};
 			indices = new unsigned int[3]
 			{
@@ -34,10 +34,10 @@ namespace engine
 		{
 			vertex = new float[24]
 			{
-				0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-				0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
-				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f
+				0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+				0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f
 			};
 			indices = new unsigned int[6]
 			{
@@ -65,6 +65,6 @@ namespace engine
 
 	void shape::draw()
 	{
-		_renderer->drawRequest(model, VAO, _vertices);
+		_renderer->drawRequest(model, color, VAO, _vertices);
 	}
 }
