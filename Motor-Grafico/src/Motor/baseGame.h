@@ -1,9 +1,9 @@
 #pragma once
 #include "exports.h"
+#include "keycodes.h"
 
 namespace engine
 {
-
 	class window;
 	class renderer;
 	class input;

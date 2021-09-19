@@ -2,7 +2,7 @@
 
 game::game()
 {
-	
+
 }
 
 game::~game()

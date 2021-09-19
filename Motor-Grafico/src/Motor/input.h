@@ -4,7 +4,6 @@
 
 namespace engine
 {
-
 	class window;
 
 	class ENGINE_API input

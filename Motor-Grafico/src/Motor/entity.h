@@ -4,9 +4,6 @@
 
 namespace engine
 {
-
-	renderer;
-
 	class ENGINE_API entity
 	{
 	public:
@@ -36,7 +33,7 @@ namespace engine
 		void setRotY(float y);
 		void setRotZ(float z);
 		void setScale(float x, float y, float z);
-		void setColor(glm::vec4 newColor);
+		void setColor(glm::vec4 color);
 
 	private:
 

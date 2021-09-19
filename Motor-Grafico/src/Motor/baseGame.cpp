@@ -65,6 +65,7 @@ namespace engine
     {
         return glfwWindowShouldClose(currentWindow->getGLFWwindow());
     }
+
     bool baseGame::isKeyPressed(int keycode)
     {
         return currentInput->isKeyPressed(keycode, currentWindow);

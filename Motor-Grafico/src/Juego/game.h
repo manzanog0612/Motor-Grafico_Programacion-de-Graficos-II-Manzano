@@ -12,5 +12,4 @@ public:
 	void deInit() override;
 
 private:
-
 };

@@ -71,6 +71,9 @@
     <ClInclude Include="..\src\Motor\input.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\Motor\keycodes.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\Motor\Shaders\SolidFragment.shader">

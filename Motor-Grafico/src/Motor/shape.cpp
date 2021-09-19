@@ -25,7 +25,7 @@ namespace engine
 				0, 1, 2
 			};
 			_renderer->bindRequest(VAO, VBO, EBO, vertex, indices);
-			_vertices = sizeof(indices);
+			_vertices = 3;
 
 			delete[] vertex;
 			delete[] indices;
@@ -45,7 +45,7 @@ namespace engine
 				1, 2, 3
 			};
 			_renderer->bindRequest(VAO, VBO, EBO, vertex, indices);
-			_vertices = sizeof(indices);
+			_vertices = 6;
 
 			delete[] vertex;
 			delete[] indices;
@@ -55,7 +55,6 @@ namespace engine
 			std::cout << "Vertices amount not implemented" << std::endl;
 			return;
 		}
-
 	}
 
 	shape::~shape()
