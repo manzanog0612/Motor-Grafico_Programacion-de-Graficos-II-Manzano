@@ -29,6 +29,6 @@ namespace engine
 		Shader solidShader = Shader("../src/Motor/Shaders/SolidVertex.shader", "../src/Motor/Shaders/SolidFragment.shader");
 		glm::vec4 clearColor;
 		glm::mat4 viewMatrix;
-		glm::mat4 cameraMatrix;
+		glm::mat4 projectionMatrix;
 	};
 }

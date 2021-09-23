@@ -9,7 +9,7 @@ namespace engine
 	{
 		currentWindow = NULL;
 		viewMatrix = glm::mat4();
-		cameraMatrix = glm::mat4();
+		projectionMatrix = glm::mat4();
 		clearColor = glm::vec4(0, 0, 0, 1);
 	}
 	renderer::renderer(window* window)
@@ -21,8 +21,8 @@ namespace engine
 
 		viewMatrix = glm::mat4(1.0f);
 		viewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, 0.0f, -3.0f));
-		cameraMatrix = glm::mat4(1.0f);
-		//cameraMatrix = glm::lookAt(glm::vec3(0, 0, 0), glm::vec3(0, 1, 0), glm::vec3(0, 1, 0));
+		projectionMatrix = glm::mat4(1.0f);
+		projectionMatrix = glm::lookAt(glm::vec3(0, 0, 0), glm::vec3(0, 1, 0), glm::vec3(0, 1, 0));
 
 	}
 	renderer::~renderer()
@@ -48,20 +48,20 @@ namespace engine
 	void renderer::drawRequest(glm::mat4 modelMatrix, glm::vec4 color, unsigned int VAO, unsigned int vertices)
 	{
 		unsigned int modelLoc = glGetUniformLocation(solidShader.ID, "model");
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+		glUniformMatrix4fv(modelLoc, 3, GL_FALSE, glm::value_ptr(modelMatrix));
 
 		unsigned int viewLoc = glGetUniformLocation(solidShader.ID, "view");
-		//glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
+		glUniformMatrix4fv(viewLoc, 3, GL_FALSE, glm::value_ptr(viewMatrix));
 
 		unsigned int projectionLoc = glGetUniformLocation(solidShader.ID, "projection");
-		//glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(cameraMatrix));
+		glUniformMatrix4fv(projectionLoc, 3, GL_FALSE, glm::value_ptr(projectionMatrix));
 
 		glm::vec3 newColor = glm::vec3(color.a, color.b, color.g);
 		unsigned int colorLoc = glGetUniformLocation(solidShader.ID, "color");
-		//glUniform3fv(colorLoc, 1, glm::value_ptr(newColor));
+		glUniform3fv(colorLoc, 1, glm::value_ptr(newColor));
 
 		unsigned int alphaLoc = glGetUniformLocation(solidShader.ID, "a");
-		//glUniform1fv(alphaLoc, 1, &(color.a));
+		glUniform1fv(alphaLoc, 1, &(color.a));
 
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
