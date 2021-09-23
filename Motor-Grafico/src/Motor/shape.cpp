@@ -16,9 +16,9 @@ namespace engine
 		{
 			vertex = new float[18]
 			{
-				 0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
-				 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
-				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f
+				 0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
+				 0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
+				-0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f
 			};
 			indices = new unsigned int[3]
 			{
@@ -34,14 +34,14 @@ namespace engine
 		{
 			vertex = new float[24]
 			{
-				0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
-				0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
-				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
-				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f
+				0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
+				0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
+				-0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
+				-0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f
 			};
 			indices = new unsigned int[6]
 			{
-				0, 1, 2,
+				0, 1, 3,
 				1, 2, 3
 			};
 			_renderer->bindRequest(VAO, VBO, EBO, vertex, indices);

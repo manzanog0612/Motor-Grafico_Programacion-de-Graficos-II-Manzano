@@ -5,6 +5,8 @@
 #include "window.h"
 #include "renderer.h"
 #include "input.h"
+#include "shape.h"
+#include <random>
 
 namespace engine
 {
@@ -20,12 +22,12 @@ namespace engine
         delete currentRenderer;
         delete currentInput;
     }
-    bool baseGame::init_Internal()
+    bool baseGame::init_Internal(int windowSizeX, int windowSizeY, const char* windowName)
     {
         if (!glfwInit())
             return false;
 
-        currentWindow = new window(800, 600, "Hello World");
+        currentWindow = new window(windowSizeX, windowSizeY, windowName);
 
         if (!currentWindow->getGLFWwindow())
         {
@@ -39,27 +41,38 @@ namespace engine
 
         currentInput = new input(currentWindow);
 
-        init();
-
         return true;
     }
     void baseGame::deinit_Internal()
     {
-        deInit();
         glfwTerminate();
     }
-    void baseGame::play()
+    void baseGame::play(int windowSizeX, int windowSizeY, const char* windowName)
     {
-        init_Internal();
-        while(!windowExitEvent())
+        init_Internal(windowSizeX, windowSizeY, windowName);
+        init();
+
+        shape* quad = new shape(4);
+        quad->assingRenderer(currentRenderer);
+
+        while (!windowExitEvent())
         {
             currentRenderer->startDraw();
             draw();
+            quad->draw();
             currentRenderer->endDraw();
             glfwPollEvents();
             update();
         }
+
+        deInit();
+        delete quad;
+
         deinit_Internal();
+    }
+    void baseGame::changeClearColor(float r, float g, float b, float a)
+    {
+        currentRenderer->setClearColor(r, g, b, a);
     }
     bool baseGame::windowExitEvent()
     {
@@ -73,5 +86,16 @@ namespace engine
     bool baseGame::isKeyDown(int keycode)
     {
         return currentInput->isKeyDown(keycode, currentWindow);
+    }
+    double baseGame::getCurrentTime()
+    {
+        return glfwGetTime();
+    }
+    float baseGame::getRandomNumber(float min, float max)
+    {
+        std::random_device rd;
+        std::mt19937 mt(rd());
+        std::uniform_real_distribution<float> dist(min, max);
+        return dist(mt);
     }
 }

@@ -21,11 +21,13 @@ namespace engine
 		void unbindRequest(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
 		void startDraw();
 		void endDraw();
+		void setClearColor(float r, float g, float b, float a);
 
 	private:
 		float lastTime = 0;
 		window* currentWindow;
 		Shader solidShader = Shader("../src/Motor/Shaders/SolidVertex.shader", "../src/Motor/Shaders/SolidFragment.shader");
+		glm::vec4 clearColor;
 		glm::mat4 viewMatrix;
 		glm::mat4 cameraMatrix;
 	};

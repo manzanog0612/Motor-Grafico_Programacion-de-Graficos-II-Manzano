@@ -12,4 +12,5 @@ public:
 	void deInit() override;
 
 private:
+	bool flashingColorsScreen = false;
 };

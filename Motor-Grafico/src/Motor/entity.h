@@ -4,12 +4,20 @@
 
 namespace engine
 {
+
 	class ENGINE_API entity
 	{
 	public:
 		entity();
 		~entity();
 		void assingRenderer(renderer* _renderer);
+		void setPos(float x, float y, float z);
+		void setRotX(float x);
+		void setRotY(float y);
+		void setRotZ(float z);
+		void setScale(float x, float y, float z);
+		void setColor(glm::vec4 color);
+		virtual void draw() = 0;
 
 	protected:
 		renderer* _renderer;
@@ -29,13 +37,6 @@ namespace engine
 		glm::vec4 color;
 
 		void updateModelMatrix();
-		void setRotX(float x);
-		void setRotY(float y);
-		void setRotZ(float z);
-		void setScale(float x, float y, float z);
-		void setColor(glm::vec4 color);
-
 	private:
-
 	};
 }

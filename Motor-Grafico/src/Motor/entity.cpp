@@ -6,19 +6,17 @@ namespace engine
 	{
 		_renderer = NULL;
 
-		v3pos = glm::vec3();
-		v3rot = glm::vec3();
-		v3scale = glm::vec3();
+		model = glm::mat4(1.0f);
 
-		model = glm::mat4();
+		setPos(0, 0, 0);
 
-		translate = glm::mat4();
-		rotateX = glm::mat4();
-		rotateY = glm::mat4();
-		rotateZ = glm::mat4();
-		scale = glm::mat4();
+		setRotX(0);
 
-		color = glm::vec4(1, 1, 1, 1);
+		setRotY(0);
+
+		setRotZ(0);
+
+		setScale(1, 1, 1);
 
 		updateModelMatrix();
 	}
@@ -37,7 +35,14 @@ namespace engine
 	{
 		model = translate * rotateX * rotateY * rotateZ * scale;
 	}
-
+	void entity::setPos(float x, float y, float z)
+	{
+		v3pos[0] = x;
+		v3pos[1] = y;
+		v3pos[2] = z;
+		translate = glm::translate(glm::mat4(1.0f), v3pos);
+		updateModelMatrix();
+	}
 	void entity::setRotX(float x)
 	{
 		v3rot[0] = x;
@@ -83,7 +88,7 @@ namespace engine
 		v3scale[1] = y;
 		v3scale[2] = z;
 
-		translate = glm::translate(glm::mat4(1.0f), v3pos);
+		scale = glm::scale(glm::mat4(1.0f), v3pos);
 		updateModelMatrix();
 	}
 	void entity::setColor(glm::vec4 newColor)
