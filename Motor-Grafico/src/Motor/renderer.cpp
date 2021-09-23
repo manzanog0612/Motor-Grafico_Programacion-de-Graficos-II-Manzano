@@ -21,6 +21,7 @@ namespace engine
 
 		viewMatrix = glm::mat4(1.0f);
 		viewMatrix = glm::scale(viewMatrix, glm::vec3(0.1f, 0.1f, 0.1f));
+		viewMatrix = glm::translate(viewMatrix, glm::vec3(0.1f, 0.1f, 0.1f));
 		projectionMatrix = glm::mat4(1.0f);
 		projectionMatrix = glm::lookAt(glm::vec3(0, 0, 0), glm::vec3(0, 1, 0), glm::vec3(0, 1, 0));
 

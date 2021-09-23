@@ -1,9 +1,12 @@
 #pragma once
 #include "exports.h"
-#include "renderer.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 namespace engine
 {
+	class renderer;
 
 	class ENGINE_API entity
 	{
@@ -17,6 +20,11 @@ namespace engine
 		void setRotZ(float z);
 		void setScale(float x, float y, float z);
 		void setColor(float r, float g, float b, float a);
+
+		float getPosX();
+		float getPosY();
+		float getPosZ();
+
 		virtual void draw() = 0;
 
 	protected:

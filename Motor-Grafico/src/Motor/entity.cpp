@@ -1,4 +1,5 @@
 #include "entity.h"
+#include "renderer.h"
 
 namespace engine
 {
@@ -11,6 +12,10 @@ namespace engine
 		rotateY = glm::mat4(1.0f);
 		rotateZ = glm::mat4(1.0f);			
 		scale = glm::mat4(1.0f);
+
+		v3pos = glm::vec3(0.0f);
+		v3rot = glm::vec3(0.0f);
+		v3scale = glm::vec3(0.0f);
 
 		updateModelMatrix();
 
@@ -90,5 +95,17 @@ namespace engine
 	void entity::setColor(float r, float g, float b, float a)
 	{
 		color = glm::vec4(r, g, b, a);
+	}
+	float entity::getPosX()
+	{
+		return v3pos[0];
+	}
+	float entity::getPosY()
+	{
+		return v3pos[1];
+	}
+	float entity::getPosZ()
+	{
+		return v3pos[2];
 	}
 }

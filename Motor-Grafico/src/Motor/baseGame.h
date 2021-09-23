@@ -1,5 +1,6 @@
 #pragma once
 #include "exports.h"
+#include "shape.h"
 #include "keycodes.h"
 
 namespace engine

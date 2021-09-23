@@ -1,4 +1,5 @@
 #include "shape.h"
+#include "renderer.h"
 
 namespace engine
 {
