@@ -20,7 +20,7 @@ namespace engine
 		currentWindow = window;
 
 		viewMatrix = glm::mat4(1.0f);
-		viewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, 0.0f, -3.0f));
+		viewMatrix = glm::scale(viewMatrix, glm::vec3(0.1f, 0.1f, 0.1f));
 		projectionMatrix = glm::mat4(1.0f);
 		projectionMatrix = glm::lookAt(glm::vec3(0, 0, 0), glm::vec3(0, 1, 0), glm::vec3(0, 1, 0));
 
@@ -47,16 +47,17 @@ namespace engine
 	}
 	void renderer::drawRequest(glm::mat4 modelMatrix, glm::vec4 color, unsigned int VAO, unsigned int vertices)
 	{
+		
 		unsigned int modelLoc = glGetUniformLocation(solidShader.ID, "model");
-		glUniformMatrix4fv(modelLoc, 3, GL_FALSE, glm::value_ptr(modelMatrix));
-
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+		
 		unsigned int viewLoc = glGetUniformLocation(solidShader.ID, "view");
-		glUniformMatrix4fv(viewLoc, 3, GL_FALSE, glm::value_ptr(viewMatrix));
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 
 		unsigned int projectionLoc = glGetUniformLocation(solidShader.ID, "projection");
-		glUniformMatrix4fv(projectionLoc, 3, GL_FALSE, glm::value_ptr(projectionMatrix));
-
-		glm::vec3 newColor = glm::vec3(color.a, color.b, color.g);
+		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+		
+		glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
 		unsigned int colorLoc = glGetUniformLocation(solidShader.ID, "color");
 		glUniform3fv(colorLoc, 1, glm::value_ptr(newColor));
 
@@ -66,23 +67,8 @@ namespace engine
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
 	}
-	void renderer::bindRequest(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO, float vertices[], unsigned int indices[])
+	void renderer::bindRequest(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO, float* vertices, unsigned int sizeOfVertices, unsigned int* indices, unsigned int sizeOfIndices)
 	{
-
-
-		float ver[24]
-		{
-			0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-			0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
-			-0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f
-		};
-		unsigned int ind[6]
-		{
-			0, 1, 3,
-			1, 2, 3
-		};
-
 		glGenVertexArrays(1, &VAO);
 		glGenBuffers(1, &VBO);
 		glGenBuffers(1, &EBO);
@@ -90,10 +76,10 @@ namespace engine
 		glBindVertexArray(VAO);
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(ver), ver, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeOfVertices, vertices, GL_STATIC_DRAW);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(ind), ind, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeOfIndices, indices, GL_STATIC_DRAW);
 
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));

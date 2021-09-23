@@ -51,23 +51,15 @@ namespace engine
     {
         init_Internal(windowSizeX, windowSizeY, windowName);
         init();
-
-        shape* quad = new shape(4);
-        quad->assingRenderer(currentRenderer);
-
         while (!windowExitEvent())
         {
             currentRenderer->startDraw();
             draw();
-            quad->draw();
             currentRenderer->endDraw();
             glfwPollEvents();
             update();
         }
-
         deInit();
-        delete quad;
-
         deinit_Internal();
     }
     void baseGame::changeClearColor(float r, float g, float b, float a)

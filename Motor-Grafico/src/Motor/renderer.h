@@ -16,7 +16,7 @@ namespace engine
 		renderer(window* window);
 		~renderer();
 		void setCurrentWindow(window* window);
-		void bindRequest(unsigned int &VAO, unsigned int& VBO, unsigned int& EBO, float vertices[], unsigned int indices[]);
+		void bindRequest(unsigned int &VAO, unsigned int& VBO, unsigned int& EBO, float* vertices, unsigned int sizeOfVertices, unsigned int* indices, unsigned int sizeOfIndices);
 		void drawRequest(glm::mat4 model, glm::vec4 color, unsigned int VAO, unsigned int vertices);
 		void unbindRequest(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
 		void startDraw();

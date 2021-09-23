@@ -16,15 +16,15 @@ namespace engine
 		{
 			vertex = new float[18]
 			{
-				 0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-				 0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-				-0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f
+				 0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+				 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f
 			};
 			indices = new unsigned int[3]
 			{
 				0, 1, 2
 			};
-			_renderer->bindRequest(VAO, VBO, EBO, vertex, indices);
+			_renderer->bindRequest(VAO, VBO, EBO, vertex, sizeof(vertex) * 18, indices, sizeof(indices) * 3);
 			_vertices = 3;
 
 			delete[] vertex;
@@ -34,17 +34,17 @@ namespace engine
 		{
 			vertex = new float[24]
 			{
-				0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-				0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-				-0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f,
-				-0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f
+				0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+				0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+				-0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f
 			};
 			indices = new unsigned int[6]
 			{
 				0, 1, 3,
 				1, 2, 3
 			};
-			_renderer->bindRequest(VAO, VBO, EBO, vertex, indices);
+			_renderer->bindRequest(VAO, VBO, EBO, vertex, sizeof(vertex) * 24, indices, sizeof(indices) * 6);
 			_vertices = 6;
 
 			delete[] vertex;
