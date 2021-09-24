@@ -89,7 +89,7 @@ namespace engine
 		v3scale[1] = y;
 		v3scale[2] = z;
 
-		scale = glm::scale(glm::mat4(1.0f), v3pos);
+		scale = glm::scale(glm::mat4(1.0f), v3scale);
 		updateModelMatrix();
 	}
 	void entity::setColor(float r, float g, float b, float a)

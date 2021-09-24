@@ -17,9 +17,9 @@ namespace engine
 		{
 			vertex = new float[18]
 			{
-				 0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
 				 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
-				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f
+				 0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 0.0f
 			};
 			indices = new unsigned int[3]
 			{
@@ -35,10 +35,10 @@ namespace engine
 		{
 			vertex = new float[24]
 			{
-				0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
-				0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+				 0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
+				 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
 				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f,
-				-0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f
+				-0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 0.0f
 			};
 			indices = new unsigned int[6]
 			{
