@@ -1,7 +1,9 @@
 #pragma once
 #include "exports.h"
-#include "shape.h"
 #include "keycodes.h"
+#include "time.h"
+
+#include "shape.h"
 
 namespace engine
 {
@@ -47,6 +49,7 @@ namespace engine
 		void deinit_Internal();
 		window* currentWindow;
 		input* currentInput;
+		time* currentTimer;
 		bool windowExitEvent();
 	};
 }

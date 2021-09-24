@@ -26,6 +26,7 @@
     <ClCompile Include="..\src\Motor\renderer.cpp" />
     <ClCompile Include="..\src\Motor\shader.cpp" />
     <ClCompile Include="..\src\Motor\shape.cpp" />
+    <ClCompile Include="..\src\Motor\time.cpp" />
     <ClCompile Include="..\src\Motor\window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -38,6 +39,7 @@
     <ClInclude Include="..\src\Motor\renderer.h" />
     <ClInclude Include="..\src\Motor\shader.h" />
     <ClInclude Include="..\src\Motor\shape.h" />
+    <ClInclude Include="..\src\Motor\time.h" />
     <ClInclude Include="..\src\Motor\window.h" />
   </ItemGroup>
   <ItemGroup>

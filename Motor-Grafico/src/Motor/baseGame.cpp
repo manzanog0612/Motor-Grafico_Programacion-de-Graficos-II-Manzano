@@ -40,6 +40,8 @@ namespace engine
 
         currentInput = new input(currentWindow);
 
+        currentTimer = new time();
+
         return true;
     }
     void baseGame::deinit_Internal()
@@ -56,6 +58,7 @@ namespace engine
             draw();
             currentRenderer->endDraw();
             glfwPollEvents();
+            time::updateDeltaTime(getCurrentTime());
             update();
         }
         deInit();
