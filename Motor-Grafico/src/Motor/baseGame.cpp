@@ -14,6 +14,7 @@ namespace engine
         currentWindow = NULL;
         currentRenderer = NULL;
         currentInput = NULL;
+        currentTimer = NULL;
     }
     baseGame::~baseGame()
     {
@@ -27,15 +28,14 @@ namespace engine
             return false;
 
         currentWindow = new window(windowSizeX, windowSizeY, windowName);
-
         if (!currentWindow->getGLFWwindow())
         {
             glfwTerminate();
-            return false;
             delete currentWindow;
+            return false;
         }
-
         currentWindow->init();
+
         currentRenderer = new renderer(currentWindow);
 
         currentInput = new input(currentWindow);
@@ -50,19 +50,21 @@ namespace engine
     }
     void baseGame::play(int windowSizeX, int windowSizeY, const char* windowName)
     {
-        init_Internal(windowSizeX, windowSizeY, windowName);
-        init();
-        while (!windowExitEvent())
+        if(init_Internal(windowSizeX, windowSizeY, windowName))
         {
-            currentRenderer->startDraw();
-            draw();
-            currentRenderer->endDraw();
-            glfwPollEvents();
-            time::updateDeltaTime(getCurrentTime());
-            update();
+            init();
+            while (!windowExitEvent())
+            {
+                glfwPollEvents();
+                time::updateDeltaTime(getCurrentTime());
+                update();
+                currentRenderer->startDraw();
+                draw();
+                currentRenderer->endDraw();
+            }
+            deInit();
+            deinit_Internal();
         }
-        deInit();
-        deinit_Internal();
     }
     void baseGame::changeClearColor(float r, float g, float b, float a)
     {
