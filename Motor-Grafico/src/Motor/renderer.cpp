@@ -19,10 +19,9 @@ namespace engine
 		currentWindow = window;
 
 		viewMatrix = glm::mat4(1.0f);
-		viewMatrix = glm::scale(viewMatrix, glm::vec3(0.05f, 0.05f, 0.05f));
+		viewMatrix = glm::lookAt(glm::vec3(0, 0, -15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 		projectionMatrix = glm::mat4(1.0f);
-		projectionMatrix = glm::lookAt(glm::vec3(0, 0, 3), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-
+		projectionMatrix = glm::perspective(glm::radians(90.0f), 4.0f / 3.0f, 0.1f, 100.0f);
 	}
 	renderer::~renderer()
 	{

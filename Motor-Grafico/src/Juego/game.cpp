@@ -12,7 +12,15 @@ game::~game()
 
 void game::draw()
 {
-	quad->draw();
+	if(showingBoth)
+	{
+		quad->draw();
+		triangle->draw();
+	}
+	else
+	{
+		activeShape->draw();
+	}
 }
 
 void game::update()
@@ -20,6 +28,24 @@ void game::update()
 	if(isKeyDown(ENGINE_KEY_ENTER))
 	{
 		flashingColorsScreen = !flashingColorsScreen;
+	}
+
+	if (isKeyDown(ENGINE_KEY_B))
+	{
+		showingBoth = !showingBoth;
+		if(showingBoth)
+		{
+			if(activeShape == quad)
+			{
+				quad->setColor(1, 0, 0, 1);
+				triangle->setColor(1, 1, 1, 1);
+			}
+			else
+			{
+				quad->setColor(1, 1, 1, 1);
+				triangle->setColor(1, 0, 0, 1);
+			}
+		}
 	}
 
 	if (flashingColorsScreen)
@@ -30,16 +56,15 @@ void game::update()
 		changeClearColor(r, g, b, 1);
 	}
 
-	static float rot = 0;
 	if (isKeyPressed(ENGINE_KEY_Q))
 	{
-		rot += .1f;
-		quad->setRotZ(rot);
+		float rot = activeShape->getRotZ() - .1f;
+		activeShape->setRotZ(rot);
 	}
 	if (isKeyPressed(ENGINE_KEY_E))
 	{
-		rot -= .1f;
-		quad->setRotZ(rot);
+		float rot = activeShape->getRotZ() + .1f;
+		activeShape->setRotZ(rot);
 	}
 
 	if(isKeyDown(ENGINE_KEY_SPACE))
@@ -47,58 +72,97 @@ void game::update()
 		float r = getRandomNumber(0, 1);
 		float g = getRandomNumber(0, 1);
 		float b = getRandomNumber(0, 1);
-		quad->setColor(r, g, b, 1);
+		activeShape->setColor(r, g, b, 1);
 	}
 	if(isKeyPressed(ENGINE_KEY_LEFT) || isKeyPressed(ENGINE_KEY_A))
 	{
-		float posX = quad->getPosX();
-		float posY = quad->getPosY();
-		float posZ = quad->getPosZ();
-		quad->setPos(posX - movementSpeed * engine::time::getDeltaTime(), posY, posZ);
+		float posX = activeShape->getPosX();
+		float posY = activeShape->getPosY();
+		float posZ = activeShape->getPosZ();
+		activeShape->setPos(posX + movementSpeed * engine::time::getDeltaTime(), posY, posZ);
 	}
 	if (isKeyPressed(ENGINE_KEY_RIGHT) || isKeyPressed(ENGINE_KEY_D))
 	{
-		float posX = quad->getPosX();
-		float posY = quad->getPosY();
-		float posZ = quad->getPosZ();
-		quad->setPos(posX + movementSpeed * engine::time::getDeltaTime(), posY, posZ);
+		float posX = activeShape->getPosX();
+		float posY = activeShape->getPosY();
+		float posZ = activeShape->getPosZ();
+		activeShape->setPos(posX - movementSpeed * engine::time::getDeltaTime(), posY, posZ);
 	}
 	if (isKeyPressed(ENGINE_KEY_UP) || isKeyPressed(ENGINE_KEY_W))
 	{
-		float posX = quad->getPosX();
-		float posY = quad->getPosY();
-		float posZ = quad->getPosZ();
-		quad->setPos(posX, posY + movementSpeed * engine::time::getDeltaTime(), posZ);
+		float posX = activeShape->getPosX();
+		float posY = activeShape->getPosY();
+		float posZ = activeShape->getPosZ();
+		activeShape->setPos(posX, posY + movementSpeed * engine::time::getDeltaTime(), posZ);
 	}
 	if (isKeyPressed(ENGINE_KEY_DOWN) || isKeyPressed(ENGINE_KEY_S))
 	{
-		float posX = quad->getPosX();
-		float posY = quad->getPosY();
-		float posZ = quad->getPosZ();
-		quad->setPos(posX, posY - movementSpeed * engine::time::getDeltaTime(), posZ);
+		float posX = activeShape->getPosX();
+		float posY = activeShape->getPosY();
+		float posZ = activeShape->getPosZ();
+		activeShape->setPos(posX, posY - movementSpeed * engine::time::getDeltaTime(), posZ);
 	}
+
+	if(isKeyPressed(ENGINE_KEY_X))
+	{
+		float posX = activeShape->getPosX();
+		float posY = activeShape->getPosY();
+		float posZ = activeShape->getPosZ();
+		activeShape->setPos(posX, posY, posZ - movementSpeed * engine::time::getDeltaTime());
+	}
+	if(isKeyPressed(ENGINE_KEY_C))
+	{
+		float posX = activeShape->getPosX();
+		float posY = activeShape->getPosY();
+		float posZ = activeShape->getPosZ();
+		activeShape->setPos(posX, posY, posZ + movementSpeed * engine::time::getDeltaTime());
+	}
+
 	if (isKeyDown(ENGINE_KEY_R))
 	{
-		quad->setScale(1, 1, 1);
+		activeShape->setScale(1, 1, 1);
 	}
 	if(isKeyDown(ENGINE_KEY_T))
 	{
-		quad->setScale(2, 2, 2);
+		activeShape->setScale(2, 2, 2);
 	}
 	if (isKeyDown(ENGINE_KEY_Y))
 	{
-		quad->setScale(4, 4, 4);
+		activeShape->setScale(4, 4, 4);
+	}
+
+	if(isKeyDown(ENGINE_KEY_1))
+	{
+		activeShape = triangle;
+		if(showingBoth)
+		{
+			triangle->setColor(1, 0, 0 ,1);
+			quad->setColor(1, 1, 1, 1);
+		}
+	}
+	else if(isKeyDown(ENGINE_KEY_2))
+	{
+		activeShape = quad;
+		if (showingBoth)
+		{
+			triangle->setColor(1, 1, 1, 1);
+			quad->setColor(1, 0, 0, 1);
+		}
 	}
 }
 
 void game::init()
 {
-	quad = new engine::shape(3);
+	quad = new engine::shape(4);
 	quad->assingRenderer(currentRenderer);
-	movementSpeed = 2.f;
+	triangle = new engine::shape(3);
+	triangle->assingRenderer(currentRenderer);
+	movementSpeed = 10.f;
+	activeShape = quad;
 }
 
 void game::deInit()
 {
-
+	delete quad;
+	delete triangle;
 }

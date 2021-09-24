@@ -25,6 +25,14 @@ namespace engine
 		float getPosY();
 		float getPosZ();
 
+		float getRotX();
+		float getRotY();
+		float getRotZ();
+
+		float getScaleX();
+		float getScaleY();
+		float getScaleZ();
+
 		virtual void draw() = 0;
 
 	protected:

@@ -13,6 +13,9 @@ public:
 
 private:
 	bool flashingColorsScreen = false;
+	bool showingBoth = false;
 	engine::shape* quad;
+	engine::shape* triangle;
+	engine::shape* activeShape;
 	float movementSpeed;
 };

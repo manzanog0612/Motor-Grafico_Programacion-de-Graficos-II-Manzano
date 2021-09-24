@@ -15,7 +15,7 @@ namespace engine
 
 		v3pos = glm::vec3(0.0f);
 		v3rot = glm::vec3(0.0f);
-		v3scale = glm::vec3(0.0f);
+		v3scale = glm::vec3(1.0f);
 
 		updateModelMatrix();
 
@@ -107,5 +107,29 @@ namespace engine
 	float entity::getPosZ()
 	{
 		return v3pos[2];
+	}
+	float entity::getRotX()
+	{
+		return v3rot[0];
+	}
+	float entity::getRotY()
+	{
+		return v3rot[1];
+	}
+	float entity::getRotZ()
+	{
+		return v3rot[2];
+	}
+	float entity::getScaleX()
+	{
+		return v3scale[0];
+	}
+	float entity::getScaleY()
+	{
+		return v3scale[1];
+	}
+	float entity::getScaleZ()
+	{
+		return v3scale[2];
 	}
 }
