@@ -22,6 +22,8 @@ namespace engine
 		viewMatrix = glm::lookAt(glm::vec3(0, 0, -15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 		projectionMatrix = glm::mat4(1.0f);
 		projectionMatrix = glm::perspective(glm::radians(90.0f), 4.0f / 3.0f, 0.1f, 100.0f);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
 	}
 	renderer::~renderer()
 	{
@@ -33,7 +35,7 @@ namespace engine
 	}
 	void renderer::startDraw()
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 
