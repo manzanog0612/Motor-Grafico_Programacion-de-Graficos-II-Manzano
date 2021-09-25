@@ -21,7 +21,8 @@ namespace engine
 		viewMatrix = glm::mat4(1.0f);
 		viewMatrix = glm::lookAt(glm::vec3(0, 0, -15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 		projectionMatrix = glm::mat4(1.0f);
-		projectionMatrix = glm::perspective(glm::radians(90.0f), 4.0f / 3.0f, 0.1f, 100.0f);
+		//projectionMatrix = glm::ortho(0.0f, (float)currentWindow->getWidth(), 0.0f, (float)currentWindow->getHeight(), 0.1f, 100.0f);
+		projectionMatrix = glm::perspective(glm::radians(90.0f), (float)currentWindow->getWidth() / (float)currentWindow->getHeight(), 0.1f, 100.0f);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
 	}
@@ -35,9 +36,9 @@ namespace engine
 	}
 	void renderer::startDraw()
 	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 		glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
+
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		solidShader.use();
 	}
@@ -46,8 +47,7 @@ namespace engine
 		glfwSwapBuffers(currentWindow->getGLFWwindow());
 	}
 	void renderer::drawRequest(glm::mat4 modelMatrix, glm::vec4 color, unsigned int VAO, unsigned int vertices)
-	{
-		
+	{		
 		unsigned int modelLoc = glGetUniformLocation(solidShader.ID, "model");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 		
