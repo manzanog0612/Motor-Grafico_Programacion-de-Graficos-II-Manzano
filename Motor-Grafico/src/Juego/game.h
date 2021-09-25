@@ -18,4 +18,5 @@ private:
 	engine::shape* triangle;
 	engine::shape* activeShape;
 	float movementSpeed;
+	float rotationSpeed;
 };

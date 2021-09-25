@@ -58,12 +58,12 @@ void game::update()
 
 	if (isKeyPressed(ENGINE_KEY_Q))
 	{
-		float rot = activeShape->getRotZ() - .1f;
+		float rot = activeShape->getRotZ() - rotationSpeed * engine::time::getDeltaTime();
 		activeShape->setRotZ(rot);
 	}
 	if (isKeyPressed(ENGINE_KEY_E))
 	{
-		float rot = activeShape->getRotZ() + .1f;
+		float rot = activeShape->getRotZ() + rotationSpeed * engine::time::getDeltaTime();
 		activeShape->setRotZ(rot);
 	}
 
@@ -128,7 +128,7 @@ void game::update()
 	}
 	if (isKeyDown(ENGINE_KEY_Y))
 	{
-		activeShape->setScale(4, 4, 4);
+		activeShape->setScale(8, 8, 8);
 	}
 
 	if(isKeyDown(ENGINE_KEY_1))
@@ -158,7 +158,8 @@ void game::init()
 	triangle = new engine::shape(3);
 	triangle->assingRenderer(currentRenderer);
 	movementSpeed = 10.f;
-	activeShape = quad;
+	rotationSpeed = 5.f;
+	activeShape = triangle;
 }
 
 void game::deInit()
