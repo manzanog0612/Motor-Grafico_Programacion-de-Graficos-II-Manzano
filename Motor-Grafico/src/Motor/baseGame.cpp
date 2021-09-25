@@ -21,6 +21,7 @@ namespace engine
         delete currentWindow;
         delete currentRenderer;
         delete currentInput;
+        delete currentTimer;
     }
     bool baseGame::init_Internal(int windowSizeX, int windowSizeY, const char* windowName)
     {
@@ -35,6 +36,12 @@ namespace engine
             return false;
         }
         currentWindow->init();
+
+        if (glewInit() != GLEW_OK) // tiene que ir despues de la creacion del contexto de glfw si o si
+        {
+            std::cout << "Glew error" << std::endl;
+            return false;
+        }
 
         currentRenderer = new renderer(currentWindow);
 
