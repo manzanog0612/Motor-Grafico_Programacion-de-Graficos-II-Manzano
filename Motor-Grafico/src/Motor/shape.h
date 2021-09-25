@@ -10,8 +10,5 @@ namespace engine
 		shape(unsigned int vertices);
 		~shape();
 		void draw() override;
-
-	protected:
-		unsigned int VAO, VBO, EBO, _vertices;
 	};
 }

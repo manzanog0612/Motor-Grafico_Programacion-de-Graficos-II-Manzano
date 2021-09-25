@@ -52,6 +52,8 @@ namespace engine
 
 		glm::vec4 color;
 
+		unsigned int VAO, VBO, EBO, _vertices;
+		
 		void updateModelMatrix();
 	private:
 	};

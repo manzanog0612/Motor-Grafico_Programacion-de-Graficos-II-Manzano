@@ -53,7 +53,7 @@ namespace engine
 		}
 		else
 		{
-			std::cout << "Vertices amount not implemented" << std::endl;
+			std::cout << vert << " Vertices amount not implemented." << std::endl;
 			return;
 		}
 	}
