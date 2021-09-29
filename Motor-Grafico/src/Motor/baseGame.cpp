@@ -6,6 +6,7 @@
 #include "renderer.h"
 #include "input.h"
 #include <random>
+#include <iostream>
 
 namespace engine
 {
@@ -63,7 +64,7 @@ namespace engine
             while (!windowExitEvent())
             {
                 glfwPollEvents();
-                time::updateDeltaTime(getCurrentTime());
+                currentTimer->updateDeltaTime(getCurrentTime());
                 update();
                 currentRenderer->startDraw();
                 draw();

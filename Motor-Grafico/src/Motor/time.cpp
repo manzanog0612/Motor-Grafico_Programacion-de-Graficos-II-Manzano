@@ -4,7 +4,7 @@ namespace engine
 {
 	time::time()
 	{
-
+		lastDeltaTime = 0;
 	}
 	time::~time()
 	{
@@ -20,5 +20,4 @@ namespace engine
 		lastDeltaTime = currentTime;
 	}
 	float time::currentDeltaTime = 0;
-	float time::lastDeltaTime = 0;
 }

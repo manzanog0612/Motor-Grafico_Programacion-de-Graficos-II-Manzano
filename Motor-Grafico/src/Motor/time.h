@@ -9,9 +9,9 @@ namespace engine
 		time();
 		~time();
 		static float getDeltaTime();
-		static void updateDeltaTime(float currentTime);
+		void updateDeltaTime(float currentTime);
 	private:
 		static float currentDeltaTime;
-		static float lastDeltaTime;
+		float lastDeltaTime;
 	};
 }
