@@ -46,6 +46,8 @@
     <None Include="..\src\Motor\Shaders\SolidFragment.shader" />
     <None Include="..\src\Motor\Shaders\SolidFragmentVariant.shader" />
     <None Include="..\src\Motor\Shaders\SolidVertex.shader" />
+    <None Include="..\src\Motor\Shaders\TextureFragment.shader" />
+    <None Include="..\src\Motor\Shaders\TextureVertex.shader" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

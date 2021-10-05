@@ -91,5 +91,11 @@
     <None Include="..\src\Motor\Shaders\SolidFragmentVariant.shader">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\src\Motor\Shaders\TextureFragment.shader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\src\Motor\Shaders\TextureVertex.shader">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
