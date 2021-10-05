@@ -88,5 +88,8 @@
     <None Include="..\src\Motor\Shaders\SolidVertex.shader">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\src\Motor\Shaders\SolidFragmentVariant.shader">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

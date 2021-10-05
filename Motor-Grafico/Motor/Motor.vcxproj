@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\Motor\Shaders\SolidFragment.shader" />
+    <None Include="..\src\Motor\Shaders\SolidFragmentVariant.shader" />
     <None Include="..\src\Motor\Shaders\SolidVertex.shader" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

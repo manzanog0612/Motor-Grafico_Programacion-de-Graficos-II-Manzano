@@ -102,7 +102,6 @@ void game::update()
 		float posZ = activeShape->getPosZ();
 		activeShape->setPos(posX, posY - movementSpeed * engine::time::getDeltaTime(), posZ);
 	}
-
 	if(isKeyPressed(ENGINE_KEY_X))
 	{
 		float posX = activeShape->getPosX();

@@ -64,6 +64,14 @@ namespace engine
 		unsigned int alphaLoc = glGetUniformLocation(solidShader.ID, "a");
 		glUniform1fv(alphaLoc, 1, &(color.a));
 
+		unsigned int timeLoc = glGetUniformLocation(solidShader.ID, "u_time");
+		float time = glfwGetTime();
+		glUniform1fv(timeLoc, 1, &(time));
+
+		unsigned int resLoc = glGetUniformLocation(solidShader.ID, "u_resolution");
+		glm::vec2 res = glm::vec2(currentWindow->getWidth(), currentWindow->getHeight());
+		glUniform2fv(resLoc, 1, glm::value_ptr(res));
+
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
 	}
