@@ -42,6 +42,10 @@ namespace engine
 		double getCurrentTime();
 		// ~ ENGINE ~  Returns a random float between the minimun and the maximun value. 
 		float getRandomNumber(float min, float max);
+		// ~ ENGINE ~  Lerps between two float values based on a t Value. 
+		float lerp(float v0, float v1, float t);
+		// ~ ENGINE ~  Lerps between two color values based on a t Value. 
+		glm::vec4 lerp(glm::vec4 color1, glm::vec4 color2, float t);
 
 	protected:
 		renderer* currentRenderer;

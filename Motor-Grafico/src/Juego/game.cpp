@@ -2,7 +2,14 @@
 
 game::game()
 {
-
+	sprite = nullptr;
+	colors[0] = glm::vec4(1, 0, 0, 1);
+	colors[1] = glm::vec4(0, 1, 0, 1);
+	colors[2] = glm::vec4(0, 0, 1, 1);
+	colors[3] = glm::vec4(1, 1, 1, 1);
+	nextColor = colors[0];
+	flickerSpeed = 2;
+	float t = 0;
 }
 
 game::~game()
@@ -12,165 +19,35 @@ game::~game()
 
 void game::draw()
 {
-
-	if(showingBoth)
-	{
-		quad->draw();
-		triangle->draw();
-	}
-	else
-	{
-		activeShape->draw();
-	}
 	sprite->draw();
 }
 
 void game::update()
 {
-
-	if(isKeyDown(ENGINE_KEY_ENTER))
+	t += engine::time::getDeltaTime() * flickerSpeed;
+	if(t < 1)
 	{
-		flashingColorsScreen = !flashingColorsScreen;
+		sprite->setColor(lerp(sprite->getColor(), nextColor, t));
 	}
-
-	if (isKeyDown(ENGINE_KEY_B))
+	else
 	{
-		showingBoth = !showingBoth;
-		if(showingBoth)
+		t = 0;
+		currentColorIndex++;
+		if(currentColorIndex == colorsArraySize)
 		{
-			if(activeShape == quad)
-			{
-				quad->setColor(1, 0, 0, 1);
-				triangle->setColor(1, 1, 1, 1);
-			}
-			else
-			{
-				quad->setColor(1, 1, 1, 1);
-				triangle->setColor(1, 0, 0, 1);
-			}
+			currentColorIndex = 0;
 		}
-	}
-
-	if (flashingColorsScreen)
-	{
-		float r = getRandomNumber(0, 1);
-		float g = getRandomNumber(0, 1);
-		float b = getRandomNumber(0, 1);
-		changeClearColor(r, g, b, 1);
-	}
-
-	if (isKeyPressed(ENGINE_KEY_Q))
-	{
-		float rot = activeShape->getRotZ() - rotationSpeed * engine::time::getDeltaTime();
-		activeShape->setRotZ(rot);
-	}
-	if (isKeyPressed(ENGINE_KEY_E))
-	{
-		float rot = activeShape->getRotZ() + rotationSpeed * engine::time::getDeltaTime();
-		activeShape->setRotZ(rot);
-	}
-
-	if(isKeyDown(ENGINE_KEY_SPACE))
-	{
-		float r = getRandomNumber(0, 1);
-		float g = getRandomNumber(0, 1);
-		float b = getRandomNumber(0, 1);
-		activeShape->setColor(r, g, b, 1);
-	}
-	if(isKeyPressed(ENGINE_KEY_LEFT) || isKeyPressed(ENGINE_KEY_A))
-	{
-		float posX = activeShape->getPosX();
-		float posY = activeShape->getPosY();
-		float posZ = activeShape->getPosZ();
-		activeShape->setPos(posX + movementSpeed * engine::time::getDeltaTime(), posY, posZ);
-	}
-	if (isKeyPressed(ENGINE_KEY_RIGHT) || isKeyPressed(ENGINE_KEY_D))
-	{
-		float posX = activeShape->getPosX();
-		float posY = activeShape->getPosY();
-		float posZ = activeShape->getPosZ();
-		activeShape->setPos(posX - movementSpeed * engine::time::getDeltaTime(), posY, posZ);
-	}
-	if (isKeyPressed(ENGINE_KEY_UP) || isKeyPressed(ENGINE_KEY_W))
-	{
-		float posX = activeShape->getPosX();
-		float posY = activeShape->getPosY();
-		float posZ = activeShape->getPosZ();
-		activeShape->setPos(posX, posY + movementSpeed * engine::time::getDeltaTime(), posZ);
-	}
-	if (isKeyPressed(ENGINE_KEY_DOWN) || isKeyPressed(ENGINE_KEY_S))
-	{
-		float posX = activeShape->getPosX();
-		float posY = activeShape->getPosY();
-		float posZ = activeShape->getPosZ();
-		activeShape->setPos(posX, posY - movementSpeed * engine::time::getDeltaTime(), posZ);
-	}
-	if(isKeyPressed(ENGINE_KEY_X))
-	{
-		float posX = activeShape->getPosX();
-		float posY = activeShape->getPosY();
-		float posZ = activeShape->getPosZ();
-		activeShape->setPos(posX, posY, posZ - movementSpeed * engine::time::getDeltaTime());
-	}
-	if(isKeyPressed(ENGINE_KEY_C))
-	{
-		float posX = activeShape->getPosX();
-		float posY = activeShape->getPosY();
-		float posZ = activeShape->getPosZ();
-		activeShape->setPos(posX, posY, posZ + movementSpeed * engine::time::getDeltaTime());
-	}
-
-	if (isKeyDown(ENGINE_KEY_R))
-	{
-		activeShape->setScale(1, 1, 1);
-	}
-	if(isKeyDown(ENGINE_KEY_T))
-	{
-		activeShape->setScale(2, 2, 2);
-	}
-	if (isKeyDown(ENGINE_KEY_Y))
-	{
-		activeShape->setScale(8, 8, 8);
-	}
-
-	if(isKeyDown(ENGINE_KEY_1))
-	{
-		activeShape = triangle;
-		if(showingBoth)
-		{
-			triangle->setColor(1, 0, 0 ,1);
-			quad->setColor(1, 1, 1, 1);
-		}
-	}
-	else if(isKeyDown(ENGINE_KEY_2))
-	{
-		activeShape = quad;
-		if (showingBoth)
-		{
-			triangle->setColor(1, 1, 1, 1);
-			quad->setColor(1, 0, 0, 1);
-		}
+		nextColor = colors[currentColorIndex];
 	}
 }
 
 void game::init()
 {
-	quad = new engine::shape(currentRenderer, 4);
-	triangle = new engine::shape(currentRenderer, 3);
-
 	sprite = new engine::sprite(currentRenderer, "../Resources/Textures/stefanito.png");
-	sprite->setScale(16, 16, 16);
-	sprite->setColor(1, 1, 1, .5f);
-
-
-	movementSpeed = 10.f;
-	rotationSpeed = 5.f;
-	activeShape = triangle;
+	sprite->setScale(25, 25, 25);
 }
 
 void game::deInit()
 {
-	delete quad;
-	delete triangle;
 	delete sprite;
 }

@@ -19,7 +19,7 @@ namespace engine
 
 		updateModelMatrix();
 
-		setColor(1, 1, 1, 1);
+		setColor(glm::vec4(1.0f));
 	}
 
 	entity::~entity()
@@ -87,9 +87,13 @@ namespace engine
 		scale = glm::scale(glm::mat4(1.0f), v3scale);
 		updateModelMatrix();
 	}
-	void entity::setColor(float r, float g, float b, float a)
+	void entity::setColor(glm::vec4 color)
 	{
-		color = glm::vec4(r, g, b, a);
+		this->color = color;
+	}
+	glm::vec4 entity::getColor()
+	{
+		return color;
 	}
 	float entity::getPosX()
 	{

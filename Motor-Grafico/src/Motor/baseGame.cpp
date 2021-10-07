@@ -102,4 +102,16 @@ namespace engine
         std::uniform_real_distribution<float> dist(min, max);
         return dist(mt);
     }
+    float baseGame::lerp(float v0, float v1, float t)
+    {
+        return v0 + t * (v1 - v0);
+    }
+    glm::vec4 baseGame::lerp(glm::vec4 color1, glm::vec4 color2, float t)
+    {
+        float r = lerp(color1.r, color2.r, t);
+        float g = lerp(color1.g, color2.g, t);
+        float b = lerp(color1.b, color2.b, t);
+        float a = lerp(color1.a, color2.a, t);
+        return glm::vec4(r, g, b, a);
+    }
 }
