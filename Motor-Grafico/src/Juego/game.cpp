@@ -12,7 +12,6 @@ game::~game()
 
 void game::draw()
 {
-	sprite->draw();
 
 	if(showingBoth)
 	{
@@ -23,6 +22,7 @@ void game::draw()
 	{
 		activeShape->draw();
 	}
+	sprite->draw();
 }
 
 void game::update()
@@ -158,9 +158,9 @@ void game::init()
 	quad = new engine::shape(currentRenderer, 4);
 	triangle = new engine::shape(currentRenderer, 3);
 
-	sprite = new engine::sprite(currentRenderer, "../src/Motor/image campus.jpg");
-	sprite->setColor(0, 0, 1, 1);
-	sprite->setScale(8, 8, 8);
+	sprite = new engine::sprite(currentRenderer, "../Resources/Textures/stefanito.png");
+	sprite->setScale(16, 16, 16);
+	sprite->setColor(1, 1, 1, .5f);
 
 
 	movementSpeed = 10.f;

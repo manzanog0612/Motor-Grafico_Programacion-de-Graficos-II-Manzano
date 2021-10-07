@@ -20,7 +20,7 @@ namespace engine
 			 0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		1.0f, 1.0f,
 			 0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		1.0f, 0.0f,
 			-0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		0.0f, 0.0f,
-			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		0.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		0.0f, 1.0f
 		};
 		unsigned int indices[]
 		{
@@ -46,17 +46,19 @@ namespace engine
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-		
+
+		stbi_set_flip_vertically_on_load(true);
 		unsigned char* data = stbi_load(filePathImage, &textureWidth, &textureHeight, &numberOfColorChannels, 0);
 		if (data)
 		{
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textureWidth, textureHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 			glGenerateMipmap(GL_TEXTURE_2D);
 		}
 		else
 		{
 			std::cout << "Failed to load texture" << std::endl;
 		}
+		glBindTexture(GL_TEXTURE_2D, 0);
 		stbi_image_free(data);
 	}
 
@@ -83,7 +85,7 @@ namespace engine
 		glUniform1fv(alphaLoc, 1, &(color.a));
 
 		unsigned int textureLoc = glGetUniformLocation(_renderer->textureShader.ID, "ourTexture"); //TODO Chequear si es correcto esta forma de pasar la textura
-		glUniform1i(textureLoc, textureID);
+		glUniform1f(textureLoc, textureID);
 
 	}
 }
