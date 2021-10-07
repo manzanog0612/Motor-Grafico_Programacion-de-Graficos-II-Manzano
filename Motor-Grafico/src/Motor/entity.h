@@ -13,7 +13,6 @@ namespace engine
 	public:
 		entity();
 		~entity();
-		void assingRenderer(renderer* _renderer);
 		void setPos(float x, float y, float z);
 		void setRotX(float x);
 		void setRotY(float y);
@@ -56,5 +55,6 @@ namespace engine
 		
 		void updateModelMatrix();
 	private:
+		virtual void setShader() = 0;
 	};
 }

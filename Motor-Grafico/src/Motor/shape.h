@@ -7,8 +7,10 @@ namespace engine
 	class ENGINE_API shape : public entity2D
 	{
 	public:
-		shape(unsigned int vertices);
+		shape(renderer* render, unsigned int vertices);
 		~shape();
 		void draw() override;
+	private:
+		void setShader() override;
 	};
 }

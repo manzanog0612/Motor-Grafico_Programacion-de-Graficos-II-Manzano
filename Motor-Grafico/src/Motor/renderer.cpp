@@ -39,38 +39,21 @@ namespace engine
 		glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		solidShader.use();
 	}
 	void renderer::endDraw()
 	{
 		glfwSwapBuffers(currentWindow->getGLFWwindow());
 	}
-	void renderer::drawRequest(glm::mat4 modelMatrix, glm::vec4 color, unsigned int VAO, unsigned int vertices)
-	{		
-		unsigned int modelLoc = glGetUniformLocation(solidShader.ID, "model");
+	void renderer::drawRequest(glm::mat4 modelMatrix, unsigned int VAO, unsigned int vertices, unsigned int usedShaderID)
+	{
+		unsigned int modelLoc = glGetUniformLocation(usedShaderID, "model");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-		
-		unsigned int viewLoc = glGetUniformLocation(solidShader.ID, "view");
+
+		unsigned int viewLoc = glGetUniformLocation(usedShaderID, "view");
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 
-		unsigned int projectionLoc = glGetUniformLocation(solidShader.ID, "projection");
+		unsigned int projectionLoc = glGetUniformLocation(usedShaderID, "projection");
 		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
-		
-		glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
-		unsigned int colorLoc = glGetUniformLocation(solidShader.ID, "color");
-		glUniform3fv(colorLoc, 1, glm::value_ptr(newColor));
-
-		unsigned int alphaLoc = glGetUniformLocation(solidShader.ID, "a");
-		glUniform1fv(alphaLoc, 1, &(color.a));
-
-		unsigned int timeLoc = glGetUniformLocation(solidShader.ID, "u_time");
-		float time = glfwGetTime();
-		glUniform1fv(timeLoc, 1, &(time));
-
-		unsigned int resLoc = glGetUniformLocation(solidShader.ID, "u_resolution");
-		glm::vec2 res = glm::vec2(currentWindow->getWidth(), currentWindow->getHeight());
-		glUniform2fv(resLoc, 1, glm::value_ptr(res));
 
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
@@ -88,12 +71,6 @@ namespace engine
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeOfIndices, indices, GL_STATIC_DRAW);
-
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-
-		glEnableVertexAttribArray(0);
-		glEnableVertexAttribArray(1);
 	}
 	void renderer::unbindRequest(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
 	{

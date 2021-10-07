@@ -17,6 +17,7 @@ private:
 	engine::shape* quad;
 	engine::shape* triangle;
 	engine::shape* activeShape;
+	engine::sprite* sprite;
 	float movementSpeed;
 	float rotationSpeed;
 };

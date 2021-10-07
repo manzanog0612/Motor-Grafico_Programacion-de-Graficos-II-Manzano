@@ -12,6 +12,8 @@ game::~game()
 
 void game::draw()
 {
+	sprite->draw();
+
 	if(showingBoth)
 	{
 		quad->draw();
@@ -25,6 +27,7 @@ void game::draw()
 
 void game::update()
 {
+
 	if(isKeyDown(ENGINE_KEY_ENTER))
 	{
 		flashingColorsScreen = !flashingColorsScreen;
@@ -152,10 +155,14 @@ void game::update()
 
 void game::init()
 {
-	quad = new engine::shape(4);
-	quad->assingRenderer(currentRenderer);
-	triangle = new engine::shape(3);
-	triangle->assingRenderer(currentRenderer);
+	quad = new engine::shape(currentRenderer, 4);
+	triangle = new engine::shape(currentRenderer, 3);
+
+	sprite = new engine::sprite(currentRenderer, "../src/Motor/image campus.jpg");
+	sprite->setColor(0, 0, 1, 1);
+	sprite->setScale(8, 8, 8);
+
+
 	movementSpeed = 10.f;
 	rotationSpeed = 5.f;
 	activeShape = triangle;
@@ -165,4 +172,5 @@ void game::deInit()
 {
 	delete quad;
 	delete triangle;
+	delete sprite;
 }

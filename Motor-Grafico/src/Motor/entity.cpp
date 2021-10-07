@@ -27,11 +27,6 @@ namespace engine
 
 	}
 
-	void entity::assingRenderer(renderer* _renderer)
-	{
-		this->_renderer = _renderer;
-	}
-
 	void entity::updateModelMatrix()
 	{
 		model = translate * rotateX * rotateY * rotateZ * scale;

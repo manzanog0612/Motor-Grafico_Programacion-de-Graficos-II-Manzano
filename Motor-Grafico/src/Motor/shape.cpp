@@ -1,15 +1,17 @@
 #include "shape.h"
 #include "renderer.h"
-#include <iostream>
+#include "glew.h"
+#include "glfw3.h"
 
 namespace engine
 {
-	shape::shape(unsigned int vert)
+	shape::shape(renderer* render, unsigned int vert)
 	{
 		VAO = 0;
 		VBO = 0;
 		EBO = 0;
 		_vertices = 0;
+		_renderer = render;
 
 		float* vertex;
 		unsigned int* indices;
@@ -57,6 +59,13 @@ namespace engine
 			std::cout << vert << " Vertices amount not implemented." << std::endl;
 			return;
 		}
+
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+
 	}
 
 	shape::~shape()
@@ -66,6 +75,18 @@ namespace engine
 
 	void shape::draw()
 	{
-		_renderer->drawRequest(model, color, VAO, _vertices);
+		_renderer->solidShader.use();
+		setShader();
+		_renderer->drawRequest(model, VAO, _vertices, _renderer->solidShader.ID);
+	}
+
+	void shape::setShader()
+	{
+		glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
+		unsigned int colorLoc = glGetUniformLocation(_renderer->solidShader.ID, "color");
+		glUniform3fv(colorLoc, 1, glm::value_ptr(newColor));
+
+		unsigned int alphaLoc = glGetUniformLocation(_renderer->solidShader.ID, "a");
+		glUniform1fv(alphaLoc, 1, &(color.a));
 	}
 }
