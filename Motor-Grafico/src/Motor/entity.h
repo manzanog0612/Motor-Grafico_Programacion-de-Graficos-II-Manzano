@@ -15,8 +15,11 @@ namespace engine
 		~entity();
 		void setPos(float x, float y, float z);
 		void setRotX(float x);
+		void invertX();
 		void setRotY(float y);
+		void invertY();
 		void setRotZ(float z);
+		void invertZ();
 		void setScale(float x, float y, float z);
 		void setColor(glm::vec4 color);
 		glm::vec4 getColor();
@@ -28,6 +31,7 @@ namespace engine
 		float getRotX();
 		float getRotY();
 		float getRotZ();
+
 
 		float getScaleX();
 		float getScaleY();

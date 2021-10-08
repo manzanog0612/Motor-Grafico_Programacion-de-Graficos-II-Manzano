@@ -131,4 +131,16 @@ namespace engine
 	{
 		return v3scale[2];
 	}
+	void entity::invertX()
+	{
+		setRotY(-3.14169265f);
+	}
+	void entity::invertY()
+	{
+		setRotZ(-3.14169265f);
+	}
+	void entity::invertZ()
+	{
+		setRotX(-3.14169265f);
+	}
 }
