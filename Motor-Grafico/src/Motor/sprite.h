@@ -14,14 +14,12 @@ namespace engine
 		int createAnimation(const char* firstFrameFilePathImage);
 		void playAnimation(int animationID);
 		void stopAnimation(int animationID);
+		void setAnimationSpeed(int animationID, float speed);
 		void addFrameToAnimation(int animationID, const char* filePathImage);
 
 	private:
 		void setShader(unsigned int texture);
 		unsigned int getCurrentTextureToDraw();
-		int textureWidth;
-		int textureHeight;
-		int numberOfColorChannels;
 		unsigned int baseTextureID;
 		std::vector<animation> animations;
 	};

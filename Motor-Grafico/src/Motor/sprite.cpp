@@ -38,43 +38,7 @@ namespace engine
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
 
-		glGenTextures(1, &baseTextureID);
-		glBindTexture(GL_TEXTURE_2D, baseTextureID);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		unsigned char* data = textureImporter::loadTexture(filePathImage, textureWidth, textureHeight, numberOfColorChannels);
-		if (data)
-		{
-			int channelType = GL_RGB;
-			switch (numberOfColorChannels)
-			{
-				case 1:
-					channelType = GL_R;
-					break;
-				case 2:
-					channelType = GL_RG;
-					break;
-				case 3:
-					channelType = GL_RGB;
-					break;
-				case 4:
-					channelType = GL_RGBA;
-					break;
-			default:
-				break;
-			}
-			glTexImage2D(GL_TEXTURE_2D, 0, channelType, textureWidth, textureHeight, 0, channelType, GL_UNSIGNED_BYTE, data);
-			glGenerateMipmap(GL_TEXTURE_2D);
-		}
-		else
-		{
-			std::cout << "Failed to load texture" << std::endl;
-		}
-		textureImporter::unloadTexture(data);
+		baseTextureID = textureImporter::loadTexture(filePathImage);
 	}
 
 	sprite::~sprite()
@@ -120,97 +84,26 @@ namespace engine
 	int sprite::createAnimation(const char* firstFrameFilePathImage)
 	{
 		animation anim;
-		unsigned int newTextureID;
-		glGenTextures(1, &newTextureID);
-		glBindTexture(GL_TEXTURE_2D, newTextureID);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		unsigned char* data = textureImporter::loadTexture(firstFrameFilePathImage, textureWidth, textureHeight, numberOfColorChannels);
-		if (data)
-		{
-			int channelType = GL_RGB;
-			switch (numberOfColorChannels)
-			{
-			case 1:
-				channelType = GL_R;
-				break;
-			case 2:
-				channelType = GL_RG;
-				break;
-			case 3:
-				channelType = GL_RGB;
-				break;
-			case 4:
-				channelType = GL_RGBA;
-				break;
-			default:
-				break;
-			}
-			glTexImage2D(GL_TEXTURE_2D, 0, channelType, textureWidth, textureHeight, 0, channelType, GL_UNSIGNED_BYTE, data);
-			glGenerateMipmap(GL_TEXTURE_2D);
-		}
-		else
-		{
-			std::cout << "Failed to load texture" << std::endl;
-		}
-		textureImporter::unloadTexture(data);
+		unsigned int newTextureID = textureImporter::loadTexture(firstFrameFilePathImage);
 		anim.addAnimationFrame(newTextureID);
 		animations.push_back(anim);
 		return animations.size() - 1;
 	}
-
 	void sprite::playAnimation(int animationID)
 	{
-		animations[animationID].play();
+		if(!animations[animationID].isPlaying()) animations[animationID].play();
 	}
 	void sprite::stopAnimation(int animationID)
 	{
 		animations[animationID].stop();
 	}
+	void sprite::setAnimationSpeed(int animationID, float speed)
+	{
+		animations[animationID].setAnimationSpeed(speed);
+	}
 	void sprite::addFrameToAnimation(int animationID, const char* filePathImage)
 	{
-		unsigned int newTextureID;
-		glGenTextures(1, &newTextureID);
-		glBindTexture(GL_TEXTURE_2D, newTextureID);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		unsigned char* data = textureImporter::loadTexture(filePathImage, textureWidth, textureHeight, numberOfColorChannels);
-		if (data)
-		{
-			int channelType = GL_RGB;
-			switch (numberOfColorChannels)
-			{
-			case 1:
-				channelType = GL_R;
-				break;
-			case 2:
-				channelType = GL_RG;
-				break;
-			case 3:
-				channelType = GL_RGB;
-				break;
-			case 4:
-				channelType = GL_RGBA;
-				break;
-			default:
-				break;
-			}
-			glTexImage2D(GL_TEXTURE_2D, 0, channelType, textureWidth, textureHeight, 0, channelType, GL_UNSIGNED_BYTE, data);
-			glGenerateMipmap(GL_TEXTURE_2D);
-		}
-		else
-		{
-			std::cout << "Failed to load texture" << std::endl;
-		}
-		textureImporter::unloadTexture(data);
+		unsigned int newTextureID = textureImporter::loadTexture(filePathImage);
 		animations[animationID].addAnimationFrame(newTextureID);
 	}
 }

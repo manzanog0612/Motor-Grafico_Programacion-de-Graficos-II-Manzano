@@ -87,13 +87,35 @@ void game::update()
 	{
 		changeClearColor(getRandomColor());
 	}
-	if(isKeyDown(ENGINE_KEY_P))
+
+	if(isKeyPressed(ENGINE_KEY_A))
 	{
+		megaman->setRot(0, 0, 0);
+		glm::vec3 pos = megaman->getPos();
+		megaman->setPos(pos.x + engine::time::getDeltaTime() * megamanSpeed, pos.y, pos.z);
 		megaman->playAnimation(megamanRunAnimationID);
 	}
-	if(isKeyDown(ENGINE_KEY_O))
+	else if(isKeyPressed(ENGINE_KEY_D))
+	{
+		megaman->invertX();
+		glm::vec3 pos = megaman->getPos();
+		megaman->setPos(pos.x - engine::time::getDeltaTime() * megamanSpeed, pos.y, pos.z);
+		megaman->playAnimation(megamanRunAnimationID);
+	}
+	else
 	{
 		megaman->stopAnimation(megamanRunAnimationID);
+	}
+
+	if(megaman->getPos().x > 22)
+	{
+		glm::vec3 currentPos = megaman->getPos();
+		megaman->setPos(-22, currentPos.y, currentPos.z);
+	}
+	else if (megaman->getPos().x < -22)
+	{
+		glm::vec3 currentPos = megaman->getPos();
+		megaman->setPos(22, currentPos.y, currentPos.z);
 	}
 }
 
@@ -117,20 +139,22 @@ void game::init()
 
 	std::ostringstream oss;
 	const char* megamanPartialFilePath = "../Resources/Textures/Megaman Sprites/megaman";
-	oss << megamanPartialFilePath << 1 << ".png";
+	oss << megamanPartialFilePath << 0 << ".png";
 	megaman = new engine::sprite(currentRenderer, oss.str().c_str());
-	megamanRunAnimationID = megaman->createAnimation(oss.str().c_str());
+
+	std::ostringstream oss2;
+	oss2 << megamanPartialFilePath << 1 << ".png";
+	megamanRunAnimationID = megaman->createAnimation(oss2.str().c_str());
 
 	for (int i = 2; i < 11; i++)
 	{
-		std::ostringstream oss2;
-		oss2 << megamanPartialFilePath << i << ".png";
-		megaman->addFrameToAnimation(megamanRunAnimationID, oss2.str().c_str());
+		std::ostringstream oss3;
+		oss3 << megamanPartialFilePath << i << ".png";
+		megaman->addFrameToAnimation(megamanRunAnimationID, oss3.str().c_str());
 	}
+	megaman->setAnimationSpeed(megamanRunAnimationID, megamanSpeed);
 	megaman->setScale(5, 5, 5);
 	megaman->setPos(0, 10, 0);
-
-	changeClearColor(getRandomColor());
 }
 
 void game::deInit()

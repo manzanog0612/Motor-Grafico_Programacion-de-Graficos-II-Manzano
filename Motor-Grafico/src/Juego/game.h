@@ -27,5 +27,6 @@ private:
 	engine::sprite* sprite3;
 	engine::sprite* sprite4;
 	engine::sprite* megaman;
+	float megamanSpeed = 12.5f;
 	int megamanRunAnimationID;
 };

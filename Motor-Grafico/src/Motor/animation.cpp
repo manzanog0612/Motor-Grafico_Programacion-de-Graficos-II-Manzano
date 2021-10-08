@@ -16,7 +16,7 @@ namespace engine
 	}
 	void animation::update()
 	{
-		currentTime += time::getDeltaTime();
+		currentTime += time::getDeltaTime() * animationSpeed;
 		if(currentTime > timeBetweenFrames)
 		{
 			currentTime = 0;
@@ -53,5 +53,9 @@ namespace engine
 	unsigned int animation::getCurrentAnimationFrame()
 	{
 		return animationFrames[currentFrame];
+	}
+	void animation::setAnimationSpeed(float speed)
+	{
+		animationSpeed = speed;
 	}
 }
