@@ -36,6 +36,8 @@ void game::draw()
 	sprite3->draw();
 	sprite4->draw();
 	megaman->draw();
+	triangle->draw();
+	quad->draw();
 }
 
 void game::update()
@@ -121,12 +123,23 @@ void game::update()
 
 void game::init()
 {
+
+	triangle = new engine::shape(currentRenderer, 3);
+	triangle->setScale(5, 5, 5);
+	triangle->setPos(15, -10, 0);
+	triangle->setColor(glm::vec4(1, 1, 0, 1));
+
+	quad = new engine::shape(currentRenderer, 4);
+	quad->setScale(5, 5, 5);
+	quad->setPos(-15, -10, 0);
+	quad->setColor(glm::vec4(0, 1, 1, 1));
+
 	sprite = new engine::sprite(currentRenderer, "../Resources/Textures/stefanito.png");
 	sprite->setScale(glm::vec3(10, 10, 10));
 	
 	sprite2 = new engine::sprite(currentRenderer, "../Resources/Textures/Image Campus.png");
 	sprite2->setScale(glm::vec3(30, 20, 10));
-	sprite2->setPos(glm::vec3(0, -7.5f, -.1f));
+	sprite2->setPos(glm::vec3(0, -9.f, -.1f));
 	sprite2->invertX();
 
 	sprite3 = new engine::sprite(currentRenderer, "../Resources/Textures/container.jpg");
@@ -164,4 +177,5 @@ void game::deInit()
 	delete sprite3;
 	delete sprite4;
 	delete megaman;
+	delete triangle;
 }

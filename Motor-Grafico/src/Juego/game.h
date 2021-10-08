@@ -27,6 +27,8 @@ private:
 	engine::sprite* sprite3;
 	engine::sprite* sprite4;
 	engine::sprite* megaman;
+	engine::shape* triangle;
+	engine::shape* quad;
 	float megamanSpeed = 12.5f;
 	int megamanRunAnimationID;
 };
