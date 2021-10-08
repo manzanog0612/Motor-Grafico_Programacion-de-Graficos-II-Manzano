@@ -5,7 +5,7 @@ game::game()
 {
 	sprite = nullptr;
 	sprite2 = nullptr;
-	colors[0] = glm::vec4(0, 0, 0, 1);
+	colors[0] = glm::vec4(0, 0, 0, 0);
 	colors[1] = glm::vec4(1, 0, 0, 1);
 	colors[2] = glm::vec4(0, 1, 0, 1);
 	colors[3] = glm::vec4(0, 0, 1, 1);
@@ -31,6 +31,8 @@ void game::draw()
 {
 	sprite->draw();
 	sprite2->draw();
+	sprite3->draw();
+	sprite4->draw();
 }
 
 void game::update()
@@ -78,20 +80,35 @@ void game::update()
 		float rot = sprite2->getRotY() - rotationSpeed * engine::time::getDeltaTime();
 		sprite2->setRotY(rot);
 	}
+	if(isKeyDown(ENGINE_KEY_ENTER))
+	{
+		changeClearColor(getRandomColor());
+	}
 }
 
 void game::init()
 {
 	sprite = new engine::sprite(currentRenderer, "../Resources/Textures/stefanito.png");
-	sprite->setScale(25, 25, 25);
+	sprite->setScale(10, 10, 10);
+	
 	sprite2 = new engine::sprite(currentRenderer, "../Resources/Textures/Image Campus.png");
 	sprite2->setScale(30, 20, 10);
 	sprite2->setPos(0, -7.5f, -.1f);
 	sprite2->invertX();
+
+	sprite3 = new engine::sprite(currentRenderer, "../Resources/Textures/container.jpg");
+	sprite3->setScale(10, 10, 10);
+	sprite3->setPos(-15, 0, 0);
+
+	sprite4 = new engine::sprite(currentRenderer, "../Resources/Textures/awesomeface.png");
+	sprite4->setScale(10, 10, 10);
+	sprite4->setPos(15, 0, 0);
 }
 
 void game::deInit()
 {
 	delete sprite;
 	delete sprite2;
+	delete sprite3;
+	delete sprite4;
 }

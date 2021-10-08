@@ -37,15 +37,21 @@ namespace engine
 
 		// General
 		// ~ ENGINE ~  Changes screen clear color to the parameter float values. 
-		void changeClearColor(float r, float g, float b, float a);
+		void changeClearColor(glm::vec4 color);
 		// ~ ENGINE ~  Returns a double corresponding to the current time since GLFW context started. 
 		double getCurrentTime();
-		// ~ ENGINE ~  Returns a random float between the minimun and the maximun value. 
-		float getRandomNumber(float min, float max);
+
+		// Lerp
 		// ~ ENGINE ~  Lerps between two float values based on a t Value. 
 		float lerp(float v0, float v1, float t);
 		// ~ ENGINE ~  Lerps between two color values based on a t Value. 
 		glm::vec4 lerp(glm::vec4 color1, glm::vec4 color2, float t);
+
+		// Random
+		// ~ ENGINE ~  Returns a random float between the minimun and the maximun value. 
+		float getRandomNumber(float min, float max);
+		// ~ ENGINE ~  Returns a random color value. 
+		glm::vec4 getRandomColor();
 
 	protected:
 		renderer* currentRenderer;

@@ -2,7 +2,7 @@
 #include "renderer.h"
 #include "glew.h"
 #include "glfw3.h"
-#include "stb_image.h"
+#include "textureImporter.h"
 
 namespace engine
 {
@@ -46,20 +46,35 @@ namespace engine
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-
-		stbi_set_flip_vertically_on_load(true);
-		unsigned char* data = stbi_load(filePathImage, &textureWidth, &textureHeight, &numberOfColorChannels, 0);
+		unsigned char* data = textureImporter::loadTexture(filePathImage, textureWidth, textureHeight, numberOfColorChannels);
 		if (data)
 		{
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textureWidth, textureHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+			int channelType = GL_RGB;
+			switch (numberOfColorChannels)
+			{
+				case 1:
+					channelType = GL_R;
+					break;
+				case 2:
+					channelType = GL_RG;
+					break;
+				case 3:
+					channelType = GL_RGB;
+					break;
+				case 4:
+					channelType = GL_RGBA;
+					break;
+			default:
+				break;
+			}
+			glTexImage2D(GL_TEXTURE_2D, 0, channelType, textureWidth, textureHeight, 0, channelType, GL_UNSIGNED_BYTE, data);
 			glGenerateMipmap(GL_TEXTURE_2D);
 		}
 		else
 		{
 			std::cout << "Failed to load texture" << std::endl;
 		}
-		glBindTexture(GL_TEXTURE_2D, 0);
-		stbi_image_free(data);
+		textureImporter::unloadTexture(data);
 	}
 
 	sprite::~sprite()
@@ -69,8 +84,8 @@ namespace engine
 
 	void sprite::draw()
 	{
-		glBindTexture(GL_TEXTURE_2D, textureID);
 		_renderer->textureShader.use();
+		glBindTexture(GL_TEXTURE_2D, textureID);
 		setShader();
 		_renderer->drawRequest(model, VAO, _vertices, _renderer->textureShader.ID);
 	}

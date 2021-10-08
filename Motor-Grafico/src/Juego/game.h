@@ -24,4 +24,6 @@ private:
 	float timeBetweenChanges = 0;
 	engine::sprite* sprite;
 	engine::sprite* sprite2;
+	engine::sprite* sprite3;
+	engine::sprite* sprite4;
 };

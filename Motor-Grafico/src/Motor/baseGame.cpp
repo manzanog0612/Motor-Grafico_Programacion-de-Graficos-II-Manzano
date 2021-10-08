@@ -74,9 +74,9 @@ namespace engine
             deinit_Internal();
         }
     }
-    void baseGame::changeClearColor(float r, float g, float b, float a)
+    void baseGame::changeClearColor(glm::vec4 color)
     {
-        currentRenderer->setClearColor(r, g, b, a);
+        currentRenderer->setClearColor(color);
     }
     bool baseGame::windowExitEvent()
     {
@@ -101,6 +101,14 @@ namespace engine
         std::mt19937 mt(rd());
         std::uniform_real_distribution<float> dist(min, max);
         return dist(mt);
+    }
+    glm::vec4 baseGame::getRandomColor()
+    {
+        float r = getRandomNumber(0, 1);
+        float g = getRandomNumber(0, 1);
+        float b = getRandomNumber(0, 1);
+        float a = getRandomNumber(0, 1);
+        return glm::vec4(r, g, b, a);
     }
     float baseGame::lerp(float v0, float v1, float t)
     {

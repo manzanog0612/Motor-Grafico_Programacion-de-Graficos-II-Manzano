@@ -24,10 +24,10 @@ namespace engine
 		//projectionMatrix = glm::ortho(0.0f, (float)currentWindow->getWidth(), 0.0f, (float)currentWindow->getHeight(), 0.1f, 100.0f);
 		projectionMatrix = glm::perspective(glm::radians(90.0f), (float)currentWindow->getWidth() / (float)currentWindow->getHeight(), 0.1f, 100.0f);
 		
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LESS);
-		//glEnable(GL_BLEND);
-		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glEnable(GL_DEPTH_TEST);
+		//glDepthFunc(GL_LESS);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 	renderer::~renderer()
 	{
@@ -81,8 +81,8 @@ namespace engine
 		glDeleteBuffers(1, &VBO);
 		glDeleteBuffers(1, &EBO);
 	}
-	void renderer::setClearColor(float r, float g, float b, float a)
+	void renderer::setClearColor(glm::vec4 color)
 	{
-		clearColor = glm::vec4(r, g, b, a);
+		clearColor = color;
 	}
 }

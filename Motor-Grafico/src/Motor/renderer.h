@@ -21,7 +21,7 @@ namespace engine
 		void unbindRequest(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
 		void startDraw();
 		void endDraw();
-		void setClearColor(float r, float g, float b, float a);
+		void setClearColor(glm::vec4 color);
 
 		//TODO Pensar mejor implementacion, probablemente materiales
 		Shader textureShader = Shader("../src/Motor/Shaders/TextureVertex.shader", "../src/Motor/Shaders/TextureFragment.shader");
