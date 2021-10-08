@@ -28,7 +28,7 @@
     <ClCompile Include="..\src\Motor\shape.cpp" />
     <ClCompile Include="..\src\Motor\sprite.cpp" />
     <ClCompile Include="..\src\Motor\stb_image.cpp" />
-    <ClCompile Include="..\src\Motor\TextureImporter.cpp" />
+    <ClCompile Include="..\src\Motor\textureImporter.cpp" />
     <ClCompile Include="..\src\Motor\time.cpp" />
     <ClCompile Include="..\src\Motor\window.cpp" />
   </ItemGroup>
@@ -44,7 +44,7 @@
     <ClInclude Include="..\src\Motor\shape.h" />
     <ClInclude Include="..\src\Motor\sprite.h" />
     <ClInclude Include="..\src\Motor\stb_image.h" />
-    <ClInclude Include="..\src\Motor\TextureImporter.h" />
+    <ClInclude Include="..\src\Motor\textureImporter.h" />
     <ClInclude Include="..\src\Motor\time.h" />
     <ClInclude Include="..\src\Motor\window.h" />
   </ItemGroup>

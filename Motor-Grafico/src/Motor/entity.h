@@ -13,29 +13,21 @@ namespace engine
 	public:
 		entity();
 		~entity();
+		void setPos(glm::vec3 pos);
 		void setPos(float x, float y, float z);
-		void setRotX(float x);
-		void invertX();
-		void setRotY(float y);
-		void invertY();
-		void setRotZ(float z);
-		void invertZ();
+		void setRot(glm::vec3 rot);
+		void setRot(float x, float y, float z);
+		void setScale(glm::vec3 scale);
 		void setScale(float x, float y, float z);
 		void setColor(glm::vec4 color);
+		void invertX();
+		void invertY();
+		void invertZ();
+		
 		glm::vec4 getColor();
-
-		float getPosX();
-		float getPosY();
-		float getPosZ();
-
-		float getRotX();
-		float getRotY();
-		float getRotZ();
-
-
-		float getScaleX();
-		float getScaleY();
-		float getScaleZ();
+		glm::vec3 getPos();
+		glm::vec3 getRot();
+		glm::vec3 getScale();
 
 		virtual void draw() = 0;
 
@@ -61,5 +53,8 @@ namespace engine
 		void updateModelMatrix();
 	private:
 		virtual void setShader() = 0;
+		void setRotX(float x);
+		void setRotY(float y);
+		void setRotZ(float z);
 	};
 }

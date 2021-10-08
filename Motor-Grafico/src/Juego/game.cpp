@@ -62,23 +62,23 @@ void game::update()
 	}
 	if (isKeyPressed(ENGINE_KEY_Q))
 	{
-		float rot = sprite->getRotZ() - rotationSpeed * engine::time::getDeltaTime();
-		sprite->setRotZ(rot);
+		float rot = sprite->getRot().z - rotationSpeed * engine::time::getDeltaTime();
+		sprite->setRot(glm::vec3(0, 0, rot));
 	}
 	if (isKeyPressed(ENGINE_KEY_E))
 	{
-		float rot = sprite->getRotZ() + rotationSpeed * engine::time::getDeltaTime();
-		sprite->setRotZ(rot);
+		float rot = sprite->getRot().z + rotationSpeed * engine::time::getDeltaTime();
+		sprite->setRot(glm::vec3(0, 0, rot));
 	}
 	if(isKeyPressed(ENGINE_KEY_R))
 	{
-		float rot = sprite2->getRotY() + rotationSpeed * engine::time::getDeltaTime();
-		sprite2->setRotY(rot);
+		float rot = sprite2->getRot().y + rotationSpeed * engine::time::getDeltaTime();
+		sprite2->setRot(glm::vec3(0, rot, 0));
 	}
 	if (isKeyPressed(ENGINE_KEY_T))
 	{
-		float rot = sprite2->getRotY() - rotationSpeed * engine::time::getDeltaTime();
-		sprite2->setRotY(rot);
+		float rot = sprite2->getRot().y - rotationSpeed * engine::time::getDeltaTime();
+		sprite2->setRot(glm::vec3(0, rot, 0));
 	}
 	if(isKeyDown(ENGINE_KEY_ENTER))
 	{
@@ -89,20 +89,22 @@ void game::update()
 void game::init()
 {
 	sprite = new engine::sprite(currentRenderer, "../Resources/Textures/stefanito.png");
-	sprite->setScale(10, 10, 10);
+	sprite->setScale(glm::vec3(10, 10, 10));
 	
 	sprite2 = new engine::sprite(currentRenderer, "../Resources/Textures/Image Campus.png");
-	sprite2->setScale(30, 20, 10);
-	sprite2->setPos(0, -7.5f, -.1f);
+	sprite2->setScale(glm::vec3(30, 20, 10));
+	sprite2->setPos(glm::vec3(0, -7.5f, -.1f));
 	sprite2->invertX();
 
 	sprite3 = new engine::sprite(currentRenderer, "../Resources/Textures/container.jpg");
-	sprite3->setScale(10, 10, 10);
-	sprite3->setPos(-15, 0, 0);
+	sprite3->setScale(glm::vec3(10, 10, 10));
+	sprite3->setPos(glm::vec3(-15, 0, 0));
 
 	sprite4 = new engine::sprite(currentRenderer, "../Resources/Textures/awesomeface.png");
-	sprite4->setScale(10, 10, 10);
-	sprite4->setPos(15, 0, 0);
+	sprite4->setScale(glm::vec3(10, 10, 10));
+	sprite4->setPos(glm::vec3(15, 0, 0));
+
+	changeClearColor(getRandomColor());
 }
 
 void game::deInit()
