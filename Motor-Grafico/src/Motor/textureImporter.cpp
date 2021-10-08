@@ -1,4 +1,4 @@
-#include "TextureImporter.h"
+#include "textureImporter.h"
 #include "stb_image.h"
 
 namespace engine

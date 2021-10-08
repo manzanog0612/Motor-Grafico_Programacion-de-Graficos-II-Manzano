@@ -11,6 +11,6 @@ namespace engine
 		~shape();
 		void draw() override;
 	private:
-		void setShader() override;
+		void setShader();
 	};
 }

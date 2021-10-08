@@ -26,4 +26,6 @@ private:
 	engine::sprite* sprite2;
 	engine::sprite* sprite3;
 	engine::sprite* sprite4;
+	engine::sprite* megaman;
+	int megamanRunAnimationID;
 };

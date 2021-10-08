@@ -1,5 +1,7 @@
 #include "game.h"
 #include <iostream>
+#include <sstream>
+#include <string>
 
 game::game()
 {
@@ -33,6 +35,7 @@ void game::draw()
 	sprite2->draw();
 	sprite3->draw();
 	sprite4->draw();
+	megaman->draw();
 }
 
 void game::update()
@@ -84,6 +87,14 @@ void game::update()
 	{
 		changeClearColor(getRandomColor());
 	}
+	if(isKeyDown(ENGINE_KEY_P))
+	{
+		megaman->playAnimation(megamanRunAnimationID);
+	}
+	if(isKeyDown(ENGINE_KEY_O))
+	{
+		megaman->stopAnimation(megamanRunAnimationID);
+	}
 }
 
 void game::init()
@@ -104,6 +115,21 @@ void game::init()
 	sprite4->setScale(glm::vec3(10, 10, 10));
 	sprite4->setPos(glm::vec3(15, 0, 0));
 
+	std::ostringstream oss;
+	const char* megamanPartialFilePath = "../Resources/Textures/Megaman Sprites/megaman";
+	oss << megamanPartialFilePath << 1 << ".png";
+	megaman = new engine::sprite(currentRenderer, oss.str().c_str());
+	megamanRunAnimationID = megaman->createAnimation(oss.str().c_str());
+
+	for (int i = 2; i < 11; i++)
+	{
+		std::ostringstream oss2;
+		oss2 << megamanPartialFilePath << i << ".png";
+		megaman->addFrameToAnimation(megamanRunAnimationID, oss2.str().c_str());
+	}
+	megaman->setScale(5, 5, 5);
+	megaman->setPos(0, 10, 0);
+
 	changeClearColor(getRandomColor());
 }
 
@@ -113,4 +139,5 @@ void game::deInit()
 	delete sprite2;
 	delete sprite3;
 	delete sprite4;
+	delete megaman;
 }

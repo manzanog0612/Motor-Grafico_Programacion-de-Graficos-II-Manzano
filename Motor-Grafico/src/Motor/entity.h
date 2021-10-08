@@ -52,7 +52,6 @@ namespace engine
 		
 		void updateModelMatrix();
 	private:
-		virtual void setShader() = 0;
 		void setRotX(float x);
 		void setRotY(float y);
 		void setRotZ(float z);
