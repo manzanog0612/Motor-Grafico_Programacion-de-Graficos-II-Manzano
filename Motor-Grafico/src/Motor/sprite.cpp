@@ -44,6 +44,7 @@ namespace engine
 	sprite::~sprite()
 	{
 		_renderer->unbindRequest(VAO, VBO, EBO);
+		glDeleteTextures(1, &baseTextureID);
 	}
 
 	void sprite::draw()

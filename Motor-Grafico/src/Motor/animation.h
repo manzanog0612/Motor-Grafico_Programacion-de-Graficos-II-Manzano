@@ -7,6 +7,8 @@ namespace engine
 	class ENGINE_API animation
 	{
 	public:
+		animation();
+		~animation();
 		void play();
 		void stop();
 		void update();

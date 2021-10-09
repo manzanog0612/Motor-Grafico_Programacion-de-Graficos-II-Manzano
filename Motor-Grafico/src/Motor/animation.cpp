@@ -1,9 +1,21 @@
 #include "animation.h"
 #include "time.h"
 #include <algorithm>
+#include "glfw3.h"
 
 namespace engine
 {
+	animation::animation()
+	{
+
+	}
+	animation::~animation()
+	{
+		for(int i = 0; i < animationFrames.size(); i++)
+		{
+			glDeleteTextures(1, &animationFrames[i]);
+		}
+	}
 	void animation::play()
 	{
 		currentFrame = 0;
