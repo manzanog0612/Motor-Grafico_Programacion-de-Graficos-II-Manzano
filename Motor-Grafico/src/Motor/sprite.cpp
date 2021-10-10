@@ -1,8 +1,9 @@
-#include "sprite.h"
+#include "textureImporter.h"
 #include "renderer.h"
+#include "animation.h"
+#include "sprite.h"
 #include "glew.h"
 #include "glfw3.h"
-#include "textureImporter.h"
 
 namespace engine
 {
@@ -45,6 +46,10 @@ namespace engine
 	{
 		_renderer->unbindRequest(VAO, VBO, EBO);
 		glDeleteTextures(1, &baseTextureID);
+		for (int i = 0; i < animations.size(); i++)
+		{
+			delete animations[i];
+		}
 	}
 
 	void sprite::draw()
@@ -67,16 +72,15 @@ namespace engine
 
 		unsigned int textureLoc = glGetUniformLocation(_renderer->textureShader.ID, "ourTexture");
 		glUniform1f(textureLoc, texture);
-
 	}
 	unsigned int sprite::getCurrentTextureToDraw()
 	{
 		for (int i = 0; i < animations.size(); i++)
 		{
-			if(animations[i].isPlaying())
+			if(animations[i]->isPlaying())
 			{
-				animations[i].update();
-				return animations[i].getCurrentAnimationFrame();
+				animations[i]->update();
+				return animations[i]->getCurrentAnimationFrameID();
 			}
 		}
 		return baseTextureID;
@@ -84,27 +88,27 @@ namespace engine
 
 	int sprite::createAnimation(const char* firstFrameFilePathImage)
 	{
-		animation anim;
+		animation* anim = new animation();
 		unsigned int newTextureID = textureImporter::loadTexture(firstFrameFilePathImage);
-		anim.addAnimationFrame(newTextureID);
+		anim->addAnimationFrame(newTextureID);
 		animations.push_back(anim);
 		return animations.size() - 1;
 	}
 	void sprite::playAnimation(int animationID)
 	{
-		if(!animations[animationID].isPlaying()) animations[animationID].play();
+		if(!animations[animationID]->isPlaying()) animations[animationID]->play();
 	}
 	void sprite::stopAnimation(int animationID)
 	{
-		animations[animationID].stop();
+		animations[animationID]->stop();
 	}
 	void sprite::setAnimationSpeed(int animationID, float speed)
 	{
-		animations[animationID].setAnimationSpeed(speed);
+		animations[animationID]->setAnimationSpeed(speed);
 	}
 	void sprite::addFrameToAnimation(int animationID, const char* filePathImage)
 	{
 		unsigned int newTextureID = textureImporter::loadTexture(filePathImage);
-		animations[animationID].addAnimationFrame(newTextureID);
+		animations[animationID]->addAnimationFrame(newTextureID);
 	}
 }

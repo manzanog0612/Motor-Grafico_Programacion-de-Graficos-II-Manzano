@@ -62,7 +62,7 @@ namespace engine
 	{
 		animationFrames.erase(std::remove(animationFrames.begin(), animationFrames.end(), textureID), animationFrames.end());
 	}
-	unsigned int animation::getCurrentAnimationFrame()
+	unsigned int animation::getCurrentAnimationFrameID()
 	{
 		return animationFrames[currentFrame];
 	}

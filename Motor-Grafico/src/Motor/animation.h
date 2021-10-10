@@ -17,7 +17,7 @@ namespace engine
 		void addAnimationFrame(unsigned int textureID);
 		void removeAnimationFrame(unsigned int textureID);
 		void setAnimationSpeed(float speed);
-		unsigned int getCurrentAnimationFrame();
+		unsigned int getCurrentAnimationFrameID();
 	private:
 		std::vector<unsigned int> animationFrames;
 		int animationID = 0;

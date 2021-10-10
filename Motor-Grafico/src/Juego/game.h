@@ -22,10 +22,10 @@ private:
 	float t = 0;
 	float rotationSpeed = 0;
 	float timeBetweenChanges = 0;
-	engine::sprite* sprite;
-	engine::sprite* sprite2;
-	engine::sprite* sprite3;
-	engine::sprite* sprite4;
+	engine::sprite* stefano;
+	engine::sprite* imageCampus;
+	engine::sprite* container;
+	engine::sprite* awesomeface;
 	engine::sprite* megaman;
 	engine::shape* triangle;
 	engine::shape* quad;

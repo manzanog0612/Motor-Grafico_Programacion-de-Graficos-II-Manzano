@@ -5,8 +5,13 @@
 
 game::game()
 {
-	sprite = nullptr;
-	sprite2 = nullptr;
+	stefano = nullptr;
+	imageCampus = nullptr;
+	container = nullptr;
+	awesomeface = nullptr;
+	megaman = nullptr;
+	triangle = nullptr;
+	quad = nullptr;
 	colors[0] = glm::vec4(0, 0, 0, 0);
 	colors[1] = glm::vec4(1, 0, 0, 1);
 	colors[2] = glm::vec4(0, 1, 0, 1);
@@ -31,10 +36,10 @@ game::~game()
 
 void game::draw()
 {
-	sprite->draw();
-	sprite2->draw();
-	sprite3->draw();
-	sprite4->draw();
+	stefano->draw();
+	imageCampus->draw();
+	container->draw();
+	awesomeface->draw();
 	megaman->draw();
 	triangle->draw();
 	quad->draw();
@@ -45,8 +50,8 @@ void game::update()
 	t += engine::time::getDeltaTime();
 	if(t < timeBetweenChanges)
 	{
-		sprite->setColor(lerp(sprite->getColor(), nextColor, t));
-		sprite2->setColor(lerp(sprite2->getColor(), nextColor2, t));
+		stefano->setColor(lerp(stefano->getColor(), nextColor, t));
+		imageCampus->setColor(lerp(imageCampus->getColor(), nextColor2, t));
 	}
 	else
 	{
@@ -67,27 +72,23 @@ void game::update()
 	}
 	if (isKeyPressed(ENGINE_KEY_Q))
 	{
-		float rot = sprite->getRot().z - rotationSpeed * engine::time::getDeltaTime();
-		sprite->setRot(glm::vec3(0, 0, rot));
+		float rot = stefano->getRot().z - rotationSpeed * engine::time::getDeltaTime();
+		stefano->setRot(glm::vec3(0, 0, rot));
 	}
 	if (isKeyPressed(ENGINE_KEY_E))
 	{
-		float rot = sprite->getRot().z + rotationSpeed * engine::time::getDeltaTime();
-		sprite->setRot(glm::vec3(0, 0, rot));
+		float rot = stefano->getRot().z + rotationSpeed * engine::time::getDeltaTime();
+		stefano->setRot(glm::vec3(0, 0, rot));
 	}
 	if(isKeyPressed(ENGINE_KEY_R))
 	{
-		float rot = sprite2->getRot().y + rotationSpeed * engine::time::getDeltaTime();
-		sprite2->setRot(glm::vec3(0, rot, 0));
+		float rot = imageCampus->getRot().y + rotationSpeed * engine::time::getDeltaTime();
+		imageCampus->setRot(glm::vec3(0, rot, 0));
 	}
 	if (isKeyPressed(ENGINE_KEY_T))
 	{
-		float rot = sprite2->getRot().y - rotationSpeed * engine::time::getDeltaTime();
-		sprite2->setRot(glm::vec3(0, rot, 0));
-	}
-	if(isKeyDown(ENGINE_KEY_ENTER))
-	{
-		changeClearColor(getRandomColor());
+		float rot = imageCampus->getRot().y - rotationSpeed * engine::time::getDeltaTime();
+		imageCampus->setRot(glm::vec3(0, rot, 0));
 	}
 
 	if(isKeyPressed(ENGINE_KEY_A))
@@ -134,21 +135,21 @@ void game::init()
 	quad->setPos(-15, -10, 0);
 	quad->setColor(glm::vec4(0, 1, 1, 1));
 
-	sprite = new engine::sprite(currentRenderer, "../Resources/Textures/stefanito.png");
-	sprite->setScale(glm::vec3(10, 10, 10));
+	stefano = new engine::sprite(currentRenderer, "../Resources/Textures/stefanito.png");
+	stefano->setScale(glm::vec3(10, 10, 10));
 	
-	sprite2 = new engine::sprite(currentRenderer, "../Resources/Textures/Image Campus.png");
-	sprite2->setScale(glm::vec3(30, 20, 10));
-	sprite2->setPos(glm::vec3(0, -9.f, -.1f));
-	sprite2->invertX();
+	imageCampus = new engine::sprite(currentRenderer, "../Resources/Textures/Image Campus.png");
+	imageCampus->setScale(glm::vec3(30, 20, 10));
+	imageCampus->setPos(glm::vec3(0, -9.f, -.1f));
+	imageCampus->invertX();
 
-	sprite3 = new engine::sprite(currentRenderer, "../Resources/Textures/container.jpg");
-	sprite3->setScale(glm::vec3(10, 10, 10));
-	sprite3->setPos(glm::vec3(-15, 0, 0));
+	container = new engine::sprite(currentRenderer, "../Resources/Textures/container.jpg");
+	container->setScale(glm::vec3(10, 10, 10));
+	container->setPos(glm::vec3(-15, 0, 0));
 
-	sprite4 = new engine::sprite(currentRenderer, "../Resources/Textures/awesomeface.png");
-	sprite4->setScale(glm::vec3(10, 10, 10));
-	sprite4->setPos(glm::vec3(15, 0, 0));
+	awesomeface = new engine::sprite(currentRenderer, "../Resources/Textures/awesomeface.png");
+	awesomeface->setScale(glm::vec3(10, 10, 10));
+	awesomeface->setPos(glm::vec3(15, 0, 0));
 
 	std::ostringstream oss;
 	const char* megamanPartialFilePath = "../Resources/Textures/Megaman Sprites/megaman";
@@ -168,14 +169,17 @@ void game::init()
 	megaman->setAnimationSpeed(megamanRunAnimationID, megamanSpeed);
 	megaman->setScale(5, 5, 5);
 	megaman->setPos(0, 10, 0);
+
+	changeClearColor(glm::vec4(.25, .25, .5, 1));
 }
 
 void game::deInit()
 {
-	delete sprite;
-	delete sprite2;
-	delete sprite3;
-	delete sprite4;
+	delete stefano;
+	delete imageCampus;
+	delete container;
+	delete awesomeface;
 	delete megaman;
 	delete triangle;
+	delete quad;
 }
