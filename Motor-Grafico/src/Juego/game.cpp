@@ -42,6 +42,8 @@ void game::draw()
 	awesomeface->draw();
 	megaman->draw();
 	triangle->draw();
+	triangle2->draw();
+	triangle3->draw();
 	quad->draw();
 }
 
@@ -95,14 +97,14 @@ void game::update()
 	{
 		megaman->setRot(0, 0, 0);
 		glm::vec3 pos = megaman->getPos();
-		megaman->setPos(pos.x + engine::time::getDeltaTime() * megamanSpeed, pos.y, pos.z);
+		megaman->setPos(pos.x + engine::time::getDeltaTime() * megamanRunSpeed, pos.y, pos.z);
 		megaman->playAnimation(megamanRunAnimationID);
 	}
 	else if(isKeyPressed(ENGINE_KEY_D))
 	{
 		megaman->invertX();
 		glm::vec3 pos = megaman->getPos();
-		megaman->setPos(pos.x - engine::time::getDeltaTime() * megamanSpeed, pos.y, pos.z);
+		megaman->setPos(pos.x - engine::time::getDeltaTime() * megamanRunSpeed, pos.y, pos.z);
 		megaman->playAnimation(megamanRunAnimationID);
 	}
 	else
@@ -126,9 +128,19 @@ void game::init()
 {
 
 	triangle = new engine::shape(currentRenderer, 3);
-	triangle->setScale(5, 5, 5);
-	triangle->setPos(15, -10, 0);
+	triangle->setScale(3, 3, 3);
+	triangle->setPos(14, -10, 0);
 	triangle->setColor(glm::vec4(1, 1, 0, 1));
+
+	triangle2 = new engine::shape(currentRenderer, 3);
+	triangle2->setScale(3, 3, 3);
+	triangle2->setPos(17, -10, 0);
+	triangle2->setColor(glm::vec4(1, 1, 0, 1));
+
+	triangle3 = new engine::shape(currentRenderer, 3);
+	triangle3->setScale(3, 3, 3);
+	triangle3->setPos(15.5, -7, 0);
+	triangle3->setColor(glm::vec4(1, 1, 0, 1));
 
 	quad = new engine::shape(currentRenderer, 4);
 	quad->setScale(5, 5, 5);
@@ -166,7 +178,7 @@ void game::init()
 		oss3 << megamanPartialFilePath << i << ".png";
 		megaman->addFrameToAnimation(megamanRunAnimationID, oss3.str().c_str());
 	}
-	megaman->setAnimationSpeed(megamanRunAnimationID, megamanSpeed);
+	megaman->setAnimationSpeed(megamanRunAnimationID, megamanRunSpeed);
 	megaman->setScale(5, 5, 5);
 	megaman->setPos(0, 10, 0);
 

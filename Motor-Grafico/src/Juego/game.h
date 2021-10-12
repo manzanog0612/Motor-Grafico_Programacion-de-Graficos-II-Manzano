@@ -28,7 +28,9 @@ private:
 	engine::sprite* awesomeface;
 	engine::sprite* megaman;
 	engine::shape* triangle;
+	engine::shape* triangle2;
+	engine::shape* triangle3;
 	engine::shape* quad;
-	float megamanSpeed = 12.5f;
+	float megamanRunSpeed = 12.5f;
 	int megamanRunAnimationID;
 };
