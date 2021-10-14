@@ -8,7 +8,7 @@ namespace engine
 {
 	animation::animation()
 	{
-
+		tex = nullptr;
 	}
 	animation::~animation()
 	{
@@ -59,6 +59,13 @@ namespace engine
 	void animation::setAnimation(const char* AtlasFilepath, int rows, int columns)
 	{
 		tex = new texture(textureImporter::loadTexture(AtlasFilepath));
+		for (int i = 0; i < columns; i++)
+		{
+			for (int i = 0; i < rows; i++)
+			{
+				textureCoordinates.push_back(glm::vec4());
+			}
+		}
 	}
 	unsigned int animation::getTextureID()
 	{
@@ -66,6 +73,6 @@ namespace engine
 	}
 	glm::vec4 animation::getCurrentFramesCoordinates()
 	{
-		return *textureCoordinates[currentFrame];
+		return textureCoordinates[currentFrame];
 	}
 }

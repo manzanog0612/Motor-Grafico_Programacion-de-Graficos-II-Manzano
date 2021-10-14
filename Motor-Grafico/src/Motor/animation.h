@@ -26,7 +26,7 @@ namespace engine
 		unsigned int getTextureID();
 		glm::vec4 getCurrentFramesCoordinates();
 	private:
-		std::vector<glm::vec4*> textureCoordinates;
+		std::vector<glm::vec4> textureCoordinates;
 		texture* tex;
 		int currentFrame = 0;
 		float currentTime = 0;
