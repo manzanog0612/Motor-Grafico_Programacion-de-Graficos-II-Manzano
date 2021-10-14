@@ -112,6 +112,27 @@ void game::update()
 		megaman->stopAnimation(megamanRunAnimationID);
 	}
 
+	if(isKeyPressed(ENGINE_KEY_LEFT))
+	{
+		glm::vec3 movement = { 1 * engine::time::getDeltaTime() * cameraSpeed, 0, 0 };
+		cam->moveCamera(movement);
+	}
+	if (isKeyPressed(ENGINE_KEY_RIGHT))
+	{
+		glm::vec3 movement = { -1 * engine::time::getDeltaTime() * cameraSpeed, 0, 0 };
+		cam->moveCamera(movement);
+	}
+	if (isKeyPressed(ENGINE_KEY_UP))
+	{
+		glm::vec3 movement = { 0, 1 * engine::time::getDeltaTime() * cameraSpeed , 0 };
+		cam->moveCamera(movement);
+	}
+	if (isKeyPressed(ENGINE_KEY_DOWN))
+	{
+		glm::vec3 movement = { 0, -1 * engine::time::getDeltaTime() * cameraSpeed , 0 };
+		cam->moveCamera(movement);
+	}
+
 	if(megaman->getPos().x > 22)
 	{
 		glm::vec3 currentPos = megaman->getPos();
@@ -126,6 +147,11 @@ void game::update()
 
 void game::init()
 {
+
+	glm::vec3 camStartingPos = { 0, 0, -15 };
+	glm::vec3 camLookPos = { 0, 0, 0 };
+	glm::vec3 camUpVector = { 0, 1, 0 };
+	cam = new engine::camera(currentRenderer, camStartingPos, camLookPos, camUpVector);
 
 	triangle = new engine::shape(currentRenderer, 3);
 	triangle->setScale(3, 3, 3);
@@ -187,6 +213,7 @@ void game::init()
 
 void game::deInit()
 {
+	delete cam;
 	delete stefano;
 	delete imageCampus;
 	delete container;

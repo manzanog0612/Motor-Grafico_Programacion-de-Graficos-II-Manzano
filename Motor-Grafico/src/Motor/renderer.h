@@ -22,6 +22,9 @@ namespace engine
 		void startDraw();
 		void endDraw();
 		void setClearColor(glm::vec4 color);
+		void setViewMatrix(glm::mat4 viewMatrix);
+		void setProjectionMatrix(glm::mat4 projectionMatrix);
+		window* getCurrentWindow();
 
 		//TODO Pensar mejor implementacion, probablemente materiales
 		Shader textureShader = Shader("../src/Motor/Shaders/TextureVertex.shader", "../src/Motor/Shaders/TextureFragment.shader");

@@ -41,7 +41,6 @@ namespace engine
 
 		baseTextureID = textureImporter::loadTexture(filePathImage);
 	}
-
 	sprite::~sprite()
 	{
 		_renderer->unbindRequest(VAO, VBO, EBO);
@@ -51,7 +50,6 @@ namespace engine
 			delete animations[i];
 		}
 	}
-
 	void sprite::draw()
 	{
 		_renderer->textureShader.use();
@@ -60,7 +58,6 @@ namespace engine
 		setShader(texture);
 		_renderer->drawRequest(model, VAO, _vertices, _renderer->textureShader.ID);
 	}
-
 	void sprite::setShader(unsigned int texture)
 	{
 		glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
@@ -85,7 +82,6 @@ namespace engine
 		}
 		return baseTextureID;
 	}
-
 	int sprite::createAnimation(const char* firstFrameFilePathImage)
 	{
 		animation* anim = new animation();
@@ -96,7 +92,14 @@ namespace engine
 	}
 	void sprite::playAnimation(int animationID)
 	{
-		if(!animations[animationID]->isPlaying()) animations[animationID]->play();
+		if (!animations[animationID]->isPlaying())
+		{
+			for (int i = 0; i < animations.size(); i++)
+			{
+				animations[i]->stop();
+			}
+			animations[animationID]->play();
+		}
 	}
 	void sprite::stopAnimation(int animationID)
 	{

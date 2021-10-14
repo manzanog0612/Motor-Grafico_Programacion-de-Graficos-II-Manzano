@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\Motor\animation.cpp" />
     <ClCompile Include="..\src\Motor\baseGame.cpp" />
+    <ClCompile Include="..\src\Motor\camera.cpp" />
     <ClCompile Include="..\src\Motor\entity.cpp" />
     <ClCompile Include="..\src\Motor\entity2D.cpp" />
     <ClCompile Include="..\src\Motor\input.cpp" />
@@ -36,6 +37,7 @@
   <ItemGroup>
     <ClInclude Include="..\src\Motor\animation.h" />
     <ClInclude Include="..\src\Motor\baseGame.h" />
+    <ClInclude Include="..\src\Motor\camera.h" />
     <ClInclude Include="..\src\Motor\entity.h" />
     <ClInclude Include="..\src\Motor\entity2D.h" />
     <ClInclude Include="..\src\Motor\exports.h" />

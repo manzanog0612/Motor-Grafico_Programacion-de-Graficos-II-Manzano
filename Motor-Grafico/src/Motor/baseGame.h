@@ -5,6 +5,7 @@
 
 #include "shape.h"
 #include "sprite.h"
+#include "camera.h"
 
 namespace engine
 {

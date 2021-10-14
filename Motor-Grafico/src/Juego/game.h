@@ -31,6 +31,8 @@ private:
 	engine::shape* triangle2;
 	engine::shape* triangle3;
 	engine::shape* quad;
+	engine::camera* cam;
+	float cameraSpeed = 10.f;
 	float megamanRunSpeed = 12.5f;
 	int megamanRunAnimationID;
 };
