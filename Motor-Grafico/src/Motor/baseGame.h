@@ -2,10 +2,14 @@
 #include "exports.h"
 #include "keycodes.h"
 #include "time.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 #include "shape.h"
 #include "sprite.h"
 #include "camera.h"
+
 
 namespace engine
 {
@@ -35,6 +39,8 @@ namespace engine
 		bool isKeyPressed(int keycode);
 		// ~ ENGINE ~  Returns true the first frame the engine key is down. 
 		bool isKeyDown(int keycode);
+		// ~ ENGINE ~ Returns the current mouse position relative to the screen size.
+		glm::vec2 getMousePosition();
 
 		// General
 		// ~ ENGINE ~  Changes screen clear color to the parameter float values. 

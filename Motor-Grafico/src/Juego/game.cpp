@@ -114,22 +114,22 @@ void game::update()
 
 	if(isKeyPressed(ENGINE_KEY_LEFT))
 	{
-		glm::vec3 movement = { 1 * engine::time::getDeltaTime() * cameraSpeed, 0, 0 };
+		glm::vec3 movement = { engine::time::getDeltaTime() * cameraSpeed, 0, 0 };
 		cam->moveCamera(movement);
 	}
 	if (isKeyPressed(ENGINE_KEY_RIGHT))
 	{
-		glm::vec3 movement = { -1 * engine::time::getDeltaTime() * cameraSpeed, 0, 0 };
+		glm::vec3 movement = { engine::time::getDeltaTime() * -cameraSpeed, 0, 0 };
 		cam->moveCamera(movement);
 	}
 	if (isKeyPressed(ENGINE_KEY_UP))
 	{
-		glm::vec3 movement = { 0, 1 * engine::time::getDeltaTime() * cameraSpeed , 0 };
+		glm::vec3 movement = { 0, engine::time::getDeltaTime() * cameraSpeed , 0 };
 		cam->moveCamera(movement);
 	}
 	if (isKeyPressed(ENGINE_KEY_DOWN))
 	{
-		glm::vec3 movement = { 0, -1 * engine::time::getDeltaTime() * cameraSpeed , 0 };
+		glm::vec3 movement = { 0, engine::time::getDeltaTime() * -cameraSpeed , 0 };
 		cam->moveCamera(movement);
 	}
 
@@ -156,41 +156,41 @@ void game::init()
 	triangle = new engine::shape(currentRenderer, 3);
 	triangle->setScale(3, 3, 3);
 	triangle->setPos(14, -10, 0);
-	triangle->setColor(glm::vec4(1, 1, 0, 1));
+	triangle->setColor(1, 1, 0, 1);
 
 	triangle2 = new engine::shape(currentRenderer, 3);
 	triangle2->setScale(3, 3, 3);
 	triangle2->setPos(17, -10, 0);
-	triangle2->setColor(glm::vec4(1, 1, 0, 1));
+	triangle2->setColor(1, 1, 0, 1);
 
 	triangle3 = new engine::shape(currentRenderer, 3);
 	triangle3->setScale(3, 3, 3);
 	triangle3->setPos(15.5, -7, 0);
-	triangle3->setColor(glm::vec4(1, 1, 0, 1));
+	triangle3->setColor(1, 1, 0, 1);
 
 	quad = new engine::shape(currentRenderer, 4);
 	quad->setScale(5, 5, 5);
 	quad->setPos(-15, -10, 0);
-	quad->setColor(glm::vec4(0, 1, 1, 1));
+	quad->setColor(0, 1, 1, 1);
 
-	stefano = new engine::sprite(currentRenderer, "../Resources/Textures/stefanito.png");
+	stefano = new engine::sprite(currentRenderer, "../res/assets/textures/stefanito.png");
 	stefano->setScale(glm::vec3(10, 10, 10));
 	
-	imageCampus = new engine::sprite(currentRenderer, "../Resources/Textures/Image Campus.png");
+	imageCampus = new engine::sprite(currentRenderer, "../res/assets/textures/Image Campus.png");
 	imageCampus->setScale(glm::vec3(30, 20, 10));
 	imageCampus->setPos(glm::vec3(0, -9.f, -.1f));
 	imageCampus->invertX();
 
-	container = new engine::sprite(currentRenderer, "../Resources/Textures/container.jpg");
+	container = new engine::sprite(currentRenderer, "../res/assets/textures/container.jpg");
 	container->setScale(glm::vec3(10, 10, 10));
 	container->setPos(glm::vec3(-15, 0, 0));
 
-	awesomeface = new engine::sprite(currentRenderer, "../Resources/Textures/awesomeface.png");
+	awesomeface = new engine::sprite(currentRenderer, "../res/assets/textures/awesomeface.png");
 	awesomeface->setScale(glm::vec3(10, 10, 10));
 	awesomeface->setPos(glm::vec3(15, 0, 0));
 
 	std::ostringstream oss;
-	const char* megamanPartialFilePath = "../Resources/Textures/Megaman Sprites/megaman";
+	const char* megamanPartialFilePath = "../res/assets/textures/Megaman Sprites/megaman";
 	oss << megamanPartialFilePath << 0 << ".png";
 	megaman = new engine::sprite(currentRenderer, oss.str().c_str());
 

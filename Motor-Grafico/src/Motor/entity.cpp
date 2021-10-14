@@ -100,6 +100,10 @@ namespace engine
 	{
 		this->color = color;
 	}
+	void entity::setColor(float r, float g, float b, float a)
+	{
+		color = glm::vec4(r, g, b, a);
+	}
 	glm::vec4 entity::getColor()
 	{
 		return color;

@@ -6,12 +6,15 @@
 namespace engine
 {
 	void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+	void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
 	std::list<int> currentKeysDown;
+	glm::vec2 mousePosition;
 
 	input::input(window* window)
 	{
 		glfwSetKeyCallback(window->getGLFWwindow(), keyCallback);
+		glfwSetCursorPosCallback(window->getGLFWwindow(), mouse_callback);
 	}
 
 	input::~input()
@@ -35,8 +38,10 @@ namespace engine
 		}
 		return false;
 	}
-
-
+	glm::vec2 input::getMousePosition()
+	{
+		return mousePosition;
+	}
 	void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
 		if(action == GLFW_PRESS)
@@ -48,5 +53,8 @@ namespace engine
 			currentKeysDown.remove(key);
 		}
 	}
-
+	void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+	{
+		mousePosition = glm::vec2(xpos, ypos);
+	}
 }

@@ -91,6 +91,10 @@ namespace engine
     {
         return currentInput->isKeyDown(keycode, currentWindow);
     }
+    glm::vec2 baseGame::getMousePosition()
+    {
+        return currentInput->getMousePosition();
+    }
     double baseGame::getCurrentTime()
     {
         return glfwGetTime();
