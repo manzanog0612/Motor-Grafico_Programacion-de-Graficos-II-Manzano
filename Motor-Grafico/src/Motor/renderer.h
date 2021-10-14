@@ -16,9 +16,10 @@ namespace engine
 		renderer(window* window);
 		~renderer();
 		void setCurrentWindow(window* window);
-		void bindRequest(unsigned int &VAO, unsigned int& VBO, unsigned int& EBO, float* vertices, unsigned int sizeOfVertices, unsigned int* indices, unsigned int sizeOfIndices);
+		void createBufferRequest(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
+		void bindRequest(unsigned int VAO, unsigned int VBO, unsigned int EBO, float* vertices, unsigned int sizeOfVertices, unsigned int* indices, unsigned int sizeOfIndices);
 		void drawRequest(glm::mat4 model, unsigned int VAO, unsigned int vertices, unsigned int usedShaderID);
-		void unbindRequest(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
+		void deleteBufferRequest(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
 		void startDraw();
 		void endDraw();
 		void setClearColor(glm::vec4 color);

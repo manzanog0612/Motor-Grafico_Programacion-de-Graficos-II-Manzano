@@ -1,9 +1,17 @@
 #pragma once
 namespace engine
 {
+
+	struct texture
+	{
+		unsigned int ID;
+		float width;
+		float height;
+	};
+
 	static class textureImporter
 	{
 	public:
-		static unsigned int loadTexture(const char* filepath);
+		static texture loadTexture(const char* filepath);
 	};
 }

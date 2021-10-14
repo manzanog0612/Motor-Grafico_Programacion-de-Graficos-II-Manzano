@@ -28,6 +28,7 @@ namespace engine
 			{
 				0, 1, 2
 			};
+			_renderer->createBufferRequest(VAO, VBO, EBO);
 			_renderer->bindRequest(VAO, VBO, EBO, vertex, sizeof(vertex) * 18, indices, sizeof(indices) * 3);
 			_vertices = 3;
 
@@ -48,6 +49,7 @@ namespace engine
 				0, 1, 3,
 				1, 2, 3
 			};
+			_renderer->createBufferRequest(VAO, VBO, EBO);
 			_renderer->bindRequest(VAO, VBO, EBO, vertex, sizeof(vertex) * 24, indices, sizeof(indices) * 6);
 			_vertices = 6;
 
@@ -70,7 +72,7 @@ namespace engine
 
 	shape::~shape()
 	{
-		_renderer->unbindRequest(VAO, VBO, EBO);
+		_renderer->deleteBufferRequest(VAO, VBO, EBO);
 	}
 
 	void shape::draw()

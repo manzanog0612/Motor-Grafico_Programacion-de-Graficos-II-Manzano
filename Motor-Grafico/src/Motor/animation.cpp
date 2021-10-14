@@ -1,7 +1,8 @@
 #include "animation.h"
 #include "time.h"
-#include <algorithm>
 #include "glfw3.h"
+#include "textureImporter.h"
+#include <algorithm>
 
 namespace engine
 {
@@ -11,10 +12,7 @@ namespace engine
 	}
 	animation::~animation()
 	{
-		for(int i = 0; i < animationFrames.size(); i++)
-		{
-			glDeleteTextures(1, &animationFrames[i]);
-		}
+
 	}
 	void animation::play()
 	{
@@ -33,7 +31,7 @@ namespace engine
 		{
 			currentTime = 0;
 			currentFrame++;
-			if(currentFrame == animationFrames.size())
+			if(currentFrame == textureCoordinates.size())
 			{
 				if(repeat)
 				{
@@ -54,20 +52,20 @@ namespace engine
 	{
 		repeat = active;
 	}
-	void animation::addAnimationFrame(unsigned int textureID)
-	{
-		animationFrames.push_back(textureID);
-	}
-	void animation::removeAnimationFrame(unsigned int textureID)
-	{
-		animationFrames.erase(std::remove(animationFrames.begin(), animationFrames.end(), textureID), animationFrames.end());
-	}
-	unsigned int animation::getCurrentAnimationFrameID()
-	{
-		return animationFrames[currentFrame];
-	}
 	void animation::setAnimationSpeed(float speed)
 	{
 		animationSpeed = speed;
+	}
+	void animation::setAnimation(const char* AtlasFilepath, int rows, int columns)
+	{
+		tex = new texture(textureImporter::loadTexture(AtlasFilepath));
+	}
+	unsigned int animation::getTextureID()
+	{
+		return tex->ID;
+	}
+	glm::vec4 animation::getCurrentFramesCoordinates()
+	{
+		return *textureCoordinates[currentFrame];
 	}
 }

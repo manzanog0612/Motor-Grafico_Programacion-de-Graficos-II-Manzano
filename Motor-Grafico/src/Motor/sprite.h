@@ -6,6 +6,7 @@
 namespace engine
 {
 
+	struct texture;
 	class animation;
 
 	class ENGINE_API sprite : public entity2D
@@ -14,16 +15,16 @@ namespace engine
 		sprite(renderer* render, const char* filePathImage);
 		~sprite();
 		void draw() override;
-		int createAnimation(const char* firstFrameFilePathImage);
+		int createAnimation(const char* AtlasFilepath, int columns, int rows);
 		void playAnimation(int animationID);
 		void stopAnimation(int animationID);
 		void setAnimationSpeed(int animationID, float speed);
-		void addFrameToAnimation(int animationID, const char* filePathImage);
-
 	private:
 		void setShader(unsigned int texture);
-		unsigned int getCurrentTextureToDraw();
-		unsigned int baseTextureID;
+		unsigned int getCurrentTextureIDToDraw();
+		texture* baseTexture;
 		std::vector<animation*> animations;
+		float* vertex;
+		unsigned int* indices;
 	};
 }

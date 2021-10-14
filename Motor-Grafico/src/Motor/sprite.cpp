@@ -13,22 +13,22 @@ namespace engine
 		VBO = 0;
 		EBO = 0;
 		_vertices = 0;
-		baseTextureID = 0;
 		_renderer = render;
 
-		float vertex[]
+		vertex = new float[32]
 		{
 			 0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		1.0f, 1.0f,
 			 0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		1.0f, 0.0f,
 			-0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		0.0f, 0.0f,
 			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		0.0f, 1.0f
 		};
-		unsigned int indices[]
+		indices = new unsigned int[6]
 		{
 			0, 1, 3,
 			1, 2, 3
 		};
-		_renderer->bindRequest(VAO, VBO, EBO, vertex, sizeof(vertex), indices, sizeof(indices));
+		_renderer->createBufferRequest(VAO, VBO, EBO);
+		_renderer->bindRequest(VAO, VBO, EBO, vertex, sizeof(vertex) * 32, indices, sizeof(indices) * 6);
 		_vertices = 6;
 
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
@@ -39,12 +39,15 @@ namespace engine
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
 
-		baseTextureID = textureImporter::loadTexture(filePathImage);
+		baseTexture = new texture(textureImporter::loadTexture(filePathImage));
 	}
 	sprite::~sprite()
 	{
-		_renderer->unbindRequest(VAO, VBO, EBO);
-		glDeleteTextures(1, &baseTextureID);
+		delete[] vertex;
+		delete[] indices;
+		delete baseTexture;
+		_renderer->deleteBufferRequest(VAO, VBO, EBO);
+		glDeleteTextures(1, &baseTexture->ID);
 		for (int i = 0; i < animations.size(); i++)
 		{
 			delete animations[i];
@@ -53,7 +56,7 @@ namespace engine
 	void sprite::draw()
 	{
 		_renderer->textureShader.use();
-		unsigned int texture = getCurrentTextureToDraw();
+		unsigned int texture = getCurrentTextureIDToDraw();
 		glBindTexture(GL_TEXTURE_2D, texture);
 		setShader(texture);
 		_renderer->drawRequest(model, VAO, _vertices, _renderer->textureShader.ID);
@@ -70,23 +73,22 @@ namespace engine
 		unsigned int textureLoc = glGetUniformLocation(_renderer->textureShader.ID, "ourTexture");
 		glUniform1f(textureLoc, texture);
 	}
-	unsigned int sprite::getCurrentTextureToDraw()
+	unsigned int sprite::getCurrentTextureIDToDraw()
 	{
 		for (int i = 0; i < animations.size(); i++)
 		{
 			if(animations[i]->isPlaying())
 			{
 				animations[i]->update();
-				return animations[i]->getCurrentAnimationFrameID();
+				return animations[i]->getTextureID();
 			}
 		}
-		return baseTextureID;
+		return baseTexture->ID;
 	}
-	int sprite::createAnimation(const char* firstFrameFilePathImage)
+	int sprite::createAnimation(const char* AtlasFilepath, int columns, int rows)
 	{
 		animation* anim = new animation();
-		unsigned int newTextureID = textureImporter::loadTexture(firstFrameFilePathImage);
-		anim->addAnimationFrame(newTextureID);
+		anim->setAnimation(AtlasFilepath, columns, rows);
 		animations.push_back(anim);
 		return animations.size() - 1;
 	}
@@ -108,10 +110,5 @@ namespace engine
 	void sprite::setAnimationSpeed(int animationID, float speed)
 	{
 		animations[animationID]->setAnimationSpeed(speed);
-	}
-	void sprite::addFrameToAnimation(int animationID, const char* filePathImage)
-	{
-		unsigned int newTextureID = textureImporter::loadTexture(filePathImage);
-		animations[animationID]->addAnimationFrame(newTextureID);
 	}
 }

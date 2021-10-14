@@ -1,9 +1,16 @@
 #pragma once
 #include "exports.h"
 #include <vector>
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
+
 
 namespace engine
 {
+
+	struct texture;
+
 	class ENGINE_API animation
 	{
 	public:
@@ -14,13 +21,13 @@ namespace engine
 		void update();
 		bool isPlaying();
 		void repeatAnimation(bool active);
-		void addAnimationFrame(unsigned int textureID);
-		void removeAnimationFrame(unsigned int textureID);
 		void setAnimationSpeed(float speed);
-		unsigned int getCurrentAnimationFrameID();
+		void setAnimation(const char* AtlasFilepath, int rows, int columns);
+		unsigned int getTextureID();
+		glm::vec4 getCurrentFramesCoordinates();
 	private:
-		std::vector<unsigned int> animationFrames;
-		int animationID = 0;
+		std::vector<glm::vec4*> textureCoordinates;
+		texture* tex;
 		int currentFrame = 0;
 		float currentTime = 0;
 		float timeBetweenFrames = 1.f;

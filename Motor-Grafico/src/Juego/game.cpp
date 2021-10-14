@@ -1,7 +1,5 @@
 #include "game.h"
 #include <iostream>
-#include <sstream>
-#include <string>
 
 game::game()
 {
@@ -189,21 +187,9 @@ void game::init()
 	awesomeface->setScale(glm::vec3(10, 10, 10));
 	awesomeface->setPos(glm::vec3(15, 0, 0));
 
-	std::ostringstream oss;
-	const char* megamanPartialFilePath = "../res/assets/textures/Megaman Sprites/megaman";
-	oss << megamanPartialFilePath << 0 << ".png";
-	megaman = new engine::sprite(currentRenderer, oss.str().c_str());
+	megaman = new engine::sprite(currentRenderer, "../res/assets/textures/Megaman Sprites/Megaman.png");
 
-	std::ostringstream oss2;
-	oss2 << megamanPartialFilePath << 1 << ".png";
-	megamanRunAnimationID = megaman->createAnimation(oss2.str().c_str());
-
-	for (int i = 2; i < 11; i++)
-	{
-		std::ostringstream oss3;
-		oss3 << megamanPartialFilePath << i << ".png";
-		megaman->addFrameToAnimation(megamanRunAnimationID, oss3.str().c_str());
-	}
+	megamanRunAnimationID = megaman->createAnimation("../res/assets/textures/Megaman Sprites/MegamanRun.png", 5, 2);
 	megaman->setAnimationSpeed(megamanRunAnimationID, megamanRunSpeed);
 	megaman->setScale(5, 5, 5);
 	megaman->setPos(0, 10, 0);
