@@ -8,11 +8,15 @@ namespace engine
 {
 	animation::animation()
 	{
-		tex = nullptr;
+		texture = nullptr;
 	}
 	animation::~animation()
 	{
-
+		for (int i = 0; i < textureCoordinates.size(); i++)
+		{
+			delete[] textureCoordinates[i];
+		}
+		delete texture;
 	}
 	void animation::play()
 	{
@@ -56,22 +60,33 @@ namespace engine
 	{
 		animationSpeed = speed;
 	}
-	void animation::setAnimation(const char* AtlasFilepath, int rows, int columns)
+	void animation::setAnimation(const char* AtlasFilepath, int columns, int rows)
 	{
-		tex = new texture(textureImporter::loadTexture(AtlasFilepath));
-		for (int i = 0; i < columns; i++)
+		texture = new textureData(textureImporter::loadTexture(AtlasFilepath));
+		float spriteWidth = texture->width / columns;
+		float spriteHeight = texture->height / rows;
+		for (int i = 0; i < rows; i++)
 		{
-			for (int i = 0; i < rows; i++)
+			for (int j = 0; j < columns; j++)
 			{
-				textureCoordinates.push_back(glm::vec4());
+				glm::vec2* newCoord = new glm::vec2[4];
+				newCoord[0].x = (spriteWidth + (spriteWidth * j)) / texture->width; 		// bottom right
+				newCoord[0].y = (spriteHeight + (spriteHeight * i)) / texture->height;		// bottom right
+				newCoord[1].x = (spriteWidth + (spriteWidth * j)) / texture->width;			// top right
+				newCoord[1].y = (spriteHeight * i) / texture->height;						// top right
+				newCoord[2].x = (spriteWidth * j) / texture->width;							// top left 
+				newCoord[2].y = (spriteHeight * i) / texture->height;						// top left 
+				newCoord[3].x = (spriteWidth * j) / texture->width;							// bottom left
+				newCoord[3].y = (spriteHeight + (spriteHeight * i)) / texture->height;		// bottom left
+				textureCoordinates.push_back(newCoord);
 			}
 		}
 	}
 	unsigned int animation::getTextureID()
 	{
-		return tex->ID;
+		return texture->ID;
 	}
-	glm::vec4 animation::getCurrentFramesCoordinates()
+	glm::vec2* animation::getCurrentFramesCoordinates()
 	{
 		return textureCoordinates[currentFrame];
 	}

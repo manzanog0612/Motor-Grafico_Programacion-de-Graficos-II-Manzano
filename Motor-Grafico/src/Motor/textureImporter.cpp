@@ -6,7 +6,7 @@
 
 namespace engine
 {
-	texture textureImporter::loadTexture(const char* filepath)
+	textureData textureImporter::loadTexture(const char* filepath)
 	{
 		unsigned int newTextureID;
 		int textureWidth;
@@ -50,7 +50,7 @@ namespace engine
 		{
 			std::cout << "Failed to load texture" << std::endl;
 		}
-		texture tex = { newTextureID, textureWidth, textureHeight };
+		textureData tex = { newTextureID, textureWidth, textureHeight };
 		return tex;
 	}
 }

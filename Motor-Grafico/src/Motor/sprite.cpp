@@ -15,20 +15,20 @@ namespace engine
 		_vertices = 0;
 		_renderer = render;
 
-		vertex = new float[32]
+		float vertex[32] =
 		{
 			 0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		1.0f, 1.0f,
 			 0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		1.0f, 0.0f,
 			-0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		0.0f, 0.0f,
 			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		0.0f, 1.0f
 		};
-		indices = new unsigned int[6]
+		unsigned int indices[6] =
 		{
 			0, 1, 3,
 			1, 2, 3
 		};
-		_renderer->createBufferRequest(VAO, VBO, EBO);
-		_renderer->bindRequest(VAO, VBO, EBO, vertex, sizeof(vertex) * 32, indices, sizeof(indices) * 6);
+		_renderer->createBuffer(VAO, VBO, EBO);
+		_renderer->bindRequest(VAO, VBO, EBO, vertex, sizeof(vertex) , indices, sizeof(indices));
 		_vertices = 6;
 
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
@@ -39,14 +39,12 @@ namespace engine
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
 
-		baseTexture = new texture(textureImporter::loadTexture(filePathImage));
+		baseTexture = new textureData(textureImporter::loadTexture(filePathImage));
 	}
 	sprite::~sprite()
 	{
-		delete[] vertex;
-		delete[] indices;
 		delete baseTexture;
-		_renderer->deleteBufferRequest(VAO, VBO, EBO);
+		_renderer->deleteBuffer(VAO, VBO, EBO);
 		glDeleteTextures(1, &baseTexture->ID);
 		for (int i = 0; i < animations.size(); i++)
 		{
@@ -57,7 +55,6 @@ namespace engine
 	{
 		_renderer->textureShader.use();
 		unsigned int texture = getCurrentTextureIDToDraw();
-		glBindTexture(GL_TEXTURE_2D, texture);
 		setShader(texture);
 		_renderer->drawRequest(model, VAO, _vertices, _renderer->textureShader.ID);
 	}
@@ -80,10 +77,47 @@ namespace engine
 			if(animations[i]->isPlaying())
 			{
 				animations[i]->update();
+				BindAnimationTexture(i);
 				return animations[i]->getTextureID();
 			}
 		}
+		BindBaseTexture();
 		return baseTexture->ID;
+	}
+	void sprite::BindAnimationTexture(int i)
+	{
+		glm::vec2* uv = animations[i]->getCurrentFramesCoordinates();
+		float vertices[32] =
+		{
+			0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		uv[0].x, uv[0].y,
+			0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		uv[1].x, uv[1].y,
+			-0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		uv[2].x, uv[2].y,
+			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		uv[3].x, uv[3].y,
+		};
+		unsigned int indices[6] =
+		{
+			0, 1, 3,
+			1, 2, 3
+		};
+		_renderer->bindRequest(VAO, VBO, EBO, vertices, sizeof(vertices), indices, sizeof(indices));
+		glBindTexture(GL_TEXTURE_2D, animations[i]->getTextureID());
+	}
+	void sprite::BindBaseTexture()
+	{
+		float vertices[32] =
+		{
+			0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		1.0f, 1.0f,
+			0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		1.0f, 0.0f,
+			-0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		0.0f, 0.0f,
+			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		0.0f, 1.0f
+		};
+		unsigned int indices[6] =
+		{
+			0, 1, 3,
+			1, 2, 3
+		};
+		_renderer->bindRequest(VAO, VBO, EBO, vertices, sizeof(vertices), indices, sizeof(indices));
+		glBindTexture(GL_TEXTURE_2D, baseTexture->ID);
 	}
 	int sprite::createAnimation(const char* AtlasFilepath, int columns, int rows)
 	{

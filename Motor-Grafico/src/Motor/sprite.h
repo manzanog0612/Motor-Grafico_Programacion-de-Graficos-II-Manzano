@@ -6,7 +6,7 @@
 namespace engine
 {
 
-	struct texture;
+	struct textureData;
 	class animation;
 
 	class ENGINE_API sprite : public entity2D
@@ -22,9 +22,9 @@ namespace engine
 	private:
 		void setShader(unsigned int texture);
 		unsigned int getCurrentTextureIDToDraw();
-		texture* baseTexture;
+		void BindAnimationTexture(int i);
+		void BindBaseTexture();
+		textureData* baseTexture;
 		std::vector<animation*> animations;
-		float* vertex;
-		unsigned int* indices;
 	};
 }

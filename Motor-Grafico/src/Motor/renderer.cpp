@@ -59,7 +59,7 @@ namespace engine
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
 	}
-	void renderer::createBufferRequest(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
+	void renderer::createBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
 	{
 		glGenVertexArrays(1, &VAO);
 		glGenBuffers(1, &VBO);
@@ -75,7 +75,7 @@ namespace engine
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeOfIndices, indices, GL_STATIC_DRAW);
 	}
-	void renderer::deleteBufferRequest(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
+	void renderer::deleteBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
 	{
 		glDeleteVertexArrays(1, &VAO);
 		glDeleteBuffers(1, &VBO);

@@ -2,7 +2,7 @@
 namespace engine
 {
 
-	struct texture
+	struct textureData
 	{
 		unsigned int ID;
 		float width;
@@ -12,6 +12,6 @@ namespace engine
 	static class textureImporter
 	{
 	public:
-		static texture loadTexture(const char* filepath);
+		static textureData loadTexture(const char* filepath);
 	};
 }

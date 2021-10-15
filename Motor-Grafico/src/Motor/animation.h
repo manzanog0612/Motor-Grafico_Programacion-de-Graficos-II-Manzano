@@ -9,7 +9,7 @@
 namespace engine
 {
 
-	struct texture;
+	struct textureData;
 
 	class ENGINE_API animation
 	{
@@ -22,12 +22,12 @@ namespace engine
 		bool isPlaying();
 		void repeatAnimation(bool active);
 		void setAnimationSpeed(float speed);
-		void setAnimation(const char* AtlasFilepath, int rows, int columns);
+		void setAnimation(const char* AtlasFilepath, int columns, int rows);
 		unsigned int getTextureID();
-		glm::vec4 getCurrentFramesCoordinates();
+		glm::vec2* getCurrentFramesCoordinates();
 	private:
-		std::vector<glm::vec4> textureCoordinates;
-		texture* tex;
+		std::vector<glm::vec2*> textureCoordinates;
+		textureData* texture;
 		int currentFrame = 0;
 		float currentTime = 0;
 		float timeBetweenFrames = 1.f;
