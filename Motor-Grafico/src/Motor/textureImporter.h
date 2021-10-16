@@ -12,6 +12,6 @@ namespace engine
 	static class textureImporter
 	{
 	public:
-		static textureData loadTexture(const char* filepath);
+		static textureData loadTexture(const char* filepath, bool invertVertical);
 	};
 }

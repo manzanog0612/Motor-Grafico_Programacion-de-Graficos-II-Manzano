@@ -4,6 +4,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "atlasConfig.h"
 
 
 namespace engine
@@ -22,7 +23,8 @@ namespace engine
 		bool isPlaying();
 		void repeatAnimation(bool active);
 		void setAnimationSpeed(float speed);
-		void setAnimation(const char* AtlasFilepath, int columns, int rows);
+		void setAnimation(textureData* animationAtlasData, int columns, int rows);
+		void setAnimation(textureData* animationAtlasData, atlasCutConfig config);
 		unsigned int getTextureID();
 		glm::vec2* getCurrentFramesCoordinates();
 	private:

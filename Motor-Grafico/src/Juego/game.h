@@ -26,13 +26,22 @@ private:
 	engine::sprite* imageCampus;
 	engine::sprite* container;
 	engine::sprite* awesomeface;
-	engine::sprite* megaman;
+	engine::sprite* archer;
 	engine::shape* triangle;
 	engine::shape* triangle2;
 	engine::shape* triangle3;
 	engine::shape* quad;
 	engine::camera* cam;
 	float cameraSpeed = 10.f;
-	float megamanRunSpeed = 12.5f;
-	int megamanRunAnimationID;
+
+	engine::textureData* archerAtlas;
+	int archerRunLeftAnimationID;
+	int archerRunRightAnimationID;
+	int archerRunUpAnimationID;
+	int archerRunUpLeftAnimationID;
+	int archerRunUpRightAnimationID;
+	int archerRunDownAnimationID;
+	int archerRunDownLeftAnimationID;
+	int archerRunDownRightAnimationID;
+	float runSpeed = 12.5f;
 };

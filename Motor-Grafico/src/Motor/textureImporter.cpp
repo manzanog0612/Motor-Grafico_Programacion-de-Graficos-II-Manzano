@@ -6,7 +6,7 @@
 
 namespace engine
 {
-	textureData textureImporter::loadTexture(const char* filepath)
+	textureData textureImporter::loadTexture(const char* filepath, bool invertVertical)
 	{
 		unsigned int newTextureID;
 		int textureWidth;
@@ -20,7 +20,7 @@ namespace engine
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-		stbi_set_flip_vertically_on_load(true);
+		stbi_set_flip_vertically_on_load(invertVertical);
 		unsigned char* data = stbi_load(filepath, &textureWidth, &textureHeight, &nrChannels, 0);
 		if (data)
 		{

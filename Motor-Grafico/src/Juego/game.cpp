@@ -7,7 +7,7 @@ game::game()
 	imageCampus = nullptr;
 	container = nullptr;
 	awesomeface = nullptr;
-	megaman = nullptr;
+	archer = nullptr;
 	triangle = nullptr;
 	quad = nullptr;
 	colors[0] = glm::vec4(0, 0, 0, 0);
@@ -38,11 +38,11 @@ void game::draw()
 	imageCampus->draw();
 	container->draw();
 	awesomeface->draw();
-	megaman->draw();
 	triangle->draw();
 	triangle2->draw();
 	triangle3->draw();
 	quad->draw();
+	archer->draw();
 }
 
 void game::update()
@@ -91,24 +91,60 @@ void game::update()
 		imageCampus->setRot(glm::vec3(0, rot, 0));
 	}
 
-	if(isKeyPressed(ENGINE_KEY_A))
+	if(isKeyPressed(ENGINE_KEY_W) && isKeyPressed(ENGINE_KEY_A))
 	{
-		megaman->setRot(0, 0, 0);
-		glm::vec3 pos = megaman->getPos();
-		megaman->setPos(pos.x + engine::time::getDeltaTime() * megamanRunSpeed, pos.y, pos.z);
-		megaman->playAnimation(megamanRunAnimationID);
+		glm::vec3 pos = archer->getPos();
+		archer->setPos(pos.x + engine::time::getDeltaTime() * runSpeed / 2, pos.y + engine::time::getDeltaTime() * runSpeed / 2, pos.z);
+		archer->playAnimation(archerRunUpLeftAnimationID);
+	}
+	else if (isKeyPressed(ENGINE_KEY_W) && isKeyPressed(ENGINE_KEY_D))
+	{
+		glm::vec3 pos = archer->getPos();
+		archer->setPos(pos.x - engine::time::getDeltaTime() * runSpeed / 2, pos.y + engine::time::getDeltaTime() * runSpeed / 2, pos.z);
+		archer->playAnimation(archerRunUpRightAnimationID);
+	}
+	else if (isKeyPressed(ENGINE_KEY_S) && isKeyPressed(ENGINE_KEY_A))
+	{
+		glm::vec3 pos = archer->getPos();
+		archer->setPos(pos.x + engine::time::getDeltaTime() * runSpeed / 2, pos.y - engine::time::getDeltaTime() * runSpeed / 2, pos.z);
+		archer->playAnimation(archerRunDownLeftAnimationID);
+	}
+	else if (isKeyPressed(ENGINE_KEY_S) && isKeyPressed(ENGINE_KEY_D))
+	{
+		glm::vec3 pos = archer->getPos();
+		archer->setPos(pos.x - engine::time::getDeltaTime() * runSpeed / 2, pos.y - engine::time::getDeltaTime() * runSpeed / 2, pos.z);
+		archer->playAnimation(archerRunDownRightAnimationID);
+	}
+	else if(isKeyPressed(ENGINE_KEY_A))
+	{
+		glm::vec3 pos = archer->getPos();
+		archer->setPos(pos.x + engine::time::getDeltaTime() * runSpeed, pos.y, pos.z);
+		archer->playAnimation(archerRunLeftAnimationID);
 	}
 	else if(isKeyPressed(ENGINE_KEY_D))
 	{
-		megaman->invertX();
-		glm::vec3 pos = megaman->getPos();
-		megaman->setPos(pos.x - engine::time::getDeltaTime() * megamanRunSpeed, pos.y, pos.z);
-		megaman->playAnimation(megamanRunAnimationID);
+		archer->invertX();
+		glm::vec3 pos = archer->getPos();
+		archer->setPos(pos.x - engine::time::getDeltaTime() * runSpeed, pos.y, pos.z);
+		archer->playAnimation(archerRunRightAnimationID);
+	}
+	else if (isKeyPressed(ENGINE_KEY_W))
+	{
+		glm::vec3 pos = archer->getPos();
+		archer->setPos(pos.x, pos.y + engine::time::getDeltaTime() * runSpeed, pos.z);
+		archer->playAnimation(archerRunUpAnimationID);
+	}
+	else if (isKeyPressed(ENGINE_KEY_S))
+	{
+		glm::vec3 pos = archer->getPos();
+		archer->setPos(pos.x, pos.y - engine::time::getDeltaTime() * runSpeed, pos.z);
+		archer->playAnimation(archerRunDownAnimationID);
 	}
 	else
 	{
-		megaman->stopAnimation(megamanRunAnimationID);
+		archer->stopAllAnimations();
 	}
+
 
 	if(isKeyPressed(ENGINE_KEY_LEFT))
 	{
@@ -129,17 +165,6 @@ void game::update()
 	{
 		glm::vec3 movement = { 0, engine::time::getDeltaTime() * -cameraSpeed , 0 };
 		cam->moveCamera(movement);
-	}
-
-	if(megaman->getPos().x > 22)
-	{
-		glm::vec3 currentPos = megaman->getPos();
-		megaman->setPos(-22, currentPos.y, currentPos.z);
-	}
-	else if (megaman->getPos().x < -22)
-	{
-		glm::vec3 currentPos = megaman->getPos();
-		megaman->setPos(22, currentPos.y, currentPos.z);
 	}
 }
 
@@ -171,28 +196,63 @@ void game::init()
 	quad->setPos(-15, -10, 0);
 	quad->setColor(0, 1, 1, 1);
 
-	stefano = new engine::sprite(currentRenderer, "../res/assets/textures/stefanito.png");
+	stefano = new engine::sprite(currentRenderer, "../res/assets/textures/stefanito.png", true);
 	stefano->setScale(glm::vec3(10, 10, 10));
 	
-	imageCampus = new engine::sprite(currentRenderer, "../res/assets/textures/Image Campus.png");
+	imageCampus = new engine::sprite(currentRenderer, "../res/assets/textures/Image Campus.png", true);
 	imageCampus->setScale(glm::vec3(30, 20, 10));
 	imageCampus->setPos(glm::vec3(0, -9.f, -.1f));
 	imageCampus->invertX();
 
-	container = new engine::sprite(currentRenderer, "../res/assets/textures/container.jpg");
+	container = new engine::sprite(currentRenderer, "../res/assets/textures/container.jpg", true);
 	container->setScale(glm::vec3(10, 10, 10));
 	container->setPos(glm::vec3(-15, 0, 0));
 
-	awesomeface = new engine::sprite(currentRenderer, "../res/assets/textures/awesomeface.png");
+	awesomeface = new engine::sprite(currentRenderer, "../res/assets/textures/awesomeface.png", true);
 	awesomeface->setScale(glm::vec3(10, 10, 10));
 	awesomeface->setPos(glm::vec3(15, 0, 0));
 
-	megaman = new engine::sprite(currentRenderer, "../res/assets/textures/Megaman Sprites/Megaman.png");
+	archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
 
-	megamanRunAnimationID = megaman->createAnimation("../res/assets/textures/Megaman Sprites/MegamanRun.png", 5, 2);
-	megaman->setAnimationSpeed(megamanRunAnimationID, megamanRunSpeed);
-	megaman->setScale(5, 5, 5);
-	megaman->setPos(0, 10, 0);
+	archerAtlas = archer->createAnimationAtlas("../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
+
+	engine::atlasCutConfig archerRunAtlasConfig;
+
+	archerRunAtlasConfig.CutByCount(10, 7, 6, 5, 8);
+	archerRunLeftAnimationID = archer->createAnimation(archerAtlas, archerRunAtlasConfig);
+
+	archerRunAtlasConfig.CutByCount(10, 7, 0, 0, 8);
+	archerRunRightAnimationID = archer->createAnimation(archerAtlas, archerRunAtlasConfig);
+
+	archerRunAtlasConfig.CutByCount(10, 7, 8, 0, 8);
+	archerRunUpAnimationID = archer->createAnimation(archerAtlas, archerRunAtlasConfig);
+
+	archerRunAtlasConfig.CutByCount(10, 7, 2, 3, 8);
+	archerRunDownAnimationID = archer->createAnimation(archerAtlas, archerRunAtlasConfig);
+
+	archerRunAtlasConfig.CutByCount(10, 7, 4, 2, 8);
+	archerRunUpLeftAnimationID = archer->createAnimation(archerAtlas, archerRunAtlasConfig);
+
+	archerRunAtlasConfig.CutByCount(10, 7, 8, 4, 8);
+	archerRunDownLeftAnimationID = archer->createAnimation(archerAtlas, archerRunAtlasConfig);
+
+	archerRunAtlasConfig.CutByCount(10, 7, 6, 1, 8);
+	archerRunUpRightAnimationID = archer->createAnimation(archerAtlas, archerRunAtlasConfig);
+
+	archerRunAtlasConfig.CutByCount(10, 7, 0, 4, 8);
+	archerRunDownRightAnimationID = archer->createAnimation(archerAtlas, archerRunAtlasConfig);
+
+	archer->setAnimationSpeed(archerRunRightAnimationID, runSpeed);
+	archer->setAnimationSpeed(archerRunLeftAnimationID, runSpeed);
+	archer->setAnimationSpeed(archerRunUpAnimationID, runSpeed);
+	archer->setAnimationSpeed(archerRunUpLeftAnimationID, runSpeed);
+	archer->setAnimationSpeed(archerRunUpRightAnimationID, runSpeed);
+	archer->setAnimationSpeed(archerRunDownAnimationID, runSpeed);
+	archer->setAnimationSpeed(archerRunDownLeftAnimationID, runSpeed);
+	archer->setAnimationSpeed(archerRunDownRightAnimationID, runSpeed);
+	
+	archer->setScale(5, 5, 5);
+	archer->setPos(0, 10, 0);
 
 	changeClearColor(glm::vec4(.25, .25, .5, 1));
 }
@@ -204,7 +264,8 @@ void game::deInit()
 	delete imageCampus;
 	delete container;
 	delete awesomeface;
-	delete megaman;
+	archer->deleteAnimationAtlas(archerAtlas);
+	delete archer;
 	delete triangle;
 	delete quad;
 }

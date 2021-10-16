@@ -7,7 +7,7 @@
 
 namespace engine
 {
-	sprite::sprite(renderer* render, const char* filePathImage)
+	sprite::sprite(renderer* render, const char* filePathImage, bool invertImage)
 	{
 		VAO = 0;
 		VBO = 0;
@@ -39,7 +39,7 @@ namespace engine
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
 
-		baseTexture = new textureData(textureImporter::loadTexture(filePathImage));
+		baseTexture = new textureData(textureImporter::loadTexture(filePathImage, invertImage));
 	}
 	sprite::~sprite()
 	{
@@ -78,10 +78,12 @@ namespace engine
 			{
 				animations[i]->update();
 				BindAnimationTexture(i);
+				lastAnimationIndex = i;
 				return animations[i]->getTextureID();
 			}
 		}
-		BindBaseTexture();
+		if (animations.size() == 0) BindBaseTexture();
+		else BindAnimationTexture(lastAnimationIndex);
 		return baseTexture->ID;
 	}
 	void sprite::BindAnimationTexture(int i)
@@ -89,10 +91,10 @@ namespace engine
 		glm::vec2* uv = animations[i]->getCurrentFramesCoordinates();
 		float vertices[32] =
 		{
-			0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		uv[0].x, uv[0].y,
-			0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		uv[1].x, uv[1].y,
-			-0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		uv[2].x, uv[2].y,
-			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		uv[3].x, uv[3].y,
+			0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		uv[0].x, uv[0].y, // top right
+			0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		uv[1].x, uv[1].y, // bottom right
+			-0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		uv[2].x, uv[2].y, // bottom left
+			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		uv[3].x, uv[3].y, // top left 
 		};
 		unsigned int indices[6] =
 		{
@@ -119,10 +121,25 @@ namespace engine
 		_renderer->bindRequest(VAO, VBO, EBO, vertices, sizeof(vertices), indices, sizeof(indices));
 		glBindTexture(GL_TEXTURE_2D, baseTexture->ID);
 	}
-	int sprite::createAnimation(const char* AtlasFilepath, int columns, int rows)
+	textureData* sprite::createAnimationAtlas(const char* AtlasFilepath, bool invertImage)
+	{
+		return new textureData(textureImporter::loadTexture(AtlasFilepath, invertImage));
+	}
+	void sprite::deleteAnimationAtlas(textureData* atlas)
+	{
+		delete atlas;
+	}
+	int sprite::createAnimation(textureData* animationAtlasData, int columns, int rows)
 	{
 		animation* anim = new animation();
-		anim->setAnimation(AtlasFilepath, columns, rows);
+		anim->setAnimation(animationAtlasData, columns, rows);
+		animations.push_back(anim);
+		return animations.size() - 1;
+	}
+	int sprite::createAnimation(textureData* animationAtlasData, atlasCutConfig config)
+	{
+		animation* anim = new animation();
+		anim->setAnimation(animationAtlasData, config);
 		animations.push_back(anim);
 		return animations.size() - 1;
 	}
@@ -140,6 +157,13 @@ namespace engine
 	void sprite::stopAnimation(int animationID)
 	{
 		animations[animationID]->stop();
+	}
+	void sprite::stopAllAnimations()
+	{
+		for (int i = 0; i < animations.size(); i++)
+		{
+			animations[i]->stop();
+		}
 	}
 	void sprite::setAnimationSpeed(int animationID, float speed)
 	{
