@@ -11,24 +11,24 @@ namespace engine
 			this->offsetX = offsetX;
 			this->offsetY = offsetY;
 			this->framesAmount = framesAmount;
-			usePixelSize = false;
+			useSize = false;
 		}
-		void CutByPixels(int spriteWidth, int spriteHeight, int offsetX, int offsetY, int framesAmount)
+		void CutBySize(int spriteWidth, int spriteHeight, int offsetX, int offsetY, int framesAmount)
 		{
 			this->spriteWidth = spriteWidth;
 			this->spriteHeight = spriteHeight;
 			this->offsetX = offsetX;
 			this->offsetY = offsetY;
 			this->framesAmount = framesAmount;
-			usePixelSize = true;
+			useSize = true;
 		}
 	private:
-		int columns;
-		int rows;
-		int offsetX;
-		int offsetY;
-		int framesAmount;
-		bool usePixelSize = false;
+		int columns = 1;
+		int rows = 1;
+		int offsetX = 0;
+		int offsetY = 0;
+		int framesAmount = 1;
+		bool useSize = false;
 		int spriteWidth;
 		int spriteHeight;
 		friend class animation;
