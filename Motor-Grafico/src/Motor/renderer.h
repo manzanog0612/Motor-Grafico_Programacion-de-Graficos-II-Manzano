@@ -16,10 +16,13 @@ namespace engine
 		renderer(window* window);
 		~renderer();
 		void setCurrentWindow(window* window);
-		void createBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
-		void bindRequest(unsigned int VAO, unsigned int VBO, unsigned int EBO, float* vertices, unsigned int sizeOfVertices, unsigned int* indices, unsigned int sizeOfIndices);
+		void createBaseBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
+		void createExtraBuffer(unsigned int& buffer, int size);
+		void bindBaseBufferRequest(unsigned int VAO, unsigned int VBO, unsigned int EBO, float* vertices, unsigned int sizeOfVertices, unsigned int* indices, unsigned int sizeOfIndices);
+		void bindExtraBuffer(unsigned int buffer, float* data, unsigned int sizeOfData, unsigned int bufferType);
 		void drawRequest(glm::mat4 model, unsigned int VAO, unsigned int vertices, unsigned int usedShaderID);
-		void deleteBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
+		void deleteBaseBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
+		void deleteExtraBuffer(unsigned int& buffer, int size);
 		void startDraw();
 		void endDraw();
 		void setClearColor(glm::vec4 color);

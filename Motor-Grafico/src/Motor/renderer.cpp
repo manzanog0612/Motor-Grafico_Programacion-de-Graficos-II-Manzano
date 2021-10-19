@@ -59,13 +59,17 @@ namespace engine
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
 	}
-	void renderer::createBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
+	void renderer::createBaseBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
 	{
 		glGenVertexArrays(1, &VAO);
 		glGenBuffers(1, &VBO);
 		glGenBuffers(1, &EBO);
 	}
-	void renderer::bindRequest(unsigned int VAO, unsigned int VBO, unsigned int EBO, float* vertices, unsigned int sizeOfVertices, unsigned int* indices, unsigned int sizeOfIndices)
+	void renderer::createExtraBuffer(unsigned int& buffer, int size)
+	{
+		glGenBuffers(size, &buffer);
+	}
+	void renderer::bindBaseBufferRequest(unsigned int VAO, unsigned int VBO, unsigned int EBO, float* vertices, unsigned int sizeOfVertices, unsigned int* indices, unsigned int sizeOfIndices)
 	{
 		glBindVertexArray(VAO);
 
@@ -75,11 +79,20 @@ namespace engine
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeOfIndices, indices, GL_STATIC_DRAW);
 	}
-	void renderer::deleteBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
+	void renderer::bindExtraBuffer(unsigned int buffer, float* data, unsigned int sizeOfData, unsigned int bufferType)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, buffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeOfData, data, bufferType);
+	}
+	void renderer::deleteBaseBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
 	{
 		glDeleteVertexArrays(1, &VAO);
 		glDeleteBuffers(1, &VBO);
 		glDeleteBuffers(1, &EBO);
+	}
+	void renderer::deleteExtraBuffer(unsigned int& buffer, int size)
+	{
+		glDeleteBuffers(size, &buffer);
 	}
 	void renderer::setClearColor(glm::vec4 color)
 	{
