@@ -15,28 +15,37 @@ namespace engine
 		_vertices = 0;
 		_renderer = render;
 
-		float vertex[32] =
+		float vertex[24] =
 		{
-			 0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		1.0f, 1.0f,
-			 0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		1.0f, 0.0f,
-			-0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		0.0f, 0.0f,
-			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		0.0f, 1.0f
+			 0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,
+			 0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,
+			-0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f
 		};
 		unsigned int indices[6] =
 		{
 			0, 1, 3,
 			1, 2, 3
 		};
-		_renderer->createBuffer(VAO, VBO, EBO);
-		_renderer->bindRequest(VAO, VBO, EBO, vertex, sizeof(vertex) , indices, sizeof(indices));
+		_renderer->createBaseBuffer(VAO, VBO, EBO);
+		_renderer->bindBaseBufferRequest(VAO, VBO, EBO, vertex, sizeof(vertex) , indices, sizeof(indices));
 		_vertices = 6;
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
+
+		float UVs[8] =
+		{
+			1.0f, 1.0f,
+			1.0f, 0.0f,
+			0.0f, 0.0f,
+			0.0f, 1.0f
+		};
+		_renderer->createExtraBuffer(bufferPosUVs, 1);
+		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_DYNAMIC_DRAW);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(2);
 
 		baseTexture = new textureData(textureImporter::loadTexture(filePathImage, invertImage));
@@ -44,7 +53,8 @@ namespace engine
 	sprite::~sprite()
 	{
 		delete baseTexture;
-		_renderer->deleteBuffer(VAO, VBO, EBO);
+		_renderer->deleteBaseBuffer(VAO, VBO, EBO);
+		_renderer->deleteExtraBuffer(bufferPosUVs, 1);
 		glDeleteTextures(1, &baseTexture->ID);
 		for (int i = 0; i < animations.size(); i++)
 		{
@@ -55,6 +65,7 @@ namespace engine
 	{
 		_renderer->textureShader.use();
 		unsigned int texture = getCurrentTextureIDToDraw();
+		glBindTexture(GL_TEXTURE_2D, texture);
 		setShader(texture);
 		_renderer->drawRequest(model, VAO, _vertices, _renderer->textureShader.ID);
 	}
@@ -77,49 +88,37 @@ namespace engine
 			if(animations[i]->isPlaying())
 			{
 				animations[i]->update();
-				BindAnimationTexture(i);
+				bindAnimationTexture(i);
 				lastAnimationIndex = i;
 				return animations[i]->getTextureID();
 			}
 		}
-		if (animations.size() == 0) BindBaseTexture();
-		else BindAnimationTexture(lastAnimationIndex);
+		if (animations.size() == 0) bindBaseTexture();
+		else bindAnimationTexture(lastAnimationIndex);
 		return baseTexture->ID;
 	}
-	void sprite::BindAnimationTexture(int i)
+	void sprite::bindAnimationTexture(int i)
 	{
 		glm::vec2* uv = animations[i]->getCurrentFramesCoordinates();
-		float vertices[32] =
+		float UVs[8] =
 		{
-			0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		uv[0].x, uv[0].y, // top right
-			0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		uv[1].x, uv[1].y, // bottom right
-			-0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		uv[2].x, uv[2].y, // bottom left
-			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		uv[3].x, uv[3].y, // top left 
+			uv[0].x, uv[0].y, // top right
+			uv[1].x, uv[1].y, // bottom right
+			uv[2].x, uv[2].y, // bottom left
+			uv[3].x, uv[3].y, // top left 
 		};
-		unsigned int indices[6] =
-		{
-			0, 1, 3,
-			1, 2, 3
-		};
-		_renderer->bindRequest(VAO, VBO, EBO, vertices, sizeof(vertices), indices, sizeof(indices));
-		glBindTexture(GL_TEXTURE_2D, animations[i]->getTextureID());
+		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_DYNAMIC_DRAW);
 	}
-	void sprite::BindBaseTexture()
+	void sprite::bindBaseTexture()
 	{
-		float vertices[32] =
+		float UVs[8] =
 		{
-			0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		1.0f, 1.0f,
-			0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		1.0f, 0.0f,
-			-0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		0.0f, 0.0f,
-			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,		0.0f, 1.0f
+			1.0f, 1.0f,
+			1.0f, 0.0f,
+			0.0f, 0.0f,
+			0.0f, 1.0f
 		};
-		unsigned int indices[6] =
-		{
-			0, 1, 3,
-			1, 2, 3
-		};
-		_renderer->bindRequest(VAO, VBO, EBO, vertices, sizeof(vertices), indices, sizeof(indices));
-		glBindTexture(GL_TEXTURE_2D, baseTexture->ID);
+		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_DYNAMIC_DRAW);
 	}
 	textureData* sprite::createAnimationAtlas(const char* AtlasFilepath, bool invertImage)
 	{

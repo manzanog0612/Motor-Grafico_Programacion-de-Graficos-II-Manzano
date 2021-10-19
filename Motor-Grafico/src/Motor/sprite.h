@@ -26,10 +26,11 @@ namespace engine
 	private:
 		void setShader(unsigned int texture);
 		unsigned int getCurrentTextureIDToDraw();
-		void BindAnimationTexture(int i);
-		void BindBaseTexture();
-		textureData* baseTexture;
+		unsigned int bufferPosUVs = 0;
 		int lastAnimationIndex = 0;
+		void bindAnimationTexture(int i);
+		void bindBaseTexture();
+		textureData* baseTexture;
 		std::vector<animation*> animations;
 	};
 }
