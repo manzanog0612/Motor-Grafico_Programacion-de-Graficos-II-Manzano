@@ -27,9 +27,9 @@ namespace engine
 		void setShader(unsigned int texture);
 		unsigned int getCurrentTextureIDToDraw();
 		unsigned int bufferPosUVs = 0;
-		int lastAnimationIndex = 0;
-		void bindAnimationTexture(int i);
-		void bindBaseTexture();
+		int lastCoordIndex = 0;
+		void bindCustomUVCoords(int i);
+		void bindBaseUVCoords();
 		textureData* baseTexture;
 		std::vector<animation*> animations;
 	};

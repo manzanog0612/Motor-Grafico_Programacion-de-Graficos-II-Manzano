@@ -88,16 +88,16 @@ namespace engine
 			if(animations[i]->isPlaying())
 			{
 				animations[i]->update();
-				bindAnimationTexture(i);
-				lastAnimationIndex = i;
+				bindCustomUVCoords(i);
+				lastCoordIndex = i;
 				return animations[i]->getTextureID();
 			}
 		}
-		if (animations.size() == 0) bindBaseTexture();
-		else bindAnimationTexture(lastAnimationIndex);
+		if (animations.size() > 0) bindCustomUVCoords(lastCoordIndex);
+		else bindBaseUVCoords();
 		return baseTexture->ID;
 	}
-	void sprite::bindAnimationTexture(int i)
+	void sprite::bindCustomUVCoords(int i)
 	{
 		glm::vec2* uv = animations[i]->getCurrentFramesCoordinates();
 		float UVs[8] =
@@ -109,7 +109,7 @@ namespace engine
 		};
 		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_DYNAMIC_DRAW);
 	}
-	void sprite::bindBaseTexture()
+	void sprite::bindBaseUVCoords()
 	{
 		float UVs[8] =
 		{
@@ -118,7 +118,7 @@ namespace engine
 			0.0f, 0.0f,
 			0.0f, 1.0f
 		};
-		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_DYNAMIC_DRAW);
+		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_STATIC_DRAW);
 	}
 	textureData* sprite::createAnimationAtlas(const char* AtlasFilepath, bool invertImage)
 	{

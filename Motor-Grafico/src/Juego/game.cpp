@@ -72,12 +72,12 @@ void game::update()
 	}
 	if (isKeyPressed(ENGINE_KEY_Q))
 	{
-		float rot = stefano->getRot().z - rotationSpeed * engine::time::getDeltaTime();
+		float rot = stefano->getRot().z + rotationSpeed * engine::time::getDeltaTime();
 		stefano->setRot(glm::vec3(0, 0, rot));
 	}
 	if (isKeyPressed(ENGINE_KEY_E))
 	{
-		float rot = stefano->getRot().z + rotationSpeed * engine::time::getDeltaTime();
+		float rot = stefano->getRot().z - rotationSpeed * engine::time::getDeltaTime();
 		stefano->setRot(glm::vec3(0, 0, rot));
 	}
 	if(isKeyPressed(ENGINE_KEY_R))
@@ -94,38 +94,37 @@ void game::update()
 	if(isKeyPressed(ENGINE_KEY_W) && isKeyPressed(ENGINE_KEY_A))
 	{
 		glm::vec3 pos = archer->getPos();
-		archer->setPos(pos.x + engine::time::getDeltaTime() * runSpeed / 2, pos.y + engine::time::getDeltaTime() * runSpeed / 2, pos.z);
+		archer->setPos(pos.x - engine::time::getDeltaTime() * runSpeed / 2, pos.y + engine::time::getDeltaTime() * runSpeed / 2, pos.z);
 		archer->playAnimation(archerRunUpLeftAnimationID);
 	}
 	else if (isKeyPressed(ENGINE_KEY_W) && isKeyPressed(ENGINE_KEY_D))
 	{
 		glm::vec3 pos = archer->getPos();
-		archer->setPos(pos.x - engine::time::getDeltaTime() * runSpeed / 2, pos.y + engine::time::getDeltaTime() * runSpeed / 2, pos.z);
+		archer->setPos(pos.x + engine::time::getDeltaTime() * runSpeed / 2, pos.y + engine::time::getDeltaTime() * runSpeed / 2, pos.z);
 		archer->playAnimation(archerRunUpRightAnimationID);
 	}
 	else if (isKeyPressed(ENGINE_KEY_S) && isKeyPressed(ENGINE_KEY_A))
 	{
 		glm::vec3 pos = archer->getPos();
-		archer->setPos(pos.x + engine::time::getDeltaTime() * runSpeed / 2, pos.y - engine::time::getDeltaTime() * runSpeed / 2, pos.z);
+		archer->setPos(pos.x - engine::time::getDeltaTime() * runSpeed / 2, pos.y - engine::time::getDeltaTime() * runSpeed / 2, pos.z);
 		archer->playAnimation(archerRunDownLeftAnimationID);
 	}
 	else if (isKeyPressed(ENGINE_KEY_S) && isKeyPressed(ENGINE_KEY_D))
 	{
 		glm::vec3 pos = archer->getPos();
-		archer->setPos(pos.x - engine::time::getDeltaTime() * runSpeed / 2, pos.y - engine::time::getDeltaTime() * runSpeed / 2, pos.z);
+		archer->setPos(pos.x + engine::time::getDeltaTime() * runSpeed / 2, pos.y - engine::time::getDeltaTime() * runSpeed / 2, pos.z);
 		archer->playAnimation(archerRunDownRightAnimationID);
 	}
 	else if(isKeyPressed(ENGINE_KEY_A))
 	{
 		glm::vec3 pos = archer->getPos();
-		archer->setPos(pos.x + engine::time::getDeltaTime() * runSpeed, pos.y, pos.z);
+		archer->setPos(pos.x - engine::time::getDeltaTime() * runSpeed, pos.y, pos.z);
 		archer->playAnimation(archerRunLeftAnimationID);
 	}
 	else if(isKeyPressed(ENGINE_KEY_D))
 	{
-		archer->invertX();
 		glm::vec3 pos = archer->getPos();
-		archer->setPos(pos.x - engine::time::getDeltaTime() * runSpeed, pos.y, pos.z);
+		archer->setPos(pos.x + engine::time::getDeltaTime() * runSpeed, pos.y, pos.z);
 		archer->playAnimation(archerRunRightAnimationID);
 	}
 	else if (isKeyPressed(ENGINE_KEY_W))
@@ -148,12 +147,12 @@ void game::update()
 
 	if(isKeyPressed(ENGINE_KEY_LEFT))
 	{
-		glm::vec3 movement = { engine::time::getDeltaTime() * cameraSpeed, 0, 0 };
+		glm::vec3 movement = { engine::time::getDeltaTime() * -cameraSpeed, 0, 0 };
 		cam->moveCamera(movement);
 	}
 	if (isKeyPressed(ENGINE_KEY_RIGHT))
 	{
-		glm::vec3 movement = { engine::time::getDeltaTime() * -cameraSpeed, 0, 0 };
+		glm::vec3 movement = { engine::time::getDeltaTime() * cameraSpeed, 0, 0 };
 		cam->moveCamera(movement);
 	}
 	if (isKeyPressed(ENGINE_KEY_UP))
@@ -171,7 +170,7 @@ void game::update()
 void game::init()
 {
 
-	glm::vec3 camStartingPos = { 0, 0, -15 };
+	glm::vec3 camStartingPos = { 0, 0, 15 };
 	glm::vec3 camLookPos = { 0, 0, 0 };
 	glm::vec3 camUpVector = { 0, 1, 0 };
 	cam = new engine::camera(currentRenderer, camStartingPos, camLookPos, camUpVector);
@@ -202,7 +201,6 @@ void game::init()
 	imageCampus = new engine::sprite(currentRenderer, "../res/assets/textures/Image Campus.png", true);
 	imageCampus->setScale(glm::vec3(30, 20, 10));
 	imageCampus->setPos(glm::vec3(0, -9.f, -.1f));
-	imageCampus->invertX();
 
 	container = new engine::sprite(currentRenderer, "../res/assets/textures/container.jpg", true);
 	container->setScale(glm::vec3(10, 10, 10));
