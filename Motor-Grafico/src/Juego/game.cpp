@@ -210,10 +210,11 @@ void game::init()
 	awesomeface->setScale(glm::vec3(10, 10, 10));
 	awesomeface->setPos(glm::vec3(15, 0, 0));
 
+
 	archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
 
 	archerAtlas = archer->createAnimationAtlas("../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
-
+	
 	engine::atlasCutConfig archerRunAtlasConfig;
 
 	archerRunAtlasConfig.CutByCount(10, 7, 6, 5, 8);
@@ -248,7 +249,7 @@ void game::init()
 	archer->setAnimationSpeed(archerRunDownAnimationID, runSpeed);
 	archer->setAnimationSpeed(archerRunDownLeftAnimationID, runSpeed);
 	archer->setAnimationSpeed(archerRunDownRightAnimationID, runSpeed);
-	
+
 	archer->setScale(5, 5, 5);
 	archer->setPos(0, 10, 0);
 

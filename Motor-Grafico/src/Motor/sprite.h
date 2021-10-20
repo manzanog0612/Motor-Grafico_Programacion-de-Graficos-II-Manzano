@@ -13,6 +13,7 @@ namespace engine
 	{
 	public:
 		sprite(renderer* render, const char* filePathImage, bool invertImage);
+		sprite(renderer* render, const char* filePathAtlas, bool invertImage, atlasCutConfig config);
 		~sprite();
 		void draw() override;
 		textureData* createAnimationAtlas(const char* AtlasFilepath, bool invertImage);
@@ -28,6 +29,7 @@ namespace engine
 		unsigned int getCurrentTextureIDToDraw();
 		unsigned int bufferPosUVs = 0;
 		int lastCoordIndex = 0;
+		glm::vec2 baseUVCoords[4];
 		void bindCustomUVCoords(int i);
 		void bindBaseUVCoords();
 		textureData* baseTexture;

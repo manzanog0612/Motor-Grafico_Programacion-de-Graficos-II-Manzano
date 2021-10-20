@@ -32,5 +32,6 @@ namespace engine
 		int spriteWidth;
 		int spriteHeight;
 		friend class animation;
+		friend class sprite;
 	};
 }
