@@ -125,9 +125,11 @@ namespace engine
 		{
 			if(animations[i]->isPlaying())
 			{
-				animations[i]->update();
-				bindCustomUVCoords(i);
-				lastCoordIndex = i;
+				if(animations[i]->update())
+				{
+					bindCustomUVCoords(i);
+					lastCoordIndex = i;
+				}
 				return animations[i]->getTextureID();
 			}
 		}

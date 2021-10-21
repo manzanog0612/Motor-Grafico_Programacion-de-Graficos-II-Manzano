@@ -25,7 +25,7 @@ namespace engine
 	{
 		playing = false;
 	}
-	void animation::update()
+	bool animation::update()
 	{
 		currentTime += time::getDeltaTime() * animationSpeed;
 		if(currentTime > timeBetweenFrames)
@@ -45,7 +45,9 @@ namespace engine
 					stop();
 				}
 			}
+			return true;
 		}
+		return false;
 	}
 	bool animation::isPlaying()
 	{

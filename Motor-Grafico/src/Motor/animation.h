@@ -19,7 +19,7 @@ namespace engine
 		~animation();
 		void play();
 		void stop();
-		void update();
+		bool update();
 		bool isPlaying();
 		void repeatAnimation(bool active);
 		void setAnimationSpeed(float speed);
