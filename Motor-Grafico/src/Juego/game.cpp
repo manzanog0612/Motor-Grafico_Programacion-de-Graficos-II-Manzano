@@ -212,34 +212,32 @@ void game::init()
 
 
 	archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
-
-	archerAtlas = archer->createAnimationAtlas("../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
 	
 	engine::atlasCutConfig archerRunAtlasConfig;
 
 	archerRunAtlasConfig.CutByCount(10, 7, 6, 5, 8);
-	archerRunLeftAnimationID = archer->createAnimation(archerAtlas, archerRunAtlasConfig);
+	archerRunLeftAnimationID = archer->createAnimation(archerRunAtlasConfig);
 
 	archerRunAtlasConfig.CutByCount(10, 7, 0, 0, 8);
-	archerRunRightAnimationID = archer->createAnimation(archerAtlas, archerRunAtlasConfig);
+	archerRunRightAnimationID = archer->createAnimation(archerRunAtlasConfig);
 
 	archerRunAtlasConfig.CutByCount(10, 7, 8, 0, 8);
-	archerRunUpAnimationID = archer->createAnimation(archerAtlas, archerRunAtlasConfig);
+	archerRunUpAnimationID = archer->createAnimation(archerRunAtlasConfig);
 
 	archerRunAtlasConfig.CutByCount(10, 7, 2, 3, 8);
-	archerRunDownAnimationID = archer->createAnimation(archerAtlas, archerRunAtlasConfig);
+	archerRunDownAnimationID = archer->createAnimation(archerRunAtlasConfig);
 
 	archerRunAtlasConfig.CutByCount(10, 7, 4, 2, 8);
-	archerRunUpLeftAnimationID = archer->createAnimation(archerAtlas, archerRunAtlasConfig);
+	archerRunUpLeftAnimationID = archer->createAnimation(archerRunAtlasConfig);
 
 	archerRunAtlasConfig.CutByCount(10, 7, 8, 4, 8);
-	archerRunDownLeftAnimationID = archer->createAnimation(archerAtlas, archerRunAtlasConfig);
+	archerRunDownLeftAnimationID = archer->createAnimation(archerRunAtlasConfig);
 
 	archerRunAtlasConfig.CutByCount(10, 7, 6, 1, 8);
-	archerRunUpRightAnimationID = archer->createAnimation(archerAtlas, archerRunAtlasConfig);
+	archerRunUpRightAnimationID = archer->createAnimation(archerRunAtlasConfig);
 
 	archerRunAtlasConfig.CutByCount(10, 7, 0, 4, 8);
-	archerRunDownRightAnimationID = archer->createAnimation(archerAtlas, archerRunAtlasConfig);
+	archerRunDownRightAnimationID = archer->createAnimation(archerRunAtlasConfig);
 
 	archer->setAnimationSpeed(archerRunRightAnimationID, runSpeed);
 	archer->setAnimationSpeed(archerRunLeftAnimationID, runSpeed);

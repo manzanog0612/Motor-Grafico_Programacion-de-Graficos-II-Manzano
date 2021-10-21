@@ -18,6 +18,7 @@ namespace engine
 		void modifyBaseTextureCoords(atlasCutConfig config);
 		textureData* createAnimationAtlas(const char* AtlasFilepath, bool invertImage);
 		void deleteAnimationAtlas(textureData* atlas);
+		int createAnimation(atlasCutConfig config);
 		int createAnimation(textureData* animationAtlasData, int columns, int rows);
 		int createAnimation(textureData* animationAtlasData, atlasCutConfig config);
 		void playAnimation(int animationID);

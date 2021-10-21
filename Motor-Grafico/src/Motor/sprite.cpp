@@ -55,43 +55,6 @@ namespace engine
 
 		baseTexture = new textureData(textureImporter::loadTexture(filePathImage, invertImage));
 	}
-	sprite::sprite(renderer* render, const char* filePathAtlas, bool invertImage, atlasCutConfig config)
-	{
-
-		VAO = 0;
-		VBO = 0;
-		EBO = 0;
-		_vertices = 0;
-		_renderer = render;
-
-		float vertex[24] =
-		{
-			 0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,
-			 0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,
-			-0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,
-			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f
-		};
-		unsigned int indices[6] =
-		{
-			0, 1, 3,
-			1, 2, 3
-		};
-		_renderer->createBaseBuffer(VAO, VBO, EBO);
-		_renderer->bindBaseBufferRequest(VAO, VBO, EBO, vertex, sizeof(vertex), indices, sizeof(indices));
-		_vertices = 6;
-
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-		glEnableVertexAttribArray(0);
-		glEnableVertexAttribArray(1);
-
-		baseUVCoords[0] = { 1.0f, 1.0f };
-		baseUVCoords[1] = { 1.0f, 0.0f };
-		baseUVCoords[2] = { 0.0f, 0.0f };
-		baseUVCoords[3] = { 0.0f, 1.0f };
-
-		baseTexture = new textureData(textureImporter::loadTexture(filePathAtlas, invertImage));
-	}
 	sprite::~sprite()
 	{
 		delete baseTexture;
@@ -202,6 +165,13 @@ namespace engine
 	void sprite::deleteAnimationAtlas(textureData* atlas)
 	{
 		delete atlas;
+	}
+	int sprite::createAnimation(atlasCutConfig config)
+	{
+		animation* anim = new animation();
+		anim->setAnimation(baseTexture, config);
+		animations.push_back(anim);
+		return animations.size() - 1;
 	}
 	int sprite::createAnimation(textureData* animationAtlasData, int columns, int rows)
 	{
