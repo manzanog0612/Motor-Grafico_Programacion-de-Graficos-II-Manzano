@@ -1,6 +1,6 @@
 #include "game.h"
 
-int main(void)
+int main()
 {
 	game* gameVariable = new game();
 

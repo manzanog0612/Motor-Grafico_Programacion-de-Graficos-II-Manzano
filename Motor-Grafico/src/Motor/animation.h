@@ -23,12 +23,13 @@ namespace engine
 		bool isPlaying();
 		void repeatAnimation(bool active);
 		void setAnimationSpeed(float speed);
+		void setAnimationTime(float time);
 		void setAnimation(textureData* animationAtlasData, int columns, int rows);
 		void setAnimation(textureData* animationAtlasData, atlasCutConfig config);
 		unsigned int getTextureID();
 		glm::vec2* getCurrentFramesCoordinates();
 	private:
-		std::vector<glm::vec2*> textureCoordinates;
+		std::vector<glm::vec2*> framesCoordinates;
 		textureData* texture;
 		int currentFrame = 0;
 		float currentTime = 0;

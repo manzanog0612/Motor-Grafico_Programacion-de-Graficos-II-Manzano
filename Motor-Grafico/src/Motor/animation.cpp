@@ -12,9 +12,9 @@ namespace engine
 	}
 	animation::~animation()
 	{
-		for (int i = 0; i < textureCoordinates.size(); i++)
+		for (int i = 0; i < framesCoordinates.size(); i++)
 		{
-			delete[] textureCoordinates[i];
+			delete[] framesCoordinates[i];
 		}
 	}
 	void animation::play()
@@ -32,7 +32,7 @@ namespace engine
 		{
 			currentTime = 0;
 			currentFrame++;
-			if(currentFrame == textureCoordinates.size())
+			if(currentFrame == framesCoordinates.size())
 			{
 				currentFrame = 0;
 				currentTime = 0;
@@ -61,6 +61,10 @@ namespace engine
 	{
 		animationSpeed = speed;
 	}
+	void animation::setAnimationTime(float time)
+	{
+		timeBetweenFrames = time;
+	}
 	void animation::setAnimation(textureData* animationAtlasData, int columns, int rows)
 	{
 		texture = animationAtlasData;
@@ -79,7 +83,7 @@ namespace engine
 				newCoord[2].y = (spriteHeight + (spriteHeight * i)) / texture->height;		// bottom left
 				newCoord[3].x = (spriteWidth * j) / texture->width;							// top left 
 				newCoord[3].y = (spriteHeight * i) / texture->height;						// top left 
-				textureCoordinates.push_back(newCoord);
+				framesCoordinates.push_back(newCoord);
 			}
 		}
 	}
@@ -113,7 +117,7 @@ namespace engine
 				newCoord[2].y = (spriteHeight + (spriteHeight * i)) / texture->height;		// bottom left
 				newCoord[3].x = (spriteWidth * x) / texture->width;							// top left 
 				newCoord[3].y = (spriteHeight * i) / texture->height;						// top left 
-				textureCoordinates.push_back(newCoord);
+				framesCoordinates.push_back(newCoord);
 				framesCount++;
 				x++;
 				if (framesCount == config.framesAmount) return;
@@ -127,6 +131,6 @@ namespace engine
 	}
 	glm::vec2* animation::getCurrentFramesCoordinates()
 	{
-		return textureCoordinates[currentFrame];
+		return framesCoordinates[currentFrame];
 	}
 }
