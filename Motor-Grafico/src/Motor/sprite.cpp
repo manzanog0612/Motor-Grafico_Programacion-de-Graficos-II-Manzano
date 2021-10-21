@@ -91,7 +91,28 @@ namespace engine
 		baseUVCoords[3] = { 0.0f, 1.0f };
 
 		baseTexture = new textureData(textureImporter::loadTexture(filePathAtlas, invertImage));
-
+	}
+	sprite::~sprite()
+	{
+		delete baseTexture;
+		_renderer->deleteBaseBuffer(VAO, VBO, EBO);
+		_renderer->deleteExtraBuffer(bufferPosUVs, 1);
+		glDeleteTextures(1, &baseTexture->ID);
+		for (int i = 0; i < animations.size(); i++)
+		{
+			delete animations[i];
+		}
+	}
+	void sprite::draw()
+	{
+		_renderer->textureShader.use();
+		unsigned int texture = getCurrentTextureIDToDraw();
+		glBindTexture(GL_TEXTURE_2D, texture);
+		setShader(texture);
+		_renderer->drawRequest(model, VAO, _vertices, _renderer->textureShader.ID);
+	}
+	void sprite::modifyBaseTextureCoords(atlasCutConfig config)
+	{
 		float spriteWidth = 0;
 		float spriteHeight = 0;
 		if (config.useSize)
@@ -121,29 +142,7 @@ namespace engine
 			baseUVCoords[2].x, baseUVCoords[2].y,
 			baseUVCoords[3].x, baseUVCoords[3].y
 		};
-		_renderer->createExtraBuffer(bufferPosUVs, 1);
 		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_DYNAMIC_DRAW);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(2);
-	}
-	sprite::~sprite()
-	{
-		delete baseTexture;
-		_renderer->deleteBaseBuffer(VAO, VBO, EBO);
-		_renderer->deleteExtraBuffer(bufferPosUVs, 1);
-		glDeleteTextures(1, &baseTexture->ID);
-		for (int i = 0; i < animations.size(); i++)
-		{
-			delete animations[i];
-		}
-	}
-	void sprite::draw()
-	{
-		_renderer->textureShader.use();
-		unsigned int texture = getCurrentTextureIDToDraw();
-		glBindTexture(GL_TEXTURE_2D, texture);
-		setShader(texture);
-		_renderer->drawRequest(model, VAO, _vertices, _renderer->textureShader.ID);
 	}
 	void sprite::setShader(unsigned int texture)
 	{

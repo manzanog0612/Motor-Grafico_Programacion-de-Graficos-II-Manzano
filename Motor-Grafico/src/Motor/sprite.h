@@ -13,9 +13,9 @@ namespace engine
 	{
 	public:
 		sprite(renderer* render, const char* filePathImage, bool invertImage);
-		sprite(renderer* render, const char* filePathAtlas, bool invertImage, atlasCutConfig config);
 		~sprite();
 		void draw() override;
+		void modifyBaseTextureCoords(atlasCutConfig config);
 		textureData* createAnimationAtlas(const char* AtlasFilepath, bool invertImage);
 		void deleteAnimationAtlas(textureData* atlas);
 		int createAnimation(textureData* animationAtlasData, int columns, int rows);
