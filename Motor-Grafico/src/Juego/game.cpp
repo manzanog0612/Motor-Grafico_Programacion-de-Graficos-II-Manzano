@@ -9,7 +9,10 @@ game::game()
 	awesomeface = nullptr;
 	archer = nullptr;
 	triangle = nullptr;
+	triangle2 = nullptr;
+	triangle3 = nullptr;
 	quad = nullptr;
+	cam = nullptr;
 	colors[0] = glm::vec4(0, 0, 0, 0);
 	colors[1] = glm::vec4(1, 0, 0, 1);
 	colors[2] = glm::vec4(0, 1, 0, 1);
@@ -25,6 +28,16 @@ game::game()
 	t = 0;
 	currentColorIndex = 0;
 	currentColorIndex2 = 5;
+
+	archerRunLeftAnimationID = 0;
+	archerRunRightAnimationID = 0;
+	archerRunUpAnimationID = 0;
+	archerRunUpLeftAnimationID = 0;
+	archerRunUpRightAnimationID = 0;
+	archerRunDownAnimationID = 0;
+	archerRunDownLeftAnimationID = 0;
+	archerRunDownRightAnimationID = 0;
+
 }
 
 game::~game()
@@ -261,7 +274,6 @@ void game::deInit()
 	delete imageCampus;
 	delete container;
 	delete awesomeface;
-	archer->deleteAnimationAtlas(archerAtlas);
 	delete archer;
 	delete triangle;
 	delete quad;

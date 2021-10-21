@@ -61,7 +61,7 @@ namespace engine
 		_renderer->deleteBaseBuffer(VAO, VBO, EBO);
 		_renderer->deleteExtraBuffer(bufferPosUVs, 1);
 		glDeleteTextures(1, &baseTexture->ID);
-		for (int i = 0; i < animations.size(); i++)
+		for (unsigned int i = 0; i < animations.size(); i++)
 		{
 			delete animations[i];
 		}
@@ -76,8 +76,8 @@ namespace engine
 	}
 	void sprite::modifyBaseTextureCoords(atlasCutConfig config)
 	{
-		float spriteWidth = 0;
-		float spriteHeight = 0;
+		int spriteWidth = 0;
+		int spriteHeight = 0;
 		if (config.useSize)
 		{
 			spriteWidth = config.spriteWidth;
@@ -85,8 +85,8 @@ namespace engine
 		}
 		else
 		{
-			spriteWidth = baseTexture->width / config.columns;
-			spriteHeight = baseTexture->height / config.rows;
+			spriteWidth = (int)(baseTexture->width / config.columns);
+			spriteHeight = (int)(baseTexture->height / config.rows);
 		}
 
 		baseUVCoords[0].x = (spriteWidth + (spriteWidth * config.offsetX)) / baseTexture->width;		// top right
@@ -117,11 +117,11 @@ namespace engine
 		glUniform1fv(alphaLoc, 1, &(color.a));
 
 		unsigned int textureLoc = glGetUniformLocation(_renderer->textureShader.ID, "ourTexture");
-		glUniform1f(textureLoc, texture);
+		glUniform1f(textureLoc, (GLfloat)texture);
 	}
 	unsigned int sprite::getCurrentTextureIDToDraw()
 	{
-		for (int i = 0; i < animations.size(); i++)
+		for (unsigned int i = 0; i < animations.size(); i++)
 		{
 			if(animations[i]->isPlaying())
 			{
@@ -193,7 +193,7 @@ namespace engine
 	{
 		if (!animations[animationID]->isPlaying())
 		{
-			for (int i = 0; i < animations.size(); i++)
+			for (unsigned int i = 0; i < animations.size(); i++)
 			{
 				animations[i]->stop();
 			}
@@ -206,7 +206,7 @@ namespace engine
 	}
 	void sprite::stopAllAnimations()
 	{
-		for (int i = 0; i < animations.size(); i++)
+		for (unsigned int i = 0; i < animations.size(); i++)
 		{
 			animations[i]->stop();
 		}

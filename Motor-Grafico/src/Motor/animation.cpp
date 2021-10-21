@@ -12,7 +12,7 @@ namespace engine
 	}
 	animation::~animation()
 	{
-		for (int i = 0; i < framesCoordinates.size(); i++)
+		for (unsigned int i = 0; i < framesCoordinates.size(); i++)
 		{
 			delete[] framesCoordinates[i];
 		}
@@ -90,8 +90,8 @@ namespace engine
 	void animation::setAnimation(textureData* animationAtlasData, atlasCutConfig config)
 	{
 		texture = animationAtlasData;
-		float spriteWidth = 0;
-		float spriteHeight = 0;
+		int spriteWidth = 0;
+		int spriteHeight = 0;
 		if(config.useSize)
 		{
 			spriteWidth = config.spriteWidth;
@@ -99,8 +99,8 @@ namespace engine
 		}
 		else
 		{
-			spriteWidth = texture->width / config.columns;
-			spriteHeight = texture->height / config.rows;
+			spriteWidth = (int)(texture->width / config.columns);
+			spriteHeight = (int)(texture->height / config.rows);
 		}
 		int framesCount = 0;
 		int x = config.offsetX;

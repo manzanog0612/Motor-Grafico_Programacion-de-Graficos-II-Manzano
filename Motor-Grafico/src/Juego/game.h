@@ -34,7 +34,6 @@ private:
 	engine::camera* cam;
 	float cameraSpeed = 10.f;
 
-	engine::textureData* archerAtlas;
 	int archerRunLeftAnimationID;
 	int archerRunRightAnimationID;
 	int archerRunUpAnimationID;

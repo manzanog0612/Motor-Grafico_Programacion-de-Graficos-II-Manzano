@@ -29,8 +29,8 @@ namespace engine
 		int offsetY = 0;
 		int framesAmount = 1;
 		bool useSize = false;
-		int spriteWidth;
-		int spriteHeight;
+		int spriteWidth = 0;
+		int spriteHeight = 0;
 		friend class animation;
 		friend class sprite;
 	};

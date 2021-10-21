@@ -9,7 +9,7 @@ namespace engine
 		float height;
 	};
 
-	static class textureImporter
+	class textureImporter
 	{
 	public:
 		static textureData loadTexture(const char* filepath, bool invertVertical);
