@@ -30,12 +30,11 @@ namespace engine
 		currentTime += time::getDeltaTime() * animationSpeed;
 		if(currentTime > timeBetweenFrames)
 		{
-			currentTime = 0;
+			currentTime -= timeBetweenFrames;
 			currentFrame++;
 			if(currentFrame == framesCoordinates.size())
 			{
 				currentFrame = 0;
-				currentTime = 0;
 				if(repeat)
 				{
 					play();
