@@ -61,9 +61,14 @@ namespace engine
 	{
 		animationSpeed = speed;
 	}
-	void animation::setAnimationTime(float time)
+	void animation::setAnimationTimeBetweenFrames(float time)
 	{
 		timeBetweenFrames = time;
+	}
+	void animation::setAnimationFullTime(float time)
+	{
+		animationSpeed = 1;
+		timeBetweenFrames = time / framesCoordinates.size();
 	}
 	void animation::setAnimation(textureData* animationAtlasData, int columns, int rows)
 	{

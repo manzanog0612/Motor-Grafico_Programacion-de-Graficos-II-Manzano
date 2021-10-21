@@ -25,6 +25,8 @@ namespace engine
 		void stopAnimation(int animationID);
 		void stopAllAnimations();
 		void setAnimationSpeed(int animationID, float speed);
+		void setAnimationTimeBetweenFrames(int animationID, float time);
+		void setAnimationFullTime(int animationID, float time);
 	private:
 		void setShader(unsigned int texture);
 		unsigned int getCurrentTextureIDToDraw();

@@ -215,4 +215,12 @@ namespace engine
 	{
 		animations[animationID]->setAnimationSpeed(speed);
 	}
+	void sprite::setAnimationTimeBetweenFrames(int animationID, float time)
+	{
+		animations[animationID]->setAnimationTimeBetweenFrames(time);
+	}
+	void sprite::setAnimationFullTime(int animationID, float time)
+	{
+		animations[animationID]->setAnimationFullTime(time);
+	}
 }

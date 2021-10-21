@@ -252,14 +252,14 @@ void game::init()
 	archerRunAtlasConfig.CutByCount(10, 7, 0, 4, 8);
 	archerRunDownRightAnimationID = archer->createAnimation(archerRunAtlasConfig);
 
-	archer->setAnimationSpeed(archerRunRightAnimationID, runSpeed);
-	archer->setAnimationSpeed(archerRunLeftAnimationID, runSpeed);
-	archer->setAnimationSpeed(archerRunUpAnimationID, runSpeed);
-	archer->setAnimationSpeed(archerRunUpLeftAnimationID, runSpeed);
-	archer->setAnimationSpeed(archerRunUpRightAnimationID, runSpeed);
-	archer->setAnimationSpeed(archerRunDownAnimationID, runSpeed);
-	archer->setAnimationSpeed(archerRunDownLeftAnimationID, runSpeed);
-	archer->setAnimationSpeed(archerRunDownRightAnimationID, runSpeed);
+	archer->setAnimationFullTime(archerRunRightAnimationID, .5f);
+	archer->setAnimationFullTime(archerRunLeftAnimationID, .5f);
+	archer->setAnimationFullTime(archerRunUpAnimationID, .5f);
+	archer->setAnimationFullTime(archerRunUpLeftAnimationID, .5f);
+	archer->setAnimationFullTime(archerRunUpRightAnimationID, .5f);
+	archer->setAnimationFullTime(archerRunDownAnimationID, .5f);
+	archer->setAnimationFullTime(archerRunDownLeftAnimationID, .5f);
+	archer->setAnimationFullTime(archerRunDownRightAnimationID, .5f);
 
 	archer->setScale(5, 5, 5);
 	archer->setPos(0, 10, 0);

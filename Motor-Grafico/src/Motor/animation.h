@@ -23,7 +23,8 @@ namespace engine
 		bool isPlaying();
 		void repeatAnimation(bool active);
 		void setAnimationSpeed(float speed);
-		void setAnimationTime(float time);
+		void setAnimationTimeBetweenFrames(float time);
+		void setAnimationFullTime(float time);
 		void setAnimation(textureData* animationAtlasData, int columns, int rows);
 		void setAnimation(textureData* animationAtlasData, atlasCutConfig config);
 		unsigned int getTextureID();
