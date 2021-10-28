@@ -17,6 +17,7 @@ namespace engine
 	class window;
 	class renderer;
 	class input;
+	class collisionManager;
 
 	class ENGINE_API baseGame
 	{
@@ -62,6 +63,7 @@ namespace engine
 
 	protected:
 		renderer* currentRenderer;
+		collisionManager* currentCollisionManager;
 	private:
 		bool init_Internal(int windowSizeX, int windowSizeY, const char* windowName);
 		void deinit_Internal();

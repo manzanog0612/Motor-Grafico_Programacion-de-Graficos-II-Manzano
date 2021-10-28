@@ -5,6 +5,7 @@
 #include "window.h"
 #include "renderer.h"
 #include "input.h"
+#include "collisionManager.h"
 #include <random>
 #include <iostream>
 
@@ -16,6 +17,7 @@ namespace engine
         currentRenderer = NULL;
         currentInput = NULL;
         currentTimer = NULL;
+        currentCollisionManager = NULL;
     }
     baseGame::~baseGame()
     {
