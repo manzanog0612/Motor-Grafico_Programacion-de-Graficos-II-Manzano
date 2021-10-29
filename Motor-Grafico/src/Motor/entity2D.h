@@ -4,26 +4,19 @@
 
 namespace engine
 {
-
 	class collisionManager;
 
-	struct collider
-	{
-		float height;
-		float width;
-	};
+	enum class collisionType { up, down, left, right, none };
 
 	class ENGINE_API entity2D : public entity
 	{
 	public:
 		entity2D();
 		~entity2D();
-		void setCollider(float height, float width);
-		collider getCollider();
 		void setCollisionManager(collisionManager* colManager);
-		bool checkCollision(entity2D& target, float& xOverlap, float& yOverlap);
+		collisionType checkCollision(entity2D& target, float& xOverlap, float& yOverlap);
+		void applyCollisionRestrictions(collisionType colType, float xOverlap, float yOverlap, bool halfOverlap);
 	private:
 		collisionManager* colManager;
-		collider col;
 	};
 }

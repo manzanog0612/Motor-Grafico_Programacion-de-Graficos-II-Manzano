@@ -157,6 +157,20 @@ void game::update()
 		archer->stopAllAnimations();
 	}
 
+	// collision check
+	float overlapX = 0;
+	float overlapY = 0;
+
+	engine::collisionType colType = archer->checkCollision(*stefano, overlapX, overlapY);
+
+	if (colType != engine::collisionType::none)
+	{
+		std::cout << "overlapx = " << overlapX << std::endl;
+		std::cout << "overlapy = " << overlapY << std::endl;
+
+		archer->applyCollisionRestrictions(colType, overlapX, overlapY, false);
+	}
+
 
 	if(isKeyPressed(ENGINE_KEY_LEFT))
 	{
