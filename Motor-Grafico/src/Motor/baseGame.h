@@ -61,15 +61,19 @@ namespace engine
 		// ~ ENGINE ~  Returns a random color value. 
 		glm::vec4 getRandomColor();
 
+		// Collision
+		// ~ ENGINE ~  Activates collision on the given entity. 
+		void addCollider(entity2D* entity, bool isStatic);
+
 	protected:
 		renderer* currentRenderer;
-		collisionManager* currentCollisionManager;
 	private:
 		bool init_Internal(int windowSizeX, int windowSizeY, const char* windowName);
 		void deinit_Internal();
 		window* currentWindow;
 		input* currentInput;
 		time* currentTimer;
+		collisionManager* currentCollisionManager;
 		bool windowExitEvent();
 	};
 }

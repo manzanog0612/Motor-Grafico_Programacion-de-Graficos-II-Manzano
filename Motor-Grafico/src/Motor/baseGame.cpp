@@ -50,6 +50,8 @@ namespace engine
 
         currentInput = new input(currentWindow);
 
+        currentCollisionManager = new collisionManager();
+
         currentTimer = new time();
 
         return true;
@@ -68,6 +70,7 @@ namespace engine
                 glfwPollEvents();
                 currentTimer->updateDeltaTime(getCurrentTime());
                 update();
+                currentCollisionManager->updateCollisions();
                 currentRenderer->startDraw();
                 draw();
                 currentRenderer->endDraw();
@@ -115,6 +118,10 @@ namespace engine
         float b = getRandomNumber(0, 1);
         float a = getRandomNumber(0, 1);
         return glm::vec4(r, g, b, a);
+    }
+    void baseGame::addCollider(entity2D* entity, bool isStatic)
+    {
+        currentCollisionManager->addToCollisionList(entity, isStatic);
     }
     float baseGame::lerp(float v0, float v1, float t)
     {

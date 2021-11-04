@@ -11,8 +11,9 @@ namespace engine
 	public:
 		collisionManager();
 		~collisionManager();
-		void AddToCollisionList(entity2D* entityToAdd, bool isStatic);
-		void RemoveFromCollisionList(entity2D* entityToRemove);
+		void addToCollisionList(entity2D* entityToAdd, bool isStatic);
+		void removeFromCollisionList(entity2D* entityToRemove);
+		void updateCollisions();
 
 	private:
 		std::list<entity2D*> dynamicCollisionList;

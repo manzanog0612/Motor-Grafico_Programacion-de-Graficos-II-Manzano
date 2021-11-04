@@ -157,18 +157,6 @@ void game::update()
 		archer->stopAllAnimations();
 	}
 
-	// collision check
-	float overlapX = 0;
-	float overlapY = 0;
-
-	engine::collisionType colType = archer->checkCollision(*stefano, overlapX, overlapY);
-
-	if (colType != engine::collisionType::none)
-	{
-		archer->applyCollisionRestrictions(colType, overlapX, overlapY, false);
-	}
-
-
 	if(isKeyPressed(ENGINE_KEY_LEFT))
 	{
 		glm::vec3 movement = { engine::time::getDeltaTime() * -cameraSpeed, 0, 0 };
@@ -276,6 +264,11 @@ void game::init()
 	archer->setPos(0, 10, 0);
 
 	changeClearColor(glm::vec4(.25, .25, .5, 1));
+
+
+	addCollider(archer, false);
+	addCollider(stefano, true);
+	addCollider(container, true);
 }
 
 void game::deInit()
