@@ -40,7 +40,7 @@ namespace engine
 					currentCollision = d2->checkCollision(*d1, overlapX, overlapY);
 					if (currentCollision != collisionType::none)
 					{
-						d2->applyCollisionRestrictions(currentCollision, overlapX, overlapY, true);
+						d2->applyCollisionRestrictions(currentCollision, overlapX, overlapY, false);
 					}
 				}
 			}

@@ -267,7 +267,7 @@ void game::init()
 
 
 	addCollider(archer, false);
-	addCollider(stefano, false);
+	addCollider(stefano, true);
 	addCollider(container, true);
 }
 
