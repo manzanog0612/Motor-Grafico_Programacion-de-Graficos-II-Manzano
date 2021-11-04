@@ -64,6 +64,8 @@ namespace engine
 		// Collision
 		// ~ ENGINE ~  Activates collision on the given entity. 
 		void addCollider(entity2D* entity, bool isStatic);
+		// ~ ENGINE ~  Removes collision on the given entity. 
+		void removeCollider(entity2D* entity);
 
 	protected:
 		renderer* currentRenderer;

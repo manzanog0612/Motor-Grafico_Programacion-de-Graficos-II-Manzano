@@ -123,6 +123,10 @@ namespace engine
     {
         currentCollisionManager->addToCollisionList(entity, isStatic);
     }
+    void baseGame::removeCollider(entity2D* entity)
+    {
+        currentCollisionManager->removeFromCollisionList(entity);
+    }
     float baseGame::lerp(float v0, float v1, float t)
     {
         return v0 + t * (v1 - v0);
