@@ -165,9 +165,6 @@ void game::update()
 
 	if (colType != engine::collisionType::none)
 	{
-		std::cout << "overlapx = " << overlapX << std::endl;
-		std::cout << "overlapy = " << overlapY << std::endl;
-
 		archer->applyCollisionRestrictions(colType, overlapX, overlapY, false);
 	}
 

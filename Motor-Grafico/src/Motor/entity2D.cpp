@@ -13,7 +13,7 @@ namespace engine
 	}
 	entity2D::~entity2D()
 	{
-
+		if (colManager != NULL) colManager->RemoveFromCollisionList(this);
 	}
 	void entity2D::setCollisionManager(collisionManager* colManager)
 	{
