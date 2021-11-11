@@ -168,6 +168,12 @@ namespace engine
 	{
 		delete atlas;
 	}
+	int sprite::createAnimation()
+	{
+		animation* anim = new animation();
+		animations.push_back(anim);
+		return animations.size() - 1;
+	}
 	int sprite::createAnimation(atlasCutConfig config)
 	{
 		animation* anim = new animation();
@@ -188,6 +194,10 @@ namespace engine
 		anim->setAnimation(animationAtlasData, config);
 		animations.push_back(anim);
 		return animations.size() - 1;
+	}
+	void sprite::addFrameToAnimation(int animationID, int positionX, int positionY, int width, int height)
+	{
+		animations[animationID]->addFrameToAnimation(positionX, positionY, width, height);
 	}
 	void sprite::playAnimation(int animationID)
 	{

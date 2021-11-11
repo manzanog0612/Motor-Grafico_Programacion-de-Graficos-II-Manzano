@@ -129,6 +129,19 @@ namespace engine
 			x = 0;
 		}
 	}
+	void animation::addFrameToAnimation(int posX, int posY, int spriteWidth, int spriteHeight)
+	{
+		glm::vec2* newCoord = new glm::vec2[4];
+		newCoord[0].x = (spriteWidth + (spriteWidth * posX)) / texture->width;			// top right
+		newCoord[0].y = (spriteHeight * posY) / texture->height;						// top right
+		newCoord[1].x = (spriteWidth + (spriteWidth * posX)) / texture->width; 			// bottom right
+		newCoord[1].y = (spriteHeight + (spriteHeight * posY)) / texture->height;		// bottom right
+		newCoord[2].x = (spriteWidth * posX) / texture->width;							// bottom left
+		newCoord[2].y = (spriteHeight + (spriteHeight * posY)) / texture->height;		// bottom left
+		newCoord[3].x = (spriteWidth * posX) / texture->width;							// top left 
+		newCoord[3].y = (spriteHeight * posY) / texture->height;						// top left 
+		framesCoordinates.push_back(newCoord);
+	}
 	unsigned int animation::getTextureID()
 	{
 		return texture->ID;

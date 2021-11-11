@@ -228,7 +228,6 @@ void game::init()
 	awesomeface->setScale(glm::vec3(10, 10, 10));
 	awesomeface->setPos(glm::vec3(15, 0, 0));
 
-
 	archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
 	
 	engine::atlasCutConfig archerRunAtlasConfig;
@@ -271,8 +270,8 @@ void game::init()
 
 	changeClearColor(glm::vec4(.25, .25, .5, 1));
 
-
 	addCollider(archer, false);
+	addCollider(awesomeface, true);
 	addCollider(stefano, true);
 	addCollider(container, true);
 }
@@ -286,5 +285,7 @@ void game::deInit()
 	delete awesomeface;
 	delete archer;
 	delete triangle;
+	delete triangle2;
+	delete triangle3;
 	delete quad;
 }

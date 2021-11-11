@@ -27,6 +27,7 @@ namespace engine
 		void setAnimationFullTime(float time);
 		void setAnimation(textureData* animationAtlasData, int columns, int rows);
 		void setAnimation(textureData* animationAtlasData, atlasCutConfig config);
+		void addFrameToAnimation(int posX, int posY, int width, int height);
 		unsigned int getTextureID();
 		glm::vec2* getCurrentFramesCoordinates();
 	private:
