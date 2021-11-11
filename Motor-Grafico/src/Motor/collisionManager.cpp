@@ -21,6 +21,16 @@ namespace engine
 		staticCollisionList.remove(entityToRemove);
 		dynamicCollisionList.remove(entityToRemove);
 	}
+	bool collisionManager::isInCollisionList(entity2D* entityToCheck)
+	{
+		for (auto const& d1 : dynamicCollisionList) {
+			if (d1 == entityToCheck) return true;
+		}
+		for (auto const& s1 : staticCollisionList) {
+			if (s1 == entityToCheck) return true;
+		}
+		return false;
+	}
 	void collisionManager::updateCollisions()
 	{
 

@@ -162,7 +162,7 @@ void game::update()
 		glm::vec3 movement = { engine::time::getDeltaTime() * -cameraSpeed, 0, 0 };
 		cam->moveCamera(movement);
 	}
-	if (isKeyPressed(ENGINE_KEY_RIGHT))
+	else if (isKeyPressed(ENGINE_KEY_RIGHT))
 	{
 		glm::vec3 movement = { engine::time::getDeltaTime() * cameraSpeed, 0, 0 };
 		cam->moveCamera(movement);
@@ -172,10 +172,16 @@ void game::update()
 		glm::vec3 movement = { 0, engine::time::getDeltaTime() * cameraSpeed , 0 };
 		cam->moveCamera(movement);
 	}
-	if (isKeyPressed(ENGINE_KEY_DOWN))
+	else if (isKeyPressed(ENGINE_KEY_DOWN))
 	{
 		glm::vec3 movement = { 0, engine::time::getDeltaTime() * -cameraSpeed , 0 };
 		cam->moveCamera(movement);
+	}
+
+	if (isKeyDown(ENGINE_KEY_ENTER))
+	{
+		if (hasCollider(archer)) removeCollider(archer);
+		else addCollider(archer, false);
 	}
 }
 

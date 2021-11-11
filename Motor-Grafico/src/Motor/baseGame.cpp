@@ -127,6 +127,10 @@ namespace engine
     {
         currentCollisionManager->removeFromCollisionList(entity);
     }
+    bool baseGame::hasCollider(entity2D* entity)
+    {
+        return currentCollisionManager->isInCollisionList(entity);
+    }
     float baseGame::lerp(float v0, float v1, float t)
     {
         return v0 + t * (v1 - v0);

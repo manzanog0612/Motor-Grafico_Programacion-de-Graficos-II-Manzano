@@ -13,6 +13,7 @@ namespace engine
 		~collisionManager();
 		void addToCollisionList(entity2D* entityToAdd, bool isStatic);
 		void removeFromCollisionList(entity2D* entityToRemove);
+		bool isInCollisionList(entity2D* entityToCheck);
 		void updateCollisions();
 
 	private:
