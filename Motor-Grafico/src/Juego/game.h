@@ -15,9 +15,7 @@ public:
 
 private:
 	int currentColorIndex = 0;
-	int currentColorIndex2 = 0;
 	glm::vec4 nextColor;
-	glm::vec4 nextColor2;
 	glm::vec4 colors[colorsArraySize];
 	float t = 0;
 	float rotationSpeed = 0;

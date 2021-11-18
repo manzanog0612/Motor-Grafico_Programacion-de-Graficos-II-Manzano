@@ -20,13 +20,11 @@ game::game()
 	colors[5] = glm::vec4(0, 1, 1, 1);
 	colors[6] = glm::vec4(1, 0, 1, 1);
 	colors[7] = glm::vec4(1, 1, 1, 1);
-	nextColor = colors[0];
-	nextColor2 = colors[4];
+	nextColor = colors[4];
 	rotationSpeed = 2;
 	timeBetweenChanges = 1;
 	t = 0;
-	currentColorIndex = 0;
-	currentColorIndex2 = 5;
+	currentColorIndex = 5;
 
 	archerRunLeftAnimationID = 0;
 	archerRunRightAnimationID = 0;
@@ -60,24 +58,18 @@ void game::update()
 	t += engine::time::getDeltaTime();
 	if(t < timeBetweenChanges)
 	{
-		imageCampus->setColor(lerp(imageCampus->getColor(), nextColor2, t));
+		imageCampus->setColor(lerp(imageCampus->getColor(), nextColor, t));
 	}
 	else
 	{
 		t = 0;
+
 		currentColorIndex++;
-		if(currentColorIndex == colorsArraySize)
+		if (currentColorIndex == colorsArraySize)
 		{
 			currentColorIndex = 0;
 		}
 		nextColor = colors[currentColorIndex];
-
-		currentColorIndex2++;
-		if (currentColorIndex2 == colorsArraySize)
-		{
-			currentColorIndex2 = 0;
-		}
-		nextColor2 = colors[currentColorIndex2];
 	}
 	if(isKeyPressed(ENGINE_KEY_R))
 	{
