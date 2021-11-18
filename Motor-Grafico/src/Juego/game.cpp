@@ -181,22 +181,22 @@ void game::init()
 
 	triangle = new engine::shape(currentRenderer, 3);
 	triangle->setScale(3, 3, 3);
-	triangle->setPos(14, -10, 0);
+	triangle->setPos(-14, -10, 0);
 	triangle->setColor(1, 1, 0, 1);
 
 	triangle2 = new engine::shape(currentRenderer, 3);
 	triangle2->setScale(3, 3, 3);
-	triangle2->setPos(17, -10, 0);
+	triangle2->setPos(-17, -10, 0);
 	triangle2->setColor(1, 1, 0, 1);
 
 	triangle3 = new engine::shape(currentRenderer, 3);
 	triangle3->setScale(3, 3, 3);
-	triangle3->setPos(15.5, -7, 0);
+	triangle3->setPos(-15.5, -7, 0);
 	triangle3->setColor(1, 1, 0, 1);
 
 	quad = new engine::shape(currentRenderer, 4);
 	quad->setScale(5, 5, 5);
-	quad->setPos(-15, -10, 0);
+	quad->setPos(15, -10, 0);
 	quad->setColor(0, 1, 1, 1);
 	
 	imageCampus = new engine::sprite(currentRenderer, "../res/assets/textures/Image Campus.png", true);
@@ -255,6 +255,10 @@ void game::init()
 
 	addCollider(archer, false);
 	addCollider(awesomeface, false);
+	addCollider(triangle, false);
+	addCollider(triangle2, false);
+	addCollider(triangle3, false);
+	addCollider(quad, true);
 	addCollider(container, true);
 }
 
