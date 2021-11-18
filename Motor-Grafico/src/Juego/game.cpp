@@ -254,7 +254,7 @@ void game::init()
 	changeClearColor(glm::vec4(.25, .25, .5, 1));
 
 	addCollider(archer, false);
-	addCollider(awesomeface, true);
+	addCollider(awesomeface, false);
 	addCollider(container, true);
 }
 
