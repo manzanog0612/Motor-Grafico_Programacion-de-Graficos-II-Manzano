@@ -22,7 +22,6 @@ private:
 	float t = 0;
 	float rotationSpeed = 0;
 	float timeBetweenChanges = 0;
-	engine::sprite* stefano;
 	engine::sprite* imageCampus;
 	engine::sprite* container;
 	engine::sprite* awesomeface;

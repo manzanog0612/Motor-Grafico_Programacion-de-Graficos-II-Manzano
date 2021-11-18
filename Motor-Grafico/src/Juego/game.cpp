@@ -3,7 +3,6 @@
 
 game::game()
 {
-	stefano = nullptr;
 	imageCampus = nullptr;
 	container = nullptr;
 	awesomeface = nullptr;
@@ -37,7 +36,6 @@ game::game()
 	archerRunDownAnimationID = 0;
 	archerRunDownLeftAnimationID = 0;
 	archerRunDownRightAnimationID = 0;
-
 }
 
 game::~game()
@@ -47,7 +45,6 @@ game::~game()
 
 void game::draw()
 {
-	stefano->draw();
 	imageCampus->draw();
 	container->draw();
 	awesomeface->draw();
@@ -63,7 +60,6 @@ void game::update()
 	t += engine::time::getDeltaTime();
 	if(t < timeBetweenChanges)
 	{
-		stefano->setColor(lerp(stefano->getColor(), nextColor, t));
 		imageCampus->setColor(lerp(imageCampus->getColor(), nextColor2, t));
 	}
 	else
@@ -82,16 +78,6 @@ void game::update()
 			currentColorIndex2 = 0;
 		}
 		nextColor2 = colors[currentColorIndex2];
-	}
-	if (isKeyPressed(ENGINE_KEY_Q))
-	{
-		float rot = stefano->getRot().z + rotationSpeed * engine::time::getDeltaTime();
-		stefano->setRot(glm::vec3(0, 0, rot));
-	}
-	if (isKeyPressed(ENGINE_KEY_E))
-	{
-		float rot = stefano->getRot().z - rotationSpeed * engine::time::getDeltaTime();
-		stefano->setRot(glm::vec3(0, 0, rot));
 	}
 	if(isKeyPressed(ENGINE_KEY_R))
 	{
@@ -212,9 +198,6 @@ void game::init()
 	quad->setScale(5, 5, 5);
 	quad->setPos(-15, -10, 0);
 	quad->setColor(0, 1, 1, 1);
-
-	stefano = new engine::sprite(currentRenderer, "../res/assets/textures/stefanito.png", true);
-	stefano->setScale(glm::vec3(10, 10, 10));
 	
 	imageCampus = new engine::sprite(currentRenderer, "../res/assets/textures/Image Campus.png", true);
 	imageCampus->setScale(glm::vec3(30, 20, 10));
@@ -272,14 +255,12 @@ void game::init()
 
 	addCollider(archer, false);
 	addCollider(awesomeface, true);
-	addCollider(stefano, true);
 	addCollider(container, true);
 }
 
 void game::deInit()
 {
 	delete cam;
-	delete stefano;
 	delete imageCampus;
 	delete container;
 	delete awesomeface;
