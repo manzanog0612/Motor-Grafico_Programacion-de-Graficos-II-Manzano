@@ -57,10 +57,10 @@ namespace engine
 	}
 	sprite::~sprite()
 	{
-		delete baseTexture;
 		_renderer->deleteBaseBuffer(VAO, VBO, EBO);
 		_renderer->deleteExtraBuffer(bufferPosUVs, 1);
 		glDeleteTextures(1, &baseTexture->ID);
+		delete baseTexture;
 		for (unsigned int i = 0; i < animations.size(); i++)
 		{
 			delete animations[i];

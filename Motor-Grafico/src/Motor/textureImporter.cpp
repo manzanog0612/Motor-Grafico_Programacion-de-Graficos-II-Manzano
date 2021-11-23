@@ -1,4 +1,5 @@
 #include "textureImporter.h"
+#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #include "glew.h"
 #include "glfw3.h"
@@ -12,15 +13,15 @@ namespace engine
 		int textureWidth;
 		int textureHeight;
 		int nrChannels;
-		glGenTextures(1, &newTextureID);
-		glBindTexture(GL_TEXTURE_2D, newTextureID);
+		glGenTextures(1, &newTextureID); //se generan la textura
+		glBindTexture(GL_TEXTURE_2D, newTextureID); //se bindea (se marca como la textura con la que se va a trabajar)
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //le esta diciendo ene el caso de que se haga mas chiquita la textura como debería fitrarse (en este caso, se expande nomas)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-		stbi_set_flip_vertically_on_load(invertVertical);
+		stbi_set_flip_vertically_on_load(invertVertical); //porque opengl espera las texturas al reves xd
 		unsigned char* data = stbi_load(filepath, &textureWidth, &textureHeight, &nrChannels, 0);
 		if (data)
 		{
