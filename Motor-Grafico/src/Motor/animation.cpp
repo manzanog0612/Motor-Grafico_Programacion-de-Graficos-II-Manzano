@@ -77,7 +77,7 @@ namespace engine
 		for (int i = 0; i < rows; i++)
 		{
 			for (int j = 0; j < columns; j++)
-			{
+			{			
 				glm::vec2* newCoord = new glm::vec2[4];
 				newCoord[0].x = (spriteWidth + (spriteWidth * j)) / texture->width;			// top right
 				newCoord[0].y = (spriteHeight * i) / texture->height;						// top right

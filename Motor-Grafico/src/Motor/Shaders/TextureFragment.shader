@@ -14,5 +14,6 @@ void main()
     {
         discard;
     }
+
     FragColor = texColor * vec4(ourColor.x * color.x, ourColor.y * color.y, ourColor.z * color.z, a);
 }

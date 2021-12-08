@@ -7,6 +7,19 @@
 
 namespace engine
 {
+	sprite::sprite()
+	{
+		VAO = 0;
+		VBO = 0;
+		EBO = 0;
+		_vertices = 0;
+		_renderer = nullptr;
+
+		baseUVCoords[0] = { 1.0f, 1.0f };
+		baseUVCoords[1] = { 1.0f, 0.0f };
+		baseUVCoords[2] = { 0.0f, 0.0f };
+		baseUVCoords[3] = { 0.0f, 1.0f };
+	}
 	sprite::sprite(renderer* render, const char* filePathImage, bool invertImage)
 	{
 		VAO = 0;
@@ -15,45 +28,12 @@ namespace engine
 		_vertices = 0;
 		_renderer = render;
 
-		float vertex[24] =
-		{
-			 0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,
-			 0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,
-			-0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,
-			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f
-		};
-		unsigned int indices[6] =
-		{
-			0, 1, 3,
-			1, 2, 3
-		};
-		_renderer->createBaseBuffer(VAO, VBO, EBO);
-		_renderer->bindBaseBufferRequest(VAO, VBO, EBO, vertex, sizeof(vertex) , indices, sizeof(indices));
-		_vertices = 6;
-
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-		glEnableVertexAttribArray(0);
-		glEnableVertexAttribArray(1);
-
 		baseUVCoords[0] = { 1.0f, 1.0f };
 		baseUVCoords[1] = { 1.0f, 0.0f };
 		baseUVCoords[2] = { 0.0f, 0.0f };
 		baseUVCoords[3] = { 0.0f, 1.0f };
 
-		float UVs[8] =
-		{
-			baseUVCoords[0].x, baseUVCoords[0].y,
-			baseUVCoords[1].x, baseUVCoords[1].y,
-			baseUVCoords[2].x, baseUVCoords[2].y,
-			baseUVCoords[3].x, baseUVCoords[3].y
-		};
-		_renderer->createExtraBuffer(bufferPosUVs, 1);
-		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_DYNAMIC_DRAW);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(2);
-
-		baseTexture = new textureData(textureImporter::loadTexture(filePathImage, invertImage));
+		setTexture(render, filePathImage, invertImage);
 	}
 	sprite::~sprite()
 	{
@@ -232,5 +212,49 @@ namespace engine
 	void sprite::setAnimationFullTime(int animationID, float time)
 	{
 		animations[animationID]->setAnimationFullTime(time);
+	}
+	void sprite::setTextureCoordinates(glm::vec2 coord1, glm::vec2 coord2, glm::vec2 coord3, glm::vec2 coord4)
+	{
+		baseUVCoords[0] = coord1;
+		baseUVCoords[1] = coord2;
+		baseUVCoords[2] = coord3;
+		baseUVCoords[3] = coord4;
+	}
+	void sprite::setTexture(renderer* render, const char* filePathImage, bool invertImage)
+	{
+		float vertex[24] =
+		{
+			 0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,
+			 0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,
+			-0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f
+		};
+		unsigned int indices[6] =
+		{
+			0, 1, 3,
+			1, 2, 3
+		};
+		_renderer->createBaseBuffer(VAO, VBO, EBO);
+		_renderer->bindBaseBufferRequest(VAO, VBO, EBO, vertex, sizeof(vertex), indices, sizeof(indices));
+		_vertices = 6;
+
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+
+		float UVs[8] =
+		{
+			baseUVCoords[0].x, baseUVCoords[0].y,
+			baseUVCoords[1].x, baseUVCoords[1].y,
+			baseUVCoords[2].x, baseUVCoords[2].y,
+			baseUVCoords[3].x, baseUVCoords[3].y
+		};
+		_renderer->createExtraBuffer(bufferPosUVs, 1);
+		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_DYNAMIC_DRAW);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(2);
+
+		baseTexture = new textureData(textureImporter::loadTexture(filePathImage, invertImage));
 	}
 }

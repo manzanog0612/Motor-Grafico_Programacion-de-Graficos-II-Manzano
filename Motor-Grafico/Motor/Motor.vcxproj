@@ -32,7 +32,10 @@
     <ClCompile Include="..\src\Motor\sprite.cpp" />
     <ClCompile Include="..\src\Motor\stb_image.cpp" />
     <ClCompile Include="..\src\Motor\textureImporter.cpp" />
+    <ClCompile Include="..\src\Motor\tile.cpp" />
+    <ClCompile Include="..\src\Motor\tileMap.cpp" />
     <ClCompile Include="..\src\Motor\time.cpp" />
+    <ClCompile Include="..\src\Motor\tinyxml2.cpp" />
     <ClCompile Include="..\src\Motor\window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -52,7 +55,10 @@
     <ClInclude Include="..\src\Motor\sprite.h" />
     <ClInclude Include="..\src\Motor\stb_image.h" />
     <ClInclude Include="..\src\Motor\textureImporter.h" />
+    <ClInclude Include="..\src\Motor\tile.h" />
+    <ClInclude Include="..\src\Motor\tileMap.h" />
     <ClInclude Include="..\src\Motor\time.h" />
+    <ClInclude Include="..\src\Motor\tinyxml2.h" />
     <ClInclude Include="..\src\Motor\window.h" />
   </ItemGroup>
   <ItemGroup>

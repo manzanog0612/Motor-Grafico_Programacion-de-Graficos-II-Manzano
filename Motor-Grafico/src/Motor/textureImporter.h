@@ -1,7 +1,6 @@
 #pragma once
 namespace engine
 {
-
 	struct textureData
 	{
 		unsigned int ID;

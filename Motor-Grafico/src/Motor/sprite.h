@@ -12,6 +12,7 @@ namespace engine
 	class ENGINE_API sprite : public entity2D
 	{
 	public:
+		sprite();
 		sprite(renderer* render, const char* filePathImage, bool invertImage);
 		~sprite();
 		void draw() override;
@@ -29,6 +30,8 @@ namespace engine
 		void setAnimationSpeed(int animationID, float speed);
 		void setAnimationTimeBetweenFrames(int animationID, float time);
 		void setAnimationFullTime(int animationID, float time);
+		void setTextureCoordinates(glm::vec2 coord1, glm::vec2 coord2, glm::vec2 coord3, glm::vec2 coord4);
+		void setTexture(renderer* render, const char* filePathImage, bool invertImage);
 	private:
 		void setShader(unsigned int texture);
 		unsigned int getCurrentTextureIDToDraw();
