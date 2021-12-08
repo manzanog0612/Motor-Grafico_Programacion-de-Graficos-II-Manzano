@@ -37,14 +37,6 @@ namespace engine
 	}
 	sprite::~sprite()
 	{
-		_renderer->deleteBaseBuffer(VAO, VBO, EBO);
-		_renderer->deleteExtraBuffer(bufferPosUVs, 1);
-		glDeleteTextures(1, &baseTexture->ID);
-		delete baseTexture;
-		for (unsigned int i = 0; i < animations.size(); i++)
-		{
-			delete animations[i];
-		}
 	}
 	void sprite::draw()
 	{
@@ -222,6 +214,7 @@ namespace engine
 	}
 	void sprite::setTexture(renderer* render, const char* filePathImage, bool invertImage)
 	{
+		_renderer = render;
 		float vertex[24] =
 		{
 			 0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,
@@ -256,5 +249,16 @@ namespace engine
 		glEnableVertexAttribArray(2);
 
 		baseTexture = new textureData(textureImporter::loadTexture(filePathImage, invertImage));
+	}
+	void sprite::deinit()
+	{
+		_renderer->deleteBaseBuffer(VAO, VBO, EBO);
+		_renderer->deleteExtraBuffer(bufferPosUVs, 1);
+		glDeleteTextures(1, &baseTexture->ID);
+		delete baseTexture;
+		for (unsigned int i = 0; i < animations.size(); i++)
+		{
+			delete animations[i];
+		}
 	}
 }

@@ -9,6 +9,7 @@
 #include "shape.h"
 #include "sprite.h"
 #include "camera.h"
+#include "tileMap.h"
 
 
 namespace engine

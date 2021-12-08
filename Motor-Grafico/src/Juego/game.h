@@ -20,15 +20,16 @@ private:
 	float t = 0;
 	float rotationSpeed = 0;
 	float timeBetweenChanges = 0;
-	engine::sprite* imageCampus;
-	engine::sprite* container;
-	engine::sprite* awesomeface;
+	//engine::sprite* imageCampus;
+	//engine::sprite* container;
+	//engine::sprite* awesomeface;
 	engine::sprite* archer;
-	engine::shape* triangle;
-	engine::shape* triangle2;
-	engine::shape* triangle3;
-	engine::shape* quad;
+	//engine::shape* triangle;
+	//engine::shape* triangle2;
+	//engine::shape* triangle3;
+	//engine::shape* quad;
 	engine::camera* cam;
+	engine::tileMap* tileMap;
 	float cameraSpeed = 10.f;
 
 	int archerRunLeftAnimationID;
@@ -39,5 +40,5 @@ private:
 	int archerRunDownAnimationID;
 	int archerRunDownLeftAnimationID;
 	int archerRunDownRightAnimationID;
-	float runSpeed = 12.5f;
+	float runSpeed = 30;
 };

@@ -8,7 +8,7 @@ namespace engine
 		this->currentRenderer = currentRenderer;
 
 		//TODO agregar propiedades/posibilidad de camara ortogonal
-		projectionMatrix = glm::perspective(glm::radians(90.0f), (float)currentRenderer->getCurrentWindow()->getWidth() / (float)currentRenderer->getCurrentWindow()->getHeight(), 0.1f, 100.0f);
+		projectionMatrix = glm::perspective(glm::radians(90.0f), (float)currentRenderer->getCurrentWindow()->getWidth() / (float)currentRenderer->getCurrentWindow()->getHeight(), 0.1f, 500.0f);
 		this->currentRenderer->setProjectionMatrix(projectionMatrix);
 		setCameraTransform(position, lookPosition, upVector);
 	}
