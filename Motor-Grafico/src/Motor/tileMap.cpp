@@ -110,8 +110,8 @@ namespace engine
 		int columns = pTileset->IntAttribute("columns");  // Columns of Tiles in the Tileset
 		int rows = tileCount / columns;
 
-		imagePath = "../res/assets/textures/Cottage_Tileset_Alpha.png";																//
-		//imagePath += pTileset->FirstChildElement("image")->Attribute("source");			// Loading Textures
+		imagePath = "../res/assets/";																//
+		imagePath += pTileset->FirstChildElement("image")->Attribute("source");			// Loading Textures
 		textureData textData = textureImporter::loadTexture(imagePath.c_str(), true);
 		setTexture(&textData);// D3DCOLOR_XRGB(255, 255, 255))); //
 
@@ -132,15 +132,6 @@ namespace engine
 											  glm::vec2((tileX + tileWidth) / imageWidth, (tileY + tileHeight) / imageHeight),// bottom right
 											  glm::vec2(tileX / imageWidth, (tileY + tileHeight) / imageHeight),// bottom left
 											  glm::vec2(tileX / imageWidth, tileY / imageHeight));// top left tileX / imageWidth, tileY / imageHeight
-
-				// top right
-				// top right
-				// bottom right
-				// bottom right
-				// bottom left
-				// bottom left
-				// top left 
-				// top left 
 
 				tileX += tileWidth;
 				setTile(newTile);
@@ -189,28 +180,14 @@ namespace engine
 			}
 
 			while (pData) {
-				std::vector<int> tileGids = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-												0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-												0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-												0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-												0,0,0,7,8,8,27,15,0,0,0,0,0,0,0,
-												0,0,0,7,14,14,12,15,0,0,0,0,0,0,0,
-												0,0,0,7,26,25,28,8,15,0,0,0,0,0,0,
-												0,0,0,7,14,14,14,14,15,7,27,27,15,0,0,
-												0,0,0,7,14,14,14,14,15,7,14,12,15,0,0,
-												0,0,0,7,14,14,14,14,29,30,14,14,15,0,0,
-												0,0,0,7,14,14,14,14,15,7,14,14,15,0,0,
-												0,0,0,19,20,20,20,20,21,19,20,20,21,0,0,
-												0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-												0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-												0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
-				//for (tinyxml2::XMLElement* pTile = pData->FirstChildElement("tile");
-				//	pTile != NULL;
-				//	pTile = pTile->NextSiblingElement("tile"))
-				//{
-				//	unsigned int gid = std::atoi(pTile->Attribute("gid")); // tile's id is saved
-				//	tileGids.push_back(gid);
-				//}
+				std::vector<int> tileGids;
+				for (tinyxml2::XMLElement* pTile = pData->FirstChildElement("tile");
+					pTile != NULL;
+					pTile = pTile->NextSiblingElement("tile"))
+				{
+					unsigned int gid = std::atoi(pTile->Attribute("gid")); // tile's id is saved
+					tileGids.push_back(gid);
+				}
 
 				int gid = 0;
 				for (int y = 0; y < height; y++) {
@@ -230,16 +207,16 @@ namespace engine
 		return true;
 	}
 
-	void tileMap::checkCollision(entity2D& object) 
+	bool tileMap::checkCollision(entity2D& object) 
 	{
 		convertedPosX = object.getPos().x + (width / 2) * tileWidth;
 		convertedPosY = object.getPos().y - (height / 2) * tileHeight;
 
 		int left_tile = convertedPosX / tileWidth;
-		int right_tile = (convertedPosX + object.getScale().x * 2) / tileWidth;
+		int right_tile = (convertedPosX + object.getScale().x * 3) / tileWidth;
 
 		int top_tile = (convertedPosY / tileHeight) * -1;
-		int bottom_tile = ((convertedPosY - object.getScale().y * 2) / tileHeight) * -1; // Se resta porque el eje Y crece hacia arriba
+		int bottom_tile = ((convertedPosY - object.getScale().y * 3) / tileHeight) * -1; // Se resta porque el eje Y crece hacia arriba
 
 		if (left_tile < 0)
 			left_tile = 0;
@@ -286,20 +263,25 @@ namespace engine
 							std::cout << "overlapy = " << overlapY << std::endl;
 
 							object.applyCollisionRestrictions(colType, overlapX, overlapY, false);
+							return true;
 						}
-
-						//if (tileMapGrid[k][j][i].checkCollision(object) == CollisionHorizontalRight ||
-						//	tileMapGrid[k][j][i].checkCollision(object) == CollisionHorizontalLeft)
-						//	object.returnToPreviusPosH();
-						//
-						//if (tileMapGrid[k][j][i].checkCollision(object) == CollisionVerticalUp)
-						//	object.returnToPreviusPos(object.getPos().x, object.previusPosY() + 0.2);
-						//
-						//else if (_tileMapGrid[k][j][i].checkCollision(object) == CollisionVerticalDown)
-						//	object.returnToPreviusPos(object.getPos().x, object.previusPosY() - 0.2);
 					}
 				}
 			}
 		}
+
+		return false;
+	}
+	int tileMap::getWidth()
+	{
+		return width;
+	}
+	int tileMap::getHeight()
+	{
+		return height;
+	}
+	std::vector<engine::tile**> tileMap::getTilesGrid()
+	{
+		return tileMapGrid;
 	}
 }

@@ -22,7 +22,12 @@ namespace engine
 		void draw();
 
 		bool importTileMap(std::string filePath);
-		void checkCollision(entity2D& object);
+		bool checkCollision(entity2D& object);
+
+		int getWidth();
+		int getHeight();
+
+		std::vector<engine::tile**> getTilesGrid();
 
 	private:
 		std::vector<engine::tile> tiles;

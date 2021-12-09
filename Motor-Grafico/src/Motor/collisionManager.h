@@ -1,5 +1,6 @@
 #pragma once
 #include <list>
+#include "tileMap.h"
 
 namespace engine
 {
@@ -15,6 +16,7 @@ namespace engine
 		void removeFromCollisionList(entity2D* entityToRemove);
 		bool isInCollisionList(entity2D* entityToCheck);
 		void updateCollisions();
+		void updateCollisionsInTileMap(engine::tileMap* tileMap);
 
 	private:
 		std::list<entity2D*> dynamicCollisionList;

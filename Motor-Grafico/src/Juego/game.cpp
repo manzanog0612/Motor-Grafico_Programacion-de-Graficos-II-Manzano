@@ -5,7 +5,7 @@ game::game()
 {
 	//imageCampus = nullptr;
 	//container = nullptr;
-	//awesomeface = nullptr;
+	awesomeface = nullptr;
 	archer = nullptr;
 	//triangle = nullptr;
 	//triangle2 = nullptr;
@@ -44,15 +44,16 @@ game::~game()
 
 void game::draw()
 {
+	tileMap->draw();
 	//imageCampus->draw();
 	//container->draw();
-	//awesomeface->draw();
+	awesomeface->draw();
 	//triangle->draw();
 	//triangle2->draw();
 	//triangle3->draw();
 	//quad->draw();
 
-	tileMap->draw();
+	
 	archer->draw();
 }
 
@@ -175,7 +176,10 @@ void game::update()
 		else addCollider(archer, false);
 	}
 
-	tileMap->checkCollision(*archer);
+	updateCollisions(tileMap);
+
+	//tileMap->checkCollision(*archer);
+	//tileMap->checkCollision(*awesomeface);
 }
 
 void game::init()
@@ -224,9 +228,9 @@ void game::init()
 	//container->setScale(glm::vec3(10, 10, 10));
 	//container->setPos(glm::vec3(-15, 0, 0));
 	//
-	//awesomeface = new engine::sprite(currentRenderer, "../res/assets/textures/awesomeface.png", true);
-	//awesomeface->setScale(glm::vec3(10, 10, 10));
-	//awesomeface->setPos(glm::vec3(15, 0, 0));
+	awesomeface = new engine::sprite(currentRenderer, "../res/assets/textures/awesomeface.png", true);
+	awesomeface->setScale(glm::vec3(15, 15, 10));
+	awesomeface->setPos(glm::vec3(-80, 0, 0));
 
 	archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
 	
@@ -272,7 +276,8 @@ void game::init()
 	//changeClearColor(glm::vec4(.25, .25, .5, 1));
 
 	addCollider(archer, false);
-	//addCollider(awesomeface, false);
+	addCollider(awesomeface, false);
+	
 	//addCollider(triangle, false);
 	//addCollider(triangle2, false);
 	//addCollider(triangle3, false);
@@ -287,8 +292,8 @@ void game::deInit()
 	//delete imageCampus;
 	//container->deinit();
 	//delete container;
-	//awesomeface->deinit();
-	//delete awesomeface;
+	awesomeface->deinit();
+	delete awesomeface;
 	archer->deinit();
 	delete archer;
 	//delete triangle;

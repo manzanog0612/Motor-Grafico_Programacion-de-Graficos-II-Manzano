@@ -22,7 +22,7 @@ private:
 	float timeBetweenChanges = 0;
 	//engine::sprite* imageCampus;
 	//engine::sprite* container;
-	//engine::sprite* awesomeface;
+	engine::sprite* awesomeface;
 	engine::sprite* archer;
 	//engine::shape* triangle;
 	//engine::shape* triangle2;

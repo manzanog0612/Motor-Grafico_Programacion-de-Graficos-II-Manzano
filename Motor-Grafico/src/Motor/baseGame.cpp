@@ -70,7 +70,7 @@ namespace engine
                 glfwPollEvents();
                 currentTimer->updateDeltaTime(getCurrentTime());
                 update();
-                currentCollisionManager->updateCollisions();
+                //currentCollisionManager->updateCollisions();
                 currentRenderer->startDraw();
                 draw();
                 currentRenderer->endDraw();
@@ -130,6 +130,10 @@ namespace engine
     bool baseGame::hasCollider(entity2D* entity)
     {
         return currentCollisionManager->isInCollisionList(entity);
+    }
+    void baseGame::updateCollisions(engine::tileMap* tileMap)
+    {
+        currentCollisionManager->updateCollisionsInTileMap(tileMap);
     }
     float baseGame::lerp(float v0, float v1, float t)
     {

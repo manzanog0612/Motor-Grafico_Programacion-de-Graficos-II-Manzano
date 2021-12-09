@@ -69,9 +69,11 @@ namespace engine
 		void removeCollider(entity2D* entity);
 		// ~ ENGINE ~  Check if given entity has collider. 
 		bool hasCollider(entity2D* entity);
-
+		// ~ ENGINE ~  Set's the call for the collision checking. 
+		void updateCollisions(engine::tileMap* tileMap);
 	protected:
 		renderer* currentRenderer;
+		
 	private:
 		bool init_Internal(int windowSizeX, int windowSizeY, const char* windowName);
 		void deinit_Internal();
