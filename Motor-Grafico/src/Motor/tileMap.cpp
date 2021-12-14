@@ -36,11 +36,6 @@ namespace engine
 	{
 		SetConsoleTextAttribute(h, cmap[s]);        // need to add some checking ... job for another day
 	}
-
-	void ClearScrollback()
-	{
-		std::cout << "\x1B[3J\x1B[H";
-	}
 	//
 
 	tileMap::tileMap(renderer* render)
@@ -101,8 +96,8 @@ namespace engine
 	{
 		//currentRender.setCurrentTexture(texture);
 
-		float mapWidth = -(width * tileWidth) / 2;
-		float mapHeight = (height * tileHeight) / 2;
+		float mapWidth = -(width * tileWidth) / 2.0f;
+		float mapHeight = (height * tileHeight) / 2.0f;
 
 		for (int i = 0; i < tileMapGrid.size(); i++) 
 		{
@@ -169,7 +164,7 @@ namespace engine
 				newTile.setTextureCoordinates(glm::vec2((tileX + tileWidth) / imageWidth, tileY / imageHeight), // top right
 											  glm::vec2((tileX + tileWidth) / imageWidth, (tileY + tileHeight) / imageHeight),// bottom right
 											  glm::vec2(tileX / imageWidth, (tileY + tileHeight) / imageHeight),// bottom left
-											  glm::vec2(tileX / imageWidth, tileY / imageHeight));// top left tileX / imageWidth, tileY / imageHeight
+											  glm::vec2(tileX / imageWidth, tileY / imageHeight));// top left
 
 				tileX += tileWidth;
 				setTile(newTile);

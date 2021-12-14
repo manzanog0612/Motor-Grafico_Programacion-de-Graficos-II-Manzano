@@ -182,8 +182,8 @@ void game::update()
 
 void game::init()
 {
-	glm::vec3 camStartingPos = { 0, 0, 150 };
-	glm::vec3 camLookPos = { 0, 0, 0 };
+	glm::vec3 camStartingPos = { 0, 50, 150 };
+	glm::vec3 camLookPos = { 0, 50, 0 };
 	glm::vec3 camUpVector = { 0, 1, 0 };
 	cam = new engine::camera(currentRenderer, camStartingPos, camLookPos, camUpVector);
 	tileMap = new engine::tileMap(currentRenderer);
@@ -269,7 +269,7 @@ void game::init()
 	archer->setScale(32, 32, 1);
 	archer->setPos(-80, 20, 0);
 
-	changeClearColor(glm::vec4(1, 0, 0, 1));
+	changeClearColor(glm::vec4(0, 0, 0, 1));
 	//changeClearColor(glm::vec4(.25, .25, .5, 1));
 
 	addCollider(archer, false);
