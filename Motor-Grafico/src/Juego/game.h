@@ -30,7 +30,7 @@ private:
 	//engine::shape* quad;
 	engine::camera* cam;
 	engine::tileMap* tileMap;
-	float cameraSpeed = 10.f;
+	float cameraSpeed = 30.f;
 
 	int archerRunLeftAnimationID;
 	int archerRunRightAnimationID;
@@ -40,5 +40,5 @@ private:
 	int archerRunDownAnimationID;
 	int archerRunDownLeftAnimationID;
 	int archerRunDownRightAnimationID;
-	float runSpeed = 30;
+	float runSpeed = 50;
 };

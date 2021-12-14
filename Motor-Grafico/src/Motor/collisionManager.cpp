@@ -75,12 +75,15 @@ namespace engine
 					float overlapY = 0;
 					collisionType currentCollision = d1->checkCollision(*d2, overlapX, overlapY);
 
-
 					if (currentCollision != collisionType::none)
 					{
 						d1->applyCollisionRestrictions(currentCollision, overlapX, overlapY, true);
 						d2->applyCollisionRestrictions(currentCollision, -overlapX, -overlapY, true);
 					}
+				}
+				else
+				{
+					tileMap->checkCollision(*d1);
 				}
 			}
 		}

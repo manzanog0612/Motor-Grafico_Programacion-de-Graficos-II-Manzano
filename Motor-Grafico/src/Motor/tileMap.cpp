@@ -2,9 +2,47 @@
 #include "tinyxml2.h"
 #include "textureImporter.h"
 #include <iostream>
-
+//
+#include <map>
+#include <windows.h>
+//
 namespace engine
 {
+	//
+	std::map<std::string, int> cmap = {
+						{ "Black"       , 0  },
+						{ "Blue"        , 1  },
+						{ "Green"       , 2  },
+						{ "Aqua"        , 3  },
+						{ "Red"         , 4  },
+						{ "Purple"      , 5  },
+						{ "Yellow"      , 6  },
+						{ "White"       , 7  },
+						{ "Gray"        , 8  },
+						{ "Light_Blue"  , 9  },
+						{ "Light_Green" , 10 },
+						{ "Light_Aqua"  , 11 },
+						{ "Light_Red"   , 12 },
+						{ "Light_Purple", 13 },
+						{ "Light_Yellow", 14 },
+						{ "Bright_White", 15 } };
+	
+
+
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+
+
+	void color(std::string s)
+	{
+		SetConsoleTextAttribute(h, cmap[s]);        // need to add some checking ... job for another day
+	}
+
+	void ClearScrollback()
+	{
+		std::cout << "\x1B[3J\x1B[H";
+	}
+	//
+
 	tileMap::tileMap(renderer* render)
 	{
 		currentRender = render;
@@ -207,16 +245,19 @@ namespace engine
 		return true;
 	}
 
-	bool tileMap::checkCollision(entity2D& object) 
+	bool tileMap::checkCollision(entity2D& object)
 	{
-		convertedPosX = object.getPos().x + (width / 2) * tileWidth;
-		convertedPosY = object.getPos().y - (height / 2) * tileHeight;
+		convertedPosX = object.getPos().x + (width / 2.0f) * tileWidth;
+		//convertedPosY = object.getPos().y - (height / 2) * tileHeight;
+		convertedPosY = object.getPos().y + (height / 2.0f) * tileHeight;
 
 		int left_tile = convertedPosX / tileWidth;
-		int right_tile = (convertedPosX + object.getScale().x * 3) / tileWidth;
+		int right_tile = (convertedPosX + object.getScale().x) / tileWidth;
 
 		int top_tile = (convertedPosY / tileHeight) * -1;
-		int bottom_tile = ((convertedPosY - object.getScale().y * 3) / tileHeight) * -1; // Se resta porque el eje Y crece hacia arriba
+		int bottom_tile = ((convertedPosY - object.getScale().y) / tileHeight) *-1; // Se resta porque el eje Y crece hacia arriba
+
+		std::cout << std::endl;
 
 		if (left_tile < 0)
 			left_tile = 0;
@@ -230,15 +271,47 @@ namespace engine
 		if (bottom_tile >= height)
 			bottom_tile = height - 1;
 
-		/*
-		cout << "converted X: " << convertedPosX << endl;
-		cout << "converted Y: " << convertedPosY << endl;
+		system("cls");
 
-		cout << "left: " <<left_tile << endl;
-		cout << "right: "<<right_tile << endl;
-		cout << "top: " << top_tile << endl;
-		cout << "bottom: "<<bottom_tile << endl;
-		*/
+		//for (int i = 0; i < height; i++)
+		//{
+		//	for (int j = 0; j < width; j++)
+		//	{
+		//		if (i <= bottom_tile && i >= top_tile && j >= left_tile && j <= right_tile)
+		//		{
+		//			color("Red");
+		//		}
+		//		else
+		//		{
+		//			color("White");
+		//		}
+		//		std::cout << "[";
+		//		if (j < 10)
+		//		{
+		//			std::cout << "0";
+		//		}
+		//
+		//		std::cout << j << ",";
+		//
+		//		if (i < 10)
+		//		{
+		//			std::cout << "0";
+		//		}
+		//
+		//		std::cout << i << "] ";
+		//	}
+		//
+		//	std::cout << std::endl;
+		//}
+		//
+		//std::cout << "converted X: " << convertedPosX << std::endl;
+		//std::cout << "converted Y: " << convertedPosY << std::endl;
+		//
+		//std::cout << "left: " <<left_tile << std::endl;
+		//std::cout << "right: "<<right_tile << std::endl;
+		//std::cout << "top: " << top_tile << std::endl;
+		//std::cout << "bottom: "<<bottom_tile << std::endl;
+		
 
 		for (int i = left_tile; i <= right_tile; i++) 
 		{
@@ -248,7 +321,7 @@ namespace engine
 
 				for (int k = 0; k < tileMapGrid.size(); k++) 
 				{
-					//cout << "caminable " << "[" << k << "]" << "[" << j << "]" << "[" << i << "] : "<< _tileMapGrid[k][j][i].isWalkable() << endl; // true == 1  ; false == 0
+					//std::cout << "caminable " << "[" << k << "]" << "[" << j << "]" << "[" << i << "] : "<< tileMapGrid[k][j][i].isWalkable(); // true == 1  ; false == 0
 					//cout << true << endl;
 					if (!tileMapGrid[k][j][i].isWalkable()) 
 					{
@@ -268,6 +341,8 @@ namespace engine
 					}
 				}
 			}
+
+			//std::cout << std::endl;
 		}
 
 		return false;

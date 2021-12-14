@@ -110,7 +110,8 @@ void game::update()
 		archer->setPos(pos.x + engine::time::getDeltaTime() * runSpeed / 2, pos.y - engine::time::getDeltaTime() * runSpeed / 2, pos.z);
 		archer->playAnimation(archerRunDownRightAnimationID);
 	}
-	else if(isKeyPressed(ENGINE_KEY_A))
+	else 
+	if(isKeyPressed(ENGINE_KEY_A))
 	{
 		glm::vec3 pos = archer->getPos();
 		archer->setPos(pos.x - engine::time::getDeltaTime() * runSpeed, pos.y, pos.z);
@@ -177,9 +178,6 @@ void game::update()
 	}
 
 	updateCollisions(tileMap);
-
-	//tileMap->checkCollision(*archer);
-	//tileMap->checkCollision(*awesomeface);
 }
 
 void game::init()
@@ -198,7 +196,6 @@ void game::init()
 	{
 		std::cout << "tilemap failed to load";
 	}
-	//tileMap->importTileMap("../res/assets/tilemapreal.tmx");
 
 	//triangle = new engine::shape(currentRenderer, 3);
 	//triangle->setScale(3, 3, 3);
@@ -229,7 +226,7 @@ void game::init()
 	//container->setPos(glm::vec3(-15, 0, 0));
 	//
 	awesomeface = new engine::sprite(currentRenderer, "../res/assets/textures/awesomeface.png", true);
-	awesomeface->setScale(glm::vec3(15, 15, 10));
+	awesomeface->setScale(glm::vec3(32, 32, 1));
 	awesomeface->setPos(glm::vec3(-80, 0, 0));
 
 	archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
@@ -250,13 +247,13 @@ void game::init()
 
 	archerRunAtlasConfig.CutByCount(10, 7, 4, 2, 8);
 	archerRunUpLeftAnimationID = archer->createAnimation(archerRunAtlasConfig);
-
+	
 	archerRunAtlasConfig.CutByCount(10, 7, 8, 4, 8);
 	archerRunDownLeftAnimationID = archer->createAnimation(archerRunAtlasConfig);
-
+	
 	archerRunAtlasConfig.CutByCount(10, 7, 6, 1, 8);
 	archerRunUpRightAnimationID = archer->createAnimation(archerRunAtlasConfig);
-
+	
 	archerRunAtlasConfig.CutByCount(10, 7, 0, 4, 8);
 	archerRunDownRightAnimationID = archer->createAnimation(archerRunAtlasConfig);
 
@@ -264,15 +261,15 @@ void game::init()
 	archer->setAnimationFullTime(archerRunLeftAnimationID, .5f);
 	archer->setAnimationFullTime(archerRunUpAnimationID, .5f);
 	archer->setAnimationFullTime(archerRunUpLeftAnimationID, .5f);
-	archer->setAnimationFullTime(archerRunUpRightAnimationID, .5f);
 	archer->setAnimationFullTime(archerRunDownAnimationID, .5f);
+	archer->setAnimationFullTime(archerRunUpRightAnimationID, .5f);
 	archer->setAnimationFullTime(archerRunDownLeftAnimationID, .5f);
 	archer->setAnimationFullTime(archerRunDownRightAnimationID, .5f);
 
-	archer->setScale(30, 30, 1);
+	archer->setScale(32, 32, 1);
 	archer->setPos(-80, 20, 0);
 
-	changeClearColor(glm::vec4(0, 0, 0, 1));
+	changeClearColor(glm::vec4(1, 0, 0, 1));
 	//changeClearColor(glm::vec4(.25, .25, .5, 1));
 
 	addCollider(archer, false);
