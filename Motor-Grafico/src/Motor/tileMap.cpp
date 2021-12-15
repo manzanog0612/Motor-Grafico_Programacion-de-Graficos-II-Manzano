@@ -266,7 +266,7 @@ namespace engine
 		if (bottom_tile >= height)
 			bottom_tile = height - 1;
 
-		system("cls");
+		//system("cls");
 
 		//for (int i = 0; i < height; i++)
 		//{
