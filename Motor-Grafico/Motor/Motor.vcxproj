@@ -155,7 +155,7 @@
       <IgnoreSpecificDefaultLibraries>/DEFAULTLIB:LIBCMT;/DEFAULTLIB:MSVCRT;</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /d  "$(OutDir)Motor.dll" "$(SolutionDir)bin\Juego\Win32\Debug"</Command>
+      <Command>XCOPY "$(SolutionDir)bin\Motor\$(Platform)\$(Configuration)\Motor.dll" "$(SolutionDir)bin\Juego\$(Platform)\$(Configuration)" /e /h /y /s</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -194,7 +194,7 @@
       <IgnoreSpecificDefaultLibraries>/DEFAULTLIB:LIBCMT;/DEFAULTLIB:MSVCRT;</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /d  "$(OutDir)Motor.dll" "$(SolutionDir)bin\Juego\Win32\Release"</Command>
+      <Command>XCOPY "$(SolutionDir)bin\Motor\$(Platform)\$(Configuration)\Motor.dll" "$(SolutionDir)bin\Juego\$(Platform)\$(Configuration)" /e /h /y /s</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
