@@ -155,7 +155,7 @@
       <IgnoreSpecificDefaultLibraries>/DEFAULTLIB:LIBCMT;/DEFAULTLIB:MSVCRT;</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>XCOPY "$(SolutionDir)bin\Motor\$(Platform)\$(Configuration)\Motor.dll" "$(SolutionDir)bin\Juego\$(Platform)\$(Configuration)" /e /h /y /s</Command>
+      <Command>XCOPY "$(SolutionDir)bin\Motor\$(Platform)\$(Configuration)\Motor.dll" "$(SolutionDir)bin\Juego\$(Platform)\$(Configuration)\" /e /h /y /s</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -194,7 +194,7 @@
       <IgnoreSpecificDefaultLibraries>/DEFAULTLIB:LIBCMT;/DEFAULTLIB:MSVCRT;</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>XCOPY "$(SolutionDir)bin\Motor\$(Platform)\$(Configuration)\Motor.dll" "$(SolutionDir)bin\Juego\$(Platform)\$(Configuration)" /e /h /y /s</Command>
+      <Command>XCOPY "$(SolutionDir)bin\Motor\$(Platform)\$(Configuration)\Motor.dll" "$(SolutionDir)bin\Juego\$(Platform)\$(Configuration)\" /e /h /y /s</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
