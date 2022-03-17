@@ -7,8 +7,12 @@ namespace engine
 	{
 		this->currentRenderer = currentRenderer;
 
-		//TODO agregar propiedades/posibilidad de camara ortogonal
-		projectionMatrix = glm::perspective(glm::radians(90.0f), (float)currentRenderer->getCurrentWindow()->getWidth() / (float)currentRenderer->getCurrentWindow()->getHeight(), 0.1f, 500.0f);
+		//TODO agregar propiedades/posibilidad de camara ortogonal     
+
+		//fov - aspect ratio - near != 0 (porque si no genera problemas) - far
+		//learnopengl.com -> coordinate system, camera
+
+		projectionMatrix = glm::perspective(glm::radians(45.0f), (float)currentRenderer->getCurrentWindow()->getWidth() / (float)currentRenderer->getCurrentWindow()->getHeight(), 0.1f, 500.0f);
 		this->currentRenderer->setProjectionMatrix(projectionMatrix);
 		setCameraTransform(position, lookPosition, upVector);
 	}

@@ -110,8 +110,7 @@ void game::update()
 		archer->setPos(pos.x + engine::time::getDeltaTime() * runSpeed / 2, pos.y - engine::time::getDeltaTime() * runSpeed / 2, pos.z);
 		archer->playAnimation(archerRunDownRightAnimationID);
 	}
-	else 
-	if(isKeyPressed(ENGINE_KEY_A))
+	else if(isKeyPressed(ENGINE_KEY_A))
 	{
 		glm::vec3 pos = archer->getPos();
 		archer->setPos(pos.x - engine::time::getDeltaTime() * runSpeed, pos.y, pos.z);
@@ -170,6 +169,21 @@ void game::update()
 		glm::vec3 movement = { 0, 0, engine::time::getDeltaTime() * -cameraSpeed };
 		cam->moveCamera(movement);
 	}
+
+	/* 
+	
+	PARA METER ROTACIÒN DE CAMARA PROXIMAMENTE
+
+	if (isKeyPressed(ENGINE_KEY_K))
+	{
+		glm::vec3 rotation = { 0, 0, engine::time::getDeltaTime() * cameraSpeed };
+	}
+	else if (isKeyPressed(ENGINE_KEY_L))
+	{
+		glm::vec3 rotation = { 0, 0, engine::time::getDeltaTime() * -cameraSpeed };
+	}
+	
+	*/
 
 	if (isKeyDown(ENGINE_KEY_ENTER))
 	{
