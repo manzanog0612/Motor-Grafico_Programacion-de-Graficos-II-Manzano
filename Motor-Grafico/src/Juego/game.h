@@ -21,8 +21,9 @@ private:
 	float rotationSpeed = 0;
 	float timeBetweenChanges = 0;
 	//engine::sprite* imageCampus;
+	engine::sprite* floor;
 	engine::sprite* container[6];
-	engine::sprite* awesomeface[6];
+	engine::sprite* awesomeface;
 	//engine::sprite* archer;
 	//engine::shape* triangle;
 	//engine::shape* triangle2;

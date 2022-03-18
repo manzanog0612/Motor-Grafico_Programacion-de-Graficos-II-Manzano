@@ -8,8 +8,9 @@ game::game()
 	for (short i = 0; i < 6; i++)
 	{
 		container[i] = nullptr;
-		awesomeface[i] = nullptr;
 	}
+	awesomeface = nullptr;
+	floor = nullptr;
 	
 	//archer = nullptr;
 	//triangle = nullptr;
@@ -57,7 +58,8 @@ void game::draw()
 		container[i]->draw();
 		//awesomeface[i]->draw();
 	}
-	
+	awesomeface->draw();
+	floor->draw();
 	//triangle->draw();
 	//triangle2->draw();
 	//triangle3->draw();
@@ -186,25 +188,28 @@ void game::update()
 
 	if (isKeyPressed(ENGINE_KEY_LEFT))
 	{
-		movement = { engine::time::getDeltaTime() * -boxSpeed, 0, 0 };
+		movement = { engine::time::getDeltaTime() * boxSpeed, 0, 0 };
 	}
 	else if (isKeyPressed(ENGINE_KEY_RIGHT))
 	{
-		movement = { engine::time::getDeltaTime() * boxSpeed, 0, 0 };
+		movement = { engine::time::getDeltaTime() * -boxSpeed, 0, 0 };
 	}
+
 	if (isKeyPressed(ENGINE_KEY_UP))
 	{
-		movement = { 0, 0 , engine::time::getDeltaTime() * boxSpeed };
+		movement += glm::vec3( 0, 0 , engine::time::getDeltaTime() * boxSpeed);
 	}
 	else if (isKeyPressed(ENGINE_KEY_DOWN))
 	{
-		movement = { 0, 0 , engine::time::getDeltaTime() * -boxSpeed };
+		movement += glm::vec3(0, 0 , engine::time::getDeltaTime() * -boxSpeed);
 	}
 
 	for (short i = 0; i < boxFaces; i++)
 	{
 		container[i]->setPos(container[i]->getPos() + movement);
 	}
+
+	awesomeface->setPos(awesomeface->getPos() + movement);
 
 	boxPos += movement;
 
@@ -278,41 +283,43 @@ void game::init()
 	triangle->setScale(3, 3, 3);
 	triangle->setPos(-14, -10, 0);
 	triangle->setColor(1, 1, 0, 1);
-	
+
 	triangle2 = new engine::shape(currentRenderer, 3);
 	triangle2->setScale(3, 3, 3);
 	triangle2->setPos(-17, -10, 0);
 	triangle2->setColor(1, 1, 0, 1);
-	
+
 	triangle3 = new engine::shape(currentRenderer, 3);
 	triangle3->setScale(3, 3, 3);
 	triangle3->setPos(-15.5, -7, 0);
 	triangle3->setColor(1, 1, 0, 1);
-	
+
 	quad = new engine::shape(currentRenderer, 4);
 	quad->setScale(5, 5, 5);
 	quad->setPos(15, -10, 0);
 	quad->setColor(0, 1, 1, 1);
-	
+
 	imageCampus = new engine::sprite(currentRenderer, "../res/assets/textures/Image Campus.png", true);
 	imageCampus->setScale(glm::vec3(30, 20, 10));
 	imageCampus->setPos(glm::vec3(0, -9.f, -.1f));
-	
+
 	container = new engine::sprite(currentRenderer, "../res/assets/textures/container.jpg", true);
 	container->setScale(glm::vec3(10, 10, 10));
 	container->setPos(glm::vec3(-15, 0, 0));*/
-	
+
+	awesomeface = new engine::sprite(currentRenderer, "../res/assets/textures/awesomeface.png", true);
+	awesomeface->setScale(glm::vec3(10, 10, 10));
+
 	for (short i = 0; i < 6; i++)
 	{
-		awesomeface[i] = new engine::sprite(currentRenderer, "../res/assets/textures/awesomeface.png", true);
-		awesomeface[i]->setScale(glm::vec3(10, 10, 10));
-
 		container[i] = new engine::sprite(currentRenderer, "../res/assets/textures/container.jpg", true);
 		container[i]->setScale(glm::vec3(10, 10, 10));
 	}
 
 	container[0]->setPos(glm::vec3(0, 0, 5));
 	container[0]->setRot(glm::vec3(0, 0, 0));
+	awesomeface->setPos(glm::vec3(0, 0, 5.5f));
+	awesomeface->setRot(glm::vec3(0, 0, 0));
 
 	container[1]->setPos(glm::vec3(5, 0, 0));
 	container[1]->setRot(glm::vec3(0, glm::radians(90.0f), 0));
@@ -330,6 +337,12 @@ void game::init()
 	container[5]->setRot(glm::vec3(glm::radians(90.0f), 0, 0));
 
 	boxPos = glm::vec3(0, 0, 0);
+
+	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", true);
+	floor->setScale(glm::vec3(500, 500, 1));
+	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
+	floor->setPos(glm::vec3(0,-5,0));
+
 
 	/*archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
 	
@@ -393,9 +406,14 @@ void game::deInit()
 	{
 		container[i]->deinit();
 		delete container[i];
-		awesomeface[i]->deinit();
-		delete awesomeface[i];
+		
 	}
+
+	awesomeface->deinit();
+	delete awesomeface;
+
+	floor->deinit();
+	delete floor;
 	//archer->deinit();
 	//delete archer;
 	//delete triangle;
