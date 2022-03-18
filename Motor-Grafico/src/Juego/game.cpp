@@ -4,15 +4,20 @@
 game::game()
 {
 	//imageCampus = nullptr;
-	//container = nullptr;
-	awesomeface = nullptr;
-	archer = nullptr;
+
+	for (short i = 0; i < 6; i++)
+	{
+		container[i] = nullptr;
+		awesomeface[i] = nullptr;
+	}
+	
+	//archer = nullptr;
 	//triangle = nullptr;
 	//triangle2 = nullptr;
 	//triangle3 = nullptr;
 	//quad = nullptr;
 	cam = nullptr;
-	tileMap = nullptr;
+	//tileMap = nullptr;
 	colors[0] = glm::vec4(0, 0, 0, 0);
 	colors[1] = glm::vec4(1, 0, 0, 1);
 	colors[2] = glm::vec4(0, 1, 0, 1);
@@ -27,14 +32,14 @@ game::game()
 	t = 0;
 	currentColorIndex = 5;
 
-	archerRunLeftAnimationID = 0;
-	archerRunRightAnimationID = 0;
-	archerRunUpAnimationID = 0;
-	archerRunUpLeftAnimationID = 0;
-	archerRunUpRightAnimationID = 0;
-	archerRunDownAnimationID = 0;
-	archerRunDownLeftAnimationID = 0;
-	archerRunDownRightAnimationID = 0;
+	//archerRunLeftAnimationID = 0;
+	//archerRunRightAnimationID = 0;
+	//archerRunUpAnimationID = 0;
+	//archerRunUpLeftAnimationID = 0;
+	//archerRunUpRightAnimationID = 0;
+	//archerRunDownAnimationID = 0;
+	//archerRunDownLeftAnimationID = 0;
+	//archerRunDownRightAnimationID = 0;
 }
 
 game::~game()
@@ -44,49 +49,53 @@ game::~game()
 
 void game::draw()
 {
-	tileMap->draw();
+	//tileMap->draw();
 	//imageCampus->draw();
-	//container->draw();
-	awesomeface->draw();
+
+	for (short i = 0; i < 6; i++)
+	{
+		container[i]->draw();
+		//awesomeface[i]->draw();
+	}
+	
 	//triangle->draw();
 	//triangle2->draw();
 	//triangle3->draw();
 	//quad->draw();
-
 	
-	archer->draw();
+	//archer->draw();
 }
 
 void game::update()
 {
-	//t += engine::time::getDeltaTime();
-	//if(t < timeBetweenChanges)
-	//{
-	//	imageCampus->setColor(lerp(imageCampus->getColor(), nextColor, t));
-	//}
-	//else
-	//{
-	//	t = 0;
-	//
-	//	currentColorIndex++;
-	//	if (currentColorIndex == colorsArraySize)
-	//	{
-	//		currentColorIndex = 0;
-	//	}
-	//	nextColor = colors[currentColorIndex];
-	//}
-	//if(isKeyPressed(ENGINE_KEY_R))
-	//{
-	//	float rot = imageCampus->getRot().y + rotationSpeed * engine::time::getDeltaTime();
-	//	imageCampus->setRot(glm::vec3(0, rot, 0));
-	//}
-	//if (isKeyPressed(ENGINE_KEY_T))
-	//{
-	//	float rot = imageCampus->getRot().y - rotationSpeed * engine::time::getDeltaTime();
-	//	imageCampus->setRot(glm::vec3(0, rot, 0));
-	//}
+	/*t += engine::time::getDeltaTime();
+	if(t < timeBetweenChanges)
+	{
+		imageCampus->setColor(lerp(imageCampus->getColor(), nextColor, t));
+	}
+	else
+	{
+		t = 0;
+	
+		currentColorIndex++;
+		if (currentColorIndex == colorsArraySize)
+		{
+			currentColorIndex = 0;
+		}
+		nextColor = colors[currentColorIndex];
+	}
+	if(isKeyPressed(ENGINE_KEY_R))
+	{
+		float rot = imageCampus->getRot().y + rotationSpeed * engine::time::getDeltaTime();
+		imageCampus->setRot(glm::vec3(0, rot, 0));
+	}
+	if (isKeyPressed(ENGINE_KEY_T))
+	{
+		float rot = imageCampus->getRot().y - rotationSpeed * engine::time::getDeltaTime();
+		imageCampus->setRot(glm::vec3(0, rot, 0));
+	}*/
 
-	if(isKeyPressed(ENGINE_KEY_W) && isKeyPressed(ENGINE_KEY_A))
+	/*if (isKeyPressed(ENGINE_KEY_W) && isKeyPressed(ENGINE_KEY_A))
 	{
 		glm::vec3 pos = archer->getPos();
 		archer->setPos(pos.x - engine::time::getDeltaTime() * runSpeed / 2, pos.y + engine::time::getDeltaTime() * runSpeed / 2, pos.z);
@@ -137,7 +146,7 @@ void game::update()
 	else
 	{
 		archer->stopAllAnimations();
-	}
+	}*/
 
 	if(isKeyPressed(ENGINE_KEY_LEFT))
 	{
@@ -170,6 +179,7 @@ void game::update()
 		cam->moveCamera(movement);
 	}
 
+	cam->setView(glm::vec3(0, 0, 0));
 	/* 
 	
 	PARA METER ROTACIÒN DE CAMARA PROXIMAMENTE
@@ -185,65 +195,88 @@ void game::update()
 	
 	*/
 
-	if (isKeyDown(ENGINE_KEY_ENTER))
+	/*if (isKeyDown(ENGINE_KEY_ENTER))
 	{
 		if (hasCollider(archer)) removeCollider(archer);
 		else addCollider(archer, false);
-	}
+	}*/
 
-	updateCollisions(tileMap);
+	//updateCollisions(tileMap);
 }
 
 void game::init()
 {
-	glm::vec3 camStartingPos = { 0, 50, 150 };
-	glm::vec3 camLookPos = { 0, 50, 0 };
-	glm::vec3 camUpVector = { 0, 1, 0 };
-	cam = new engine::camera(currentRenderer, camStartingPos, camLookPos, camUpVector);
-	tileMap = new engine::tileMap(currentRenderer);
+	glm::vec3 camPos = { 20, 10, 30 };
+	glm::vec3 camView = { 0, 0, 0 };
+	glm::vec3 camUp = { 0, 1, 0 };
+	cam = new engine::camera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
+	//tileMap = new engine::tileMap(currentRenderer);
 
-	if (tileMap->importTileMap("../res/assets/tilemapreal.tmx"))
+	/*if (tileMap->importTileMap("../res/assets/tilemapreal.tmx"))
 	{
 		std::cout << "tilemap loaded";
 	}
 	else
 	{
 		std::cout << "tilemap failed to load";
+	}*/
+
+	/*triangle = new engine::shape(currentRenderer, 3);
+	triangle->setScale(3, 3, 3);
+	triangle->setPos(-14, -10, 0);
+	triangle->setColor(1, 1, 0, 1);
+	
+	triangle2 = new engine::shape(currentRenderer, 3);
+	triangle2->setScale(3, 3, 3);
+	triangle2->setPos(-17, -10, 0);
+	triangle2->setColor(1, 1, 0, 1);
+	
+	triangle3 = new engine::shape(currentRenderer, 3);
+	triangle3->setScale(3, 3, 3);
+	triangle3->setPos(-15.5, -7, 0);
+	triangle3->setColor(1, 1, 0, 1);
+	
+	quad = new engine::shape(currentRenderer, 4);
+	quad->setScale(5, 5, 5);
+	quad->setPos(15, -10, 0);
+	quad->setColor(0, 1, 1, 1);
+	
+	imageCampus = new engine::sprite(currentRenderer, "../res/assets/textures/Image Campus.png", true);
+	imageCampus->setScale(glm::vec3(30, 20, 10));
+	imageCampus->setPos(glm::vec3(0, -9.f, -.1f));
+	
+	container = new engine::sprite(currentRenderer, "../res/assets/textures/container.jpg", true);
+	container->setScale(glm::vec3(10, 10, 10));
+	container->setPos(glm::vec3(-15, 0, 0));*/
+	
+	for (short i = 0; i < 6; i++)
+	{
+		awesomeface[i] = new engine::sprite(currentRenderer, "../res/assets/textures/awesomeface.png", true);
+		awesomeface[i]->setScale(glm::vec3(10, 10, 10));
+
+		container[i] = new engine::sprite(currentRenderer, "../res/assets/textures/container.jpg", true);
+		container[i]->setScale(glm::vec3(10, 10, 10));
 	}
 
-	//triangle = new engine::shape(currentRenderer, 3);
-	//triangle->setScale(3, 3, 3);
-	//triangle->setPos(-14, -10, 0);
-	//triangle->setColor(1, 1, 0, 1);
-	//
-	//triangle2 = new engine::shape(currentRenderer, 3);
-	//triangle2->setScale(3, 3, 3);
-	//triangle2->setPos(-17, -10, 0);
-	//triangle2->setColor(1, 1, 0, 1);
-	//
-	//triangle3 = new engine::shape(currentRenderer, 3);
-	//triangle3->setScale(3, 3, 3);
-	//triangle3->setPos(-15.5, -7, 0);
-	//triangle3->setColor(1, 1, 0, 1);
-	//
-	//quad = new engine::shape(currentRenderer, 4);
-	//quad->setScale(5, 5, 5);
-	//quad->setPos(15, -10, 0);
-	//quad->setColor(0, 1, 1, 1);
-	//
-	//imageCampus = new engine::sprite(currentRenderer, "../res/assets/textures/Image Campus.png", true);
-	//imageCampus->setScale(glm::vec3(30, 20, 10));
-	//imageCampus->setPos(glm::vec3(0, -9.f, -.1f));
-	//
-	//container = new engine::sprite(currentRenderer, "../res/assets/textures/container.jpg", true);
-	//container->setScale(glm::vec3(10, 10, 10));
-	//container->setPos(glm::vec3(-15, 0, 0));
-	//
-	awesomeface = new engine::sprite(currentRenderer, "../res/assets/textures/awesomeface.png", true);
-	awesomeface->setScale(glm::vec3(32, 32, 1));
-	awesomeface->setPos(glm::vec3(-80, 0, 0));
+	container[0]->setPos(glm::vec3(0, 0, 5));
+	container[0]->setRot(glm::vec3(0, 0, 0));
 
-	archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
+	container[1]->setPos(glm::vec3(5, 0, 0));
+	container[1]->setRot(glm::vec3(0, glm::radians(90.0f), 0));
+
+	container[2]->setPos(glm::vec3(0, 0, -5));
+	container[2]->setRot(glm::vec3(0, glm::radians(180.0f), 0));
+
+	container[3]->setPos(glm::vec3(-5, 0, 0));
+	container[3]->setRot(glm::vec3(0, glm::radians(-90.0f), 0));
+
+	container[4]->setPos(glm::vec3(0, 5, 0));
+	container[4]->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
+
+	container[5]->setPos(glm::vec3(0, -5, 0));
+	container[5]->setRot(glm::vec3(glm::radians(90.0f), 0, 0));
+
+	/*archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
 	
 	engine::atlasCutConfig archerRunAtlasConfig;
 
@@ -281,13 +314,13 @@ void game::init()
 	archer->setAnimationFullTime(archerRunDownRightAnimationID, .5f);
 
 	archer->setScale(32, 32, 1);
-	archer->setPos(-80, 20, 0);
+	archer->setPos(-80, 20, 0);*/
 
-	changeClearColor(glm::vec4(0, 0, 0, 1));
+	changeClearColor(glm::vec4(0.5f, 0.5f, 1, 1));
 	//changeClearColor(glm::vec4(.25, .25, .5, 1));
 
-	addCollider(archer, false);
-	addCollider(awesomeface, false);
+	//addCollider(archer, false);
+	//addCollider(awesomeface, false);
 	
 	//addCollider(triangle, false);
 	//addCollider(triangle2, false);
@@ -301,12 +334,15 @@ void game::deInit()
 	delete cam;
 	//imageCampus->deinit();
 	//delete imageCampus;
-	//container->deinit();
-	//delete container;
-	awesomeface->deinit();
-	delete awesomeface;
-	archer->deinit();
-	delete archer;
+	for (short i = 0; i < 6; i++)
+	{
+		container[i]->deinit();
+		delete container[i];
+		awesomeface[i]->deinit();
+		delete awesomeface[i];
+	}
+	//archer->deinit();
+	//delete archer;
 	//delete triangle;
 	//delete triangle2;
 	//delete triangle3;
