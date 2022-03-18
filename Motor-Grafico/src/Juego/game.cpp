@@ -148,7 +148,7 @@ void game::update()
 		archer->stopAllAnimations();
 	}*/
 
-	if(isKeyPressed(ENGINE_KEY_LEFT))
+	/*if (isKeyPressed(ENGINE_KEY_LEFT))
 	{
 		glm::vec3 movement = { engine::time::getDeltaTime() * -cameraSpeed, 0, 0 };
 		cam->moveCamera(movement);
@@ -175,8 +175,29 @@ void game::update()
 	}
 	else if (isKeyPressed(ENGINE_KEY_I))
 	{
+		
 		glm::vec3 movement = { 0, 0, engine::time::getDeltaTime() * -cameraSpeed };
 		cam->moveCamera(movement);
+	}*/
+
+	float cameraMovementAmount = engine::time::getDeltaTime() * cameraSpeed;
+
+	if (isKeyPressed(ENGINE_KEY_W))
+	{
+		cam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::FRONT);
+	}
+	else if (isKeyPressed(ENGINE_KEY_S))
+	{
+		cam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::BACK);
+	}
+
+	if (isKeyPressed(ENGINE_KEY_D))
+	{
+		cam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::RIGHT);
+	}
+	else if (isKeyPressed(ENGINE_KEY_A))
+	{
+		cam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::LEFT);
 	}
 
 	cam->rotateCamera(getMouseOffset());

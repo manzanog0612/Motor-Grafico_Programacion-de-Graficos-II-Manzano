@@ -8,7 +8,7 @@ namespace engine
 		this->currentRenderer = currentRenderer;
 		movementType = MOVEMENT_TYPE::FPS;
 		yaw = -90.0f;
-
+		pitch = 0.f;
 		setProjetion(projectionType);
 
 		this->currentRenderer->setProjectionMatrix(projectionMatrix);
@@ -19,7 +19,7 @@ namespace engine
 		pos = startingPosition;
 		look = lookPosition;
 		up = upVector;
-		viewMatrix = glm::lookAt(startingPosition, lookPosition, upVector);
+		viewMatrix = glm::lookAt(startingPosition, pos + lookPosition, upVector);
 		currentRenderer->setViewMatrix(viewMatrix);
 	}
 	void camera::moveCamera(glm::vec3 movePosition)
@@ -28,10 +28,26 @@ namespace engine
 		look += movePosition;
 		setCameraTransform(pos, look, up);
 	}
-	void camera::moveCameraFoward(float movementAmount)
+	void camera::moveCamera(float movementAmount, MOVEMENT_DIRECTION movementDirection)
 	{
-		look += movementAmount * glm::normalize(look);
-		pos += movementAmount * glm::normalize(look);
+		switch (movementDirection)
+		{
+		case engine::MOVEMENT_DIRECTION::FRONT:
+			pos += movementAmount * glm::normalize(look);
+			break;
+		case engine::MOVEMENT_DIRECTION::BACK:
+			pos -= movementAmount * glm::normalize(look);
+			break;
+		case engine::MOVEMENT_DIRECTION::RIGHT:
+			pos += glm::normalize(glm::cross(glm::normalize(look), glm::normalize(up))) * movementAmount;
+			break;
+		case engine::MOVEMENT_DIRECTION::LEFT:
+			pos -= glm::normalize(glm::cross(glm::normalize(look), glm::normalize(up))) * movementAmount;
+			break;
+		default:
+			break;
+		}
+		
 		setCameraTransform(pos, look, up);
 	}
 	void camera::setCameraType(MOVEMENT_TYPE movementType)
@@ -42,6 +58,8 @@ namespace engine
 	{
 		yaw += offSet.x;
 		pitch += offSet.y;
+
+		std::cout << "x: " << offSet.x << "\ny: " << offSet.y << std::endl;
 
 		if (pitch > 89.0f)
 			pitch = 89.0f;

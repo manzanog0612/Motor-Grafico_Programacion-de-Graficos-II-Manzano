@@ -18,6 +18,7 @@ namespace engine
 		bool isKeyDown(int keycode, window* window);
 		glm::vec2 getMousePosition();
 		glm::vec2 getMouseOffSet();
+		void setOffset(glm::vec2 offSet);
 	private:
 	};
 }

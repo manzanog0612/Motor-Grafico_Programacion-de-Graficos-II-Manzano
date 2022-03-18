@@ -20,7 +20,6 @@ namespace engine
 	{
 		glfwSetKeyCallback(window->getGLFWwindow(), keyCallback);
 		glfwSetCursorPosCallback(window->getGLFWwindow(), mouse_callback);
-
 		lastPos.x = 400;
 		lastPos.y = 300;
 		fistTimeCheckingMouse = true;
@@ -56,6 +55,10 @@ namespace engine
 	glm::vec2 input::getMouseOffSet()
 	{
 		return lastOffset;
+	}
+	void input::setOffset(glm::vec2 offSet)
+	{
+		lastOffset = offSet;
 	}
 	void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{

@@ -70,6 +70,7 @@ namespace engine
                 glfwPollEvents();
                 currentTimer->updateDeltaTime(getCurrentTime());
                 update();
+                currentInput->setOffset(glm::vec2(0, 0));
                 //currentCollisionManager->updateCollisions();
                 currentRenderer->startDraw();
                 draw();
