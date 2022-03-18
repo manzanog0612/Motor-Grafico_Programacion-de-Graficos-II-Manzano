@@ -43,7 +43,8 @@ namespace engine
 		bool isKeyDown(int keycode);
 		// ~ ENGINE ~ Returns the current mouse position relative to the screen size.
 		glm::vec2 getMousePosition();
-
+		// ~ ENGINE ~ Returns the difference in the mouse position sice last movement.
+		glm::vec2 getMouseOffset();
 		// General
 		// ~ ENGINE ~  Changes screen clear color to the parameter float values. 
 		void changeClearColor(glm::vec4 color);

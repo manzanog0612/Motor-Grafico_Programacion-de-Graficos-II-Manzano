@@ -7,6 +7,7 @@
 namespace engine
 {
 	enum class PROJECTION { ORTHO, PERSPECTIVE };
+	enum class MOVEMENT_TYPE { FPS, THIRD_PERSON };
 	class renderer;
 
 	class ENGINE_API camera
@@ -15,9 +16,11 @@ namespace engine
 		camera(renderer* currentRenderer, glm::vec3 position, glm::vec3 lookPosition, glm::vec3 upVector, PROJECTION projectionType);
 		void setCameraTransform(glm::vec3 startingPosition, glm::vec3 lookPosition, glm::vec3 upVector);
 		void moveCamera(glm::vec3 movePosition);
+		void moveCameraFoward(float movementAmount);
 		void setView(glm::vec3 lookPosition);
 		void setProjetion(PROJECTION projectionType);
-
+		void setCameraType(MOVEMENT_TYPE movementType);
+		void rotateCamera(glm::vec2 offSet);
 		~camera();
 	private:
 		glm::mat4 viewMatrix;
@@ -26,6 +29,9 @@ namespace engine
 		glm::vec3 look; //a donde esta mirando
 		glm::vec3 up; //el up de la camara
 		renderer* currentRenderer;
+		MOVEMENT_TYPE movementType;
+		float yaw;
+		float pitch;
 	};
 
 	//EJE X PITCH

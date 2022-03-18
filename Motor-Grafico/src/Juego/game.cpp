@@ -179,7 +179,7 @@ void game::update()
 		cam->moveCamera(movement);
 	}
 
-	cam->setView(glm::vec3(0, 0, 0));
+	cam->rotateCamera(getMouseOffset());
 	/* 
 	
 	PARA METER ROTACIÒN DE CAMARA PROXIMAMENTE

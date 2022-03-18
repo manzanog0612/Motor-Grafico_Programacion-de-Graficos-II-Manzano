@@ -100,6 +100,11 @@ namespace engine
     {
         return currentInput->getMousePosition();
     }
+    glm::vec2 baseGame::getMouseOffset()
+    {
+        return currentInput->getMouseOffSet();
+    }
+
     double baseGame::getCurrentTime()
     {
         return glfwGetTime();
