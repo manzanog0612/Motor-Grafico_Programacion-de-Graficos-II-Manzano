@@ -180,6 +180,36 @@ void game::update()
 		cam->moveCamera(movement);
 	}*/
 
+	glm::vec3 movement = glm::vec3(0, 0, 0);
+	float boxSpeed = 10;
+	float boxFaces = 6;
+
+	if (isKeyPressed(ENGINE_KEY_LEFT))
+	{
+		movement = { engine::time::getDeltaTime() * -boxSpeed, 0, 0 };
+	}
+	else if (isKeyPressed(ENGINE_KEY_RIGHT))
+	{
+		movement = { engine::time::getDeltaTime() * boxSpeed, 0, 0 };
+	}
+	if (isKeyPressed(ENGINE_KEY_UP))
+	{
+		movement = { 0, 0 , engine::time::getDeltaTime() * boxSpeed };
+	}
+	else if (isKeyPressed(ENGINE_KEY_DOWN))
+	{
+		movement = { 0, 0 , engine::time::getDeltaTime() * -boxSpeed };
+	}
+
+	for (short i = 0; i < boxFaces; i++)
+	{
+		container[i]->setPos(container[i]->getPos() + movement);
+	}
+
+	boxPos += movement;
+
+	std::cout << boxPos.x << " " << boxPos.y << " " << boxPos.z << std::endl;
+
 	float cameraMovementAmount = engine::time::getDeltaTime() * cameraSpeed;
 
 	if (isKeyPressed(ENGINE_KEY_W))
@@ -201,6 +231,8 @@ void game::update()
 	}
 
 	cam->rotateCamera(getMouseOffset());
+	cam->updateTargetPos(boxPos);
+	cam->setView(boxPos);
 	/* 
 	
 	PARA METER ROTACIÒN DE CAMARA PROXIMAMENTE
@@ -296,6 +328,8 @@ void game::init()
 
 	container[5]->setPos(glm::vec3(0, -5, 0));
 	container[5]->setRot(glm::vec3(glm::radians(90.0f), 0, 0));
+
+	boxPos = glm::vec3(0, 0, 0);
 
 	/*archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
 	

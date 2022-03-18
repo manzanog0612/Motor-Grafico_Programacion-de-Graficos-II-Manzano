@@ -6,9 +6,14 @@ namespace engine
 	camera::camera(renderer* currentRenderer, glm::vec3 position, glm::vec3 lookPosition, glm::vec3 upVector, PROJECTION projectionType)
 	{
 		this->currentRenderer = currentRenderer;
-		movementType = MOVEMENT_TYPE::FPS;
+		movementType = MOVEMENT_TYPE::THIRD_PERSON;
 		yaw = -90.0f;
 		pitch = 0.f;
+		distace = 50;
+
+		localPos = glm::vec3(0, 0, 0);
+		targetPos = glm::vec3(0, 0, 0);
+
 		setProjetion(projectionType);
 
 		this->currentRenderer->setProjectionMatrix(projectionMatrix);
@@ -28,6 +33,7 @@ namespace engine
 		look += movePosition;
 		setCameraTransform(pos, look, up);
 	}
+	
 	void camera::moveCamera(float movementAmount, MOVEMENT_DIRECTION movementDirection)
 	{
 		switch (movementDirection)
@@ -54,12 +60,14 @@ namespace engine
 	{
 		this->movementType = movementType;
 	}
+	void camera::updateTargetPos(glm::vec3 targetPosition)
+	{
+		targetPos = targetPosition;
+	}
 	void camera::rotateCamera(glm::vec2 offSet)
 	{
 		yaw += offSet.x;
 		pitch += offSet.y;
-
-		std::cout << "x: " << offSet.x << "\ny: " << offSet.y << std::endl;
 
 		if (pitch > 89.0f)
 			pitch = 89.0f;
@@ -70,8 +78,21 @@ namespace engine
 		direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
 		direction.y = sin(glm::radians(pitch));
 		direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-		look = glm::normalize(direction);
 
+		switch (movementType)
+		{
+		case engine::MOVEMENT_TYPE::FPS:
+			look = glm::normalize(direction);
+			break;
+		case engine::MOVEMENT_TYPE::THIRD_PERSON:
+			direction.y = -direction.y;
+			localPos = glm::normalize(direction) * distace;
+			pos = targetPos + localPos;
+			//std::cout << pos.x << " " << pos.y << " " << pos.z << std::endl;
+			break;
+		default:
+			break;
+		}
 		setCameraTransform(pos, look, up);
 	}
 	void camera::setView(glm::vec3 lookPosition)

@@ -21,18 +21,23 @@ namespace engine
 		void setView(glm::vec3 lookPosition);
 		void setProjetion(PROJECTION projectionType);
 		void setCameraType(MOVEMENT_TYPE movementType);
+		void updateTargetPos(glm::vec3 targetPosition);
 		void rotateCamera(glm::vec2 offSet);
 		~camera();
 	private:
 		glm::mat4 viewMatrix;
 		glm::mat4 projectionMatrix;
 		glm::vec3 pos; //donde esta parada
+		glm::vec3 localPos; 
+		glm::vec3 targetPos;
 		glm::vec3 look; //a donde esta mirando
 		glm::vec3 up; //el up de la camara
 		renderer* currentRenderer;
 		MOVEMENT_TYPE movementType;
 		float yaw;
 		float pitch;
+		float distace;
+
 	};
 
 	//EJE X PITCH

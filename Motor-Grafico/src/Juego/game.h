@@ -31,6 +31,7 @@ private:
 	engine::camera* cam;
 	//engine::tileMap* tileMap;
 	float cameraSpeed = 30.f;
+	glm::vec3 boxPos = glm::vec3(0, 0, 0);
 
 	//int archerRunLeftAnimationID;
 	//int archerRunRightAnimationID;
