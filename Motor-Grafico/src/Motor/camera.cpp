@@ -95,6 +95,10 @@ namespace engine
 		}
 		setCameraTransform(pos, look, up);
 	}
+	glm::vec3 camera::getForward()
+	{
+		return look;
+	}
 	void camera::setView(glm::vec3 lookPosition)
 	{
 		look = lookPosition;

@@ -23,6 +23,7 @@ namespace engine
 		void setCameraType(MOVEMENT_TYPE movementType);
 		void updateTargetPos(glm::vec3 targetPosition);
 		void rotateCamera(glm::vec2 offSet);
+		glm::vec3 getForward();
 		~camera();
 	private:
 		glm::mat4 viewMatrix;

@@ -1,5 +1,6 @@
 #include "game.h"
 #include <iostream>
+#include <math.h>
 
 game::game()
 {
@@ -183,10 +184,39 @@ void game::update()
 	}*/
 
 	glm::vec3 movement = glm::vec3(0, 0, 0);
+	glm::vec3 camForward = cam->getForward();
+	glm::vec3 up = glm::vec3(0, 1, 0);
+	glm::vec3 normal = glm::vec3(0, 2, 0);
+	float dotProduct = camForward.x * normal.x + camForward.y * normal.y + camForward.z * normal.z;
+	
+	glm::vec3 projectionKonN = (dotProduct / sqrt(normal * normal)) * normal;
+	glm::vec3 camForwardProjection = camForward - projectionKonN;
 	float boxSpeed = 10;
 	float boxFaces = 6;
 
-	if (isKeyPressed(ENGINE_KEY_LEFT))
+	boxForward = camForwardProjection;
+	std::cout << boxForward.x << " " << boxForward.x << " " << boxForward.z << std::endl;
+	/*
+	switch (movementDirection)
+		{
+		case engine::MOVEMENT_DIRECTION::FRONT:
+			pos += movementAmount * glm::normalize(look);
+			break;
+		case engine::MOVEMENT_DIRECTION::BACK:
+			pos -= movementAmount * glm::normalize(look);
+			break;
+		case engine::MOVEMENT_DIRECTION::RIGHT:
+			pos += glm::normalize(glm::cross(glm::normalize(look), glm::normalize(up))) * movementAmount;
+			break;
+		case engine::MOVEMENT_DIRECTION::LEFT:
+			pos -= glm::normalize(glm::cross(glm::normalize(look), glm::normalize(up))) * movementAmount;
+			break;
+		default:
+			break;
+		}
+	*/
+
+	/*if (isKeyPressed(ENGINE_KEY_LEFT))
 	{
 		movement = { engine::time::getDeltaTime() * boxSpeed, 0, 0 };
 	}
@@ -202,6 +232,23 @@ void game::update()
 	else if (isKeyPressed(ENGINE_KEY_DOWN))
 	{
 		movement += glm::vec3(0, 0 , engine::time::getDeltaTime() * -boxSpeed);
+	}*/
+
+	if (isKeyPressed(ENGINE_KEY_LEFT))
+	{
+		movement -= glm::normalize(glm::cross(glm::normalize(boxForward), glm::normalize(up))) * boxSpeed;
+	}
+	else if (isKeyPressed(ENGINE_KEY_RIGHT))
+	{
+		movement += glm::normalize(glm::cross(glm::normalize(boxForward), glm::normalize(up))) * boxSpeed;
+	}
+	if (isKeyPressed(ENGINE_KEY_UP))
+	{
+		movement += boxSpeed * glm::normalize(boxForward);
+	}
+	else if (isKeyPressed(ENGINE_KEY_DOWN))
+	{
+		movement -= boxSpeed * glm::normalize(boxForward);
 	}
 
 	for (short i = 0; i < boxFaces; i++)
@@ -212,8 +259,6 @@ void game::update()
 	awesomeface->setPos(awesomeface->getPos() + movement);
 
 	boxPos += movement;
-
-	std::cout << boxPos.x << " " << boxPos.y << " " << boxPos.z << std::endl;
 
 	float cameraMovementAmount = engine::time::getDeltaTime() * cameraSpeed;
 
@@ -337,6 +382,7 @@ void game::init()
 	container[5]->setRot(glm::vec3(glm::radians(90.0f), 0, 0));
 
 	boxPos = glm::vec3(0, 0, 0);
+	boxForward = glm::vec3(0, 0, 1);
 
 	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", true);
 	floor->setScale(glm::vec3(500, 500, 1));
