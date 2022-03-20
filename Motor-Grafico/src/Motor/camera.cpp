@@ -92,7 +92,6 @@ namespace engine
 			localPos = glm::normalize(direction) * distace;
 			pos = targetPos + localPos;
 			look = targetPos;
-			std::cout << look.x << " " << look.y << " " << look.z << std::endl;
 			break;
 		default:
 			break;
