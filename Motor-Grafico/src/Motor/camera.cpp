@@ -24,7 +24,10 @@ namespace engine
 		pos = startingPosition;
 		look = lookPosition;
 		up = upVector;
-		viewMatrix = glm::lookAt(startingPosition, pos + lookPosition, upVector);
+		
+		glm::vec3 lookPos = movementType == MOVEMENT_TYPE::FPS ? pos + lookPosition : lookPosition;
+
+		viewMatrix = glm::lookAt(startingPosition, lookPos, upVector);
 		currentRenderer->setViewMatrix(viewMatrix);
 	}
 	void camera::moveCamera(glm::vec3 movePosition)
@@ -88,7 +91,8 @@ namespace engine
 			direction.y = -direction.y;
 			localPos = glm::normalize(direction) * distace;
 			pos = targetPos + localPos;
-			//std::cout << pos.x << " " << pos.y << " " << pos.z << std::endl;
+			look = targetPos;
+			std::cout << look.x << " " << look.y << " " << look.z << std::endl;
 			break;
 		default:
 			break;

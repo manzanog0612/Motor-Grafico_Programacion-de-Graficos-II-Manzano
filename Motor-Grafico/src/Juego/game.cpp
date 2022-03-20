@@ -182,6 +182,8 @@ void game::update()
 		cam->moveCamera(movement);
 	}*/
 
+	//box movement
+
 	glm::vec3 movement = glm::vec3(0, 0, 0);
 	float boxSpeed = 10;
 	float boxFaces = 6;
@@ -213,7 +215,7 @@ void game::update()
 
 	boxPos += movement;
 
-	std::cout << boxPos.x << " " << boxPos.y << " " << boxPos.z << std::endl;
+	//camera movement
 
 	float cameraMovementAmount = engine::time::getDeltaTime() * cameraSpeed;
 
@@ -237,7 +239,6 @@ void game::update()
 
 	cam->rotateCamera(getMouseOffset());
 	cam->updateTargetPos(boxPos);
-	cam->setView(boxPos);
 	/* 
 	
 	PARA METER ROTACIÒN DE CAMARA PROXIMAMENTE
