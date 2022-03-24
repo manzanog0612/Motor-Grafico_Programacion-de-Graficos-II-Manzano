@@ -17,7 +17,7 @@ game::game()
 	//triangle2 = nullptr;
 	//triangle3 = nullptr;
 	//quad = nullptr;
-	cam = nullptr;
+	actualCam = nullptr;
 	//tileMap = nullptr;
 	colors[0] = glm::vec4(0, 0, 0, 0);
 	colors[1] = glm::vec4(1, 0, 0, 1);
@@ -185,25 +185,29 @@ void game::update()
 	//box movement
 
 	glm::vec3 movement = glm::vec3(0, 0, 0);
-	float boxSpeed = 10;
+	glm::vec3 front = glm::normalize(actualCam->getFront());
+	glm::vec3 up = glm::normalize(actualCam->getUp());
+	float boxSpeed = 1;
 	float boxFaces = 6;
 
-	if (isKeyPressed(ENGINE_KEY_LEFT))
-	{
-		movement = { engine::time::getDeltaTime() * boxSpeed, 0, 0 };
-	}
-	else if (isKeyPressed(ENGINE_KEY_RIGHT))
-	{
-		movement = { engine::time::getDeltaTime() * -boxSpeed, 0, 0 };
-	}
+	front.y = 0;
 
 	if (isKeyPressed(ENGINE_KEY_UP))
 	{
-		movement += glm::vec3( 0, 0 , engine::time::getDeltaTime() * boxSpeed);
+		movement += front * boxSpeed;
 	}
 	else if (isKeyPressed(ENGINE_KEY_DOWN))
 	{
-		movement += glm::vec3(0, 0 , engine::time::getDeltaTime() * -boxSpeed);
+		movement -= front * boxSpeed;
+	}
+	
+	if (isKeyPressed(ENGINE_KEY_LEFT))
+	{
+		movement -= glm::normalize(glm::cross(glm::normalize(front), glm::normalize(up)));
+	}
+	else if (isKeyPressed(ENGINE_KEY_RIGHT))
+	{
+		movement += glm::normalize(glm::cross(glm::normalize(front), glm::normalize(up)));
 	}
 
 	for (short i = 0; i < boxFaces; i++)
@@ -215,30 +219,49 @@ void game::update()
 
 	boxPos += movement;
 
+	std::cout << "x: " << movement.x << " - y: " << movement.y << " - z: " << movement.z<< std::endl;
+
 	//camera movement
 
 	float cameraMovementAmount = engine::time::getDeltaTime() * cameraSpeed;
 
 	if (isKeyPressed(ENGINE_KEY_W))
 	{
-		cam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::FRONT);
+		actualCam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::FRONT);
 	}
 	else if (isKeyPressed(ENGINE_KEY_S))
 	{
-		cam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::BACK);
+		actualCam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::BACK);
 	}
 
 	if (isKeyPressed(ENGINE_KEY_D))
 	{
-		cam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::RIGHT);
+		actualCam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::RIGHT);
 	}
 	else if (isKeyPressed(ENGINE_KEY_A))
 	{
-		cam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::LEFT);
+		actualCam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::LEFT);
 	}
 
-	cam->rotateCamera(getMouseOffset());
-	cam->updateTargetPos(boxPos);
+	actualCam->rotateCamera(getMouseOffset());
+
+	if (actualCam == thirdPersonCam)
+	{
+		thirdPersonCam->updateTargetPos(boxPos);
+	}
+
+	//if (isKeyDown(ENGINE_KEY_ENTER))
+	//{
+	//	if (cam->getCameraType() == engine::MOVEMENT_TYPE::FPS)
+	//	{
+	//		cam->setCameraType(engine::MOVEMENT_TYPE::THIRD_PERSON);
+	//	}
+	//	else
+	//	{
+	//		cam->setCameraType(engine::MOVEMENT_TYPE::FPS);
+	//	}
+	//}
+		
 	/* 
 	
 	PARA METER ROTACIÒN DE CAMARA PROXIMAMENTE
@@ -268,7 +291,10 @@ void game::init()
 	glm::vec3 camPos = { 20, 10, 30 };
 	glm::vec3 camView = { 0, 0, 0 };
 	glm::vec3 camUp = { 0, 1, 0 };
-	cam = new engine::camera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
+	//renderer* currentRenderer, glm::vec3 position, glm::vec3 lookPosition, glm::vec3 upVector, PROJECTION projectionType
+	firstPersonCam = new engine::firstPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
+	thirdPersonCam = new engine::thirdPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
+	actualCam = thirdPersonCam;
 	//tileMap = new engine::tileMap(currentRenderer);
 
 	/*if (tileMap->importTileMap("../res/assets/tilemapreal.tmx"))
@@ -400,7 +426,8 @@ void game::init()
 
 void game::deInit()
 {
-	delete cam;
+	delete firstPersonCam;
+	delete thirdPersonCam;
 	//imageCampus->deinit();
 	//delete imageCampus;
 	for (short i = 0; i < 6; i++)

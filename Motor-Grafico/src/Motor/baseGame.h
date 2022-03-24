@@ -9,6 +9,9 @@
 #include "shape.h"
 #include "sprite.h"
 #include "camera.h"
+#include "firstPersonCamera.h"
+#include "thirdPersonCamera.h"
+#include "camera.h"
 #include "tileMap.h"
 
 

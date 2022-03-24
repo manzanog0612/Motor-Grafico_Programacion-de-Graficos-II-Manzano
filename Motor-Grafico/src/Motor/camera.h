@@ -14,30 +14,32 @@ namespace engine
 	class ENGINE_API camera
 	{
 	public:
-		camera(renderer* currentRenderer, glm::vec3 position, glm::vec3 lookPosition, glm::vec3 upVector, PROJECTION projectionType);
-		void setCameraTransform(glm::vec3 startingPosition, glm::vec3 lookPosition, glm::vec3 upVector);
+		camera();
+		//camera(renderer* currentRenderer, glm::vec3 position, glm::vec3 lookPosition, glm::vec3 upVector, PROJECTION projectionType);
+		virtual void setCameraTransform(glm::vec3 startingPosition, glm::vec3 lookPosition, glm::vec3 upVector) = 0;
+		virtual void rotateCamera(glm::vec2 mouseMovement) = 0;
 		void moveCamera(glm::vec3 movePosition);
 		void moveCamera(float movementAmount, MOVEMENT_DIRECTION movementDirection);
 		void setView(glm::vec3 lookPosition);
 		void setProjetion(PROJECTION projectionType);
-		void setCameraType(MOVEMENT_TYPE movementType);
-		void updateTargetPos(glm::vec3 targetPosition);
-		void rotateCamera(glm::vec2 offSet);
+		glm::vec3 getFront();
+		glm::vec3 getUp();
+		//void setCameraType(MOVEMENT_TYPE movementType);
+		//MOVEMENT_TYPE getCameraType();
 		~camera();
-	private:
+	protected:
+		void setProjectionMatrix();
+		void setViewMatrix();
+		glm::vec3 getDirectionByMovement(glm::vec2 mouseMovement);
 		glm::mat4 viewMatrix;
 		glm::mat4 projectionMatrix;
 		glm::vec3 pos; //donde esta parada
-		glm::vec3 localPos; 
-		glm::vec3 targetPos;
 		glm::vec3 look; //a donde esta mirando
 		glm::vec3 up; //el up de la camara
 		renderer* currentRenderer;
-		MOVEMENT_TYPE movementType;
+		//MOVEMENT_TYPE movementType;
 		float yaw;
 		float pitch;
-		float distace;
-
 	};
 
 	//EJE X PITCH

@@ -3,40 +3,41 @@
 
 namespace engine
 {
-	camera::camera(renderer* currentRenderer, glm::vec3 position, glm::vec3 lookPosition, glm::vec3 upVector, PROJECTION projectionType)
+	camera::camera()
 	{
-		this->currentRenderer = currentRenderer;
-		movementType = MOVEMENT_TYPE::THIRD_PERSON;
+		currentRenderer = NULL;
 		yaw = -90.0f;
 		pitch = 0.f;
-		distace = 50;
-
-		localPos = glm::vec3(0, 0, 0);
-		targetPos = glm::vec3(0, 0, 0);
-
-		setProjetion(projectionType);
-
-		this->currentRenderer->setProjectionMatrix(projectionMatrix);
-		setCameraTransform(position, lookPosition, upVector);
 	}
-	void camera::setCameraTransform(glm::vec3 startingPosition, glm::vec3 lookPosition, glm::vec3 upVector)
-	{
-		pos = startingPosition;
-		look = lookPosition;
-		up = upVector;
-		
-		glm::vec3 lookPos = movementType == MOVEMENT_TYPE::FPS ? pos + lookPosition : lookPosition;
-
-		viewMatrix = glm::lookAt(startingPosition, lookPos, upVector);
-		currentRenderer->setViewMatrix(viewMatrix);
-	}
+	//camera::camera(renderer* currentRenderer, glm::vec3 position, glm::vec3 lookPosition, glm::vec3 upVector, PROJECTION projectionType)
+	//{
+	//	this->currentRenderer = currentRenderer;
+	//	//movementType = MOVEMENT_TYPE::THIRD_PERSON;
+	//	yaw = -90.0f;
+	//	pitch = 0.f;
+	//
+	//	setProjetion(projectionType);
+	//
+	//	this->currentRenderer->setProjectionMatrix(projectionMatrix);
+	//	setCameraTransform(position, lookPosition, upVector);
+	//}
+	//void camera::setCameraTransform(glm::vec3 startingPosition, glm::vec3 lookPosition, glm::vec3 upVector)
+	//{
+	//	pos = startingPosition;
+	//	look = lookPosition;
+	//	up = upVector;
+	//	
+	//	//glm::vec3 lookPos = movementType == MOVEMENT_TYPE::FPS ? pos + lookPosition : lookPosition;
+	//
+	//	//viewMatrix = glm::lookAt(startingPosition, lookPos, upVector);
+	//	//currentRenderer->setViewMatrix(viewMatrix);
+	//}
 	void camera::moveCamera(glm::vec3 movePosition)
 	{
 		pos += movePosition;
 		look += movePosition;
 		setCameraTransform(pos, look, up);
-	}
-	
+	}	
 	void camera::moveCamera(float movementAmount, MOVEMENT_DIRECTION movementDirection)
 	{
 		switch (movementDirection)
@@ -59,18 +60,18 @@ namespace engine
 		
 		setCameraTransform(pos, look, up);
 	}
-	void camera::setCameraType(MOVEMENT_TYPE movementType)
+	//void camera::setCameraType(MOVEMENT_TYPE movementType)
+	//{
+	//	this->movementType = movementType;
+	//}
+	//MOVEMENT_TYPE camera::getCameraType()
+	//{
+	//	return movementType;
+	//}
+	glm::vec3 camera::getDirectionByMovement(glm::vec2 mouseMovement)
 	{
-		this->movementType = movementType;
-	}
-	void camera::updateTargetPos(glm::vec3 targetPosition)
-	{
-		targetPos = targetPosition;
-	}
-	void camera::rotateCamera(glm::vec2 offSet)
-	{
-		yaw += offSet.x;
-		pitch += offSet.y;
+		yaw += mouseMovement.x;
+		pitch += mouseMovement.y;
 
 		if (pitch > 89.0f)
 			pitch = 89.0f;
@@ -81,22 +82,24 @@ namespace engine
 		direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
 		direction.y = sin(glm::radians(pitch));
 		direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+		
+		return direction;
 
-		switch (movementType)
-		{
-		case engine::MOVEMENT_TYPE::FPS:
-			look = glm::normalize(direction);
-			break;
-		case engine::MOVEMENT_TYPE::THIRD_PERSON:
-			direction.y = -direction.y;
-			localPos = glm::normalize(direction) * distace;
-			pos = targetPos + localPos;
-			look = targetPos;
-			break;
-		default:
-			break;
-		}
-		setCameraTransform(pos, look, up);
+		//switch (movementType)
+		//{
+		//case engine::MOVEMENT_TYPE::FPS:
+		//	look = glm::normalize(direction);
+		//	break;
+		//case engine::MOVEMENT_TYPE::THIRD_PERSON:
+		//	direction.y = -direction.y;
+		//	localPos = glm::normalize(direction) * distace;
+		//	pos = targetPos + localPos;
+		//	look = targetPos;
+		//	break;
+		//default:
+		//	break;
+		//}
+		//setCameraTransform(pos, look, up);
 	}
 	void camera::setView(glm::vec3 lookPosition)
 	{
@@ -120,8 +123,24 @@ namespace engine
 			break;
 		}
 	}
+	glm::vec3 camera::getFront()
+	{
+		return look;
+	}
+	glm::vec3 camera::getUp()
+	{
+		return up;
+	}
 	camera::~camera()
 	{
 
+	}
+	void camera::setProjectionMatrix()
+	{
+		currentRenderer->setProjectionMatrix(projectionMatrix);
+	}
+	void camera::setViewMatrix()
+	{
+		currentRenderer->setViewMatrix(viewMatrix);
 	}
 }

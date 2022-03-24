@@ -29,7 +29,9 @@ private:
 	//engine::shape* triangle2;
 	//engine::shape* triangle3;
 	//engine::shape* quad;
-	engine::camera* cam;
+	engine::camera* actualCam;
+	engine::firstPersonCamera* firstPersonCam;
+	engine::thirdPersonCamera* thirdPersonCam;
 	//engine::tileMap* tileMap;
 	float cameraSpeed = 30.f;
 	glm::vec3 boxPos = glm::vec3(0, 0, 0);

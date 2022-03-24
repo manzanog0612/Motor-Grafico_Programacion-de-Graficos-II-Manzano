@@ -25,6 +25,7 @@
     <ClCompile Include="..\src\Motor\collisionManager.cpp" />
     <ClCompile Include="..\src\Motor\entity.cpp" />
     <ClCompile Include="..\src\Motor\entity2D.cpp" />
+    <ClCompile Include="..\src\Motor\firstPersonCamera.cpp" />
     <ClCompile Include="..\src\Motor\input.cpp" />
     <ClCompile Include="..\src\Motor\renderer.cpp" />
     <ClCompile Include="..\src\Motor\shader.cpp" />
@@ -32,6 +33,7 @@
     <ClCompile Include="..\src\Motor\sprite.cpp" />
     <ClCompile Include="..\src\Motor\stb_image.cpp" />
     <ClCompile Include="..\src\Motor\textureImporter.cpp" />
+    <ClCompile Include="..\src\Motor\thirdPersonCamera.cpp" />
     <ClCompile Include="..\src\Motor\tile.cpp" />
     <ClCompile Include="..\src\Motor\tileMap.cpp" />
     <ClCompile Include="..\src\Motor\time.cpp" />
@@ -47,6 +49,7 @@
     <ClInclude Include="..\src\Motor\entity.h" />
     <ClInclude Include="..\src\Motor\entity2D.h" />
     <ClInclude Include="..\src\Motor\exports.h" />
+    <ClInclude Include="..\src\Motor\firstPersonCamera.h" />
     <ClInclude Include="..\src\Motor\input.h" />
     <ClInclude Include="..\src\Motor\keycodes.h" />
     <ClInclude Include="..\src\Motor\renderer.h" />
@@ -55,6 +58,7 @@
     <ClInclude Include="..\src\Motor\sprite.h" />
     <ClInclude Include="..\src\Motor\stb_image.h" />
     <ClInclude Include="..\src\Motor\textureImporter.h" />
+    <ClInclude Include="..\src\Motor\thirdPersonCamera.h" />
     <ClInclude Include="..\src\Motor\tile.h" />
     <ClInclude Include="..\src\Motor\tileMap.h" />
     <ClInclude Include="..\src\Motor\time.h" />
