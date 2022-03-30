@@ -131,6 +131,10 @@ namespace engine
 	{
 		return up;
 	}
+	glm::vec3 camera::getPos()
+	{
+		return pos;
+	}
 	camera::~camera()
 	{
 

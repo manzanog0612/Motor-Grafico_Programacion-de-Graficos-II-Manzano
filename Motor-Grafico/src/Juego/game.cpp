@@ -185,7 +185,7 @@ void game::update()
 	//box movement
 
 	glm::vec3 movement = glm::vec3(0, 0, 0);
-	glm::vec3 front = glm::normalize(actualCam->getFront());
+	glm::vec3 front = glm::normalize(actualCam->getFront() - actualCam->getPos());
 	glm::vec3 up = glm::normalize(actualCam->getUp());
 	float boxSpeed = 1;
 	float boxFaces = 6;
@@ -194,20 +194,20 @@ void game::update()
 
 	if (isKeyPressed(ENGINE_KEY_UP))
 	{
-		movement += glm::vec3(0, 0, 1) * boxSpeed;
+		movement += front * boxSpeed;
 	}
 	else if (isKeyPressed(ENGINE_KEY_DOWN))
 	{
-		movement -= glm::vec3(0, 0, 1) * boxSpeed;
+		movement -= front * boxSpeed;
 	}
 	
 	if (isKeyPressed(ENGINE_KEY_LEFT))
 	{
-		movement += glm::vec3(1, 0, 0);
+		movement -= glm::normalize(glm::cross(front, up));
 	}
 	else if (isKeyPressed(ENGINE_KEY_RIGHT))
 	{
-		movement -= glm::vec3(1, 0, 0);
+		movement += glm::normalize(glm::cross(front, up));
 	}
 
 	for (short i = 0; i < boxFaces; i++)
