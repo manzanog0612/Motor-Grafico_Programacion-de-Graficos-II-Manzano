@@ -86,11 +86,6 @@ namespace engine
 		glDeleteBuffers(1, &VBO);
 		glDeleteBuffers(1, &EBO);
 	}
-	void renderer::deleteBaseBuffer(unsigned int& VAO, unsigned int& VBO)
-	{
-		glDeleteVertexArrays(1, &VAO);
-		glDeleteBuffers(1, &VBO);
-	}
 	void renderer::deleteExtraBuffer(unsigned int& buffer, int size)
 	{
 		glDeleteBuffers(size, &buffer);

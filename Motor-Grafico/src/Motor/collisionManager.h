@@ -4,8 +4,8 @@
 
 namespace engine
 {
+
 	class entity2D;
-	class entity3D;
 
 	class collisionManager
 	{
@@ -14,7 +14,6 @@ namespace engine
 		~collisionManager();
 		void addToCollisionList(entity2D* entityToAdd, bool isStatic);
 		void removeFromCollisionList(entity2D* entityToRemove);
-		void removeFromCollisionList(entity3D* entityToRemove);
 		bool isInCollisionList(entity2D* entityToCheck);
 		void updateCollisions();
 		void updateCollisionsInTileMap(engine::tileMap* tileMap);

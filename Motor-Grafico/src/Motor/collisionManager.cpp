@@ -1,6 +1,5 @@
 #include "collisionManager.h"
 #include "entity2D.h"
-#include "entity3D.h"
 
 namespace engine
 {
@@ -21,11 +20,6 @@ namespace engine
 	{
 		staticCollisionList.remove(entityToRemove);
 		dynamicCollisionList.remove(entityToRemove);
-	}
-	void collisionManager::removeFromCollisionList(entity3D* entityToRemove)
-	{
-		//staticCollisionList.remove(entityToRemove);
-		//dynamicCollisionList.remove(entityToRemove);
 	}
 	bool collisionManager::isInCollisionList(entity2D* entityToCheck)
 	{
