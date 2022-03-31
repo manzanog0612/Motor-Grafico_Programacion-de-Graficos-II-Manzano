@@ -57,6 +57,10 @@ namespace engine
 		unsigned int affectedByLightLoc = glGetUniformLocation(shaderPro.ID, "affectedByLight");
 		glUniform1i(affectedByLightLoc, affectedByLight);		
 
+		unsigned int usesTexLoc = glGetUniformLocation(shaderPro.ID, "usesTex");
+		glUniform1i(usesTexLoc, usesTexture);
+		
+
 		if (usesTexture)
 		{
 			unsigned int textureLoc = glGetUniformLocation(shaderPro.ID, "ourTexture");

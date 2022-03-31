@@ -349,7 +349,7 @@ void game::init()
 
 		lightBoxPart[i] = new engine::shape(currentRenderer, 4, false);
 		lightBoxPart[i]->setScale(glm::vec3(5, 5, 5));
-		lightBoxPart[i]->setColor(glm::vec4(1, 0.1f, 0.1f, 1));
+		lightBoxPart[i]->setColor(glm::vec4(1.0));
 	}
 
 	awesomeface->setPos(glm::vec3(0, 0, 5.5f));
