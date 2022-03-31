@@ -82,4 +82,8 @@ namespace engine
 			break;
 		}
 	}
+	void entity2D::setLightAffect(bool lightAffects)
+	{
+		affectedByLight = lightAffects;
+	}
 }

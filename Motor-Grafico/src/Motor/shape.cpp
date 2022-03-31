@@ -5,13 +5,14 @@
 
 namespace engine
 {
-	shape::shape(renderer* render, unsigned int vert)
+	shape::shape(renderer* render, unsigned int vert, bool affectedByLight)
 	{
 		VAO = 0;
 		VBO = 0;
 		EBO = 0;
 		_vertices = 0;
 		_renderer = render;
+		this->affectedByLight = affectedByLight;
 
 		float* vertex;
 		unsigned int* indices;
@@ -77,18 +78,25 @@ namespace engine
 
 	void shape::draw()
 	{
-		_renderer->solidShader.use();
-		setShader();
-		_renderer->drawRequest(model, VAO, _vertices, _renderer->solidShader.ID);
+		_renderer->shaderPro.use();
+		//setShader();
+		_renderer->SetShaderInfo(color, false, affectedByLight, 0);
+		_renderer->drawRequest(model, VAO, _vertices);
 	}
 
-	void shape::setShader()
-	{
-		glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
-		unsigned int colorLoc = glGetUniformLocation(_renderer->solidShader.ID, "color");
-		glUniform3fv(colorLoc, 1, glm::value_ptr(newColor));
-
-		unsigned int alphaLoc = glGetUniformLocation(_renderer->solidShader.ID, "a");
-		glUniform1fv(alphaLoc, 1, &(color.a));
-	}
+	//void shape::setShader()
+	//{
+	//	glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
+	//	unsigned int colorLoc = glGetUniformLocation(_renderer->shaderPro.ID, "color");
+	//	glUniform3fv(colorLoc, 1, glm::value_ptr(newColor));
+	//
+	//	unsigned int alphaLoc = glGetUniformLocation(_renderer->shaderPro.ID, "a");
+	//	glUniform1fv(alphaLoc, 1, &(color.a));
+	//
+	//	unsigned int affectedByLightLoc = glGetUniformLocation(_renderer->shaderPro.ID, "affectedByLight");
+	//	glUniform1i(affectedByLightLoc, affectedByLight);
+	//
+	//	unsigned int usesTextureLoc = glGetUniformLocation(_renderer->shaderPro.ID, "usesTexture");
+	//	glUniform1i(usesTextureLoc, false);
+	//}
 }

@@ -22,5 +22,6 @@ namespace engine
 	void light::deinit()
 	{
 
+
 	}
 }

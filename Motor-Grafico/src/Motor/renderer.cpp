@@ -41,15 +41,38 @@ namespace engine
 	{
 		glfwSwapBuffers(currentWindow->getGLFWwindow());
 	}
-	void renderer::drawRequest(glm::mat4 modelMatrix, unsigned int VAO, unsigned int vertices, unsigned int usedShaderID)
+
+	void renderer::SetShaderInfo(glm::vec4 color, bool usesTexture, bool affectedByLight, unsigned int texture)
 	{
-		unsigned int modelLoc = glGetUniformLocation(usedShaderID, "model");
+		glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
+		unsigned int colorLoc = glGetUniformLocation(shaderPro.ID, "color");
+		glUniform3fv(colorLoc, 1, glm::value_ptr(newColor));
+
+		unsigned int alphaLoc = glGetUniformLocation(shaderPro.ID, "a");
+		glUniform1fv(alphaLoc, 1, &(color.a));
+
+		unsigned int usesTextureLoc = glGetUniformLocation(shaderPro.ID, "usesTexture");
+		glUniform1i(usesTextureLoc, usesTexture);
+
+		unsigned int affectedByLightLoc = glGetUniformLocation(shaderPro.ID, "affectedByLight");
+		glUniform1i(affectedByLightLoc, affectedByLight);		
+
+		if (usesTexture)
+		{
+			unsigned int textureLoc = glGetUniformLocation(shaderPro.ID, "ourTexture");
+			glUniform1f(textureLoc, (GLfloat)texture);
+		}
+	}
+
+	void renderer::drawRequest(glm::mat4 modelMatrix, unsigned int VAO, unsigned int vertices)
+	{
+		unsigned int modelLoc = glGetUniformLocation(shaderPro.ID, "model");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
-		unsigned int viewLoc = glGetUniformLocation(usedShaderID, "view");
+		unsigned int viewLoc = glGetUniformLocation(shaderPro.ID, "view");
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 
-		unsigned int projectionLoc = glGetUniformLocation(usedShaderID, "projection");
+		unsigned int projectionLoc = glGetUniformLocation(shaderPro.ID, "projection");
 		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
 		glBindVertexArray(VAO);

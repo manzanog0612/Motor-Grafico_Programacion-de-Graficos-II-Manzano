@@ -294,7 +294,7 @@ void game::init()
 	//renderer* currentRenderer, glm::vec3 position, glm::vec3 lookPosition, glm::vec3 upVector, PROJECTION projectionType
 	firstPersonCam = new engine::firstPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	thirdPersonCam = new engine::thirdPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
-	actualCam = thirdPersonCam;
+	actualCam = firstPersonCam;
 	//tileMap = new engine::tileMap(currentRenderer);
 
 	/*if (tileMap->importTileMap("../res/assets/tilemapreal.tmx"))
@@ -334,12 +334,12 @@ void game::init()
 	container->setScale(glm::vec3(10, 10, 10));
 	container->setPos(glm::vec3(-15, 0, 0));*/
 
-	awesomeface = new engine::sprite(currentRenderer, "../res/assets/textures/awesomeface.png", true);
+	awesomeface = new engine::sprite(currentRenderer, "../res/assets/textures/awesomeface.png", true, true);
 	awesomeface->setScale(glm::vec3(10, 10, 10));
 
 	for (short i = 0; i < 6; i++)
 	{
-		container[i] = new engine::sprite(currentRenderer, "../res/assets/textures/container.jpg", true);
+		container[i] = new engine::sprite(currentRenderer, "../res/assets/textures/container.jpg", true, true);
 		container[i]->setScale(glm::vec3(10, 10, 10));
 	}
 
@@ -365,7 +365,7 @@ void game::init()
 
 	boxPos = glm::vec3(0, 0, 0);
 
-	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", true);
+	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", true, true);
 	floor->setScale(glm::vec3(500, 500, 1));
 	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 	floor->setPos(glm::vec3(0,-5,0));
