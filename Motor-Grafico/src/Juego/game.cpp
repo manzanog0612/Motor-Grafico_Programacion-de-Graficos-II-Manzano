@@ -8,6 +8,7 @@ game::game()
 	for (short i = 0; i < 6; i++)
 	{
 		container[i] = nullptr;
+		lightBoxPart[i] = nullptr;
 	}
 	awesomeface = nullptr;
 	floor = nullptr;
@@ -55,8 +56,12 @@ void game::draw()
 
 	for (short i = 0; i < 6; i++)
 	{
+		lightBoxPart[i]->draw();
+	}
+
+	for (short i = 0; i < 6; i++)
+	{
 		container[i]->draw();
-		//awesomeface[i]->draw();
 	}
 	awesomeface->draw();
 	floor->draw();
@@ -341,12 +346,20 @@ void game::init()
 	{
 		container[i] = new engine::sprite(currentRenderer, "../res/assets/textures/container.jpg", true, true);
 		container[i]->setScale(glm::vec3(10, 10, 10));
+
+		lightBoxPart[i] = new engine::shape(currentRenderer, 4, false);
+		lightBoxPart[i]->setScale(glm::vec3(5, 5, 5));
+		lightBoxPart[i]->setColor(glm::vec4(1, 0.1f, 0.1f, 1));
 	}
 
-	container[0]->setPos(glm::vec3(0, 0, 5));
-	container[0]->setRot(glm::vec3(0, 0, 0));
 	awesomeface->setPos(glm::vec3(0, 0, 5.5f));
 	awesomeface->setRot(glm::vec3(0, 0, 0));
+
+	// BOX PARTS SETTING
+
+	boxPos = glm::vec3(0, 0, 0);
+	container[0]->setPos(glm::vec3(0, 0, 5));
+	container[0]->setRot(glm::vec3(0, 0, 0));
 
 	container[1]->setPos(glm::vec3(5, 0, 0));
 	container[1]->setRot(glm::vec3(0, glm::radians(90.0f), 0));
@@ -363,7 +376,29 @@ void game::init()
 	container[5]->setPos(glm::vec3(0, -5, 0));
 	container[5]->setRot(glm::vec3(glm::radians(90.0f), 0, 0));
 
-	boxPos = glm::vec3(0, 0, 0);
+	lightBoxPos = glm::vec3(12, 5, -5);
+
+	lightBoxPart[0]->setPos(glm::vec3(0, 0, 2.5f) + lightBoxPos);
+	lightBoxPart[0]->setRot(glm::vec3(0, 0, 0));
+
+	lightBoxPart[1]->setPos(glm::vec3(2.5f, 0, 0) + lightBoxPos);
+	lightBoxPart[1]->setRot(glm::vec3(0, glm::radians(90.0f), 0));
+	
+	lightBoxPart[2]->setPos(glm::vec3(0, 0, -2.5f) + lightBoxPos);
+	lightBoxPart[2]->setRot(glm::vec3(0, glm::radians(180.0f), 0));
+	
+	lightBoxPart[3]->setPos(glm::vec3(-2.5f, 0, 0) + lightBoxPos);
+	lightBoxPart[3]->setRot(glm::vec3(0, glm::radians(-90.0f), 0));
+	
+	lightBoxPart[4]->setPos(glm::vec3(0, 2.5f, 0) + lightBoxPos);
+	lightBoxPart[4]->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
+	
+	lightBoxPart[5]->setPos(glm::vec3(0, -2.5f, 0) + lightBoxPos);
+	lightBoxPart[5]->setRot(glm::vec3(glm::radians(90.0f), 0, 0));
+
+	// END OF BOX PARTS SETTING
+
+	
 
 	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", true, true);
 	floor->setScale(glm::vec3(500, 500, 1));
@@ -434,7 +469,7 @@ void game::deInit()
 	{
 		container[i]->deinit();
 		delete container[i];
-		
+		delete lightBoxPart[i];
 	}
 
 	awesomeface->deinit();
