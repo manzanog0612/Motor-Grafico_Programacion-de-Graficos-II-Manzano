@@ -25,6 +25,7 @@ private:
 	engine::sprite* container[6];
 	engine::shape* lightBoxPart[6];
 	engine::sprite* awesomeface;
+	engine::light* lightSourse;
 	//engine::sprite* archer;
 	//engine::shape* triangle;
 	//engine::shape* triangle2;

@@ -82,6 +82,12 @@ namespace engine
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
 	}
+
+	void renderer::processLight(glm::vec3 lightColor)
+	{
+		unsigned int lightColorLoc = glGetUniformLocation(shaderPro.ID, "lightColor");
+		glUniform3fv(lightColorLoc, 1, glm::value_ptr(lightColor));
+	}
 	void renderer::createBaseBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
 	{
 		glGenVertexArrays(1, &VAO);

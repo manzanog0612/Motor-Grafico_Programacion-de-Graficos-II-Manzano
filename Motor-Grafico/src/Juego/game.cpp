@@ -12,7 +12,7 @@ game::game()
 	}
 	awesomeface = nullptr;
 	floor = nullptr;
-	
+	lightSourse = nullptr;
 	//archer = nullptr;
 	//triangle = nullptr;
 	//triangle2 = nullptr;
@@ -65,6 +65,8 @@ void game::draw()
 	}
 	awesomeface->draw();
 	floor->draw();
+
+	lightSourse->draw();
 	//triangle->draw();
 	//triangle2->draw();
 	//triangle3->draw();
@@ -255,6 +257,8 @@ void game::update()
 		thirdPersonCam->updateTargetPos(boxPos);
 	}
 
+	lightSourse->setPos(lightBoxPos);
+
 	//if (isKeyDown(ENGINE_KEY_ENTER))
 	//{
 	//	if (cam->getCameraType() == engine::MOVEMENT_TYPE::FPS)
@@ -398,12 +402,14 @@ void game::init()
 
 	// END OF BOX PARTS SETTING
 
-	
+	lightSourse = new engine::light(currentRenderer);
+	lightSourse->setColor(glm::vec4(1, 0.5f, 0.5f, 1));
 
 	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", true, true);
 	floor->setScale(glm::vec3(500, 500, 1));
 	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 	floor->setPos(glm::vec3(0,-5,0));
+
 
 
 	/*archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
