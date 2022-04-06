@@ -42,6 +42,11 @@ namespace engine
 		glfwSwapBuffers(currentWindow->getGLFWwindow());
 	}
 
+	void renderer::setAmbientLight(float ambient)
+	{
+		ambientLight = ambient;
+	}
+
 	void renderer::SetShaderInfo(glm::vec4 color, bool usesTexture, bool affectedByLight, unsigned int texture)
 	{
 		glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
@@ -87,6 +92,9 @@ namespace engine
 	{
 		unsigned int lightColorLoc = glGetUniformLocation(shaderPro.ID, "lightColor");
 		glUniform3fv(lightColorLoc, 1, glm::value_ptr(lightColor));
+
+		unsigned int ambientStengthLoc = glGetUniformLocation(shaderPro.ID, "ambientStrength");
+		glUniform1fv(ambientStengthLoc, 1, &(ambientLight));
 	}
 	void renderer::createBaseBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
 	{
