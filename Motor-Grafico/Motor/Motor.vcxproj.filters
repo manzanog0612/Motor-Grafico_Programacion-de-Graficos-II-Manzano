@@ -155,6 +155,9 @@
     <ClInclude Include="..\src\Motor\light.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\Motor\vertexs.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\Motor\Shaders\SolidFragment.shader">

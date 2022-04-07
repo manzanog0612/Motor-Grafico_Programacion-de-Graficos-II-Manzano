@@ -65,6 +65,7 @@
     <ClInclude Include="..\src\Motor\tileMap.h" />
     <ClInclude Include="..\src\Motor\time.h" />
     <ClInclude Include="..\src\Motor\tinyxml2.h" />
+    <ClInclude Include="..\src\Motor\vertexs.h" />
     <ClInclude Include="..\src\Motor\window.h" />
   </ItemGroup>
   <ItemGroup>
