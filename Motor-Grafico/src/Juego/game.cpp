@@ -15,6 +15,7 @@ game::game()
 	floor = nullptr;
 	lightSourse = nullptr;
 	cubeShape = nullptr;
+	cubeShape2 = nullptr;
 
 	//archer = nullptr;
 	//triangle = nullptr;
@@ -59,16 +60,17 @@ void game::draw()
 
 	lightBox->draw();
 
-	for (short i = 0; i < 6; i++)
-	{
-		container[i]->draw();
-	}
-	awesomeface->draw();
+	//for (short i = 0; i < 6; i++)
+	//{
+	//	container[i]->draw();
+	//}
+	//awesomeface->draw();
 	floor->draw();
 
 	lightSourse->draw();
 
 	cubeShape->draw();
+	cubeShape2->draw();
 	//triangle->draw();
 	//triangle2->draw();
 	//triangle3->draw();
@@ -219,7 +221,8 @@ void game::update()
 		movement += glm::normalize(glm::cross(front, up));
 	}
 
-	cubeShape->setPos(cubeShape->getPos() + movement);
+	//cubeShape->setPos(cubeShape->getPos() + movement);
+	lightBox->setPos(lightBox->getPos() + movement);
 
 	//for (short i = 0; i < boxFaces; i++)
 	//{
@@ -395,6 +398,10 @@ void game::init()
 	cubeShape->setPos(glm::vec3(-20, 5, -5));
 	cubeShape->setScale(glm::vec3(5, 5, 5));
 
+	cubeShape2 = new engine::shape(currentRenderer, engine::CUBE, true);
+	cubeShape2->setPos(glm::vec3(0, 0, 0));
+	cubeShape2->setScale(glm::vec3(10, 20, 10));
+
 	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", true, true);
 	floor->setScale(glm::vec3(500, 500, 1));
 	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
@@ -472,6 +479,7 @@ void game::deInit()
 	delete floor;
 
 	delete cubeShape;
+	delete cubeShape2;
 	//archer->deinit();
 	//delete archer;
 	//delete triangle;

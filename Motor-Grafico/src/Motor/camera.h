@@ -31,6 +31,7 @@ namespace engine
 	protected:
 		void setProjectionMatrix();
 		void setViewMatrix();
+		void setCameraPosToRenderer();
 		glm::vec3 getDirectionByMovement(glm::vec2 mouseMovement);
 		glm::mat4 viewMatrix;
 		glm::mat4 projectionMatrix;
