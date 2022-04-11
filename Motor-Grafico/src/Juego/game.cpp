@@ -304,8 +304,8 @@ void game::update()
 
 void game::init()
 {
-	glm::vec3 camPos = { 20, 10, 30 };
-	glm::vec3 camView = { 0, 0, 0 };
+	glm::vec3 camPos = { 0, 30, 0 };
+	glm::vec3 camView = { 0, -1, 0 };
 	glm::vec3 camUp = { 0, 1, 0 };
 	//renderer* currentRenderer, glm::vec3 position, glm::vec3 lookPosition, glm::vec3 upVector, PROJECTION projectionType
 	firstPersonCam = new engine::firstPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
