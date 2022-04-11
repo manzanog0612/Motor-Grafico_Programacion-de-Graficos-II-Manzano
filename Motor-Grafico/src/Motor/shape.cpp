@@ -18,19 +18,19 @@ namespace engine
 		if(vert == 3)
 		{
 			_renderer->createBaseBuffer(VAO, VBO, EBO);
-			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::triangVertex, sizeof(GL::triangVertex) * GL::triangVertTam, GL::triangIndexes, sizeof(GL::triangIndexes) * GL::triangIndexTam);
+			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::triangVertex, sizeof(GL::triangVertex), GL::triangIndexes, sizeof(GL::triangIndexes));
 			_vertices = GL::triangIndexTam;
 		}
 		else if(vert == 4)
 		{
 			_renderer->createBaseBuffer(VAO, VBO, EBO);
-			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::quadVertex, sizeof(GL::quadVertex) * GL::triangVertTam, GL::quadIndexes, sizeof(GL::quadIndexes) * GL::quadIndexTam);
-			_vertices = 6;
+			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::quadVertex, sizeof(GL::quadVertex), GL::quadIndexes, sizeof(GL::quadIndexes));
+			_vertices = GL::quadIndexTam;
 		}
 		else if (vert == 8)
 		{ 
 			_renderer->createBaseBuffer(VAO, VBO, EBO);
-			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::cubeVertex, sizeof(GL::cubeVertex) * GL::cubeVertTam, GL::cubeIndexes, sizeof(GL::cubeIndexes) * GL::cubeIndexTam);
+			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::cubeVertex, sizeof(GL::cubeVertex), GL::cubeIndexes, sizeof(GL::cubeIndexes));
 			_vertices = GL::cubeIndexTam;
 		}
 		else
@@ -39,23 +39,38 @@ namespace engine
 			return;
 		}
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(3 * sizeof(float)));
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(6 * sizeof(float)));
 
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
+		glEnableVertexAttribArray(2);
 
+		float UVs[8] =
+		{
+			0.0f, 0.0f,
+			0.0f, 0.0f,
+			0.0f, 0.0f,
+			0.0f, 0.0f
+		};
+		_renderer->createExtraBuffer(bufferPosUVs, 1);
+		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_DYNAMIC_DRAW);
+		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(3);
 	}
 
 	shape::~shape()
 	{
+		_renderer->deleteBaseBuffer(VAO, VBO, EBO);
+		_renderer->deleteExtraBuffer(bufferPosUVs, 1);
+
 		_renderer->deleteBaseBuffer(VAO, VBO, EBO);
 	}
 
 	void shape::draw()
 	{
 		_renderer->shaderPro.use();
-		//setShader();
 		_renderer->setShaderInfo(color, false, affectedByLight, 0);
 		_renderer->drawRequest(model, VAO, _vertices);
 	}

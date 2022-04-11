@@ -12,5 +12,6 @@ namespace engine
 		void draw() override;
 	private:
 		//void setShader();
+		unsigned int bufferPosUVs = 0;
 	};
 }

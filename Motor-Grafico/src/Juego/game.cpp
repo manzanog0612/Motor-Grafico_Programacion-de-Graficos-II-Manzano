@@ -8,11 +8,14 @@ game::game()
 	for (short i = 0; i < 6; i++)
 	{
 		container[i] = nullptr;
-		lightBoxPart[i] = nullptr;
 	}
+
+	lightBox = nullptr;
 	awesomeface = nullptr;
 	floor = nullptr;
 	lightSourse = nullptr;
+	cubeShape = nullptr;
+
 	//archer = nullptr;
 	//triangle = nullptr;
 	//triangle2 = nullptr;
@@ -54,10 +57,7 @@ void game::draw()
 	//tileMap->draw();
 	//imageCampus->draw();
 
-	for (short i = 0; i < 6; i++)
-	{
-		lightBoxPart[i]->draw();
-	}
+	lightBox->draw();
 
 	for (short i = 0; i < 6; i++)
 	{
@@ -67,6 +67,8 @@ void game::draw()
 	floor->draw();
 
 	lightSourse->draw();
+
+	cubeShape->draw();
 	//triangle->draw();
 	//triangle2->draw();
 	//triangle3->draw();
@@ -217,12 +219,14 @@ void game::update()
 		movement += glm::normalize(glm::cross(front, up));
 	}
 
-	for (short i = 0; i < boxFaces; i++)
-	{
-		container[i]->setPos(container[i]->getPos() + movement);
-	}
+	cubeShape->setPos(cubeShape->getPos() + movement);
 
-	awesomeface->setPos(awesomeface->getPos() + movement);
+	//for (short i = 0; i < boxFaces; i++)
+	//{
+	//	container[i]->setPos(container[i]->getPos() + movement);
+	//}
+	//
+	//awesomeface->setPos(awesomeface->getPos() + movement);
 
 	boxPos += movement;
 
@@ -257,7 +261,7 @@ void game::update()
 		thirdPersonCam->updateTargetPos(boxPos);
 	}
 
-	lightSourse->setPos(lightBoxPos);
+	lightSourse->setPos(lightBox->getPos());
 
 	//if (isKeyDown(ENGINE_KEY_ENTER))
 	//{
@@ -350,11 +354,11 @@ void game::init()
 	{
 		container[i] = new engine::sprite(currentRenderer, "../res/assets/textures/container.jpg", true, true);
 		container[i]->setScale(glm::vec3(10, 10, 10));
-
-		lightBoxPart[i] = new engine::shape(currentRenderer, 4, false);
-		lightBoxPart[i]->setScale(glm::vec3(5, 5, 5));
-		lightBoxPart[i]->setColor(glm::vec4(1.0));
 	}
+
+	lightBox = new engine::shape(currentRenderer, 4, false);
+	lightBox->setScale(glm::vec3(5, 5, 5));
+	lightBox->setColor(glm::vec4(1.0));
 
 	awesomeface->setPos(glm::vec3(0, 0, 5.5f));
 	awesomeface->setRot(glm::vec3(0, 0, 0));
@@ -380,37 +384,21 @@ void game::init()
 	container[5]->setPos(glm::vec3(0, -5, 0));
 	container[5]->setRot(glm::vec3(glm::radians(90.0f), 0, 0));
 
-	lightBoxPos = glm::vec3(12, 5, -5);
-
-	lightBoxPart[0]->setPos(glm::vec3(0, 0, 2.5f) + lightBoxPos);
-	lightBoxPart[0]->setRot(glm::vec3(0, 0, 0));
-
-	lightBoxPart[1]->setPos(glm::vec3(2.5f, 0, 0) + lightBoxPos);
-	lightBoxPart[1]->setRot(glm::vec3(0, glm::radians(90.0f), 0));
+	lightBox->setPos(glm::vec3(12, 5, -5));
 	
-	lightBoxPart[2]->setPos(glm::vec3(0, 0, -2.5f) + lightBoxPos);
-	lightBoxPart[2]->setRot(glm::vec3(0, glm::radians(180.0f), 0));
-	
-	lightBoxPart[3]->setPos(glm::vec3(-2.5f, 0, 0) + lightBoxPos);
-	lightBoxPart[3]->setRot(glm::vec3(0, glm::radians(-90.0f), 0));
-	
-	lightBoxPart[4]->setPos(glm::vec3(0, 2.5f, 0) + lightBoxPos);
-	lightBoxPart[4]->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
-	
-	lightBoxPart[5]->setPos(glm::vec3(0, -2.5f, 0) + lightBoxPos);
-	lightBoxPart[5]->setRot(glm::vec3(glm::radians(90.0f), 0, 0));
-
 	// END OF BOX PARTS SETTING
 
 	lightSourse = new engine::light(currentRenderer);
 	lightSourse->setColor(glm::vec4(1, 0.5f, 0.5f, 1));
 
+	cubeShape = new engine::shape(currentRenderer, 8, true);
+	cubeShape->setPos(glm::vec3(-20, 5, -5));
+	cubeShape->setScale(glm::vec3(5, 5, 5));
+
 	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", true, true);
 	floor->setScale(glm::vec3(500, 500, 1));
 	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 	floor->setPos(glm::vec3(0,-5,0));
-
-
 
 	/*archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
 	
@@ -454,10 +442,8 @@ void game::init()
 
 	changeClearColor(glm::vec4(0.5f, 0.5f, 1, 1));
 	//changeClearColor(glm::vec4(.25, .25, .5, 1));
-
 	//addCollider(archer, false);
 	//addCollider(awesomeface, false);
-	
 	//addCollider(triangle, false);
 	//addCollider(triangle2, false);
 	//addCollider(triangle3, false);
@@ -475,14 +461,17 @@ void game::deInit()
 	{
 		container[i]->deinit();
 		delete container[i];
-		delete lightBoxPart[i];
 	}
+
+	delete lightBox;
 
 	awesomeface->deinit();
 	delete awesomeface;
 
 	floor->deinit();
 	delete floor;
+
+	delete cubeShape;
 	//archer->deinit();
 	//delete archer;
 	//delete triangle;

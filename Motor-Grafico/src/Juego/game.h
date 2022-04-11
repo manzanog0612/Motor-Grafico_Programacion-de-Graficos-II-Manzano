@@ -23,9 +23,10 @@ private:
 	//engine::sprite* imageCampus;
 	engine::sprite* floor;
 	engine::sprite* container[6];
-	engine::shape* lightBoxPart[6];
+	engine::shape* lightBox;
 	engine::sprite* awesomeface;
 	engine::light* lightSourse;
+	engine::shape* cubeShape;
 	//engine::sprite* archer;
 	//engine::shape* triangle;
 	//engine::shape* triangle2;
@@ -37,7 +38,6 @@ private:
 	//engine::tileMap* tileMap;
 	float cameraSpeed = 30.f;
 	glm::vec3 boxPos = glm::vec3(0, 0, 0);
-	glm::vec3 lightBoxPos = glm::vec3(0, 0, 0);
 	//int archerRunLeftAnimationID;
 	//int archerRunRightAnimationID;
 	//int archerRunUpAnimationID;
