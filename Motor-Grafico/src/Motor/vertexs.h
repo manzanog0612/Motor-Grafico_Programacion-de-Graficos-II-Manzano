@@ -2,7 +2,7 @@ namespace GL
 {
 #pragma region TRIANGULE_VERTEX
 
-	const int triangVertTam = 18;
+	const int triangVertTam = 27;
 	const int triangIndexTam = 3;
 	static unsigned int triangIndexes[triangIndexTam]
 	{
@@ -12,16 +12,16 @@ namespace GL
 	{
 		// positions         // colors
 		//X		Y	  Z		 R	   G	 B
-		 0.5f, -0.5f, 0.0f,  1.0f, 1.0f, 1.0f,   // bottom right
-		-0.5f, -0.5f, 0.0f,  1.0f, 1.0f, 1.0f,   // bottom left
-		 0.0f,  0.5f, 0.0f,  1.0f, 1.0f, 1.0f    // top 
+		 0.5f, -0.5f, 0.0f,  1.0f, 1.0f, 1.0f,   0.0f,  0.0f, -1.0f,// bottom right
+		-0.5f, -0.5f, 0.0f,  1.0f, 1.0f, 1.0f,   0.0f,  0.0f, -1.0f,// bottom left
+		 0.0f,  0.5f, 0.0f,  1.0f, 1.0f, 1.0f,   0.0f,  0.0f, -1.0f// top 
 	};
 
 #pragma endregion
 
 #pragma region QUAD_VERTEX
 
-	const int quadVertTam = 24;
+	const int quadVertTam = 36;
 	const int quadIndexTam = 6;
 	static unsigned int quadIndexes[quadIndexTam]
 	{
@@ -32,10 +32,10 @@ namespace GL
 	{
 		// positions          // colors
 		//X		Y	  Z		 R	   G	 B
-		 0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   // top right
-		 0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   // bottom right
-		-0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   // bottom right
-		-0.5f,  0.5f, 0.0f,	  1.0f, 1.0f, 1.0f,	  // top left
+		 0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f,  0.0f, -1.0f, // top right
+		 0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f,  0.0f, -1.0f, // bottom right
+		-0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f,  0.0f, -1.0f, // bottom right
+		-0.5f,  0.5f, 0.0f,	  1.0f, 1.0f, 1.0f,	  0.0f,  0.0f, -1.0f // top left
 	};
 
 #pragma endregion
