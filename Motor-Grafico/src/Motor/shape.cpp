@@ -6,7 +6,7 @@
 
 namespace engine
 {
-	shape::shape(renderer* render, unsigned int vert, bool affectedByLight)
+	shape::shape(renderer* render, SHAPE shape, bool affectedByLight)
 	{
 		VAO = 0;
 		VBO = 0;
@@ -15,28 +15,35 @@ namespace engine
 		_renderer = render;
 		this->affectedByLight = affectedByLight;
 
-		if(vert == 3)
+		switch (shape)
 		{
-			_renderer->createBaseBuffer(VAO, VBO, EBO);
-			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::triangVertex, sizeof(GL::triangVertex), GL::triangIndexes, sizeof(GL::triangIndexes));
-			_vertices = GL::triangIndexTam;
-		}
-		else if(vert == 4)
-		{
-			_renderer->createBaseBuffer(VAO, VBO, EBO);
-			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::quadVertex, sizeof(GL::quadVertex), GL::quadIndexes, sizeof(GL::quadIndexes));
-			_vertices = GL::quadIndexTam;
-		}
-		else if (vert == 8)
-		{ 
-			_renderer->createBaseBuffer(VAO, VBO, EBO);
-			_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::cubeVertex, sizeof(GL::cubeVertex), GL::cubeIndexes, sizeof(GL::cubeIndexes));
-			_vertices = GL::cubeIndexTam;
-		}
-		else
-		{
-			std::cout << vert << " Vertices amount not implemented." << std::endl;
-			return;
+		case engine::TRIANGLE:
+			{
+				_renderer->createBaseBuffer(VAO, VBO, EBO);
+				_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::triangVertex, sizeof(GL::triangVertex), GL::triangIndexes, sizeof(GL::triangIndexes));
+				_vertices = GL::triangIndexTam; 
+			}
+			break;
+		case engine::QUAD:
+			{
+				_renderer->createBaseBuffer(VAO, VBO, EBO);
+				_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::quadVertex, sizeof(GL::quadVertex), GL::quadIndexes, sizeof(GL::quadIndexes));
+				_vertices = GL::quadIndexTam; 
+			}
+			break;
+		case engine::CUBE:
+			{
+				_renderer->createBaseBuffer(VAO, VBO, EBO);
+				_renderer->bindBaseBufferRequest(VAO, VBO, EBO, GL::cubeVertex, sizeof(GL::cubeVertex), GL::cubeIndexes, sizeof(GL::cubeIndexes));
+				_vertices = GL::cubeIndexTam;
+			}
+			break;
+		default:
+			{
+				std::cout << " Vertices amount not implemented." << std::endl;
+				return;
+			}
+			break;
 		}
 
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);

@@ -356,7 +356,7 @@ void game::init()
 		container[i]->setScale(glm::vec3(10, 10, 10));
 	}
 
-	lightBox = new engine::shape(currentRenderer, 8, false);
+	lightBox = new engine::shape(currentRenderer, engine::CUBE, false);
 	lightBox->setScale(glm::vec3(5, 5, 5));
 	lightBox->setColor(glm::vec4(1.0));
 
@@ -391,7 +391,7 @@ void game::init()
 	lightSourse = new engine::light(currentRenderer);
 	lightSourse->setColor(glm::vec4(1, 0.5f, 0.5f, 1));
 
-	cubeShape = new engine::shape(currentRenderer, 8, true);
+	cubeShape = new engine::shape(currentRenderer, engine::CUBE, true);
 	cubeShape->setPos(glm::vec3(-20, 5, -5));
 	cubeShape->setScale(glm::vec3(5, 5, 5));
 
