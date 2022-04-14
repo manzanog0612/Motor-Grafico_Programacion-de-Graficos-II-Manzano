@@ -26,8 +26,14 @@ private:
 	engine::shape* lightBox;
 	engine::sprite* awesomeface;
 	engine::light* lightSourse;
-	engine::shape* cubeShape;
-	engine::shape* cubeShape2;
+	engine::shape* cubeEmerald;
+	engine::shape* cubePearl;
+	engine::shape* cubeBronze;
+	engine::shape* cubeGold;
+	engine::shape* cubeCyanPlastic;
+	engine::shape* cubeRedPlastic;
+	engine::shape* cubeGreenRubber;
+	engine::shape* cubeYellowRubber;
 	//engine::sprite* archer;
 	//engine::shape* triangle;
 	//engine::shape* triangle2;

@@ -29,6 +29,11 @@ namespace engine
 		updateModelMatrix();
 
 		setColor(glm::vec4(1.0f));
+
+		glm::vec3 colorvec3 = glm::vec3(color.r, color.g, color.b);
+		values.diffuse = colorvec3 * glm::vec3(0.5f);
+		values.ambient = values.diffuse * glm::vec3(0.2f);
+		values.specular = glm::vec3(1,1,1);
 	}
 	light::~light()
 	{
@@ -36,7 +41,7 @@ namespace engine
 	void light::draw()
 	{
 		_renderer->shaderPro.use();
-		_renderer->processLight(color, v3pos);
+		_renderer->processLight(color, v3pos, values);
 	}
 	void light::deinit()
 	{
