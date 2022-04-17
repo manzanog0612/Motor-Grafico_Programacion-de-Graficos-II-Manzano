@@ -66,6 +66,7 @@ namespace engine
 		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_DYNAMIC_DRAW);
 		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(3);
+		setColor(glm::vec4(1));
 	}
 
 	shape::~shape()

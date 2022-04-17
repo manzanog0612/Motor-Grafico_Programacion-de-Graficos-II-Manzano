@@ -67,7 +67,7 @@ void game::draw()
 	//awesomeface->draw();
 	floor->draw();
 
-	lightSourse->draw();
+	
 
 	cubeEmerald->draw();
 	cubePearl->draw();
@@ -77,6 +77,8 @@ void game::draw()
 	cubeRedPlastic->draw();
 	cubeGreenRubber->draw();
 	cubeYellowRubber->draw();
+
+	lightSourse->draw();
 	//triangle->draw();
 	//triangle2->draw();
 	//triangle3->draw();
@@ -239,8 +241,6 @@ void game::update()
 
 	boxPos += movement;
 
-	std::cout << "x: " << movement.x << " - y: " << movement.y << " - z: " << movement.z<< std::endl;
-
 	//camera movement
 
 	float cameraMovementAmount = engine::time::getDeltaTime() * cameraSpeed;
@@ -271,7 +271,7 @@ void game::update()
 	}
 
 	lightSourse->setPos(lightBox->getPos());
-
+	std::cout << "x: " << lightSourse->getPos().x << " - y: " << lightSourse->getPos().y << " - z: " << lightSourse->getPos().z << std::endl;
 	//if (isKeyDown(ENGINE_KEY_ENTER))
 	//{
 	//	if (cam->getCameraType() == engine::MOVEMENT_TYPE::FPS)

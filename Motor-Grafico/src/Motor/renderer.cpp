@@ -116,14 +116,14 @@ namespace engine
 		glUniform3fv(lightPosLoc, 1, glm::value_ptr(lightPos));
 
 
-		unsigned int lightLoc = glGetUniformLocation(shaderPro.ID, "light.ambient");
-		glUniform3fv(lightPosLoc, 1, glm::value_ptr(light.ambient));
+		unsigned int lightAmbientLoc = glGetUniformLocation(shaderPro.ID, "light.ambient");
+		glUniform3fv(lightAmbientLoc, 1, glm::value_ptr(light.ambient));
 
-		lightLoc = glGetUniformLocation(shaderPro.ID, "light.diffuse");
-		glUniform3fv(lightPosLoc, 1, glm::value_ptr(light.diffuse));
+		unsigned int lighDiffusetLoc = glGetUniformLocation(shaderPro.ID, "light.diffuse");
+		glUniform3fv(lighDiffusetLoc, 1, glm::value_ptr(light.diffuse));
 
-		lightLoc = glGetUniformLocation(shaderPro.ID, "light.specular");
-		glUniform3fv(lightPosLoc, 1, glm::value_ptr(light.specular));
+		unsigned int lightSpecularLoc = glGetUniformLocation(shaderPro.ID, "light.specular");
+		glUniform3fv(lightSpecularLoc, 1, glm::value_ptr(light.specular));
 	}
 	void renderer::createBaseBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
 	{

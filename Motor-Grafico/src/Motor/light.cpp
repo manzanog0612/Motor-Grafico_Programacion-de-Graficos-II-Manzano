@@ -30,10 +30,9 @@ namespace engine
 
 		setColor(glm::vec4(1.0f));
 
-		glm::vec3 colorvec3 = glm::vec3(color.r, color.g, color.b);
-		values.diffuse = colorvec3 * glm::vec3(0.5f);
-		values.ambient = values.diffuse * glm::vec3(0.2f);
-		values.specular = glm::vec3(1,1,1);
+		values.ambient = glm::vec3(0.2f);
+		values.diffuse = glm::vec3(0.5f);
+		values.specular = glm::vec3(1);
 	}
 	light::~light()
 	{
