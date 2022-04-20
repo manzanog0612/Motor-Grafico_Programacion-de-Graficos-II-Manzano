@@ -229,6 +229,14 @@ void game::update()
 		movement += glm::normalize(glm::cross(front, up));
 	}
 
+	if (isKeyPressed(ENGINE_KEY_Q))
+	{
+		movement += up * boxSpeed;
+	}
+	else if (isKeyPressed(ENGINE_KEY_E))
+	{
+		movement -= up * boxSpeed;
+	}
 	//cubeShape->setPos(cubeShape->getPos() + movement);
 	lightBox->setPos(lightBox->getPos() + movement);
 
@@ -271,7 +279,7 @@ void game::update()
 	}
 
 	lightSourse->setPos(lightBox->getPos());
-	std::cout << "x: " << lightSourse->getPos().x << " - y: " << lightSourse->getPos().y << " - z: " << lightSourse->getPos().z << std::endl;
+	std::cout << "x: " << front.x << " - y: " << front.y << " - z: " << front.z << std::endl;
 	//if (isKeyDown(ENGINE_KEY_ENTER))
 	//{
 	//	if (cam->getCameraType() == engine::MOVEMENT_TYPE::FPS)
