@@ -58,6 +58,7 @@ void game::draw()
 	//tileMap->draw();
 	//imageCampus->draw();
 
+	std::cout << "lightBox" << std::endl;
 	lightBox->draw();
 
 	//for (short i = 0; i < 6; i++)
@@ -65,10 +66,10 @@ void game::draw()
 	//	container[i]->draw();
 	//}
 	//awesomeface->draw();
+	std::cout << "floor" << std::endl;
 	floor->draw();
 
-	
-
+	std::cout << "material cubes" << std::endl;
 	cubeEmerald->draw();
 	cubePearl->draw();
 	cubeBronze->draw();
@@ -78,6 +79,7 @@ void game::draw()
 	cubeGreenRubber->draw();
 	cubeYellowRubber->draw();
 
+	std::cout << "light" << std::endl;
 	lightSourse->draw();
 	//triangle->draw();
 	//triangle2->draw();
