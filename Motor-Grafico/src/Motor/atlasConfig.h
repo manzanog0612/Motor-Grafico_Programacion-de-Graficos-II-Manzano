@@ -33,6 +33,6 @@ namespace engine
 		int spriteHeight = 0;
 		friend class animation;
 		friend class sprite;
-		friend class shapeWithTexture;
+		friend class cubeWithTexture;
 	};
 }

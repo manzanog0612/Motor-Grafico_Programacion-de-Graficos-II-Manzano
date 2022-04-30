@@ -11,7 +11,7 @@ game::game()
 	}
 
 	lightBox = nullptr;
-	awesomeface = nullptr;
+	conteiner2 = nullptr;
 	floor = nullptr;
 	lightSourse = nullptr;
 	cubePearl = nullptr;
@@ -58,7 +58,6 @@ void game::draw()
 	//tileMap->draw();
 	//imageCampus->draw();
 
-	std::cout << "lightBox" << std::endl;
 	lightBox->draw();
 
 	//for (short i = 0; i < 6; i++)
@@ -66,10 +65,8 @@ void game::draw()
 	//	container[i]->draw();
 	//}
 	//awesomeface->draw();
-	std::cout << "floor" << std::endl;
 	floor->draw();
 
-	std::cout << "material cubes" << std::endl;
 	cubeEmerald->draw();
 	cubePearl->draw();
 	cubeBronze->draw();
@@ -78,9 +75,11 @@ void game::draw()
 	cubeRedPlastic->draw();
 	cubeGreenRubber->draw();
 	cubeYellowRubber->draw();
+	conteiner2->draw();
 
-	std::cout << "light" << std::endl;
 	lightSourse->draw();
+
+	
 	//triangle->draw();
 	//triangle2->draw();
 	//triangle3->draw();
@@ -277,7 +276,7 @@ void game::update()
 
 	if (actualCam == thirdPersonCam)
 	{
-		thirdPersonCam->updateTargetPos(boxPos);
+		thirdPersonCam->updateTargetPos(conteiner2->getPos());
 	}
 
 	lightSourse->setPos(lightBox->getPos());
@@ -320,13 +319,13 @@ void game::update()
 
 void game::init()
 {
-	glm::vec3 camPos = { 0, 10, 75 };
-	glm::vec3 camView = { 0, 0, 0 };
+	glm::vec3 camPos = { 0, 30, 10 };
+	glm::vec3 camView = { 0, -1, 0 };
 	glm::vec3 camUp = { 0, 1, 0 };
 	//renderer* currentRenderer, glm::vec3 position, glm::vec3 lookPosition, glm::vec3 upVector, PROJECTION projectionType
 	firstPersonCam = new engine::firstPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	thirdPersonCam = new engine::thirdPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
-	actualCam = firstPersonCam;
+	actualCam = thirdPersonCam;
 	//tileMap = new engine::tileMap(currentRenderer);
 
 	/*if (tileMap->importTileMap("../res/assets/tilemapreal.tmx"))
@@ -366,11 +365,15 @@ void game::init()
 	container->setScale(glm::vec3(10, 10, 10));
 	container->setPos(glm::vec3(-15, 0, 0));*/
 
-	awesomeface = new engine::sprite(currentRenderer, "../res/assets/textures/awesomeface.png", true, true, engine::MATERIAL::RED_PLASTIC);
-	awesomeface->setScale(glm::vec3(10, 10, 10));
+	conteiner2 = new engine::sprite(currentRenderer, "../res/assets/textures/container2.png", "../res/assets/textures/container2_specular.png", true, true, engine::MATERIAL::PEARL);
+	conteiner2->setPos(glm::vec3(0, 7.5f, 10));
+	conteiner2->setScale(glm::vec3(10, 10, 10));
+	conteiner2->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
+
+	
 
 	lightBox = new engine::shape(currentRenderer, engine::SHAPE::CUBE, false, engine::MATERIAL::PEARL);
-	lightBox->setPos(glm::vec3(0, 7.5f, 20));
+	lightBox->setPos(glm::vec3(0, 40, 20));
 	lightBox->setScale(glm::vec3(5, 5, 5));
 
 	lightSourse = new engine::light(currentRenderer);
@@ -401,7 +404,7 @@ void game::init()
 	cubeYellowRubber->setPos(glm::vec3(30, 0, 0));
 	cubeYellowRubber->setScale(glm::vec3(10, 10, 10));
 
-	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", true, true, engine::MATERIAL::YELLOW_RUBBER);
+	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, true, engine::MATERIAL::YELLOW_RUBBER);
 	floor->setScale(glm::vec3(500, 500, 1));
 	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 	floor->setPos(glm::vec3(0,-5,0));
@@ -473,8 +476,8 @@ void game::deInit()
 
 	delete lightBox;
 
-	awesomeface->deinit();
-	delete awesomeface;
+	conteiner2->deinit();
+	delete conteiner2;
 
 	floor->deinit();
 	delete floor;

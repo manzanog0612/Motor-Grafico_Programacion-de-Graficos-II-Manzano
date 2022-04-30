@@ -7,7 +7,7 @@
 
 namespace engine
 {
-	shapeWithTexture::~shapeWithTexture()
+	cubeWithTexture::~cubeWithTexture()
 	{
 		VAO = 0;
 		VBO = 0;
@@ -20,7 +20,7 @@ namespace engine
 		baseUVCoords[2] = { 0.0f, 0.0f };
 		baseUVCoords[3] = { 0.0f, 1.0f };
 	}
-	shapeWithTexture::shapeWithTexture(renderer* render, SHAPE shape, const char* filePathImage, bool invertImage, bool affectedByLight, MATERIAL material)
+	cubeWithTexture::cubeWithTexture(renderer* render, SHAPE shape, const char* filePathImage, bool invertImage, bool affectedByLight, MATERIAL material)
 	{
 		VAO = 0;
 		VBO = 0;
@@ -37,16 +37,16 @@ namespace engine
 
 		setTexture(render, filePathImage, invertImage);
 	}
-	void shapeWithTexture::draw()
+	void cubeWithTexture::draw()
 	{
 		_renderer->shaderPro.use();
 		unsigned int texture = baseTexture->ID;
 		glBindTexture(GL_TEXTURE_2D, texture);
 		//setShader(texture);
-		_renderer->setShaderInfo(color, true, affectedByLight, texture, material);
+		//_renderer->setShaderInfo(color, true, affectedByLight, texture, texture, material);
 		_renderer->drawRequest(model, VAO, _vertices);
 	}
-	void shapeWithTexture::bindBaseUVCoords()
+	void cubeWithTexture::bindBaseUVCoords()
 	{
 		float UVs[8] =
 		{
@@ -57,7 +57,7 @@ namespace engine
 		};
 		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_STATIC_DRAW);
 	}
-	void shapeWithTexture::modifyBaseTextureCoords(atlasCutConfig config)
+	void cubeWithTexture::modifyBaseTextureCoords(atlasCutConfig config)
 	{
 		int spriteWidth = 0;
 		int spriteHeight = 0;
@@ -90,14 +90,14 @@ namespace engine
 		};
 		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_DYNAMIC_DRAW);
 	}
-	void shapeWithTexture::setTextureCoordinates(glm::vec2 coord1, glm::vec2 coord2, glm::vec2 coord3, glm::vec2 coord4)
+	void cubeWithTexture::setTextureCoordinates(glm::vec2 coord1, glm::vec2 coord2, glm::vec2 coord3, glm::vec2 coord4)
 	{
 		baseUVCoords[0] = coord1;
 		baseUVCoords[1] = coord2;
 		baseUVCoords[2] = coord3;
 		baseUVCoords[3] = coord4;
 	}
-	void shapeWithTexture::setTexture(renderer* render, const char* filePathImage, bool invertImage)
+	void cubeWithTexture::setTexture(renderer* render, const char* filePathImage, bool invertImage)
 	{
 		_renderer = render;
 		float vertex[36] =
@@ -131,6 +131,7 @@ namespace engine
 			baseUVCoords[2].x, baseUVCoords[2].y,
 			baseUVCoords[3].x, baseUVCoords[3].y
 		};
+
 		_renderer->createExtraBuffer(bufferPosUVs, 1);
 		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_DYNAMIC_DRAW);
 		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
@@ -140,7 +141,7 @@ namespace engine
 
 		baseTexture = new textureData(textureImporter::loadTexture(filePathImage, invertImage));
 	}
-	void shapeWithTexture::deinit()
+	void cubeWithTexture::deinit()
 	{
 		_renderer->deleteBaseBuffer(VAO, VBO, EBO);
 		_renderer->deleteExtraBuffer(bufferPosUVs, 1);

@@ -8,11 +8,11 @@ namespace engine
 {
 	enum class SHAPE { TRIANGLE, QUAD, CUBE };
 
-	class ENGINE_API shapeWithTexture : public entity
+	class ENGINE_API cubeWithTexture : public entity
 	{
 	public:
-		shapeWithTexture(renderer* render, SHAPE shape, const char* filePathImage, bool invertImage, bool affectedByLight, MATERIAL material);
-		~shapeWithTexture();
+		cubeWithTexture(renderer* render, SHAPE shape, const char* filePathImage, bool invertImage, bool affectedByLight, MATERIAL material);
+		~cubeWithTexture();
 		void draw() override;
 		void modifyBaseTextureCoords(atlasCutConfig config);
 		void setTextureCoordinates(glm::vec2 coord1, glm::vec2 coord2, glm::vec2 coord3, glm::vec2 coord4);

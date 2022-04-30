@@ -24,7 +24,7 @@ private:
 	engine::sprite* floor;
 	engine::sprite* container[6];
 	engine::shape* lightBox;
-	engine::sprite* awesomeface;
+	engine::sprite* conteiner2;
 	engine::light* lightSourse;
 	engine::shape* cubeEmerald;
 	engine::shape* cubePearl;

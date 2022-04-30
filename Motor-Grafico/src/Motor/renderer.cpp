@@ -48,7 +48,7 @@ namespace engine
 		ambientLight = ambient;
 	}
 
-	void renderer::setShaderInfo(glm::vec4 color, bool usesTexture, bool affectedByLight, unsigned int texture, MATERIAL material)
+	void renderer::setShaderInfo(glm::vec4 color, bool usesTexture, bool affectedByLight, unsigned int textures[], MATERIAL material)
 	{
 		glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
 		unsigned int colorLoc = glGetUniformLocation(shaderPro.ID, "color");
@@ -65,21 +65,40 @@ namespace engine
 
 		unsigned int usesTexLoc = glGetUniformLocation(shaderPro.ID, "usesTex");
 		glUniform1i(usesTexLoc, usesTexture);
-		
-		if (usesTexture)
-		{
-			unsigned int textureLoc = glGetUniformLocation(shaderPro.ID, "ourTexture");
-			glUniform1f(textureLoc, (GLfloat)texture);
-		}
 
 		if (affectedByLight)
 		{
 			Material materialValue = GetMaterialData(material);
-			unsigned int materialLoc = glGetUniformLocation(shaderPro.ID, "material.diffuse");
-			glUniform1i(materialLoc, materialValue.diffuse);
+			unsigned int materialLoc;
 
-			materialLoc = glGetUniformLocation(shaderPro.ID, "material.specular");
-			glUniform1i(materialLoc, materialValue.specular);
+			if (usesTexture)
+			{
+				int diffuse = 0;
+				int specular = 1;
+
+				unsigned int textureLoc = glGetUniformLocation(shaderPro.ID, "ourTexture");
+				glUniform1f(textureLoc, (GLfloat)textures[0]);
+
+				materialLoc = glGetUniformLocation(shaderPro.ID, "material.diffuse");
+				glUniform1i(materialLoc, diffuse);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, textures[0]);
+
+				materialLoc = glGetUniformLocation(shaderPro.ID, "material.specular");
+				glUniform1i(materialLoc, specular);
+
+				glActiveTexture(GL_TEXTURE1);
+				glBindTexture(GL_TEXTURE_2D, textures[1]);
+			}
+			else
+			{
+				materialLoc = glGetUniformLocation(shaderPro.ID, "material.diffuse");
+				glUniform1i(materialLoc, materialValue.diffuse);
+
+				materialLoc = glGetUniformLocation(shaderPro.ID, "material.specular");
+				glUniform1i(materialLoc, materialValue.specular);
+			}
 
 			materialLoc = glGetUniformLocation(shaderPro.ID, "material.shininess");
 			glUniform1fv(materialLoc, 1, &(materialValue.shininess));
