@@ -13,7 +13,7 @@ game::game()
 	lightBox = nullptr;
 	conteiner2 = nullptr;
 	floor = nullptr;
-	lightSourse = nullptr;
+	pointLight = nullptr;
 	cubePearl = nullptr;
 	cubeEmerald = nullptr;
 
@@ -77,7 +77,7 @@ void game::draw()
 	cubeYellowRubber->draw();
 	conteiner2->draw();
 
-	lightSourse->draw();
+	pointLight->draw();
 
 	
 	//triangle->draw();
@@ -279,7 +279,7 @@ void game::update()
 		thirdPersonCam->updateTargetPos(conteiner2->getPos());
 	}
 
-	lightSourse->setPos(lightBox->getPos());
+	pointLight->setPos(lightBox->getPos());
 	std::cout << "x: " << front.x << " - y: " << front.y << " - z: " << front.z << std::endl;
 	//if (isKeyDown(ENGINE_KEY_ENTER))
 	//{
@@ -365,46 +365,46 @@ void game::init()
 	container->setScale(glm::vec3(10, 10, 10));
 	container->setPos(glm::vec3(-15, 0, 0));*/
 
-	conteiner2 = new engine::sprite(currentRenderer, "../res/assets/textures/container2.png", "../res/assets/textures/container2_specular.png", true, true, engine::MATERIAL::PEARL);
+	conteiner2 = new engine::sprite(currentRenderer, "../res/assets/textures/container2.png", "../res/assets/textures/container2_specular.png", true, engine::MATERIAL::PEARL);
 	conteiner2->setPos(glm::vec3(0, 7.5f, 10));
 	conteiner2->setScale(glm::vec3(10, 10, 10));
 	conteiner2->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 
 	
 
-	lightBox = new engine::shape(currentRenderer, engine::SHAPE::CUBE, false, engine::MATERIAL::PEARL);
+	lightBox = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
 	lightBox->setPos(glm::vec3(0, 40, 20));
 	lightBox->setScale(glm::vec3(5, 5, 5));
 
-	lightSourse = new engine::light(currentRenderer);
-	lightSourse->setColor(glm::vec4(1, 1, 1, 1));
+	pointLight = new engine::light(currentRenderer);
+	pointLight->setColor(glm::vec4(1, 1, 1, 1));
 
-	cubeEmerald = new engine::shape(currentRenderer, engine::SHAPE::CUBE, true, engine::MATERIAL::EMERALD);
+	cubeEmerald = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::EMERALD);
 	cubeEmerald->setPos(glm::vec3(-30, 15, 0));
 	cubeEmerald->setScale(glm::vec3(10, 10, 10));
-	cubePearl = new engine::shape(currentRenderer, engine::SHAPE::CUBE, true, engine::MATERIAL::PEARL);
+	cubePearl = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
 	cubePearl->setPos(glm::vec3(-10, 15, 0));
 	cubePearl->setScale(glm::vec3(10, 10, 10));
-	cubeBronze = new engine::shape(currentRenderer, engine::SHAPE::CUBE, true, engine::MATERIAL::BRONZE);
+	cubeBronze = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::BRONZE);
 	cubeBronze->setPos(glm::vec3(10, 15, 0));
 	cubeBronze->setScale(glm::vec3(10, 10, 10));
-	cubeGold = new engine::shape(currentRenderer, engine::SHAPE::CUBE, true, engine::MATERIAL::GOLD);
+	cubeGold = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::GOLD);
 	cubeGold->setPos(glm::vec3(30, 15, 0));
 	cubeGold->setScale(glm::vec3(10, 10, 10));
-	cubeCyanPlastic = new engine::shape(currentRenderer, engine::SHAPE::CUBE, true, engine::MATERIAL::CYAN_PLASTIC);
+	cubeCyanPlastic = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::CYAN_PLASTIC);
 	cubeCyanPlastic->setPos(glm::vec3(-30, 0, 0));
 	cubeCyanPlastic->setScale(glm::vec3(10, 10, 10));
-	cubeRedPlastic = new engine::shape(currentRenderer, engine::SHAPE::CUBE, true, engine::MATERIAL::RED_PLASTIC);
+	cubeRedPlastic = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::RED_PLASTIC);
 	cubeRedPlastic->setPos(glm::vec3(-10, 0, 0));
 	cubeRedPlastic->setScale(glm::vec3(10, 10, 10));
-	cubeGreenRubber = new engine::shape(currentRenderer, engine::SHAPE::CUBE, true, engine::MATERIAL::GREEN_RUBBER);
+	cubeGreenRubber = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::GREEN_RUBBER);
 	cubeGreenRubber->setPos(glm::vec3(10, 0, 0));
 	cubeGreenRubber->setScale(glm::vec3(10, 10, 10));
-	cubeYellowRubber = new engine::shape(currentRenderer, engine::SHAPE::CUBE, true, engine::MATERIAL::YELLOW_RUBBER);
+	cubeYellowRubber = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::YELLOW_RUBBER);
 	cubeYellowRubber->setPos(glm::vec3(30, 0, 0));
 	cubeYellowRubber->setScale(glm::vec3(10, 10, 10));
 
-	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, true, engine::MATERIAL::YELLOW_RUBBER);
+	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
 	floor->setScale(glm::vec3(500, 500, 1));
 	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 	floor->setPos(glm::vec3(0,-5,0));

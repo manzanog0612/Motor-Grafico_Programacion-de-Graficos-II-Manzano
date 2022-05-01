@@ -25,7 +25,9 @@ private:
 	engine::sprite* container[6];
 	engine::shape* lightBox;
 	engine::sprite* conteiner2;
-	engine::light* lightSourse;
+	engine::pointLight* pointLight[4];
+	engine::directionalLight* directionalLight;
+	//engine::pointLight* lightSourse;
 	engine::shape* cubeEmerald;
 	engine::shape* cubePearl;
 	engine::shape* cubeBronze;
