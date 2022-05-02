@@ -112,8 +112,11 @@ namespace engine
 
 		unsigned int lightSpecularLoc = glGetUniformLocation(shaderPro.ID, "dirLight.specular");
 		glUniform3fv(lightSpecularLoc, 1, glm::value_ptr(light.specular));
+
+		unsigned int lightColorLoc = glGetUniformLocation(shaderPro.ID, "dirLight.color");
+		glUniform3fv(lightColorLoc, 1, glm::value_ptr(light.color));
 	}
-	void renderer::processPointLight(float constant, float linear, float quadratic, Light light, int index)
+	void renderer::processPointLight(float constant, float linear, float quadratic, glm::vec3 position, Light light, int index)
 	{
 		unsigned int lightAmbientLoc;
 		unsigned int lighDiffusetLoc;
@@ -121,6 +124,8 @@ namespace engine
 		unsigned int lightConstantLoc;
 		unsigned int lightLinearLoc;
 		unsigned int lightQuadraticLoc;
+		unsigned int lightPosLoc;
+		unsigned int lightColorLoc;
 
 		switch (index)
 		{
@@ -131,6 +136,8 @@ namespace engine
 			lightConstantLoc = glGetUniformLocation(shaderPro.ID, "pointLights[0].constant");
 			lightLinearLoc = glGetUniformLocation(shaderPro.ID, "pointLights[0].linear");
 			lightQuadraticLoc = glGetUniformLocation(shaderPro.ID, "pointLights[0].quadratic");
+			lightPosLoc = glGetUniformLocation(shaderPro.ID, "pointLights[0].position");
+			lightColorLoc = glGetUniformLocation(shaderPro.ID, "pointLights[0].color");
 			break;
 		case 1:
 			lightAmbientLoc = glGetUniformLocation(shaderPro.ID, "pointLights[1].ambient");
@@ -139,6 +146,8 @@ namespace engine
 			lightConstantLoc = glGetUniformLocation(shaderPro.ID, "pointLights[1].constant");
 			lightLinearLoc = glGetUniformLocation(shaderPro.ID, "pointLights[1].linear");
 			lightQuadraticLoc = glGetUniformLocation(shaderPro.ID, "pointLights[1].quadratic");
+			lightPosLoc = glGetUniformLocation(shaderPro.ID, "pointLights[1].position");
+			lightColorLoc = glGetUniformLocation(shaderPro.ID, "pointLights[1].color");
 			break;
 		case 2:
 			lightAmbientLoc = glGetUniformLocation(shaderPro.ID, "pointLights[2].ambient");
@@ -147,6 +156,8 @@ namespace engine
 			lightConstantLoc = glGetUniformLocation(shaderPro.ID, "pointLights[2].constant");
 			lightLinearLoc = glGetUniformLocation(shaderPro.ID, "pointLights[2].linear");
 			lightQuadraticLoc = glGetUniformLocation(shaderPro.ID, "pointLights[2].quadratic");
+			lightPosLoc = glGetUniformLocation(shaderPro.ID, "pointLights[2].position");
+			lightColorLoc = glGetUniformLocation(shaderPro.ID, "pointLights[2].color");
 			break;
 		case 3:
 			lightAmbientLoc = glGetUniformLocation(shaderPro.ID, "pointLights[3].ambient");
@@ -155,6 +166,8 @@ namespace engine
 			lightConstantLoc = glGetUniformLocation(shaderPro.ID, "pointLights[3].constant");
 			lightLinearLoc = glGetUniformLocation(shaderPro.ID, "pointLights[3].linear");
 			lightQuadraticLoc = glGetUniformLocation(shaderPro.ID, "pointLights[3].quadratic");
+			lightPosLoc = glGetUniformLocation(shaderPro.ID, "pointLights[3].position");
+			lightColorLoc = glGetUniformLocation(shaderPro.ID, "pointLights[3].color");
 			break;
 		}
 
@@ -162,9 +175,12 @@ namespace engine
 		glUniform3fv(lightAmbientLoc, 1, glm::value_ptr(light.ambient));
 		glUniform3fv(lighDiffusetLoc, 1, glm::value_ptr(light.diffuse));
 		glUniform3fv(lightSpecularLoc, 1, glm::value_ptr(light.specular));
+		glUniform3fv(lightColorLoc, 1, glm::value_ptr(light.color));
+		glUniform3fv(lightPosLoc, 1, glm::value_ptr(position));
 		glUniform1fv(lightConstantLoc, 1, &constant);
 		glUniform1fv(lightLinearLoc, 1, &linear);
 		glUniform1fv(lightQuadraticLoc, 1, &quadratic);
+
 	}
 	void renderer::createBaseBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
 	{

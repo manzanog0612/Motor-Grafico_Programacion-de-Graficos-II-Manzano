@@ -1,6 +1,8 @@
 #pragma once
 #include "Motor/baseGame.h"
 
+#define AMOUNT_POINT_LIGHTS 4
+
 const int colorsArraySize = 8;
 
 class game : public engine::baseGame
@@ -25,7 +27,7 @@ private:
 	engine::sprite* container[6];
 	engine::shape* lightBox;
 	engine::sprite* conteiner2;
-	engine::pointLight* pointLight[4];
+	engine::pointLight* pointLight[AMOUNT_POINT_LIGHTS];
 	engine::directionalLight* directionalLight;
 	//engine::pointLight* lightSourse;
 	engine::shape* cubeEmerald;

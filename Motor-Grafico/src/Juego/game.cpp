@@ -13,7 +13,14 @@ game::game()
 	lightBox = nullptr;
 	conteiner2 = nullptr;
 	floor = nullptr;
-	pointLight = nullptr;
+
+	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
+	{
+		pointLight[i] = nullptr;
+	}
+
+	directionalLight = nullptr;
+	
 	cubePearl = nullptr;
 	cubeEmerald = nullptr;
 
@@ -77,8 +84,14 @@ void game::draw()
 	cubeYellowRubber->draw();
 	conteiner2->draw();
 
-	pointLight->draw();
+	directionalLight->draw();
 
+	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
+	{
+		pointLight[i]->draw();
+	}
+	
+	
 	
 	//triangle->draw();
 	//triangle2->draw();
@@ -278,8 +291,6 @@ void game::update()
 	{
 		thirdPersonCam->updateTargetPos(conteiner2->getPos());
 	}
-
-	pointLight->setPos(lightBox->getPos());
 	std::cout << "x: " << front.x << " - y: " << front.y << " - z: " << front.z << std::endl;
 	//if (isKeyDown(ENGINE_KEY_ENTER))
 	//{
@@ -325,7 +336,7 @@ void game::init()
 	//renderer* currentRenderer, glm::vec3 position, glm::vec3 lookPosition, glm::vec3 upVector, PROJECTION projectionType
 	firstPersonCam = new engine::firstPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	thirdPersonCam = new engine::thirdPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
-	actualCam = thirdPersonCam;
+	actualCam = firstPersonCam;
 	//tileMap = new engine::tileMap(currentRenderer);
 
 	/*if (tileMap->importTileMap("../res/assets/tilemapreal.tmx"))
@@ -370,14 +381,9 @@ void game::init()
 	conteiner2->setScale(glm::vec3(10, 10, 10));
 	conteiner2->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 
-	
-
 	lightBox = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
 	lightBox->setPos(glm::vec3(0, 40, 20));
 	lightBox->setScale(glm::vec3(5, 5, 5));
-
-	pointLight = new engine::light(currentRenderer);
-	pointLight->setColor(glm::vec4(1, 1, 1, 1));
 
 	cubeEmerald = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::EMERALD);
 	cubeEmerald->setPos(glm::vec3(-30, 15, 0));
@@ -403,6 +409,29 @@ void game::init()
 	cubeYellowRubber = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::YELLOW_RUBBER);
 	cubeYellowRubber->setPos(glm::vec3(30, 0, 0));
 	cubeYellowRubber->setScale(glm::vec3(10, 10, 10));
+
+	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
+	{
+		pointLight[i] = new engine::pointLight(currentRenderer, i);
+		pointLight[i]->setColor(glm::vec4(1, 1, 1, 1));
+		pointLight[i]->setPos(glm::vec3(10 * i, -2, -20));
+	}
+
+	cubeEmerald->setPos(glm::vec3(0, -2, -20));
+	cubeEmerald->setScale(glm::vec3(3, 3, 3));
+	cubePearl->setPos(glm::vec3(10, -2, -20));
+	cubePearl->setScale(glm::vec3(3, 3, 3));
+	cubeBronze->setPos(glm::vec3(20, -2, -20));
+	cubeBronze->setScale(glm::vec3(3, 3, 3));
+	cubeGold->setPos(glm::vec3(30, -2, -20));
+	cubeGold->setScale(glm::vec3(3, 3, 3));
+
+	pointLight[0]->setColor(glm::vec4(1, 0, 0, 1));
+	pointLight[1]->setColor(glm::vec4(0, 1, 0, 1));
+	pointLight[2]->setColor(glm::vec4(0, 0, 1, 1));
+	pointLight[3]->setColor(glm::vec4(1, 1, 1, 1));
+
+	directionalLight = new engine::directionalLight(currentRenderer);
 
 	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
 	floor->setScale(glm::vec3(500, 500, 1));
@@ -482,7 +511,12 @@ void game::deInit()
 	floor->deinit();
 	delete floor;
 
-	
+	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
+	{
+		delete pointLight[i];
+	}
+
+	delete directionalLight;
 
 	//archer->deinit();
 	//delete archer;
