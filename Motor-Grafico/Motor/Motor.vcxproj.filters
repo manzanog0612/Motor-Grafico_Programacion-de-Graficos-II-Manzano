@@ -90,6 +90,9 @@
     <ClCompile Include="..\src\Motor\pointLight.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Motor\spotLight.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Motor\baseGame.h">
@@ -174,6 +177,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Motor\pointLight.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\spotLight.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

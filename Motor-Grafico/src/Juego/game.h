@@ -24,11 +24,12 @@ private:
 	float timeBetweenChanges = 0;
 	//engine::sprite* imageCampus;
 	engine::sprite* floor;
-	engine::sprite* container[6];
-	engine::shape* lightBox;
 	engine::sprite* conteiner2;
 	engine::pointLight* pointLight[AMOUNT_POINT_LIGHTS];
+	engine::shape* pointLightBox[AMOUNT_POINT_LIGHTS];
 	engine::directionalLight* directionalLight;
+	engine::spotLight* spotLight;
+	engine::shape* spotLightBox;
 	//engine::pointLight* lightSourse;
 	engine::shape* cubeEmerald;
 	engine::shape* cubePearl;
@@ -47,7 +48,7 @@ private:
 	engine::firstPersonCamera* firstPersonCam;
 	engine::thirdPersonCamera* thirdPersonCam;
 	//engine::tileMap* tileMap;
-	float cameraSpeed = 30.f;
+	float cameraSpeed = 2;
 	glm::vec3 boxPos = glm::vec3(0, 0, 0);
 	//int archerRunLeftAnimationID;
 	//int archerRunRightAnimationID;

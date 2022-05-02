@@ -15,10 +15,10 @@
 #include "tileMap.h"
 #include "pointLight.h"
 #include "directionalLight.h"
+#include "spotLight.h"
 
 namespace engine
 {
-
 	class window;
 	class renderer;
 	class input;

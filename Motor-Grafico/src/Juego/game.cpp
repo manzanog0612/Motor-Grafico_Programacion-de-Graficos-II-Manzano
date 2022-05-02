@@ -5,21 +5,18 @@ game::game()
 {
 	//imageCampus = nullptr;
 
-	for (short i = 0; i < 6; i++)
-	{
-		container[i] = nullptr;
-	}
-
-	lightBox = nullptr;
 	conteiner2 = nullptr;
 	floor = nullptr;
 
 	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
 	{
 		pointLight[i] = nullptr;
+		pointLightBox[i] = nullptr;
 	}
 
 	directionalLight = nullptr;
+	spotLight = nullptr;
+	spotLightBox = nullptr;
 	
 	cubePearl = nullptr;
 	cubeEmerald = nullptr;
@@ -65,8 +62,6 @@ void game::draw()
 	//tileMap->draw();
 	//imageCampus->draw();
 
-	lightBox->draw();
-
 	//for (short i = 0; i < 6; i++)
 	//{
 	//	container[i]->draw();
@@ -89,9 +84,11 @@ void game::draw()
 	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
 	{
 		pointLight[i]->draw();
+		pointLightBox[i]->draw();
 	}
 	
-	
+	spotLight->draw();
+	spotLightBox->draw();
 	
 	//triangle->draw();
 	//triangle2->draw();
@@ -252,7 +249,6 @@ void game::update()
 		movement -= up * boxSpeed;
 	}
 	//cubeShape->setPos(cubeShape->getPos() + movement);
-	lightBox->setPos(lightBox->getPos() + movement);
 
 	//for (short i = 0; i < boxFaces; i++)
 	//{
@@ -292,6 +288,8 @@ void game::update()
 		thirdPersonCam->updateTargetPos(conteiner2->getPos());
 	}
 	std::cout << "x: " << front.x << " - y: " << front.y << " - z: " << front.z << std::endl;
+
+	//spotLight->setDirection(actualCam->getFront());
 	//if (isKeyDown(ENGINE_KEY_ENTER))
 	//{
 	//	if (cam->getCameraType() == engine::MOVEMENT_TYPE::FPS)
@@ -330,7 +328,7 @@ void game::update()
 
 void game::init()
 {
-	glm::vec3 camPos = { 0, 30, 10 };
+	glm::vec3 camPos = { 0, 3, 2 };
 	glm::vec3 camView = { 0, -1, 0 };
 	glm::vec3 camUp = { 0, 1, 0 };
 	//renderer* currentRenderer, glm::vec3 position, glm::vec3 lookPosition, glm::vec3 upVector, PROJECTION projectionType
@@ -377,54 +375,37 @@ void game::init()
 	container->setPos(glm::vec3(-15, 0, 0));*/
 
 	conteiner2 = new engine::sprite(currentRenderer, "../res/assets/textures/container2.png", "../res/assets/textures/container2_specular.png", true, engine::MATERIAL::PEARL);
-	conteiner2->setPos(glm::vec3(0, 7.5f, 10));
-	conteiner2->setScale(glm::vec3(10, 10, 10));
+	conteiner2->setPos(glm::vec3(0, 1, 3));
+	conteiner2->setScale(glm::vec3(2, 2, 2));
 	conteiner2->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 
-	lightBox = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
-	lightBox->setPos(glm::vec3(0, 40, 20));
-	lightBox->setScale(glm::vec3(5, 5, 5));
-
 	cubeEmerald = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::EMERALD);
-	cubeEmerald->setPos(glm::vec3(-30, 15, 0));
-	cubeEmerald->setScale(glm::vec3(10, 10, 10));
+	cubeEmerald->setPos(glm::vec3(-3, 2, 0));
 	cubePearl = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
-	cubePearl->setPos(glm::vec3(-10, 15, 0));
-	cubePearl->setScale(glm::vec3(10, 10, 10));
+	cubePearl->setPos(glm::vec3(-1, 2, 0));
 	cubeBronze = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::BRONZE);
-	cubeBronze->setPos(glm::vec3(10, 15, 0));
-	cubeBronze->setScale(glm::vec3(10, 10, 10));
+	cubeBronze->setPos(glm::vec3(1, 2, 0));
 	cubeGold = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::GOLD);
-	cubeGold->setPos(glm::vec3(30, 15, 0));
-	cubeGold->setScale(glm::vec3(10, 10, 10));
+	cubeGold->setPos(glm::vec3(3, 2, 0));
 	cubeCyanPlastic = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::CYAN_PLASTIC);
-	cubeCyanPlastic->setPos(glm::vec3(-30, 0, 0));
-	cubeCyanPlastic->setScale(glm::vec3(10, 10, 10));
+	cubeCyanPlastic->setPos(glm::vec3(-3, 0.5f, 0));
 	cubeRedPlastic = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::RED_PLASTIC);
-	cubeRedPlastic->setPos(glm::vec3(-10, 0, 0));
-	cubeRedPlastic->setScale(glm::vec3(10, 10, 10));
+	cubeRedPlastic->setPos(glm::vec3(-1, 0.5f, 0));
 	cubeGreenRubber = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::GREEN_RUBBER);
-	cubeGreenRubber->setPos(glm::vec3(10, 0, 0));
-	cubeGreenRubber->setScale(glm::vec3(10, 10, 10));
+	cubeGreenRubber->setPos(glm::vec3(1, 0.5f, 0));
 	cubeYellowRubber = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::YELLOW_RUBBER);
-	cubeYellowRubber->setPos(glm::vec3(30, 0, 0));
-	cubeYellowRubber->setScale(glm::vec3(10, 10, 10));
+	cubeYellowRubber->setPos(glm::vec3(3, 0.5f, 0));
 
 	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
 	{
 		pointLight[i] = new engine::pointLight(currentRenderer, i);
 		pointLight[i]->setColor(glm::vec4(1, 1, 1, 1));
-		pointLight[i]->setPos(glm::vec3(10 * i, -2, -20));
-	}
+		pointLight[i]->setPos(glm::vec3(-4 + 2 * i, 1, -3));
 
-	cubeEmerald->setPos(glm::vec3(0, -2, -20));
-	cubeEmerald->setScale(glm::vec3(3, 3, 3));
-	cubePearl->setPos(glm::vec3(10, -2, -20));
-	cubePearl->setScale(glm::vec3(3, 3, 3));
-	cubeBronze->setPos(glm::vec3(20, -2, -20));
-	cubeBronze->setScale(glm::vec3(3, 3, 3));
-	cubeGold->setPos(glm::vec3(30, -2, -20));
-	cubeGold->setScale(glm::vec3(3, 3, 3));
+		pointLightBox[i] = new engine::shape(currentRenderer,engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
+		pointLightBox[i]->setScale(glm::vec3(0.5f, 0.5f, 0.5f));
+		pointLightBox[i]->setPos(pointLight[i]->getPos());
+	}
 
 	pointLight[0]->setColor(glm::vec4(1, 0, 0, 1));
 	pointLight[1]->setColor(glm::vec4(0, 1, 0, 1));
@@ -433,10 +414,16 @@ void game::init()
 
 	directionalLight = new engine::directionalLight(currentRenderer);
 
+	spotLight = new engine::spotLight(currentRenderer);
+	spotLight->setPos({ 0,5,3 });
+	spotLightBox = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
+	spotLightBox->setScale(glm::vec3(0.5f, 0.5f, 0.5f));
+	spotLightBox->setPos(spotLight->getPos());
+
 	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
-	floor->setScale(glm::vec3(500, 500, 1));
+	floor->setScale(glm::vec3(10, 10, 1));
 	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
-	floor->setPos(glm::vec3(0,-5,0));
+	floor->setPos(glm::vec3(0,0,0));
 
 	/*archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
 	
@@ -502,8 +489,6 @@ void game::deInit()
 
 	delete firstPersonCam;
 	delete thirdPersonCam;
-
-	delete lightBox;
 
 	conteiner2->deinit();
 	delete conteiner2;

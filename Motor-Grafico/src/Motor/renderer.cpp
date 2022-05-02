@@ -182,6 +182,41 @@ namespace engine
 		glUniform1fv(lightQuadraticLoc, 1, &quadratic);
 
 	}
+	void renderer::processSpotLight(glm::vec3 direction, float constant, float linear, float quadratic, glm::vec3 position, Light light, float cutOff, float outerCutOff)
+	{
+		unsigned int lightDirLoc = glGetUniformLocation(shaderPro.ID, "spotLight.direction");
+		glUniform3fv(lightDirLoc, 1, glm::value_ptr(direction));
+
+		unsigned int lightPosLoc = glGetUniformLocation(shaderPro.ID, "spotLight.position");
+		glUniform3fv(lightPosLoc, 1, glm::value_ptr(position));
+
+		unsigned int lightCutOffLoc = glGetUniformLocation(shaderPro.ID, "spotLight.cutOff");
+		glUniform1fv(lightCutOffLoc, 1, &cutOff);
+
+		unsigned int lightOuterCutOffLoc = glGetUniformLocation(shaderPro.ID, "spotLight.outerCutOff");
+		glUniform1fv(lightOuterCutOffLoc, 1, &outerCutOff);
+
+		unsigned int lightConstantLoc = glGetUniformLocation(shaderPro.ID, "spotLight.constant");
+		glUniform1fv(lightConstantLoc, 1, &constant);
+
+		unsigned int lightLinearLoc = glGetUniformLocation(shaderPro.ID, "spotLight.linear");
+		glUniform1fv(lightLinearLoc, 1, &linear);
+
+		unsigned int lightQuadraticLoc = glGetUniformLocation(shaderPro.ID, "spotLight.quadratic");
+		glUniform1fv(lightQuadraticLoc, 1, &quadratic);
+
+		unsigned int lightAmbientLoc = glGetUniformLocation(shaderPro.ID, "spotLight.ambient");
+		glUniform3fv(lightAmbientLoc, 1, glm::value_ptr(light.ambient));
+
+		unsigned int lighDiffusetLoc = glGetUniformLocation(shaderPro.ID, "spotLight.diffuse");
+		glUniform3fv(lighDiffusetLoc, 1, glm::value_ptr(light.diffuse));
+
+		unsigned int lightSpecularLoc = glGetUniformLocation(shaderPro.ID, "spotLight.specular");
+		glUniform3fv(lightSpecularLoc, 1, glm::value_ptr(light.specular));
+
+		unsigned int lightColorLoc = glGetUniformLocation(shaderPro.ID, "spotLight.color");
+		glUniform3fv(lightColorLoc, 1, glm::value_ptr(light.color));
+	}
 	void renderer::createBaseBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
 	{
 		glGenVertexArrays(1, &VAO);
