@@ -43,4 +43,15 @@ namespace engine
 		values.color = { getColor().r, getColor().g, getColor().b };
 		_renderer->processDirectionalLight(direction, values);
 	}
+	void directionalLight::setDirection(glm::vec3 direction, bool normalized)
+	{
+		if (normalized)
+		{
+			this->direction = direction;
+		}
+		else
+		{
+			this->direction = { direction.x / 180, direction.y / 180, direction.z / 180 };
+		}
+	}
 }

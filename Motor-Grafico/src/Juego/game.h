@@ -39,6 +39,7 @@ private:
 	engine::shape* cubeRedPlastic;
 	engine::shape* cubeGreenRubber;
 	engine::shape* cubeYellowRubber;
+	engine::entity* selectedEntity;
 	//engine::sprite* archer;
 	//engine::shape* triangle;
 	//engine::shape* triangle2;
@@ -49,7 +50,7 @@ private:
 	engine::thirdPersonCamera* thirdPersonCam;
 	//engine::tileMap* tileMap;
 	float cameraSpeed = 2;
-	glm::vec3 boxPos = glm::vec3(0, 0, 0);
+	glm::vec3 entityPos = glm::vec3(0, 0, 0);
 	//int archerRunLeftAnimationID;
 	//int archerRunRightAnimationID;
 	//int archerRunUpAnimationID;

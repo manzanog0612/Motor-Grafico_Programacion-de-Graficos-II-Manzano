@@ -47,9 +47,16 @@ namespace engine
 		cutOff = glm::cos(glm::radians(12.5f));
 		outerCutOff = glm::cos(glm::radians(15.0f));
 	}
-	void spotLight::setDirection(glm::vec3 direction)
+	void spotLight::setDirection(glm::vec3 direction, bool normalized)
 	{
-		this->direction = direction;
+		if (normalized)
+		{
+			this->direction = direction;
+		}
+		else
+		{
+			this->direction = { direction.x / 180, direction.y / 180, direction.z / 180 };
+		}
 	}
 	void spotLight::processIndividualValues()
 	{

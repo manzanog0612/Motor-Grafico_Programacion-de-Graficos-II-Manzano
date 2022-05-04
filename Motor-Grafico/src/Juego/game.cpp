@@ -214,21 +214,50 @@ void game::update()
 
 	//box movement
 
+	if (isKeyPressed(ENGINE_KEY_0))
+	{
+		selectedEntity = pointLight[0];
+	}
+	else if (isKeyPressed(ENGINE_KEY_1))
+	{
+		selectedEntity = pointLight[1];
+	}
+	else if (isKeyPressed(ENGINE_KEY_2))
+	{
+		selectedEntity = pointLight[2];
+	}
+	else if (isKeyPressed(ENGINE_KEY_3))
+	{
+		selectedEntity = pointLight[3];
+	}
+	else if (isKeyPressed(ENGINE_KEY_4))
+	{
+		selectedEntity = spotLight;
+	}
+	else if (isKeyPressed(ENGINE_KEY_5))
+	{
+		selectedEntity = conteiner2;
+	}
+
+	glm::vec3 rotation = glm::vec3(0, 0, 0);
 	glm::vec3 movement = glm::vec3(0, 0, 0);
-	glm::vec3 front = glm::normalize(actualCam->getFront() - actualCam->getPos());
+	glm::vec3 front = actualCam->getFront();
 	glm::vec3 up = glm::normalize(actualCam->getUp());
-	float boxSpeed = 1;
-	float boxFaces = 6;
+
+	float movementSpeed = 0.1f;
+	float rotationSpeed = 0.1f;
+
+	bool managingDirectionalLight = true;
 
 	front.y = 0;
 
 	if (isKeyPressed(ENGINE_KEY_UP))
 	{
-		movement += front * boxSpeed;
+		movement += front * movementSpeed;
 	}
 	else if (isKeyPressed(ENGINE_KEY_DOWN))
 	{
-		movement -= front * boxSpeed;
+		movement -= front * movementSpeed;
 	}
 	
 	if (isKeyPressed(ENGINE_KEY_LEFT))
@@ -242,24 +271,77 @@ void game::update()
 
 	if (isKeyPressed(ENGINE_KEY_Q))
 	{
-		movement += up * boxSpeed;
+		movement += up * movementSpeed;
 	}
 	else if (isKeyPressed(ENGINE_KEY_E))
 	{
-		movement -= up * boxSpeed;
+		movement -= up * movementSpeed;
 	}
-	//cubeShape->setPos(cubeShape->getPos() + movement);
 
-	//for (short i = 0; i < boxFaces; i++)
-	//{
-	//	container[i]->setPos(container[i]->getPos() + movement);
-	//}
-	//
-	//awesomeface->setPos(awesomeface->getPos() + movement);
+	if (isKeyPressed(ENGINE_KEY_I))
+	{
+		if (rotation.y > 0)
+		{
+			rotation.y -= engine::time::getDeltaTime() * rotationSpeed;
 
-	boxPos += movement;
+			rotation.y = rotation.y < 0 ? 0 : rotation.y;
+		}
+	}
+	else if (isKeyPressed(ENGINE_KEY_O))
+	{
+		if (rotation.y < 360)
+		{
+			rotation.y += engine::time::getDeltaTime() * rotationSpeed;
+
+			rotation.y = rotation.y > 360 ? 360 : rotation.y;
+		}
+	}
+
+	if (isKeyPressed(ENGINE_KEY_K))
+	{
+		if (rotation.x > 0)
+		{
+			rotation.x -= engine::time::getDeltaTime() * rotationSpeed;
+
+			rotation.x = rotation.x < 0 ? 0 : rotation.x;
+		}
+	}
+	else if (isKeyPressed(ENGINE_KEY_L))
+	{
+		if (rotation.x < 360)
+		{
+			rotation.x += engine::time::getDeltaTime() * rotationSpeed;
+
+			rotation.x = rotation.x > 360 ? 360 : rotation.x;
+		}
+	}
+
+	if (isKeyDown(ENGINE_KEY_ENTER))
+	{
+		managingDirectionalLight != managingDirectionalLight;
+	}
+
+	entityPos += movement;
+
+	selectedEntity->setPos(entityPos);
+
+	if (managingDirectionalLight)
+	{
+		directionalLight->setDirection(rotation, false);
+	}
+	else
+	{
+		spotLight->setDirection(front, true);
+	}
 
 	//camera movement
+
+	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
+	{
+		pointLightBox[i]->setPos(pointLight[i]->getPos());
+	}
+
+	spotLightBox->setPos(spotLight->getPos());
 
 	float cameraMovementAmount = engine::time::getDeltaTime() * cameraSpeed;
 
@@ -419,6 +501,8 @@ void game::init()
 	spotLightBox = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
 	spotLightBox->setScale(glm::vec3(0.5f, 0.5f, 0.5f));
 	spotLightBox->setPos(spotLight->getPos());
+
+	selectedEntity = spotLight;
 
 	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
 	floor->setScale(glm::vec3(10, 10, 1));

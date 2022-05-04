@@ -11,7 +11,7 @@ namespace engine
 		~spotLight();
 		void setInitialValues() override;
 		void processIndividualValues() override;
-		void setDirection(glm::vec3 direction);
+		void setDirection(glm::vec3 direction, bool normalized);
 	private:
 		glm::vec3 direction;
 		float cutOff;
