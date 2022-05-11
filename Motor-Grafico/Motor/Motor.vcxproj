@@ -29,6 +29,8 @@
     <ClCompile Include="..\src\Motor\firstPersonCamera.cpp" />
     <ClCompile Include="..\src\Motor\input.cpp" />
     <ClCompile Include="..\src\Motor\light.cpp" />
+    <ClCompile Include="..\src\Motor\Mesh.cpp" />
+    <ClCompile Include="..\src\Motor\Model.cpp" />
     <ClCompile Include="..\src\Motor\pointLight.cpp" />
     <ClCompile Include="..\src\Motor\renderer.cpp" />
     <ClCompile Include="..\src\Motor\shader.cpp" />
@@ -46,6 +48,39 @@
     <ClCompile Include="..\src\Motor\window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\lib\assimp\include\ai_assert.h" />
+    <ClInclude Include="..\lib\assimp\include\anim.h" />
+    <ClInclude Include="..\lib\assimp\include\camera.h" />
+    <ClInclude Include="..\lib\assimp\include\cexport.h" />
+    <ClInclude Include="..\lib\assimp\include\cfileio.h" />
+    <ClInclude Include="..\lib\assimp\include\cimport.h" />
+    <ClInclude Include="..\lib\assimp\include\color4.h" />
+    <ClInclude Include="..\lib\assimp\include\config.h" />
+    <ClInclude Include="..\lib\assimp\include\DefaultLogger.hpp" />
+    <ClInclude Include="..\lib\assimp\include\defs.h" />
+    <ClInclude Include="..\lib\assimp\include\Exporter.hpp" />
+    <ClInclude Include="..\lib\assimp\include\Importer.hpp" />
+    <ClInclude Include="..\lib\assimp\include\importerdesc.h" />
+    <ClInclude Include="..\lib\assimp\include\IOStream.hpp" />
+    <ClInclude Include="..\lib\assimp\include\IOSystem.hpp" />
+    <ClInclude Include="..\lib\assimp\include\light.h" />
+    <ClInclude Include="..\lib\assimp\include\Logger.hpp" />
+    <ClInclude Include="..\lib\assimp\include\LogStream.hpp" />
+    <ClInclude Include="..\lib\assimp\include\material.h" />
+    <ClInclude Include="..\lib\assimp\include\matrix3x3.h" />
+    <ClInclude Include="..\lib\assimp\include\matrix4x4.h" />
+    <ClInclude Include="..\lib\assimp\include\mesh.h" />
+    <ClInclude Include="..\lib\assimp\include\metadata.h" />
+    <ClInclude Include="..\lib\assimp\include\NullLogger.hpp" />
+    <ClInclude Include="..\lib\assimp\include\postprocess.h" />
+    <ClInclude Include="..\lib\assimp\include\ProgressHandler.hpp" />
+    <ClInclude Include="..\lib\assimp\include\quaternion.h" />
+    <ClInclude Include="..\lib\assimp\include\scene.h" />
+    <ClInclude Include="..\lib\assimp\include\texture.h" />
+    <ClInclude Include="..\lib\assimp\include\types.h" />
+    <ClInclude Include="..\lib\assimp\include\vector2.h" />
+    <ClInclude Include="..\lib\assimp\include\vector3.h" />
+    <ClInclude Include="..\lib\assimp\include\version.h" />
     <ClInclude Include="..\src\Motor\animation.h" />
     <ClInclude Include="..\src\Motor\atlasConfig.h" />
     <ClInclude Include="..\src\Motor\baseGame.h" />
@@ -59,6 +94,8 @@
     <ClInclude Include="..\src\Motor\input.h" />
     <ClInclude Include="..\src\Motor\keycodes.h" />
     <ClInclude Include="..\src\Motor\light.h" />
+    <ClInclude Include="..\src\Motor\Mesh.h" />
+    <ClInclude Include="..\src\Motor\Model.h" />
     <ClInclude Include="..\src\Motor\pointLight.h" />
     <ClInclude Include="..\src\Motor\renderer.h" />
     <ClInclude Include="..\src\Motor\shader.h" />
@@ -77,6 +114,13 @@
     <ClInclude Include="..\src\Motor\window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\lib\assimp\include\color4.inl" />
+    <None Include="..\lib\assimp\include\material.inl" />
+    <None Include="..\lib\assimp\include\matrix3x3.inl" />
+    <None Include="..\lib\assimp\include\matrix4x4.inl" />
+    <None Include="..\lib\assimp\include\quaternion.inl" />
+    <None Include="..\lib\assimp\include\vector2.inl" />
+    <None Include="..\lib\assimp\include\vector3.inl" />
     <None Include="..\src\Motor\Shaders\SolidFragment.shader" />
     <None Include="..\src\Motor\Shaders\SolidFragmentVariant.shader" />
     <None Include="..\src\Motor\Shaders\SolidVertex.shader" />
@@ -160,13 +204,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>DEBUG;ENGINE_EXPORTS;GLEW_STATIC;_MBCS;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\glm;$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\glm;$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)src;$(SolutionDir)lib\assimp\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib;$(SolutionDir)lib\assimp\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;assimpd.lib;zlibstaticd.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>/DEFAULTLIB:LIBCMT;/DEFAULTLIB:MSVCRT;</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
@@ -179,13 +223,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\glm;$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)src;$(SolutionDir)lib\assimp\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib;$(SolutionDir)lib\assimp\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;assimpd.lib;zlibstaticd.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>/DEFAULTLIB:LIBCMT;/DEFAULTLIB:MSVCRT;</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -197,15 +241,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS;GLEW_STATIC;_MBCS;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\glm;$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\glm;$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)src;$(SolutionDir)lib\assimp\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib;$(SolutionDir)lib\assimp\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;assimpd.lib;zlibstaticd.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>/DEFAULTLIB:LIBCMT;/DEFAULTLIB:MSVCRT;</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
@@ -220,15 +264,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\glm;$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)src;$(SolutionDir)lib\assimp\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib;$(SolutionDir)lib\assimp\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;assimpd.lib;zlibstaticd.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>/DEFAULTLIB:LIBCMT;/DEFAULTLIB:MSVCRT;</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>

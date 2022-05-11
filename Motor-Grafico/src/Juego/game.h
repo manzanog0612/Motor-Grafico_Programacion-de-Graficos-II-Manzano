@@ -40,6 +40,7 @@ private:
 	engine::shape* cubeGreenRubber;
 	engine::shape* cubeYellowRubber;
 	engine::entity* selectedEntity;
+	engine::Model* backpackModel;
 	//engine::sprite* archer;
 	//engine::shape* triangle;
 	//engine::shape* triangle2;

@@ -141,6 +141,10 @@ namespace engine
     {
         currentCollisionManager->updateCollisionsInTileMap(tileMap);
     }
+    Shader baseGame::getShader()
+    {
+        return currentRenderer->shaderPro;
+    }
     float baseGame::lerp(float v0, float v1, float t)
     {
         return v0 + t * (v1 - v0);

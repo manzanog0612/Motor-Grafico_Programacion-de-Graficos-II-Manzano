@@ -16,6 +16,7 @@
 #include "pointLight.h"
 #include "directionalLight.h"
 #include "spotLight.h"
+#include "Model.h"
 
 namespace engine
 {
@@ -76,6 +77,7 @@ namespace engine
 		bool hasCollider(entity2D* entity);
 		// ~ ENGINE ~  Set's the call for the collision checking. 
 		void updateCollisions(engine::tileMap* tileMap);
+		Shader getShader();
 	protected:
 		renderer* currentRenderer;
 		

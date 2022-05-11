@@ -16,6 +16,9 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{8ae40fc4-02a5-4c30-b941-8021b0db7626}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de encabezado\Assimp">
+      <UniqueIdentifier>{84c86049-415d-41a4-bcca-345607734129}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Motor\baseGame.cpp">
@@ -91,6 +94,12 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Motor\spotLight.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\Model.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\Mesh.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -182,6 +191,111 @@
     <ClInclude Include="..\src\Motor\spotLight.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\Motor\Mesh.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\Model.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\ai_assert.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\anim.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\camera.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\cexport.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\cfileio.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\cimport.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\color4.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\config.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\DefaultLogger.hpp">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\defs.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\Exporter.hpp">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\Importer.hpp">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\importerdesc.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\IOStream.hpp">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\IOSystem.hpp">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\light.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\Logger.hpp">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\LogStream.hpp">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\material.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\matrix3x3.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\matrix4x4.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\mesh.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\metadata.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\NullLogger.hpp">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\postprocess.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\ProgressHandler.hpp">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\quaternion.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\scene.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\texture.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\types.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\vector2.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\vector3.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\assimp\include\version.h">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\src\Motor\Shaders\SolidFragment.shader">
@@ -198,6 +312,27 @@
     </None>
     <None Include="..\src\Motor\Shaders\SolidFragmentVariant.shader">
       <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\lib\assimp\include\color4.inl">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </None>
+    <None Include="..\lib\assimp\include\material.inl">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </None>
+    <None Include="..\lib\assimp\include\matrix3x3.inl">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </None>
+    <None Include="..\lib\assimp\include\matrix4x4.inl">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </None>
+    <None Include="..\lib\assimp\include\quaternion.inl">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </None>
+    <None Include="..\lib\assimp\include\vector2.inl">
+      <Filter>Archivos de encabezado\Assimp</Filter>
+    </None>
+    <None Include="..\lib\assimp\include\vector3.inl">
+      <Filter>Archivos de encabezado\Assimp</Filter>
     </None>
   </ItemGroup>
 </Project>
