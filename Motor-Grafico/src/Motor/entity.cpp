@@ -1,5 +1,5 @@
 #include "entity.h"
-#include "renderer.h"
+//#include "renderer.h"
 
 namespace engine
 {
@@ -88,8 +88,7 @@ namespace engine
 	void entity::setScale(glm::vec3 scale)
 	{
 		v3scale = scale;
-
-		this->scale = glm::scale(glm::mat4(1.0f), v3scale);
+		this->scale = glm::scale4(glm::mat4(1.0f), v3scale);
 		updateModelMatrix();
 	}
 	void entity::setScale(float x, float y, float z)

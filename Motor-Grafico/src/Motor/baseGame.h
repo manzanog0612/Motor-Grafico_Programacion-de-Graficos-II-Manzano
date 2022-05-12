@@ -1,10 +1,13 @@
-#pragma once
+#ifndef BASE_GAME
+#define BASE_GAME
+
+
 #include "exports.h"
 #include "keycodes.h"
 #include "time.h"
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-#include "glm/gtc/type_ptr.hpp"
+//#include "glm/glm.hpp"
+//#include "glm/gtc/matrix_transform.hpp"
+//#include "glm/gtc/type_ptr.hpp"
 
 #include "shape.h"
 #include "sprite.h"
@@ -78,6 +81,7 @@ namespace engine
 		// ~ ENGINE ~  Set's the call for the collision checking. 
 		void updateCollisions(engine::tileMap* tileMap);
 		Shader getShader();
+		void debugSetShaderForModel();
 	protected:
 		renderer* currentRenderer;
 		
@@ -91,3 +95,4 @@ namespace engine
 		bool windowExitEvent();
 	};
 }
+#endif // !BASE_GAME

@@ -1,6 +1,7 @@
 #include "animation.h"
 #include "time.h"
-#include "glfw3.h"
+#include "GLFW/glfw3.h"
+//#include "glfw3.h"
 #include "textureImporter.h"
 #include <algorithm>
 

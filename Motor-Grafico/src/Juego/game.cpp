@@ -91,14 +91,13 @@ void game::draw()
 	////////////////////spotLight->draw();
 	////////////////////spotLightBox->draw();
 
-	engine::Shader* currShader = &getShader();
-	currShader->use();
+	//currentRenderer->shaderPro;
+	//engine::Shader* currShader = &getShader();
+	currentRenderer->shaderPro.use();
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-	currShader->setMat4("model", model);
-
-	backpackModel->Draw(*currShader);
+	model = glm::scale4(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+	backpackModel->Draw(currentRenderer->shaderPro, model, currentRenderer->GetViewMatrix(), currentRenderer->GetProjMatrix());
 	
 	//triangle->draw();
 	//triangle2->draw();
@@ -251,7 +250,7 @@ void game::update()
 	/////////////////////////////
 	/////////////////////////////glm::vec3 rotation = glm::vec3(0, 0, 0);
 	/////////////////////////////glm::vec3 movement = glm::vec3(0, 0, 0);
-	/////////////////////////////glm::vec3 front = actualCam->getFront();
+	glm::vec3 front = actualCam->getFront();
 	/////////////////////////////glm::vec3 up = glm::normalize(actualCam->getUp());
 	/////////////////////////////
 	/////////////////////////////float movementSpeed = 0.1f;
@@ -353,33 +352,33 @@ void game::update()
 	/////////////////////////////
 	/////////////////////////////spotLightBox->setPos(spotLight->getPos());
 	/////////////////////////////
-	/////////////////////////////float cameraMovementAmount = engine::time::getDeltaTime() * cameraSpeed;
-	/////////////////////////////
-	/////////////////////////////if (isKeyPressed(ENGINE_KEY_W))
-	/////////////////////////////{
-	/////////////////////////////	actualCam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::FRONT);
-	/////////////////////////////}
-	/////////////////////////////else if (isKeyPressed(ENGINE_KEY_S))
-	/////////////////////////////{
-	/////////////////////////////	actualCam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::BACK);
-	/////////////////////////////}
-	/////////////////////////////
-	/////////////////////////////if (isKeyPressed(ENGINE_KEY_D))
-	/////////////////////////////{
-	/////////////////////////////	actualCam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::RIGHT);
-	/////////////////////////////}
-	/////////////////////////////else if (isKeyPressed(ENGINE_KEY_A))
-	/////////////////////////////{
-	/////////////////////////////	actualCam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::LEFT);
-	/////////////////////////////}
-	/////////////////////////////
-	/////////////////////////////actualCam->rotateCamera(getMouseOffset());
-	/////////////////////////////
-	/////////////////////////////if (actualCam == thirdPersonCam)
-	/////////////////////////////{
-	/////////////////////////////	thirdPersonCam->updateTargetPos(conteiner2->getPos());
-	/////////////////////////////}
-	/////////////////////////////std::cout << "x: " << front.x << " - y: " << front.y << " - z: " << front.z << std::endl;
+	float cameraMovementAmount = engine::time::getDeltaTime() * cameraSpeed;
+	
+	if (isKeyPressed(ENGINE_KEY_W))
+	{
+		actualCam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::FRONT);
+	}
+	else if (isKeyPressed(ENGINE_KEY_S))
+	{
+		actualCam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::BACK);
+	}
+	
+	if (isKeyPressed(ENGINE_KEY_D))
+	{
+		actualCam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::RIGHT);
+	}
+	else if (isKeyPressed(ENGINE_KEY_A))
+	{
+		actualCam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::LEFT);
+	}
+	
+	actualCam->rotateCamera(getMouseOffset());
+	
+	if (actualCam == thirdPersonCam)
+	{
+		thirdPersonCam->updateTargetPos(conteiner2->getPos());
+	}
+	std::cout << "x: " << front.x << " - y: " << front.y << " - z: " << front.z << std::endl;
 
 	//spotLight->setDirection(actualCam->getFront());
 	//if (isKeyDown(ENGINE_KEY_ENTER))
@@ -429,6 +428,12 @@ void game::init()
 	firstPersonCam = new engine::firstPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	thirdPersonCam = new engine::thirdPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	actualCam = firstPersonCam;
+
+	currentRenderer->shaderPro.use();
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+	model = glm::scale4(model, glm::vec3(10.0f, 10.0f, 10.0f));	// it's a bit too big for our scene, so scale it down
+	currentRenderer->shaderPro.setMat4("model", model);
 	//tileMap = new engine::tileMap(currentRenderer);
 
 	/*if (tileMap->importTileMap("../res/assets/tilemapreal.tmx"))

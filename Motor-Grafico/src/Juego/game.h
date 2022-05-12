@@ -23,6 +23,7 @@ private:
 	float rotationSpeed = 0;
 	float timeBetweenChanges = 0;
 	//engine::sprite* imageCampus;
+	
 	engine::sprite* floor;
 	engine::sprite* conteiner2;
 	engine::pointLight* pointLight[AMOUNT_POINT_LIGHTS];

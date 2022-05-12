@@ -2,10 +2,10 @@
 #include "exports.h"
 #include "window.h"
 #include "shader.h"
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-#include "glm/gtc/type_ptr.hpp"
 #include "light.h"
+#include "GLM/glm.hpp"
+#include "GLM/gtc/matrix_transform.hpp"
+#include "GLM/gtc/type_ptr.hpp"
 
 namespace engine
 {
@@ -67,6 +67,9 @@ namespace engine
 		void setViewPosition(glm::vec3 viewPos);
 		void setProjectionMatrix(glm::mat4 projectionMatrix);
 		window* getCurrentWindow();
+
+		glm::mat4 GetProjMatrix();
+		glm::mat4 GetViewMatrix();
 
 		//TODO Pensar mejor implementacion, probablemente materiales
 		Shader shaderPro = Shader("../src/Motor/Shaders/a.shader", "../src/Motor/Shaders/b.shader");//Shader("../src/Motor/Shaders/TextureVertex.shader", "../src/Motor/Shaders/TextureFragment.shader");

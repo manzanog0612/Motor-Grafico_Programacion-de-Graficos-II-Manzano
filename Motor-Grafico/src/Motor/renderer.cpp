@@ -1,8 +1,10 @@
 #include "renderer.h"
 #include "light.h"
 #include <string>
-#include "glew.h"
-#include "glfw3.h"
+//#include "glew.h"
+//#include "glfw3.h"
+#include "GLEW/glew.h"
+#include "GLFW/glfw3.h"
 
 namespace engine
 {
@@ -41,6 +43,14 @@ namespace engine
 	void renderer::endDraw()
 	{
 		glfwSwapBuffers(currentWindow->getGLFWwindow());
+	}
+	glm::mat4 renderer::GetViewMatrix()
+	{
+		return viewMatrix;
+	}
+	glm::mat4 renderer::GetProjMatrix()
+	{
+		return projectionMatrix;
 	}
 	void renderer::setShaderInfo(glm::vec4 color, unsigned int textures[], MATERIAL material)
 	{

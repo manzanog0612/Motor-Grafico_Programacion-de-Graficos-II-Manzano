@@ -9,23 +9,24 @@
 //#include "glm/gtc/type_ptr.hpp"
 //#include ""
 
-#include <Importer.hpp>
-#include <scene.h>
-#include <postprocess.h>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 #include "Mesh.h"
+#include "exports.h"
 
 using namespace std;
 
 namespace engine
 {
-    class Model
+    class ENGINE_API Model
     {
     public:
         Model(string path)
         {
             loadModel(path);
         }
-        void Draw(Shader& shader);
+        void Draw(Shader& shader, glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix);
     private:
         // model data
         vector<Texture> textures_loaded;

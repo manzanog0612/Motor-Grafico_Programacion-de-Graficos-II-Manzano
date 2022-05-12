@@ -334,5 +334,11 @@
     <None Include="..\lib\assimp\include\vector3.inl">
       <Filter>Archivos de encabezado\Assimp</Filter>
     </None>
+    <None Include="..\src\Motor\Shaders\a.shader">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\src\Motor\Shaders\b.shader">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
