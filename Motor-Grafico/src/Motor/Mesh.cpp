@@ -25,9 +25,15 @@ namespace engine
             string number;
             string name = textures[i].type;
             if (name == "texture_diffuse")
+            {
                 number = std::to_string(diffuseNr++);
+                name = "diffuse";
+            }
             else if (name == "texture_specular")
+            {
                 number = std::to_string(specularNr++);
+                name = "specular";
+            }
 
             shader.setFloat(("material." + name + number).c_str(), i);
             glBindTexture(GL_TEXTURE_2D, textures[i].id);

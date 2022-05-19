@@ -68,7 +68,8 @@ void game::draw()
 	//	container[i]->draw();
 	//}
 	//awesomeface->draw();
-	////////////////////floor->draw();
+	floor->draw();
+	conteiner2->draw();
 	////////////////////
 	////////////////////cubeEmerald->draw();
 	////////////////////cubePearl->draw();
@@ -80,19 +81,17 @@ void game::draw()
 	////////////////////cubeYellowRubber->draw();
 	////////////////////conteiner2->draw();
 	////////////////////
-	////////////////////directionalLight->draw();
-	////////////////////
-	////////////////////for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
-	////////////////////{
-	////////////////////	pointLight[i]->draw();
-	////////////////////	pointLightBox[i]->draw();
-	////////////////////}
-	////////////////////
-	////////////////////spotLight->draw();
-	////////////////////spotLightBox->draw();
+	
+	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
+	{
+		pointLight[i]->draw();
+		pointLightBox[i]->draw();
+	}
 
-	//currentRenderer->shaderPro;
-	//engine::Shader* currShader = &getShader();
+	spotLight->draw();
+	spotLightBox->draw();
+	directionalLight->draw();
+
 	currentRenderer->shaderPro.use();
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
@@ -223,135 +222,135 @@ void game::update()
 
 	//box movement
 
-	/////////////////////////////if (isKeyPressed(ENGINE_KEY_0))
-	/////////////////////////////{
-	/////////////////////////////	selectedEntity = pointLight[0];
-	/////////////////////////////}
-	/////////////////////////////else if (isKeyPressed(ENGINE_KEY_1))
-	/////////////////////////////{
-	/////////////////////////////	selectedEntity = pointLight[1];
-	/////////////////////////////}
-	/////////////////////////////else if (isKeyPressed(ENGINE_KEY_2))
-	/////////////////////////////{
-	/////////////////////////////	selectedEntity = pointLight[2];
-	/////////////////////////////}
-	/////////////////////////////else if (isKeyPressed(ENGINE_KEY_3))
-	/////////////////////////////{
-	/////////////////////////////	selectedEntity = pointLight[3];
-	/////////////////////////////}
-	/////////////////////////////else if (isKeyPressed(ENGINE_KEY_4))
-	/////////////////////////////{
-	/////////////////////////////	selectedEntity = spotLight;
-	/////////////////////////////}
-	/////////////////////////////else if (isKeyPressed(ENGINE_KEY_5))
-	/////////////////////////////{
-	/////////////////////////////	selectedEntity = conteiner2;
-	/////////////////////////////}
-	/////////////////////////////
-	/////////////////////////////glm::vec3 rotation = glm::vec3(0, 0, 0);
-	/////////////////////////////glm::vec3 movement = glm::vec3(0, 0, 0);
+	if (isKeyPressed(ENGINE_KEY_0))
+	{
+		selectedEntity = pointLight[0];
+	}
+	else if (isKeyPressed(ENGINE_KEY_1))
+	{
+		selectedEntity = pointLight[1];
+	}
+	else if (isKeyPressed(ENGINE_KEY_2))
+	{
+		selectedEntity = pointLight[2];
+	}
+	else if (isKeyPressed(ENGINE_KEY_3))
+	{
+		selectedEntity = pointLight[3];
+	}
+	else if (isKeyPressed(ENGINE_KEY_4))
+	{
+		selectedEntity = spotLight;
+	}
+	else if (isKeyPressed(ENGINE_KEY_5))
+	{
+		selectedEntity = conteiner2;
+	}
+	
+	glm::vec3 rotation = glm::vec3(0, 0, 0);
+	glm::vec3 movement = glm::vec3(0, 0, 0);
 	glm::vec3 front = actualCam->getFront();
-	/////////////////////////////glm::vec3 up = glm::normalize(actualCam->getUp());
-	/////////////////////////////
-	/////////////////////////////float movementSpeed = 0.1f;
-	/////////////////////////////float rotationSpeed = 0.1f;
-	/////////////////////////////
-	/////////////////////////////bool managingDirectionalLight = true;
-	/////////////////////////////
-	/////////////////////////////front.y = 0;
-	/////////////////////////////
-	/////////////////////////////if (isKeyPressed(ENGINE_KEY_UP))
-	/////////////////////////////{
-	/////////////////////////////	movement += front * movementSpeed;
-	/////////////////////////////}
-	/////////////////////////////else if (isKeyPressed(ENGINE_KEY_DOWN))
-	/////////////////////////////{
-	/////////////////////////////	movement -= front * movementSpeed;
-	/////////////////////////////}
-	/////////////////////////////
-	/////////////////////////////if (isKeyPressed(ENGINE_KEY_LEFT))
-	/////////////////////////////{
-	/////////////////////////////	movement -= glm::normalize(glm::cross(front, up));
-	/////////////////////////////}
-	/////////////////////////////else if (isKeyPressed(ENGINE_KEY_RIGHT))
-	/////////////////////////////{
-	/////////////////////////////	movement += glm::normalize(glm::cross(front, up));
-	/////////////////////////////}
-	/////////////////////////////
-	/////////////////////////////if (isKeyPressed(ENGINE_KEY_Q))
-	/////////////////////////////{
-	/////////////////////////////	movement += up * movementSpeed;
-	/////////////////////////////}
-	/////////////////////////////else if (isKeyPressed(ENGINE_KEY_E))
-	/////////////////////////////{
-	/////////////////////////////	movement -= up * movementSpeed;
-	/////////////////////////////}
-	/////////////////////////////
-	/////////////////////////////if (isKeyPressed(ENGINE_KEY_I))
-	/////////////////////////////{
-	/////////////////////////////	if (rotation.y > 0)
-	/////////////////////////////	{
-	/////////////////////////////		rotation.y -= engine::time::getDeltaTime() * rotationSpeed;
-	/////////////////////////////
-	/////////////////////////////		rotation.y = rotation.y < 0 ? 0 : rotation.y;
-	/////////////////////////////	}
-	/////////////////////////////}
-	/////////////////////////////else if (isKeyPressed(ENGINE_KEY_O))
-	/////////////////////////////{
-	/////////////////////////////	if (rotation.y < 360)
-	/////////////////////////////	{
-	/////////////////////////////		rotation.y += engine::time::getDeltaTime() * rotationSpeed;
-	/////////////////////////////
-	/////////////////////////////		rotation.y = rotation.y > 360 ? 360 : rotation.y;
-	/////////////////////////////	}
-	/////////////////////////////}
-	/////////////////////////////
-	/////////////////////////////if (isKeyPressed(ENGINE_KEY_K))
-	/////////////////////////////{
-	/////////////////////////////	if (rotation.x > 0)
-	/////////////////////////////	{
-	/////////////////////////////		rotation.x -= engine::time::getDeltaTime() * rotationSpeed;
-	/////////////////////////////
-	/////////////////////////////		rotation.x = rotation.x < 0 ? 0 : rotation.x;
-	/////////////////////////////	}
-	/////////////////////////////}
-	/////////////////////////////else if (isKeyPressed(ENGINE_KEY_L))
-	/////////////////////////////{
-	/////////////////////////////	if (rotation.x < 360)
-	/////////////////////////////	{
-	/////////////////////////////		rotation.x += engine::time::getDeltaTime() * rotationSpeed;
-	/////////////////////////////
-	/////////////////////////////		rotation.x = rotation.x > 360 ? 360 : rotation.x;
-	/////////////////////////////	}
-	/////////////////////////////}
-	/////////////////////////////
-	/////////////////////////////if (isKeyDown(ENGINE_KEY_ENTER))
-	/////////////////////////////{
-	/////////////////////////////	managingDirectionalLight != managingDirectionalLight;
-	/////////////////////////////}
-	/////////////////////////////
-	/////////////////////////////entityPos += movement;
-	/////////////////////////////
-	/////////////////////////////selectedEntity->setPos(entityPos);
-	/////////////////////////////
-	/////////////////////////////if (managingDirectionalLight)
-	/////////////////////////////{
-	/////////////////////////////	directionalLight->setDirection(rotation, false);
-	/////////////////////////////}
-	/////////////////////////////else
-	/////////////////////////////{
-	/////////////////////////////	spotLight->setDirection(front, true);
-	/////////////////////////////}
-	/////////////////////////////
-	///////////////////////////////camera movement
-	/////////////////////////////
-	/////////////////////////////for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
-	/////////////////////////////{
-	/////////////////////////////	pointLightBox[i]->setPos(pointLight[i]->getPos());
-	/////////////////////////////}
-	/////////////////////////////
-	/////////////////////////////spotLightBox->setPos(spotLight->getPos());
-	/////////////////////////////
+	glm::vec3 up = glm::normalize(actualCam->getUp());
+	
+	float movementSpeed = 0.01f;
+	float rotationSpeed = 0.1f;
+	
+	bool managingDirectionalLight = true;
+	
+	front.y = 0;
+	
+	if (isKeyPressed(ENGINE_KEY_UP))
+	{
+		movement += front * movementSpeed;
+	}
+	else if (isKeyPressed(ENGINE_KEY_DOWN))
+	{
+		movement -= front * movementSpeed;
+	}
+	
+	if (isKeyPressed(ENGINE_KEY_LEFT))
+	{
+		movement -= glm::normalize(glm::cross(front, up));
+	}
+	else if (isKeyPressed(ENGINE_KEY_RIGHT))
+	{
+		movement += glm::normalize(glm::cross(front, up));
+	}
+	
+	if (isKeyPressed(ENGINE_KEY_Q))
+	{
+		movement += up * movementSpeed;
+	}
+	else if (isKeyPressed(ENGINE_KEY_E))
+	{
+		movement -= up * movementSpeed;
+	}
+	
+	if (isKeyPressed(ENGINE_KEY_I))
+	{
+		if (rotation.y > 0)
+		{
+			rotation.y -= engine::time::getDeltaTime() * rotationSpeed;
+	
+			rotation.y = rotation.y < 0 ? 0 : rotation.y;
+		}
+	}
+	else if (isKeyPressed(ENGINE_KEY_O))
+	{
+		if (rotation.y < 360)
+		{
+			rotation.y += engine::time::getDeltaTime() * rotationSpeed;
+	
+			rotation.y = rotation.y > 360 ? 360 : rotation.y;
+		}
+	}
+	
+	if (isKeyPressed(ENGINE_KEY_K))
+	{
+		if (rotation.x > 0)
+		{
+			rotation.x -= engine::time::getDeltaTime() * rotationSpeed;
+	
+			rotation.x = rotation.x < 0 ? 0 : rotation.x;
+		}
+	}
+	else if (isKeyPressed(ENGINE_KEY_L))
+	{
+		if (rotation.x < 360)
+		{
+			rotation.x += engine::time::getDeltaTime() * rotationSpeed;
+	
+			rotation.x = rotation.x > 360 ? 360 : rotation.x;
+		}
+	}
+	
+	if (isKeyDown(ENGINE_KEY_ENTER))
+	{
+		managingDirectionalLight != managingDirectionalLight;
+	}
+	
+	entityPos += movement;
+	
+	selectedEntity->setPos(entityPos);
+	
+	if (managingDirectionalLight)
+	{
+		directionalLight->setDirection(rotation, false);
+	}
+	else
+	{
+		spotLight->setDirection(front, true);
+	}
+	
+	//camera movement
+	
+	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
+	{
+		pointLightBox[i]->setPos(pointLight[i]->getPos());
+	}
+
+	spotLightBox->setPos(spotLight->getPos());
+
 	float cameraMovementAmount = engine::time::getDeltaTime() * cameraSpeed;
 	
 	if (isKeyPressed(ENGINE_KEY_W))
@@ -435,7 +434,6 @@ void game::init()
 	model = glm::scale4(model, glm::vec3(10.0f, 10.0f, 10.0f));	// it's a bit too big for our scene, so scale it down
 	currentRenderer->shaderPro.setMat4("model", model);
 
-
 	//tileMap = new engine::tileMap(currentRenderer);
 
 	/*if (tileMap->importTileMap("../res/assets/tilemapreal.tmx"))
@@ -475,10 +473,10 @@ void game::init()
 	container->setScale(glm::vec3(10, 10, 10));
 	container->setPos(glm::vec3(-15, 0, 0));*/
 
-	////////////conteiner2 = new engine::sprite(currentRenderer, "../res/assets/textures/container2.png", "../res/assets/textures/container2_specular.png", true, engine::MATERIAL::PEARL);
-	////////////conteiner2->setPos(glm::vec3(0, 1, 3));
-	////////////conteiner2->setScale(glm::vec3(2, 2, 2));
-	////////////conteiner2->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
+	conteiner2 = new engine::sprite(currentRenderer, "../res/assets/textures/container2.png", "../res/assets/textures/container2_specular.png", true, engine::MATERIAL::PEARL);
+	conteiner2->setPos(glm::vec3(0, 1, 3));
+	conteiner2->setScale(glm::vec3(2, 2, 2));
+	conteiner2->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 	////////////
 	////////////cubeEmerald = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::EMERALD);
 	////////////cubeEmerald->setPos(glm::vec3(-3, 2, 0));
@@ -497,36 +495,36 @@ void game::init()
 	////////////cubeYellowRubber = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::YELLOW_RUBBER);
 	////////////cubeYellowRubber->setPos(glm::vec3(3, 0.5f, 0));
 	////////////
-	////////////for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
-	////////////{
-	////////////	pointLight[i] = new engine::pointLight(currentRenderer, i);
-	////////////	pointLight[i]->setColor(glm::vec4(1, 1, 1, 1));
-	////////////	pointLight[i]->setPos(glm::vec3(-4 + 2 * i, 1, -3));
-	////////////
-	////////////	pointLightBox[i] = new engine::shape(currentRenderer,engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
-	////////////	pointLightBox[i]->setScale(glm::vec3(0.5f, 0.5f, 0.5f));
-	////////////	pointLightBox[i]->setPos(pointLight[i]->getPos());
-	////////////}
-	////////////
-	////////////pointLight[0]->setColor(glm::vec4(1, 0, 0, 1));
-	////////////pointLight[1]->setColor(glm::vec4(0, 1, 0, 1));
-	////////////pointLight[2]->setColor(glm::vec4(0, 0, 1, 1));
-	////////////pointLight[3]->setColor(glm::vec4(1, 1, 1, 1));
-	////////////
-	////////////directionalLight = new engine::directionalLight(currentRenderer);
-	////////////
-	////////////spotLight = new engine::spotLight(currentRenderer);
-	////////////spotLight->setPos({ 0,5,3 });
-	////////////spotLightBox = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
-	////////////spotLightBox->setScale(glm::vec3(0.5f, 0.5f, 0.5f));
-	////////////spotLightBox->setPos(spotLight->getPos());
-	////////////
-	////////////selectedEntity = spotLight;
-	////////////
-	////////////floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
-	////////////floor->setScale(glm::vec3(10, 10, 1));
-	////////////floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
-	////////////floor->setPos(glm::vec3(0,0,0));
+	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
+	{
+		pointLight[i] = new engine::pointLight(currentRenderer, i);
+		pointLight[i]->setColor(glm::vec4(1, 1, 1, 1));
+		pointLight[i]->setPos(glm::vec3(-4 + 2 * i, 1, -3));
+	
+		pointLightBox[i] = new engine::shape(currentRenderer,engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
+		pointLightBox[i]->setScale(glm::vec3(0.5f, 0.5f, 0.5f));
+		pointLightBox[i]->setPos(pointLight[i]->getPos());
+	}
+	
+	pointLight[0]->setColor(glm::vec4(1, 0, 0, 1));
+	pointLight[1]->setColor(glm::vec4(0, 1, 0, 1));
+	pointLight[2]->setColor(glm::vec4(0, 0, 1, 1));
+	pointLight[3]->setColor(glm::vec4(1, 1, 1, 1));
+
+	directionalLight = new engine::directionalLight(currentRenderer);
+
+	spotLight = new engine::spotLight(currentRenderer);
+	spotLight->setPos({ 0,5,3 });
+	spotLightBox = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
+	spotLightBox->setScale(glm::vec3(0.5f, 0.5f, 0.5f));
+	spotLightBox->setPos(spotLight->getPos());
+	
+	selectedEntity = spotLight;
+	
+	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
+	floor->setScale(glm::vec3(10, 10, 1));
+	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
+	floor->setPos(glm::vec3(0,0,0));
 
 	/*archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
 	
@@ -592,19 +590,23 @@ void game::deInit()
 	////////////
 	delete firstPersonCam;
 	delete thirdPersonCam;
-	////////////
-	////////////conteiner2->deinit();
-	////////////delete conteiner2;
-	////////////
-	////////////floor->deinit();
-	////////////delete floor;
-	////////////
-	////////////for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
-	////////////{
-	////////////	delete pointLight[i];
-	////////////}
-	////////////
-	////////////delete directionalLight;
+
+	conteiner2->deinit();
+	delete conteiner2;
+
+	floor->deinit();
+	delete floor;
+
+	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
+	{
+		delete pointLight[i];
+		delete pointLightBox[i];
+	}
+
+	delete directionalLight;
+
+	delete spotLight;
+	delete spotLightBox;
 
 	//archer->deinit();
 	//delete archer;

@@ -72,7 +72,7 @@ namespace engine
 		glm::mat4 GetViewMatrix();
 
 		//TODO Pensar mejor implementacion, probablemente materiales
-		Shader shaderPro = Shader("../src/Motor/Shaders/a.shader", "../src/Motor/Shaders/b.shader");//Shader("../src/Motor/Shaders/TextureVertex.shader", "../src/Motor/Shaders/TextureFragment.shader");
+		Shader shaderPro = Shader("../src/Motor/Shaders/TextureVertex.shader", "../src/Motor/Shaders/TextureFragment.shader");//Shader("../src/Motor/Shaders/TextureVertex.shader", "../src/Motor/Shaders/TextureFragment.shader");
 
 	private:
 		Material GetMaterialData(MATERIAL material);
