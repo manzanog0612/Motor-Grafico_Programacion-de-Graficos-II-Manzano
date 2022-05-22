@@ -11,6 +11,7 @@
 
 #include "shape.h"
 #include "sprite.h"
+#include "entity3D.h"
 #include "camera.h"
 #include "firstPersonCamera.h"
 #include "thirdPersonCamera.h"

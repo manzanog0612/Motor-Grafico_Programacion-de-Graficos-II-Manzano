@@ -6,23 +6,26 @@
 #include "GLEW/glew.h"
 #include "GLFW/glfw3.h"
 
+using namespace std;
+using namespace glm;
+
 namespace engine
 {
 	renderer::renderer()
 	{
 		currentWindow = NULL;
-		viewMatrix = glm::mat4();
-		projectionMatrix = glm::mat4();
-		clearColor = glm::vec4(0, 0, 0, 1);
+		viewMatrix = mat4();
+		projectionMatrix = mat4();
+		clearColor = vec4(0, 0, 0, 1);
 	}
 	renderer::renderer(window* window)
 	{
-		clearColor = glm::vec4(0, 0, 0, 1);
+		clearColor = vec4(0, 0, 0, 1);
 
 		currentWindow = window;
 
-		viewMatrix = glm::mat4(1.0f);
-		projectionMatrix = glm::mat4(1.0f);
+		viewMatrix = mat4(1.0f);
+		projectionMatrix = mat4(1.0f);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -57,6 +60,7 @@ namespace engine
 	void renderer::setShaderInfo(glm::vec4 color, unsigned int textures[], MATERIAL material)
 	{
 		glm::vec3 newColor = glm::vec3(color.r, color.g, color.b);
+
 		unsigned int colorLoc = glGetUniformLocation(shaderPro.ID, "color");
 		glUniform3fv(colorLoc, 1, glm::value_ptr(newColor));
 
@@ -88,6 +92,44 @@ namespace engine
 	}
 	void renderer::drawRequest(glm::mat4 modelMatrix, unsigned int VAO, unsigned int vertices)
 	{
+		setMVP(modelMatrix);
+
+		glBindVertexArray(VAO);
+		glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
+	}
+	void renderer::drawMesh(std::vector<myVertex> vertices, std::vector<unsigned int> indices, std::vector<myTexture> textures, unsigned int VAO)
+	{
+		unsigned int diffuseNr = 1;
+		unsigned int specularNr = 1;
+		for (unsigned int i = 0; i < textures.size(); i++)
+		{
+			glActiveTexture(GL_TEXTURE0 + i); // activate proper texture unit before binding
+			// retrieve texture number (the N in diffuse_textureN)
+			string number;
+			string name = textures[i].type;
+			if (name == "texture_diffuse")
+			{
+				number = std::to_string(diffuseNr++);
+				name = "diffuse";
+			}
+			else if (name == "texture_specular")
+			{
+				number = std::to_string(specularNr++);
+				name = "specular";
+			}
+
+			shaderPro.setFloat(("material." + name + number).c_str(), i);
+			glBindTexture(GL_TEXTURE_2D, textures[i].id);
+		}
+		glActiveTexture(GL_TEXTURE0);
+
+		// draw mesh
+		glBindVertexArray(VAO);
+		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+		glBindVertexArray(0);
+	}
+	void renderer::setMVP(glm::mat4 modelMatrix)
+	{
 		unsigned int modelLoc = glGetUniformLocation(shaderPro.ID, "model");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
@@ -96,9 +138,6 @@ namespace engine
 
 		unsigned int projectionLoc = glGetUniformLocation(shaderPro.ID, "projection");
 		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
-
-		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
 	}
 	void renderer::processLight(glm::vec3 lightColor, glm::vec3 lightPos)
 	{

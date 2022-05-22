@@ -5,6 +5,7 @@ game::game()
 {
 	//imageCampus = nullptr;
 
+	testModel = nullptr;
 	conteiner2 = nullptr;
 	floor = nullptr;
 
@@ -92,12 +93,12 @@ void game::draw()
 	spotLightBox->draw();
 	directionalLight->draw();
 
-	currentRenderer->shaderPro.use();
-	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-	model = glm::scale4(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-	backpackModel->Draw(currentRenderer->shaderPro, model, currentRenderer->GetViewMatrix(), currentRenderer->GetProjMatrix());
-	
+	//currentRenderer->shaderPro.use();
+	//glm::mat4 model = glm::mat4(1.0f);
+	//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+	//model = glm::scale4(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+	//backpackModel->Draw(currentRenderer->shaderPro, model, currentRenderer->GetViewMatrix(), currentRenderer->GetProjMatrix());
+	testModel->draw();
 	//triangle->draw();
 	//triangle2->draw();
 	//triangle3->draw();
@@ -331,7 +332,8 @@ void game::update()
 	
 	entityPos += movement;
 	
-	selectedEntity->setPos(entityPos);
+	//selectedEntity->setPos(entityPos);
+	testModel->setPos(entityPos);
 	
 	if (managingDirectionalLight)
 	{
@@ -418,8 +420,8 @@ void game::update()
 
 void game::init()
 {
-	backpackModel = new engine::Model("../res/assets/backpack/backpack.obj");
-
+	//backpackModel = new engine::Model("../res/assets/backpack/backpack.obj");
+	testModel = new engine::entity3D(currentRenderer, "../res/assets/backpack/backpack.obj");
 	glm::vec3 camPos = { 0, 3, 2 };
 	glm::vec3 camView = { 0, -1, 0 };
 	glm::vec3 camUp = { 0, 1, 0 };

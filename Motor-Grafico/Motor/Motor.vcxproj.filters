@@ -5,296 +5,330 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Archivos de encabezado">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Archivos de recursos">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Shaders">
       <UniqueIdentifier>{8ae40fc4-02a5-4c30-b941-8021b0db7626}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de encabezado\Assimp">
+    <Filter Include="Assimp">
       <UniqueIdentifier>{84c86049-415d-41a4-bcca-345607734129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{f8e5d283-83ad-41e7-bea0-8f5e0abb863b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Light">
+      <UniqueIdentifier>{6f81998a-c6cc-4ae1-a552-aa6fd11fcc72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Miscellaneous">
+      <UniqueIdentifier>{1f102ce8-82c5-4a71-a688-379764710030}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{b6e74ea5-78da-4b26-ade7-250dbce46e1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Importer">
+      <UniqueIdentifier>{a493cf17-d4e1-48cd-b651-a0811e606f0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include=".Hs">
+      <UniqueIdentifier>{38a079c7-6828-4997-bcb0-4410fa273e21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TileMap">
+      <UniqueIdentifier>{e713d068-b4d4-4d2d-891d-26f63abcc0b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyImporter">
+      <UniqueIdentifier>{8b02ec84-f4a7-4f76-a119-248d83317f8d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Motor\baseGame.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Motor\renderer.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\window.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\entity.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\entity2D.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\shape.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\shader.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\input.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\time.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\sprite.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\stb_image.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\textureImporter.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\animation.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Motor\camera.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\collisionManager.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\tile.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\tileMap.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\tinyxml2.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\thirdPersonCamera.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Motor\firstPersonCamera.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Camera</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Motor\light.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\shapeWithTexture.cpp">
-      <Filter>Archivos de origen</Filter>
+    <ClCompile Include="..\src\Motor\thirdPersonCamera.cpp">
+      <Filter>Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Motor\directionalLight.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\light.cpp">
+      <Filter>Light</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Motor\pointLight.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Motor\spotLight.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Light</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Motor\Model.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Importer</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Motor\Mesh.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Importer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\tileMap.cpp">
+      <Filter>TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\tile.cpp">
+      <Filter>TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\entity.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\entity2D.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\shape.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\sprite.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\tinyxml2.cpp">
+      <Filter>.Hs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\stb_image.cpp">
+      <Filter>.Hs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\window.cpp">
+      <Filter>Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\time.cpp">
+      <Filter>Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\textureImporter.cpp">
+      <Filter>Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\shader.cpp">
+      <Filter>Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\renderer.cpp">
+      <Filter>Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\input.cpp">
+      <Filter>Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\collisionManager.cpp">
+      <Filter>Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\animation.cpp">
+      <Filter>Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\spotLight.cpp">
+      <Filter>Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\modelImporter.cpp">
+      <Filter>MyImporter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\entity3D.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\myMesh.cpp">
+      <Filter>MyImporter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\myModel.cpp">
+      <Filter>MyImporter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\Motor\baseGame.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\exports.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\renderer.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\window.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\entity2D.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\shader.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\shape.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\entity.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\input.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\keycodes.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\time.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\sprite.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\stb_image.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\textureImporter.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\animation.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\camera.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\atlasConfig.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\collisionManager.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\tile.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\tileMap.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\tinyxml2.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\firstPersonCamera.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\thirdPersonCamera.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\light.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\vertexs.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\shapeWithTexture.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\directionalLight.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\pointLight.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\spotLight.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\Mesh.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Motor\Model.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="..\lib\assimp\include\ai_assert.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\anim.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\camera.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\cexport.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\cfileio.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\cimport.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\color4.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\config.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\DefaultLogger.hpp">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\defs.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\Exporter.hpp">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\Importer.hpp">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\importerdesc.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\IOStream.hpp">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\IOSystem.hpp">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\light.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\Logger.hpp">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\LogStream.hpp">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\material.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\matrix3x3.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\matrix4x4.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\mesh.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\metadata.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\NullLogger.hpp">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\postprocess.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\ProgressHandler.hpp">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\quaternion.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\scene.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\texture.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\types.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\vector2.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\vector3.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\lib\assimp\include\version.h">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\animation.h">
+      <Filter>Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\atlasConfig.h">
+      <Filter>Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\collisionManager.h">
+      <Filter>Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\directionalLight.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\entity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\entity2D.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\light.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\Mesh.h">
+      <Filter>Importer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\Model.h">
+      <Filter>Importer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\pointLight.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\shape.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\sprite.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\exports.h">
+      <Filter>.Hs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\stb_image.h">
+      <Filter>.Hs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\keycodes.h">
+      <Filter>.Hs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\input.h">
+      <Filter>Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\firstPersonCamera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\spotLight.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\vertexs.h">
+      <Filter>.Hs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\tinyxml2.h">
+      <Filter>.Hs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\tileMap.h">
+      <Filter>TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\tile.h">
+      <Filter>TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\thirdPersonCamera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\window.h">
+      <Filter>Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\renderer.h">
+      <Filter>Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\shader.h">
+      <Filter>Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\textureImporter.h">
+      <Filter>Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\time.h">
+      <Filter>Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\baseGame.h">
+      <Filter>Archivos de origen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\modelImporter.h">
+      <Filter>MyImporter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\entity3D.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\myMesh.h">
+      <Filter>MyImporter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\myModel.h">
+      <Filter>MyImporter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -314,25 +348,25 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="..\lib\assimp\include\color4.inl">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </None>
     <None Include="..\lib\assimp\include\material.inl">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </None>
     <None Include="..\lib\assimp\include\matrix3x3.inl">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </None>
     <None Include="..\lib\assimp\include\matrix4x4.inl">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </None>
     <None Include="..\lib\assimp\include\quaternion.inl">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </None>
     <None Include="..\lib\assimp\include\vector2.inl">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </None>
     <None Include="..\lib\assimp\include\vector3.inl">
-      <Filter>Archivos de encabezado\Assimp</Filter>
+      <Filter>Assimp</Filter>
     </None>
     <None Include="..\src\Motor\Shaders\a.shader">
       <Filter>Shaders</Filter>

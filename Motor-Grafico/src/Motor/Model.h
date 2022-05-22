@@ -27,6 +27,7 @@ namespace engine
             loadModel(path);
         }
         void Draw(Shader& shader, glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix);
+        vector<Mesh> GetMeshes() { return meshes; };
     private:
         // model data
         vector<Texture> textures_loaded;

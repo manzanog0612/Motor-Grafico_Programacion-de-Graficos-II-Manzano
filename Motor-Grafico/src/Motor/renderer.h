@@ -2,10 +2,8 @@
 #include "exports.h"
 #include "window.h"
 #include "shader.h"
+#include <vector>
 #include "light.h"
-#include "GLM/glm.hpp"
-#include "GLM/gtc/matrix_transform.hpp"
-#include "GLM/gtc/type_ptr.hpp"
 
 namespace engine
 {
@@ -41,6 +39,18 @@ namespace engine
 		}
 	};
 
+	struct  myVertex {
+		glm::vec3 Position;
+		glm::vec3 Normal;
+		glm::vec2 TexCoords;
+	};
+
+	struct myTexture {
+		unsigned int id;
+		std::string type;
+		std::string path;  // we store the path of the texture to compare with other textures
+	};
+
 	class ENGINE_API renderer
 	{
 	public:
@@ -54,6 +64,8 @@ namespace engine
 		void bindExtraBuffer(unsigned int buffer, float* data, unsigned int sizeOfData, unsigned int bufferType);
 		void setShaderInfo(glm::vec4 color, unsigned int textures[], MATERIAL material);
 		void drawRequest(glm::mat4 model, unsigned int VAO, unsigned int vertices);
+		void setMVP(glm::mat4 modelMatrix);
+		void drawMesh(std::vector<myVertex> vertices, std::vector<unsigned int> indices, std::vector<myTexture> textures, unsigned int VAO);
 		void processLight(glm::vec3 lightColor, glm::vec3 lightPos);
 		void processDirectionalLight(glm::vec3 direction, Light light);
 		void processPointLight(float constant, float linear, float quadratic, glm::vec3 position, Light light, int index);
