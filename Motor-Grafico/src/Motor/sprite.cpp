@@ -226,10 +226,10 @@ namespace engine
 		_renderer = render;
 		float vertex[24] =
 		{
-			 0.5f,  0.5f, 0.0f,		0.0f, 1.0f, 0.0f,
-			 0.5f, -0.5f, 0.0f,		0.0f, 1.0f, 0.0f,
-			-0.5f, -0.5f, 0.0f,		0.0f, 1.0f, 0.0f,
-			-0.5f,  0.5f, 0.0f,		0.0f, 1.0f, 0.0f
+			 0.5f,  0.5f, 0.0f,		0.0f, 0.0f,1.0f,
+			 0.5f, -0.5f, 0.0f,		0.0f, 0.0f,1.0f,
+			-0.5f, -0.5f, 0.0f,		0.0f, 0.0f,1.0f,
+			-0.5f,  0.5f, 0.0f,		0.0f, 0.0f, 1.0f
 		};
 		unsigned int indices[6] =
 		{

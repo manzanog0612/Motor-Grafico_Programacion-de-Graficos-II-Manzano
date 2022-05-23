@@ -15,15 +15,15 @@ void main()
 {
     mat4 mvp = projection * view * model;
 
-    mat3 normalMatrix = mat3(mvp);
+    mat4 normalMatrix = mat4(mvp);
+    //normalMatrix = transpose(normalMatrix);
     //normalMatrix = inverse(normalMatrix);
-    normalMatrix = transpose(normalMatrix);
-
-    gl_Position = mvp * vec4(aPos, 1.0f);
-
-    Normal = normalize(aNormal) * normalMatrix;
-    //Normal = mat3(transpose(inverse(model))) * aNormal;
+    
+    //Normal = normalize(aNormal);// *mat3(normalMatrix);
+    Normal = mat3(transpose(inverse(model))) * aNormal;
     FragPos = vec3(model * vec4(aPos, 1.0));
 
     TexCoord = aTexCoord;
+
+    gl_Position = projection * view * vec4(FragPos, 1.0f);
 }
