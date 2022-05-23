@@ -45,12 +45,12 @@ namespace engine
 	void sprite::draw()
 	{
 		_renderer->shaderPro.use();
-		unsigned int texture = getCurrentTextureIDToDraw();
+		//unsigned int texture = getCurrentTextureIDToDraw();
 
 		lightingMaps[0] = diffuseMap->ID;
 		lightingMaps[1] = specularMap->ID;
 
-		glBindTexture(GL_TEXTURE_2D, texture);
+		//glBindTexture(GL_TEXTURE_2D, texture);
 		//setShader(texture);
 		_renderer->setShaderInfo(color, lightingMaps, material);
 		_renderer->drawRequest(model, VAO, _vertices);
@@ -224,12 +224,12 @@ namespace engine
 	void sprite::setTexture(renderer* render, const char* diffuseMapPath, const char* specularMapPath, bool invertImage)
 	{
 		_renderer = render;
-		float vertex[36] =
+		float vertex[24] =
 		{
-			 0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,	  0.0f, 1.0f, 0.0f,
-			 0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,	  0.0f, 1.0f, 0.0f,
-			-0.5f, -0.5f, 0.0f,		1.0f, 1.0f, 1.0f,	  0.0f, 1.0f, 0.0f,
-			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 1.0f,	  0.0f, 1.0f, 0.0f
+			 0.5f,  0.5f, 0.0f,		0.0f, 1.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f,		0.0f, 1.0f, 0.0f,
+			-0.5f, -0.5f, 0.0f,		0.0f, 1.0f, 0.0f,
+			-0.5f,  0.5f, 0.0f,		0.0f, 1.0f, 0.0f
 		};
 		unsigned int indices[6] =
 		{
@@ -240,13 +240,11 @@ namespace engine
 		_renderer->bindBaseBufferRequest(VAO, VBO, EBO, vertex, sizeof(vertex), indices, sizeof(indices));
 		_vertices = 6;
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(3 * sizeof(float)));
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(6 * sizeof(float)));
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 		
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
-		glEnableVertexAttribArray(2);
 
 		float UVs[8] =
 		{
@@ -257,8 +255,8 @@ namespace engine
 		};
 		_renderer->createExtraBuffer(bufferPosUVs, 1);
 		_renderer->bindExtraBuffer(bufferPosUVs, UVs, sizeof(UVs), GL_DYNAMIC_DRAW);
-		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(3);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(2);
 
 		diffuseMap = new textureData(textureImporter::loadTexture(diffuseMapPath, invertImage));
 		specularMap = new textureData(textureImporter::loadTexture(specularMapPath, invertImage));

@@ -250,8 +250,8 @@ void game::update()
 	
 	glm::vec3 rotation = glm::vec3(0, 0, 0);
 	glm::vec3 movement = glm::vec3(0, 0, 0);
-	glm::vec3 front = actualCam->getFront();
-	glm::vec3 up = glm::normalize(actualCam->getUp());
+	glm::vec3 front = glm::vec3(0, 0, -1);
+	glm::vec3 up = glm::vec3(0, 1, 0);
 	
 	float movementSpeed = 0.01f;
 	float rotationSpeed = 0.1f;
@@ -271,11 +271,11 @@ void game::update()
 	
 	if (isKeyPressed(ENGINE_KEY_LEFT))
 	{
-		movement -= glm::normalize(glm::cross(front, up));
+		movement -= glm::vec3(1, 0, 0) * movementSpeed;
 	}
 	else if (isKeyPressed(ENGINE_KEY_RIGHT))
 	{
-		movement += glm::normalize(glm::cross(front, up));
+		movement += glm::vec3(1, 0, 0) * movementSpeed;
 	}
 	
 	if (isKeyPressed(ENGINE_KEY_Q))
@@ -422,6 +422,7 @@ void game::init()
 {
 	//backpackModel = new engine::Model("../res/assets/backpack/backpack.obj");
 	testModel = new engine::entity3D(currentRenderer, "../res/assets/backpack/backpack.obj");
+	testModel->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 	glm::vec3 camPos = { 0, 3, 2 };
 	glm::vec3 camView = { 0, -1, 0 };
 	glm::vec3 camUp = { 0, 1, 0 };
