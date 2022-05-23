@@ -5,6 +5,7 @@ game::game()
 {
 	//imageCampus = nullptr;
 
+	testModel = nullptr;
 	conteiner2 = nullptr;
 	floor = nullptr;
 
@@ -20,6 +21,7 @@ game::game()
 	
 	cubePearl = nullptr;
 	cubeEmerald = nullptr;
+	backpackModel = nullptr;
 
 	//archer = nullptr;
 	//triangle = nullptr;
@@ -68,28 +70,35 @@ void game::draw()
 	//}
 	//awesomeface->draw();
 	floor->draw();
-
-	cubeEmerald->draw();
-	cubePearl->draw();
-	cubeBronze->draw();
-	cubeGold->draw();
-	cubeCyanPlastic->draw();
-	cubeRedPlastic->draw();
-	cubeGreenRubber->draw();
-	cubeYellowRubber->draw();
 	conteiner2->draw();
-
-	directionalLight->draw();
-
+	////////////////////
+	////////////////////cubeEmerald->draw();
+	////////////////////cubePearl->draw();
+	////////////////////cubeBronze->draw();
+	////////////////////cubeGold->draw();
+	////////////////////cubeCyanPlastic->draw();
+	////////////////////cubeRedPlastic->draw();
+	////////////////////cubeGreenRubber->draw();
+	////////////////////cubeYellowRubber->draw();
+	////////////////////conteiner2->draw();
+	////////////////////
+	
 	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
 	{
 		pointLight[i]->draw();
 		pointLightBox[i]->draw();
 	}
-	
+
 	spotLight->draw();
 	spotLightBox->draw();
-	
+	directionalLight->draw();
+
+	//currentRenderer->shaderPro.use();
+	//glm::mat4 model = glm::mat4(1.0f);
+	//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+	//model = glm::scale4(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+	//backpackModel->Draw(currentRenderer->shaderPro, model, currentRenderer->GetViewMatrix(), currentRenderer->GetProjMatrix());
+	testModel->draw();
 	//triangle->draw();
 	//triangle2->draw();
 	//triangle3->draw();
@@ -238,19 +247,19 @@ void game::update()
 	{
 		selectedEntity = conteiner2;
 	}
-
+	
 	glm::vec3 rotation = glm::vec3(0, 0, 0);
 	glm::vec3 movement = glm::vec3(0, 0, 0);
-	glm::vec3 front = actualCam->getFront();
-	glm::vec3 up = glm::normalize(actualCam->getUp());
-
-	float movementSpeed = 0.1f;
+	glm::vec3 front = glm::vec3(0, 0, -1);
+	glm::vec3 up = glm::vec3(0, 1, 0);
+	
+	float movementSpeed = 0.01f;
 	float rotationSpeed = 0.1f;
-
+	
 	bool managingDirectionalLight = true;
-
+	
 	front.y = 0;
-
+	
 	if (isKeyPressed(ENGINE_KEY_UP))
 	{
 		movement += front * movementSpeed;
@@ -262,13 +271,13 @@ void game::update()
 	
 	if (isKeyPressed(ENGINE_KEY_LEFT))
 	{
-		movement -= glm::normalize(glm::cross(front, up));
+		movement -= glm::vec3(1, 0, 0) * movementSpeed;
 	}
 	else if (isKeyPressed(ENGINE_KEY_RIGHT))
 	{
-		movement += glm::normalize(glm::cross(front, up));
+		movement += glm::vec3(1, 0, 0) * movementSpeed;
 	}
-
+	
 	if (isKeyPressed(ENGINE_KEY_Q))
 	{
 		movement += up * movementSpeed;
@@ -277,13 +286,13 @@ void game::update()
 	{
 		movement -= up * movementSpeed;
 	}
-
+	
 	if (isKeyPressed(ENGINE_KEY_I))
 	{
 		if (rotation.y > 0)
 		{
 			rotation.y -= engine::time::getDeltaTime() * rotationSpeed;
-
+	
 			rotation.y = rotation.y < 0 ? 0 : rotation.y;
 		}
 	}
@@ -292,17 +301,17 @@ void game::update()
 		if (rotation.y < 360)
 		{
 			rotation.y += engine::time::getDeltaTime() * rotationSpeed;
-
+	
 			rotation.y = rotation.y > 360 ? 360 : rotation.y;
 		}
 	}
-
+	
 	if (isKeyPressed(ENGINE_KEY_K))
 	{
 		if (rotation.x > 0)
 		{
 			rotation.x -= engine::time::getDeltaTime() * rotationSpeed;
-
+	
 			rotation.x = rotation.x < 0 ? 0 : rotation.x;
 		}
 	}
@@ -311,20 +320,21 @@ void game::update()
 		if (rotation.x < 360)
 		{
 			rotation.x += engine::time::getDeltaTime() * rotationSpeed;
-
+	
 			rotation.x = rotation.x > 360 ? 360 : rotation.x;
 		}
 	}
-
+	
 	if (isKeyDown(ENGINE_KEY_ENTER))
 	{
 		managingDirectionalLight != managingDirectionalLight;
 	}
-
+	
 	entityPos += movement;
-
-	selectedEntity->setPos(entityPos);
-
+	
+	//selectedEntity->setPos(entityPos);
+	testModel->setPos(entityPos);
+	
 	if (managingDirectionalLight)
 	{
 		directionalLight->setDirection(rotation, false);
@@ -333,9 +343,9 @@ void game::update()
 	{
 		spotLight->setDirection(front, true);
 	}
-
+	
 	//camera movement
-
+	
 	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
 	{
 		pointLightBox[i]->setPos(pointLight[i]->getPos());
@@ -344,7 +354,7 @@ void game::update()
 	spotLightBox->setPos(spotLight->getPos());
 
 	float cameraMovementAmount = engine::time::getDeltaTime() * cameraSpeed;
-
+	
 	if (isKeyPressed(ENGINE_KEY_W))
 	{
 		actualCam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::FRONT);
@@ -353,7 +363,7 @@ void game::update()
 	{
 		actualCam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::BACK);
 	}
-
+	
 	if (isKeyPressed(ENGINE_KEY_D))
 	{
 		actualCam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::RIGHT);
@@ -362,9 +372,9 @@ void game::update()
 	{
 		actualCam->moveCamera(cameraMovementAmount, engine::MOVEMENT_DIRECTION::LEFT);
 	}
-
+	
 	actualCam->rotateCamera(getMouseOffset());
-
+	
 	if (actualCam == thirdPersonCam)
 	{
 		thirdPersonCam->updateTargetPos(conteiner2->getPos());
@@ -410,6 +420,9 @@ void game::update()
 
 void game::init()
 {
+	//backpackModel = new engine::Model("../res/assets/backpack/backpack.obj");
+	testModel = new engine::entity3D(currentRenderer, "../res/assets/backpack/backpack.obj");
+	testModel->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 	glm::vec3 camPos = { 0, 3, 2 };
 	glm::vec3 camView = { 0, -1, 0 };
 	glm::vec3 camUp = { 0, 1, 0 };
@@ -417,6 +430,13 @@ void game::init()
 	firstPersonCam = new engine::firstPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	thirdPersonCam = new engine::thirdPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	actualCam = firstPersonCam;
+
+	currentRenderer->shaderPro.use();
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+	model = glm::scale4(model, glm::vec3(10.0f, 10.0f, 10.0f));	// it's a bit too big for our scene, so scale it down
+	currentRenderer->shaderPro.setMat4("model", model);
+
 	//tileMap = new engine::tileMap(currentRenderer);
 
 	/*if (tileMap->importTileMap("../res/assets/tilemapreal.tmx"))
@@ -460,35 +480,35 @@ void game::init()
 	conteiner2->setPos(glm::vec3(0, 1, 3));
 	conteiner2->setScale(glm::vec3(2, 2, 2));
 	conteiner2->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
-
-	cubeEmerald = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::EMERALD);
-	cubeEmerald->setPos(glm::vec3(-3, 2, 0));
-	cubePearl = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
-	cubePearl->setPos(glm::vec3(-1, 2, 0));
-	cubeBronze = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::BRONZE);
-	cubeBronze->setPos(glm::vec3(1, 2, 0));
-	cubeGold = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::GOLD);
-	cubeGold->setPos(glm::vec3(3, 2, 0));
-	cubeCyanPlastic = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::CYAN_PLASTIC);
-	cubeCyanPlastic->setPos(glm::vec3(-3, 0.5f, 0));
-	cubeRedPlastic = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::RED_PLASTIC);
-	cubeRedPlastic->setPos(glm::vec3(-1, 0.5f, 0));
-	cubeGreenRubber = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::GREEN_RUBBER);
-	cubeGreenRubber->setPos(glm::vec3(1, 0.5f, 0));
-	cubeYellowRubber = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::YELLOW_RUBBER);
-	cubeYellowRubber->setPos(glm::vec3(3, 0.5f, 0));
-
+	////////////
+	////////////cubeEmerald = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::EMERALD);
+	////////////cubeEmerald->setPos(glm::vec3(-3, 2, 0));
+	////////////cubePearl = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
+	////////////cubePearl->setPos(glm::vec3(-1, 2, 0));
+	////////////cubeBronze = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::BRONZE);
+	////////////cubeBronze->setPos(glm::vec3(1, 2, 0));
+	////////////cubeGold = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::GOLD);
+	////////////cubeGold->setPos(glm::vec3(3, 2, 0));
+	////////////cubeCyanPlastic = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::CYAN_PLASTIC);
+	////////////cubeCyanPlastic->setPos(glm::vec3(-3, 0.5f, 0));
+	////////////cubeRedPlastic = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::RED_PLASTIC);
+	////////////cubeRedPlastic->setPos(glm::vec3(-1, 0.5f, 0));
+	////////////cubeGreenRubber = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::GREEN_RUBBER);
+	////////////cubeGreenRubber->setPos(glm::vec3(1, 0.5f, 0));
+	////////////cubeYellowRubber = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::YELLOW_RUBBER);
+	////////////cubeYellowRubber->setPos(glm::vec3(3, 0.5f, 0));
+	////////////
 	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
 	{
 		pointLight[i] = new engine::pointLight(currentRenderer, i);
 		pointLight[i]->setColor(glm::vec4(1, 1, 1, 1));
 		pointLight[i]->setPos(glm::vec3(-4 + 2 * i, 1, -3));
-
+	
 		pointLightBox[i] = new engine::shape(currentRenderer,engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
 		pointLightBox[i]->setScale(glm::vec3(0.5f, 0.5f, 0.5f));
 		pointLightBox[i]->setPos(pointLight[i]->getPos());
 	}
-
+	
 	pointLight[0]->setColor(glm::vec4(1, 0, 0, 1));
 	pointLight[1]->setColor(glm::vec4(0, 1, 0, 1));
 	pointLight[2]->setColor(glm::vec4(0, 0, 1, 1));
@@ -501,9 +521,9 @@ void game::init()
 	spotLightBox = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
 	spotLightBox->setScale(glm::vec3(0.5f, 0.5f, 0.5f));
 	spotLightBox->setPos(spotLight->getPos());
-
+	
 	selectedEntity = spotLight;
-
+	
 	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
 	floor->setScale(glm::vec3(10, 10, 1));
 	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
@@ -549,7 +569,7 @@ void game::init()
 	archer->setScale(32, 32, 1);
 	archer->setPos(-80, 20, 0);*/
 
-	changeClearColor(glm::vec4(0.5f, 0.5f, 1, 1));
+	///////changeClearColor(glm::vec4(0.5f, 0.5f, 1, 1));
 	//changeClearColor(glm::vec4(.25, .25, .5, 1));
 	//addCollider(archer, false);
 	//addCollider(awesomeface, false);
@@ -562,15 +582,15 @@ void game::init()
 
 void game::deInit()
 {
-	delete cubeEmerald;
-	delete cubePearl;
-	delete cubeBronze;
-	delete cubeGold;
-	delete cubeCyanPlastic;
-	delete cubeRedPlastic;
-	delete cubeGreenRubber;
-	delete cubeYellowRubber;
-
+	////////////delete cubeEmerald;
+	////////////delete cubePearl;
+	////////////delete cubeBronze;
+	////////////delete cubeGold;
+	////////////delete cubeCyanPlastic;
+	////////////delete cubeRedPlastic;
+	////////////delete cubeGreenRubber;
+	////////////delete cubeYellowRubber;
+	////////////
 	delete firstPersonCam;
 	delete thirdPersonCam;
 
@@ -583,9 +603,13 @@ void game::deInit()
 	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
 	{
 		delete pointLight[i];
+		delete pointLightBox[i];
 	}
 
 	delete directionalLight;
+
+	delete spotLight;
+	delete spotLightBox;
 
 	//archer->deinit();
 	//delete archer;

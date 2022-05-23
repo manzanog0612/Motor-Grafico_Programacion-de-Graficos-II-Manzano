@@ -23,8 +23,10 @@ private:
 	float rotationSpeed = 0;
 	float timeBetweenChanges = 0;
 	//engine::sprite* imageCampus;
+	
 	engine::sprite* floor;
 	engine::sprite* conteiner2;
+	engine::entity3D* testModel;
 	engine::pointLight* pointLight[AMOUNT_POINT_LIGHTS];
 	engine::shape* pointLightBox[AMOUNT_POINT_LIGHTS];
 	engine::directionalLight* directionalLight;
@@ -40,6 +42,7 @@ private:
 	engine::shape* cubeGreenRubber;
 	engine::shape* cubeYellowRubber;
 	engine::entity* selectedEntity;
+	engine::Model* backpackModel;
 	//engine::sprite* archer;
 	//engine::shape* triangle;
 	//engine::shape* triangle2;

@@ -1,0 +1,4 @@
+//COMPILADOR//$(SolutionDir)lib\glm;$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include;$(SolutionDir)src;$(SolutionDir)lib\assimp\include
+
+
+//VINCULADOR// $(SolutionDir)lib\GLFW\lib;$(SolutionDir)lib\GLEW\lib;$(SolutionDir)lib\assimp\lib
