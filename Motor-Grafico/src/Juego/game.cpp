@@ -6,6 +6,9 @@ game::game()
 	//imageCampus = nullptr;
 
 	testModel = nullptr;
+	sniper = nullptr;
+	testModel = nullptr;
+
 	conteiner2 = nullptr;
 	floor = nullptr;
 
@@ -21,7 +24,6 @@ game::game()
 	
 	cubePearl = nullptr;
 	cubeEmerald = nullptr;
-	backpackModel = nullptr;
 
 	//archer = nullptr;
 	//triangle = nullptr;
@@ -253,10 +255,8 @@ void game::update()
 	glm::vec3 front = glm::vec3(0, 0, -1);
 	glm::vec3 up = glm::vec3(0, 1, 0);
 	
-	float movementSpeed = 0.01f;
-	float rotationSpeed = 0.1f;
-	
-	bool managingDirectionalLight = true;
+	float movementSpeed = 0.1f;
+	float rotationSpeed = 1.f;
 	
 	front.y = 0;
 	
@@ -289,59 +289,47 @@ void game::update()
 	
 	if (isKeyPressed(ENGINE_KEY_I))
 	{
-		if (rotation.y > 0)
-		{
-			rotation.y -= engine::time::getDeltaTime() * rotationSpeed;
-	
-			rotation.y = rotation.y < 0 ? 0 : rotation.y;
-		}
+		rotation.y -= engine::time::getDeltaTime() * rotationSpeed;
 	}
 	else if (isKeyPressed(ENGINE_KEY_O))
 	{
-		if (rotation.y < 360)
-		{
-			rotation.y += engine::time::getDeltaTime() * rotationSpeed;
-	
-			rotation.y = rotation.y > 360 ? 360 : rotation.y;
-		}
+		rotation.y += engine::time::getDeltaTime() * rotationSpeed;
 	}
 	
 	if (isKeyPressed(ENGINE_KEY_K))
 	{
-		if (rotation.x > 0)
-		{
-			rotation.x -= engine::time::getDeltaTime() * rotationSpeed;
-	
-			rotation.x = rotation.x < 0 ? 0 : rotation.x;
-		}
+		rotation.x -= engine::time::getDeltaTime() * rotationSpeed;
 	}
 	else if (isKeyPressed(ENGINE_KEY_L))
 	{
-		if (rotation.x < 360)
-		{
-			rotation.x += engine::time::getDeltaTime() * rotationSpeed;
-	
-			rotation.x = rotation.x > 360 ? 360 : rotation.x;
-		}
+		rotation.x += engine::time::getDeltaTime() * rotationSpeed;
 	}
 	
-	if (isKeyDown(ENGINE_KEY_ENTER))
+	if (isKeyPressed(ENGINE_KEY_R))
 	{
-		managingDirectionalLight != managingDirectionalLight;
+		managingDirectionalLight = true;
+		pointLight[0]->setColor(glm::vec4(0, 0, 0, 1));
+	}
+	else if (isKeyPressed(ENGINE_KEY_T))
+	{
+		managingDirectionalLight = false;
+		pointLight[0]->setColor(glm::vec4(1, 0, 0, 1));
 	}
 	
 	entityPos += movement;
 	
-	//selectedEntity->setPos(entityPos);
-	testModel->setPos(entityPos);
+	selectedEntity->setPos(entityPos);
+	//testModel->setPos(entityPos);
 	
 	if (managingDirectionalLight)
 	{
-		directionalLight->setDirection(rotation, false);
+		testModel->setRot(testModel->getRot() + rotation);
+		//directionalLight->setDirection(rotation, false);
 	}
 	else
 	{
-		spotLight->setDirection(front, true);
+		testModel->setScale(testModel->getScale() + rotation);
+		//spotLight->setDirection(front, false);
 	}
 	
 	//camera movement
@@ -421,8 +409,9 @@ void game::update()
 void game::init()
 {
 	//backpackModel = new engine::Model("../res/assets/backpack/backpack.obj");
-	testModel = new engine::entity3D(currentRenderer, "../res/assets/backpack/backpack.obj");
+	testModel = new engine::entity3D(currentRenderer, "../res/assets/aa/Banantosaurus.obj");
 	testModel->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
+	testModel->setScale(glm::vec3(1, 2, 1));
 	glm::vec3 camPos = { 0, 3, 2 };
 	glm::vec3 camView = { 0, -1, 0 };
 	glm::vec3 camUp = { 0, 1, 0 };
@@ -500,29 +489,43 @@ void game::init()
 	////////////
 	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
 	{
-		pointLight[i] = new engine::pointLight(currentRenderer, i);
+		pointLight[i] = new engine::pointLight(currentRenderer);
 		pointLight[i]->setColor(glm::vec4(1, 1, 1, 1));
 		pointLight[i]->setPos(glm::vec3(-4 + 2 * i, 1, -3));
-	
+		
 		pointLightBox[i] = new engine::shape(currentRenderer,engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
 		pointLightBox[i]->setScale(glm::vec3(0.5f, 0.5f, 0.5f));
-		pointLightBox[i]->setPos(pointLight[i]->getPos());
+		pointLightBox[i]->setPos(glm::vec3(-4 + 2 * i, 1, -3));
+		
+		switch (i)
+		{
+		case 0:
+			pointLight[0]->setColor(glm::vec4(1, 0, 0, 1));
+			break;
+		case 1:
+			pointLight[1]->setColor(glm::vec4(0, 1, 0, 1));
+			break;
+		case 2:
+			pointLight[2]->setColor(glm::vec4(0, 0, 1, 1));
+			break;
+		case 3:
+			pointLight[3]->setColor(glm::vec4(1, 1, 1, 1));
+			break;
+		default:
+			break;
+		}
+
 	}
 	
-	pointLight[0]->setColor(glm::vec4(1, 0, 0, 1));
-	pointLight[1]->setColor(glm::vec4(0, 1, 0, 1));
-	pointLight[2]->setColor(glm::vec4(0, 0, 1, 1));
-	pointLight[3]->setColor(glm::vec4(1, 1, 1, 1));
-
 	directionalLight = new engine::directionalLight(currentRenderer);
 
 	spotLight = new engine::spotLight(currentRenderer);
 	spotLight->setPos({ 0,5,3 });
 	spotLightBox = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
 	spotLightBox->setScale(glm::vec3(0.5f, 0.5f, 0.5f));
-	spotLightBox->setPos(spotLight->getPos());
+	spotLightBox->setPos({ 0,5,3 });
 	
-	selectedEntity = spotLight;
+	selectedEntity = directionalLight;// spotLight;
 	
 	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
 	floor->setScale(glm::vec3(10, 10, 1));
@@ -610,6 +613,8 @@ void game::deInit()
 
 	delete spotLight;
 	delete spotLightBox;
+
+	delete testModel;
 
 	//archer->deinit();
 	//delete archer;

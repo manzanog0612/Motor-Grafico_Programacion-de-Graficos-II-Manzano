@@ -65,6 +65,9 @@ uniform float ambientStrength = 0.1;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
 uniform Material material;
+uniform int initializedPointLights = 0;
+uniform bool spotLightInitialized = false;
+uniform bool directionalLightInitialized = false;
 //uniform Light light;
 
 uniform DirLight dirLight;
@@ -122,12 +125,17 @@ void main()
     vec3 viewDir = normalize(viewPos - FragPos);
 
     // phase 1: Directional lighting
-    vec3 result = CalcDirLight(dirLight, norm, viewDir);
+    vec3 result = vec3(0.0f, 0.0f, 0.0f);
+
+    if (directionalLightInitialized)
+        result = CalcDirLight(dirLight, norm, viewDir);
     // phase 2: Point lights
-    for (int i = 0; i < NR_POINT_LIGHTS; i++)
+    for (int i = 0; i < (initializedPointLights < NR_POINT_LIGHTS ? initializedPointLights : NR_POINT_LIGHTS); i++)
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
     // phase 3: Spot light
-    result += CalcSpotLight(spotLight, norm, FragPos, viewDir);
+
+    if (spotLightInitialized)
+        result += CalcSpotLight(spotLight, norm, FragPos, viewDir);
 
     FragColor = vec4(result, 1.0);
     //FragColor = texture(material.diffuse1, TexCoord);

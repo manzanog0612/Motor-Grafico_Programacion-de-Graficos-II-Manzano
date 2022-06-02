@@ -22,11 +22,14 @@ private:
 	float t = 0;
 	float rotationSpeed = 0;
 	float timeBetweenChanges = 0;
+	bool managingDirectionalLight = true;
 	//engine::sprite* imageCampus;
 	
 	engine::sprite* floor;
 	engine::sprite* conteiner2;
 	engine::entity3D* testModel;
+	engine::entity3D* sniper;
+	engine::entity3D* dinosour;
 	engine::pointLight* pointLight[AMOUNT_POINT_LIGHTS];
 	engine::shape* pointLightBox[AMOUNT_POINT_LIGHTS];
 	engine::directionalLight* directionalLight;
@@ -42,7 +45,6 @@ private:
 	engine::shape* cubeGreenRubber;
 	engine::shape* cubeYellowRubber;
 	engine::entity* selectedEntity;
-	engine::Model* backpackModel;
 	//engine::sprite* archer;
 	//engine::shape* triangle;
 	//engine::shape* triangle2;

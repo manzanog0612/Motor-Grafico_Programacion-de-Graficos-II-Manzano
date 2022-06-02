@@ -7,9 +7,8 @@ namespace engine
 	{
 		
 	}
-	pointLight::pointLight(renderer* render, int index)
+	pointLight::pointLight(renderer* render)
 	{
-		this->index = index;
 		//
 		//if (lightsAmount == 4)
 		//{
@@ -60,6 +59,6 @@ namespace engine
 	void pointLight::processIndividualValues()
 	{
 		values.color = { getColor().r, getColor().g, getColor().b };
-		_renderer->processPointLight(constant, linear, quadratic, getPos(), values, index);
+		_renderer->processPointLight(constant, linear, quadratic, getPos(), values);
 	}
 }

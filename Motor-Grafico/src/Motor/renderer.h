@@ -68,7 +68,7 @@ namespace engine
 		void drawMesh(std::vector<myVertex> vertices, std::vector<unsigned int> indices, std::vector<myTexture> textures, unsigned int VAO);
 		void processLight(glm::vec3 lightColor, glm::vec3 lightPos);
 		void processDirectionalLight(glm::vec3 direction, Light light);
-		void processPointLight(float constant, float linear, float quadratic, glm::vec3 position, Light light, int index);
+		void processPointLight(float constant, float linear, float quadratic, glm::vec3 position, Light light);
 		void processSpotLight(glm::vec3 direction, float constant, float linear, float quadratic, glm::vec3 position, Light light, float cutOff, float outerCutOff);
 		void deleteBaseBuffer(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
 		void deleteExtraBuffer(unsigned int& buffer, int size);
@@ -90,6 +90,7 @@ namespace engine
 		Material GetMaterialData(MATERIAL material);
 		float lastTime = 0;
 		float ambientLight = 0.1f;
+		int pointLightIndex = 0;
 		window* currentWindow;
 		glm::vec4 clearColor;
 		glm::mat4 viewMatrix;

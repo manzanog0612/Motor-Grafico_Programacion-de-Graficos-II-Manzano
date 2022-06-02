@@ -7,13 +7,11 @@ namespace engine
 	{
 	public:
 		pointLight();
-		pointLight(renderer* render, int index);
+		pointLight(renderer* render);
 		~pointLight();
 		void setInitialValues() override;
 		void processIndividualValues() override;
 	private:
-		static int lightsAmount;
-		int index;
 		float constant;
 		float linear;
 		float quadratic;
