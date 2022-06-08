@@ -409,7 +409,7 @@ void game::update()
 void game::init()
 {
 	//backpackModel = new engine::Model("../res/assets/backpack/backpack.obj");
-	testModel = new engine::entity3D(currentRenderer, "../res/assets/aa/Banantosaurus.obj");
+	testModel = new engine::entity3D(currentRenderer, "../res/assets/backpack/backpack.obj");
 	testModel->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 	testModel->setScale(glm::vec3(1, 2, 1));
 	glm::vec3 camPos = { 0, 3, 2 };
