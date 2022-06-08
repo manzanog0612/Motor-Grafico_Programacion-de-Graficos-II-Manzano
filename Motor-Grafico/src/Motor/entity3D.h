@@ -4,7 +4,6 @@
 #include <vector>
 #include "renderer.h"
 #include "modelImporter.h"
-#include "myMesh.h"
 #include <string>
 
 namespace engine
@@ -18,6 +17,6 @@ namespace engine
 		void draw();
 		void deinit();
 	private:
-		vector<myMesh> meshes;
+		vector<Mesh> meshes;
 	};
 }

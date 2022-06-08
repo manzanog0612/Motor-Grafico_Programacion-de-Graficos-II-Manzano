@@ -1,7 +1,6 @@
 #pragma once
 #include "Model.h"
 #include "renderer.h"
-#include "myMesh.h"
 #include <list>
 
 namespace engine
@@ -12,9 +11,6 @@ namespace engine
 	public:
 		modelImporter();
 		~modelImporter();
-		static vector<myMesh> loadModel(std::string path);
-	private:
-		static myVertex convertType(Vertex vertex);
-		static myTexture convertType(Texture texture);
+		static vector<Mesh> loadModel(std::string path);
 	};
 }

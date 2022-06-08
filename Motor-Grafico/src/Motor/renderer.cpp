@@ -104,7 +104,7 @@ namespace engine
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
 	}
-	void renderer::drawMesh(std::vector<myVertex> vertices, std::vector<unsigned int> indices, std::vector<myTexture> textures, unsigned int VAO)
+	void renderer::drawMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, unsigned int VAO)
 	{
 		unsigned int diffuseNr = 1;
 		unsigned int specularNr = 1;
