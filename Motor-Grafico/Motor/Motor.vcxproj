@@ -33,6 +33,7 @@
     <ClCompile Include="..\src\Motor\Mesh.cpp" />
     <ClCompile Include="..\src\Motor\Model.cpp" />
     <ClCompile Include="..\src\Motor\modelImporter.cpp" />
+    <ClCompile Include="..\src\Motor\node.cpp" />
     <ClCompile Include="..\src\Motor\pointLight.cpp" />
     <ClCompile Include="..\src\Motor\renderer.cpp" />
     <ClCompile Include="..\src\Motor\shader.cpp" />
@@ -99,6 +100,7 @@
     <ClInclude Include="..\src\Motor\Mesh.h" />
     <ClInclude Include="..\src\Motor\Model.h" />
     <ClInclude Include="..\src\Motor\modelImporter.h" />
+    <ClInclude Include="..\src\Motor\node.h" />
     <ClInclude Include="..\src\Motor\pointLight.h" />
     <ClInclude Include="..\src\Motor\renderer.h" />
     <ClInclude Include="..\src\Motor\shader.h" />

@@ -1,5 +1,6 @@
 #include "game.h"
 #include <iostream>
+#include "Motor/modelImporter.h"
 
 game::game()
 {
@@ -409,9 +410,10 @@ void game::update()
 void game::init()
 {
 	//backpackModel = new engine::Model("../res/assets/backpack/backpack.obj");
-	testModel = new engine::entity3D(currentRenderer, "../res/assets/backpack/backpack.obj");
-	testModel->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
-	testModel->setScale(glm::vec3(1, 2, 1));
+	testModel = new engine::entity3D(currentRenderer, "../res/assets/h/model.obj");
+	//engine::modelImporter::chargeEntity3D("../res/assets/h/model.obj", *testModel);
+	testModel->setRot(glm::vec3(0, 0, 0));
+	testModel->setScale(glm::vec3(1, 1, 1));
 	glm::vec3 camPos = { 0, 3, 2 };
 	glm::vec3 camView = { 0, -1, 0 };
 	glm::vec3 camUp = { 0, 1, 0 };

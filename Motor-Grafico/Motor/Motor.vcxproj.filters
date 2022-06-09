@@ -121,6 +121,9 @@
     <ClCompile Include="..\src\Motor\entity3D.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Motor\node.cpp">
+      <Filter>MyImporter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\assimp\include\ai_assert.h">
@@ -317,6 +320,9 @@
     </ClInclude>
     <ClInclude Include="..\src\Motor\entity3D.h">
       <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\node.h">
+      <Filter>MyImporter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
