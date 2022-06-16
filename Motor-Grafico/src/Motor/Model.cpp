@@ -31,21 +31,40 @@ namespace engine
 		}
 		directory = path.substr(0, path.find_last_of('/'));
 
-		processNode(scene->mRootNode, scene);
+		baseNode = new node();
+		processNode(scene->mRootNode, scene, baseNode);
+		baseNode->setParent(NULL);
 	}
-	void Model::processNode(aiNode* node, const aiScene* scene)
+	void Model::processNode(aiNode* node, const aiScene* scene, engine::node* myNode)
 	{
 		// process all the node's meshes (if any)
+		vector<Mesh> nodeMeshes;
+
 		for (unsigned int i = 0; i < node->mNumMeshes; i++)
 		{
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-			meshes.push_back(processMesh(mesh, scene));
+			Mesh newMesh = processMesh(mesh, scene);
+			meshes.push_back(newMesh);
+			nodeMeshes.push_back(newMesh);
 		}
+
+		myNode->setMeshes(nodeMeshes);
+		myNode->setName(node->mName.C_Str());
+		//engine::node* myNode = new engine::node();
+
 		// then do the same for each of its children
+		vector<engine::node*> childrenNodes;
+
 		for (unsigned int i = 0; i < node->mNumChildren; i++)
 		{
-			processNode(node->mChildren[i], scene);
+			engine::node* myNodeChild = new engine::node();
+			processNode(node->mChildren[i], scene, myNodeChild);
+
+			myNodeChild->setParent(myNode);
+			childrenNodes.push_back(myNodeChild);
 		}
+
+		myNode->setChildren(childrenNodes);
 	}
 	Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	{

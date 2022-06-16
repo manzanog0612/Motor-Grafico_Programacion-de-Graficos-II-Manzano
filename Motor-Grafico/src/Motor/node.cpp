@@ -1,4 +1,5 @@
 #include "node.h"
+#include <list>
 
 namespace engine
 {
@@ -7,25 +8,18 @@ namespace engine
 
 	}
 
-	node::node(renderer* render, std::string path)
-	{
-		_renderer = render;
-
-		//meshes = modelImporter::chargeEntity3D(path);
-	}
-
 	node::~node()
 	{
 	}
 
-	vector<node>* node::getChildren()
+	vector<node*> node::getChildren()
 	{
 		return children;
 	}
 
 	int node::getChildrenAmount()
 	{
-		return children->size();
+		return children.size();
 	}
 
 	void node::draw()
@@ -34,8 +28,43 @@ namespace engine
 
 		for (int i = 0; i < meshes.size(); i++)
 		{
-				_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO);
+			_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO);
 		}
+
+		for (int i = 0; i < getChildrenAmount(); i++)
+		{
+			children[i]->draw();
+		}
+	}
+
+	void node::setRenderer(renderer* renderer)
+	{
+		_renderer = renderer;
+
+		for (int i = 0; i < getChildrenAmount(); i++)
+		{
+			children[i]->setRenderer(renderer);
+		}
+	}
+
+	void node::setMeshes(vector<Mesh> meshes)
+	{
+		this->meshes = meshes;
+	}
+
+	void node::setName(string name)
+	{
+		this->name = name;
+	}
+
+	void node::setChildren(vector<node*> children)
+	{
+		this->children = children;
+	}
+
+	void node::setParent(node* parent)
+	{
+		this->parent = parent;
 	}
 
 	void node::deinit()

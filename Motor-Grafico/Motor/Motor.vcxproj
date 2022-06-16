@@ -26,7 +26,6 @@
     <ClCompile Include="..\src\Motor\directionalLight.cpp" />
     <ClCompile Include="..\src\Motor\entity.cpp" />
     <ClCompile Include="..\src\Motor\entity2D.cpp" />
-    <ClCompile Include="..\src\Motor\entity3D.cpp" />
     <ClCompile Include="..\src\Motor\firstPersonCamera.cpp" />
     <ClCompile Include="..\src\Motor\input.cpp" />
     <ClCompile Include="..\src\Motor\light.cpp" />
@@ -91,7 +90,6 @@
     <ClInclude Include="..\src\Motor\directionalLight.h" />
     <ClInclude Include="..\src\Motor\entity.h" />
     <ClInclude Include="..\src\Motor\entity2D.h" />
-    <ClInclude Include="..\src\Motor\entity3D.h" />
     <ClInclude Include="..\src\Motor\exports.h" />
     <ClInclude Include="..\src\Motor\firstPersonCamera.h" />
     <ClInclude Include="..\src\Motor\input.h" />

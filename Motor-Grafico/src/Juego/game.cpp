@@ -7,8 +7,6 @@ game::game()
 	//imageCampus = nullptr;
 
 	testModel = nullptr;
-	sniper = nullptr;
-	testModel = nullptr;
 
 	conteiner2 = nullptr;
 	floor = nullptr;
@@ -410,8 +408,8 @@ void game::update()
 void game::init()
 {
 	//backpackModel = new engine::Model("../res/assets/backpack/backpack.obj");
-	testModel = new engine::entity3D(currentRenderer, "../res/assets/h/model.obj");
-	//engine::modelImporter::chargeEntity3D("../res/assets/h/model.obj", *testModel);
+	testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/h/model.obj");
+	testModel->setRenderer(currentRenderer);
 	testModel->setRot(glm::vec3(0, 0, 0));
 	testModel->setScale(glm::vec3(1, 1, 1));
 	glm::vec3 camPos = { 0, 3, 2 };

@@ -27,9 +27,7 @@ private:
 	
 	engine::sprite* floor;
 	engine::sprite* conteiner2;
-	engine::entity3D* testModel;
-	engine::entity3D* sniper;
-	engine::entity3D* dinosour;
+	engine::node* testModel;
 	engine::pointLight* pointLight[AMOUNT_POINT_LIGHTS];
 	engine::shape* pointLightBox[AMOUNT_POINT_LIGHTS];
 	engine::directionalLight* directionalLight;

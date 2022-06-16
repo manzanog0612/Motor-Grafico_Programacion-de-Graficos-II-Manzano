@@ -1,9 +1,11 @@
-#pragma once
+#ifndef NODE_H
+#define NODE_H
+
 #include "exports.h"
 #include "entity.h"
 #include <vector>
 #include "renderer.h"
-#include "modelImporter.h"
+//#include "modelImporter.h"
 #include <string>
 
 namespace engine
@@ -12,15 +14,27 @@ namespace engine
 	{
 	public:
 		node();
-		node(renderer* render, std::string path);
 		~node();
-		vector<node>* getChildren();
+
+		vector<node*> getChildren();
 		int getChildrenAmount();
+
+		void setRenderer(renderer* render);
+		void setMeshes(vector<Mesh> meshes);
+		void setName(string name);
+		void setChildren(vector<node*> children);
+		void setParent(node* parent);
+
 		void draw();
 		void deinit();
 	private:
 		vector<Mesh> meshes;
-		vector<node>* children;
+
+		vector<node*> children;
 		node* parent;
+
+		string name;
 	};
 }
+
+#endif

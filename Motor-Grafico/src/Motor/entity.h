@@ -30,7 +30,7 @@ namespace engine
 		void invertX();
 		void invertY();
 		void invertZ();
-		
+
 		glm::vec4 getColor();
 		glm::vec3 getPos();
 		glm::vec3 getRot();
