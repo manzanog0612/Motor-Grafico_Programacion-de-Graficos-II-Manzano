@@ -322,6 +322,7 @@ void game::update()
 	
 	if (managingDirectionalLight)
 	{
+
 		testModel->getChildren()[0]->setRot(testModel->getChildren()[0]->getRot() + rotation);
 		//directionalLight->setDirection(rotation, false);
 		testModel->getChildren()[0]->setPos(entityPos);
@@ -411,10 +412,11 @@ void game::update()
 void game::init()
 {
 	//backpackModel = new engine::Model("../res/assets/backpack/backpack.obj");
-	testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/mario-obj/Mario.obj");
+	testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/aaa/aaaaaxd.fbx");
+	//testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/mario-obj/Mario.obj");
 	testModel->setRenderer(currentRenderer);
 	testModel->setRot(glm::vec3(0, 0, 0));
-	testModel->setScale(glm::vec3(1, 1, 1));
+	testModel->setScale(glm::vec3(1, 1, 0.1f));
 	glm::vec3 camPos = { 0, 3, 2 };
 	glm::vec3 camView = { 0, -1, 0 };
 	glm::vec3 camUp = { 0, 1, 0 };
@@ -617,6 +619,7 @@ void game::deInit()
 	delete spotLight;
 	delete spotLightBox;
 
+	testModel->deinit();
 	delete testModel;
 
 	//archer->deinit();

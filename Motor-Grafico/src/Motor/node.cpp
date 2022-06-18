@@ -78,5 +78,10 @@ namespace engine
 
 	void node::deinit()
 	{
+		for (int i = 0; i < getChildrenAmount(); i++)
+		{
+			children[i]->deinit();
+			delete children[i];
+		}
 	}
 }
