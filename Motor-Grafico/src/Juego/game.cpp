@@ -254,7 +254,7 @@ void game::update()
 	glm::vec3 front = glm::vec3(0, 0, -1);
 	glm::vec3 up = glm::vec3(0, 1, 0);
 	
-	float movementSpeed = 0.1f;
+	float movementSpeed = 0.01f;
 	float rotationSpeed = 1.f;
 	
 	front.y = 0;
@@ -317,18 +317,21 @@ void game::update()
 	
 	entityPos += movement;
 	
-	selectedEntity->setPos(entityPos);
-	//testModel->setPos(entityPos);
+	//selectedEntity->setPos(entityPos);
+	//testModel->getChildren()[0]->setPos(entityPos);
 	
 	if (managingDirectionalLight)
 	{
-		testModel->setRot(testModel->getRot() + rotation);
+		testModel->getChildren()[0]->setRot(testModel->getChildren()[0]->getRot() + rotation);
 		//directionalLight->setDirection(rotation, false);
+		testModel->getChildren()[0]->setPos(entityPos);
 	}
 	else
 	{
-		testModel->setScale(testModel->getScale() + rotation);
+		testModel->setRot(testModel->getRot() + rotation);
+		//testModel->setScale(testModel->getScale() + rotation);
 		//spotLight->setDirection(front, false);
+		testModel->setPos(entityPos);
 	}
 	
 	//camera movement
@@ -408,7 +411,7 @@ void game::update()
 void game::init()
 {
 	//backpackModel = new engine::Model("../res/assets/backpack/backpack.obj");
-	testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/h/model.obj");
+	testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/mario-obj/Mario.obj");
 	testModel->setRenderer(currentRenderer);
 	testModel->setRot(glm::vec3(0, 0, 0));
 	testModel->setScale(glm::vec3(1, 1, 1));

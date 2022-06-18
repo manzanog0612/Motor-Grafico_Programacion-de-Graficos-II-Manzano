@@ -24,8 +24,16 @@ namespace engine
 
 	void node::draw()
 	{
-		_renderer->setMVP(model);
-
+		if (parent == NULL)
+		{
+			_renderer->setMVP(model);
+			setLocalModel(model);
+		}
+		else
+		{
+			_renderer->setMVP(localModel);
+		}
+		
 		for (int i = 0; i < meshes.size(); i++)
 		{
 			_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO);
@@ -33,6 +41,7 @@ namespace engine
 
 		for (int i = 0; i < getChildrenAmount(); i++)
 		{
+			children[i]->setLocalModel(localModel * children[i]->getModel());
 			children[i]->draw();
 		}
 	}

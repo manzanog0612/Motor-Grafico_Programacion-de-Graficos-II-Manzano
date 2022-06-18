@@ -27,6 +27,7 @@ namespace engine
 		void setScale(float x, float y, float z);
 		void setColor(glm::vec4 color);
 		void setColor(float r, float g, float b, float a);
+		void setLocalModel(glm::mat4 localModel);
 		void invertX();
 		void invertY();
 		void invertZ();
@@ -35,6 +36,9 @@ namespace engine
 		glm::vec3 getPos();
 		glm::vec3 getRot();
 		glm::vec3 getScale();
+
+		glm::mat4 getModel();
+		glm::mat4 getLocalModel();
 
 		virtual void draw() = 0;
 
@@ -46,6 +50,7 @@ namespace engine
 		glm::vec3 v3scale;
 
 		glm::mat4 model;
+		glm::mat4 localModel;
 
 		glm::mat4 translate;
 		glm::mat4 rotateX;

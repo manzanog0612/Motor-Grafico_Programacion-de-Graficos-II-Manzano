@@ -7,6 +7,7 @@ namespace engine
 	{
 		_renderer = NULL;
 		model = glm::mat4(1.0f);
+		localModel = glm::mat4(1.0f);
 		translate = glm::mat4(1.0f);
 		rotateX = glm::mat4(1.0f);
 		rotateY = glm::mat4(1.0f);
@@ -103,6 +104,10 @@ namespace engine
 	{
 		color = glm::vec4(r, g, b, a);
 	}
+	void entity::setLocalModel(glm::mat4 localModel)
+	{
+		this->localModel = localModel;
+	}
 	glm::vec4 entity::getColor()
 	{
 		return color;
@@ -118,6 +123,14 @@ namespace engine
 	glm::vec3 entity::getScale()
 	{
 		return v3scale;
+	}
+	glm::mat4 entity::getModel()
+	{
+		return model;
+	}
+	glm::mat4 entity::getLocalModel()
+	{
+		return localModel;
 	}
 	void entity::invertX()
 	{
