@@ -2,6 +2,8 @@
 #include <iostream>
 #include "Motor/modelImporter.h"
 
+std::string nodeName = "pCube1";
+
 game::game()
 {
 	//imageCampus = nullptr;
@@ -227,26 +229,32 @@ void game::update()
 	if (isKeyPressed(ENGINE_KEY_0))
 	{
 		selectedEntity = pointLight[0];
+		nodeName = "pCube1";
 	}
 	else if (isKeyPressed(ENGINE_KEY_1))
 	{
 		selectedEntity = pointLight[1];
+		nodeName = "pCube2";
 	}
 	else if (isKeyPressed(ENGINE_KEY_2))
 	{
 		selectedEntity = pointLight[2];
+		nodeName = "group1";
 	}
 	else if (isKeyPressed(ENGINE_KEY_3))
 	{
 		selectedEntity = pointLight[3];
+		nodeName = "pCylinder1";
 	}
 	else if (isKeyPressed(ENGINE_KEY_4))
 	{
 		selectedEntity = spotLight;
+		nodeName = "pCylinder2";
 	}
 	else if (isKeyPressed(ENGINE_KEY_5))
 	{
 		selectedEntity = conteiner2;
+		nodeName = "pCylinder3";
 	}
 	
 	glm::vec3 rotation = glm::vec3(0, 0, 0);
@@ -322,10 +330,18 @@ void game::update()
 	
 	if (managingDirectionalLight)
 	{
+		engine::node* child = testModel->getChildWithName(nodeName);
 
-		testModel->getChildren()[0]->setRot(testModel->getChildren()[0]->getRot() + rotation);
+		if (child != NULL)
+		{
+			std::cout << "childFound" << std::endl;
+			child->setRot(child->getRot() + rotation);
+			child->setPos(entityPos);
+		}
+
+		//testModel->getChildren()[testModel->getChildrenAmount() - 1]->setRot(testModel->getChildren()[testModel->getChildrenAmount() - 1]->getRot() + rotation);
 		//directionalLight->setDirection(rotation, false);
-		testModel->getChildren()[0]->setPos(entityPos);
+		//testModel->getChildren()[testModel->getChildrenAmount() - 1]->setPos(entityPos);
 	}
 	else
 	{
@@ -412,11 +428,11 @@ void game::update()
 void game::init()
 {
 	//backpackModel = new engine::Model("../res/assets/backpack/backpack.obj");
-	testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/aaa/aaaaaxd.fbx");
+	testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/j/tank2.fbx");
 	//testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/mario-obj/Mario.obj");
 	testModel->setRenderer(currentRenderer);
 	testModel->setRot(glm::vec3(0, 0, 0));
-	testModel->setScale(glm::vec3(1, 1, 0.1f));
+	testModel->setScale(glm::vec3(1, 1, 1));
 	glm::vec3 camPos = { 0, 3, 2 };
 	glm::vec3 camView = { 0, -1, 0 };
 	glm::vec3 camUp = { 0, 1, 0 };

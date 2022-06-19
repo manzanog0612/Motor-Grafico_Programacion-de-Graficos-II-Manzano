@@ -22,7 +22,7 @@ private:
 	float t = 0;
 	float rotationSpeed = 0;
 	float timeBetweenChanges = 0;
-	bool managingDirectionalLight = true;
+	bool managingDirectionalLight = false;
 	//engine::sprite* imageCampus;
 	
 	engine::sprite* floor;

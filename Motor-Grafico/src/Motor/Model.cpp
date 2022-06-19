@@ -7,6 +7,7 @@ namespace engine
 {
 	void Model::Draw(Shader& shader, glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix)
 	{
+		
 		unsigned int modelLoc = glGetUniformLocation(shader.ID, "model");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
@@ -46,14 +47,15 @@ namespace engine
 			Mesh newMesh = processMesh(mesh, scene);
 			meshes.push_back(newMesh);
 			nodeMeshes.push_back(newMesh);
-		}
-
+		}//_$AssimpFbx$_RotationPivot pCube1
+		
 		myNode->setMeshes(nodeMeshes);
 		myNode->setName(node->mName.C_Str());
 		//engine::node* myNode = new engine::node();
 
 		// then do the same for each of its children
 		vector<engine::node*> childrenNodes;
+		childrenNodes.clear();
 
 		for (unsigned int i = 0; i < node->mNumChildren; i++)
 		{
@@ -64,7 +66,8 @@ namespace engine
 			childrenNodes.push_back(myNodeChild);
 		}
 
-		myNode->setChildren(childrenNodes);
+		if (childrenNodes.size() > 0)
+			myNode->setChildren(childrenNodes);
 	}
 	Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	{

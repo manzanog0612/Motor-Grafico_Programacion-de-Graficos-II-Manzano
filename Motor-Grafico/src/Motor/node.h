@@ -25,6 +25,10 @@ namespace engine
 		void setChildren(vector<node*> children);
 		void setParent(node* parent);
 
+		string getName();
+
+		node* getChildWithName(string name);
+
 		void draw();
 		void deinit();
 	private:

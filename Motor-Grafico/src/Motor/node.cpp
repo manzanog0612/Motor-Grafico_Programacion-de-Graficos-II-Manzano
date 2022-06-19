@@ -71,6 +71,34 @@ namespace engine
 		this->children = children;
 	}
 
+	string node::getName()
+	{
+		return name;
+	}
+
+	node* node::getChildWithName(string name)
+	{
+		for (int i = 0; i < getChildrenAmount(); i++)
+		{
+			if (children[i]->getName() == name)
+			{
+				return children[i];
+			}
+		}
+
+		for (int i = 0; i < getChildrenAmount(); i++)
+		{
+			node* node = children[i]->getChildWithName(name);
+
+			if (node != NULL)
+			{
+				return node;
+			}
+		}
+
+		return NULL;
+	}
+
 	void node::setParent(node* parent)
 	{
 		this->parent = parent;
