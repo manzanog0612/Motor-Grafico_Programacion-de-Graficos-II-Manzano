@@ -428,7 +428,7 @@ void game::update()
 void game::init()
 {
 	//backpackModel = new engine::Model("../res/assets/backpack/backpack.obj");
-	testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/j/tanke.fbx");
+	testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/j/tanke2.fbx");
 	//testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/mario-obj/Mario.obj");
 	testModel->setRenderer(currentRenderer);
 	testModel->setRot(glm::vec3(0, 0, 0));
