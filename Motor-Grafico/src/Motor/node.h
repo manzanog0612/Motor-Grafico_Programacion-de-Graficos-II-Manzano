@@ -5,8 +5,11 @@
 #include "entity.h"
 #include <vector>
 #include "renderer.h"
+#include "shape.h"
 //#include "modelImporter.h"
 #include <string>
+
+#define AMOUNT_BOUNDS 8
 
 namespace engine
 {
@@ -25,6 +28,8 @@ namespace engine
 		void setChildren(vector<node*> children);
 		void setParent(node* parent);
 
+		float getRandomNumber(float min, float max);
+
 		string getName();
 
 		node* getChildWithName(string name);
@@ -38,6 +43,12 @@ namespace engine
 		node* parent;
 
 		string name;
+
+		void setAABB(vector<Mesh> meshes);
+
+		vector<glm::vec3> aabb;
+
+		shape* aabbShapes[AMOUNT_BOUNDS];
 	};
 }
 

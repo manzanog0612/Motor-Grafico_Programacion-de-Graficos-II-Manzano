@@ -13,6 +13,7 @@ namespace engine
 		shape(renderer* render, SHAPE shape, MATERIAL material);
 		~shape();
 		void draw() override;
+		void draw(glm::mat4 model);
 	private:
 		//void setShader();
 		unsigned int bufferPosUVs = 0;

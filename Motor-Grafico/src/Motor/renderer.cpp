@@ -104,10 +104,14 @@ namespace engine
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
 	}
-	void renderer::drawMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, unsigned int VAO)
+	void renderer::drawMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, unsigned int VAO, glm::vec3 color)
 	{
 		unsigned int diffuseNr = 1;
 		unsigned int specularNr = 1;
+
+		unsigned int colorLoc = glGetUniformLocation(shaderPro.ID, "color");
+		glUniform3fv(colorLoc, 1, glm::value_ptr(color));
+
 		for (unsigned int i = 0; i < textures.size(); i++)
 		{
 			glActiveTexture(GL_TEXTURE0 + i); // activate proper texture unit before binding

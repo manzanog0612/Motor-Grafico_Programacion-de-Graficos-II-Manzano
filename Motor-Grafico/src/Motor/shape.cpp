@@ -94,4 +94,15 @@ namespace engine
 		_renderer->setShaderInfo(color, textures, material);
 		_renderer->drawRequest(model, VAO, _vertices);
 	}
+
+	void shape::draw(glm::mat4 model)
+	{
+		glBindTexture(GL_TEXTURE_2D, texture->ID);
+
+		unsigned int textures[] = { texture->ID, texture->ID };
+
+		_renderer->shaderPro.use();
+		_renderer->setShaderInfo(color, textures, material);
+		_renderer->drawRequest(model, VAO, _vertices);
+	}
 }

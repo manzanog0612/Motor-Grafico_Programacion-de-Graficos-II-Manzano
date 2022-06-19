@@ -441,11 +441,11 @@ void game::init()
 	thirdPersonCam = new engine::thirdPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	actualCam = firstPersonCam;
 
-	currentRenderer->shaderPro.use();
-	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-	model = glm::scale4(model, glm::vec3(10.0f, 10.0f, 10.0f));	// it's a bit too big for our scene, so scale it down
-	currentRenderer->shaderPro.setMat4("model", model);
+	//currentRenderer->shaderPro.use();
+	//glm::mat4 model = glm::mat4(1.0f);
+	//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+	//model = glm::scale4(model, glm::vec3(10.0f, 10.0f, 10.0f));	// it's a bit too big for our scene, so scale it down
+	//currentRenderer->shaderPro.setMat4("model", model);
 
 	//tileMap = new engine::tileMap(currentRenderer);
 

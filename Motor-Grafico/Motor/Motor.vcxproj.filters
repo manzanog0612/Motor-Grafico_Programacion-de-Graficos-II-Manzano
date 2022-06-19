@@ -121,6 +121,9 @@
     <ClCompile Include="..\src\Motor\node.cpp">
       <Filter>MyImporter</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Motor\aabb.cpp">
+      <Filter>Miscellaneous</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\assimp\include\ai_assert.h">
@@ -317,6 +320,9 @@
     </ClInclude>
     <ClInclude Include="..\src\Motor\node.h">
       <Filter>MyImporter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\aabb.h">
+      <Filter>Miscellaneous</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

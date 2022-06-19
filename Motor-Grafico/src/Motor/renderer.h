@@ -54,7 +54,7 @@ namespace engine
 		void setShaderInfo(glm::vec4 color, unsigned int textures[], MATERIAL material);
 		void drawRequest(glm::mat4 model, unsigned int VAO, unsigned int vertices);
 		void setMVP(glm::mat4 modelMatrix);
-		void drawMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, unsigned int VAO);
+		void drawMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, unsigned int VAO, glm::vec3 color);
 		void processLight(glm::vec3 lightColor, glm::vec3 lightPos);
 		void processDirectionalLight(glm::vec3 direction, Light light);
 		void processPointLight(float constant, float linear, float quadratic, glm::vec3 position, Light light);
