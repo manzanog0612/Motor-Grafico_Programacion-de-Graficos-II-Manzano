@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Motor/modelImporter.h"
 
-std::string nodeName = "pCube1";
+std::string nodeName = "RootNode";
 
 game::game()
 {
@@ -229,7 +229,7 @@ void game::update()
 	if (isKeyPressed(ENGINE_KEY_0))
 	{
 		selectedEntity = pointLight[0];
-		nodeName = "pCube1";
+		nodeName = "RootNode";
 	}
 	else if (isKeyPressed(ENGINE_KEY_1))
 	{
@@ -254,7 +254,7 @@ void game::update()
 	else if (isKeyPressed(ENGINE_KEY_5))
 	{
 		selectedEntity = conteiner2;
-		nodeName = "pCylinder3";
+		nodeName = "pCylinder4";
 	}
 	
 	glm::vec3 rotation = glm::vec3(0, 0, 0);
@@ -262,7 +262,7 @@ void game::update()
 	glm::vec3 front = glm::vec3(0, 0, -1);
 	glm::vec3 up = glm::vec3(0, 1, 0);
 	
-	float movementSpeed = 0.01f;
+	float movementSpeed = 0.001f;
 	float rotationSpeed = 1.f;
 	
 	front.y = 0;
@@ -428,7 +428,7 @@ void game::update()
 void game::init()
 {
 	//backpackModel = new engine::Model("../res/assets/backpack/backpack.obj");
-	testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/j/tank2.fbx");
+	testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/j/tanke.fbx");
 	//testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/mario-obj/Mario.obj");
 	testModel->setRenderer(currentRenderer);
 	testModel->setRot(glm::vec3(0, 0, 0));

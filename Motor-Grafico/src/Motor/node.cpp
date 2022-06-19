@@ -78,6 +78,11 @@ namespace engine
 
 	node* node::getChildWithName(string name)
 	{
+		if (this->name == name)
+		{
+			return this;
+		}
+
 		for (int i = 0; i < getChildrenAmount(); i++)
 		{
 			if (children[i]->getName() == name)
