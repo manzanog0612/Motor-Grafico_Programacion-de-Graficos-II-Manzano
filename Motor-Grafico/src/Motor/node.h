@@ -6,6 +6,7 @@
 #include <vector>
 #include "renderer.h"
 #include "shape.h"
+#include "camera.h"
 //#include "modelImporter.h"
 #include <string>
 
@@ -28,19 +29,27 @@ namespace engine
 		void setChildren(vector<node*> children);
 		void setParent(node* parent);
 
-		float getRandomNumber(float min, float max);
-
 		string getName();
 
+		float getRandomNumber(float min, float max);
 		node* getChildWithName(string name);
 
+		bool isOnOrForwardPlan(Plan plan);
+		bool isInsideCamera(Frustum frustum);
+
+		void checkIfDrawAsChild(Frustum frustum);
+		void setTransformations(vector<node*> *lastChilds);
 		void draw();
+		void drawAsParent(Frustum frustum);
+		void drawAsChild();
 		void deinit();
 	private:
 		vector<Mesh> meshes;
 
 		vector<node*> children;
 		node* parent;
+
+		vector<node*> *lastChilds;
 
 		string name;
 
@@ -49,6 +58,8 @@ namespace engine
 		vector<glm::vec3> aabb;
 
 		shape* aabbShapes[AMOUNT_BOUNDS];
+
+		bool drawnThisFrame;
 	};
 }
 

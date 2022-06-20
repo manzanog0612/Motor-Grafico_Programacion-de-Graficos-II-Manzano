@@ -1,5 +1,8 @@
 #include "camera.h"
 #include "renderer.h"
+#include <GLM/glm.hpp>
+#include "GLM/gtc/matrix_transform.hpp"
+#include "GLM/gtc/type_ptr.hpp"
 
 namespace engine
 {
@@ -29,6 +32,8 @@ namespace engine
 		viewMatrix = glm::lookAt(pos, look, up);
 		currentRenderer->setViewMatrix(viewMatrix);
 		setCameraPosToRenderer();
+
+		updateCameraVectors();
 	}
 	void camera::moveCamera(glm::vec3 movePosition)
 	{
@@ -91,6 +96,7 @@ namespace engine
 		case engine::PROJECTION::PERSPECTIVE:
 			//fov - aspect ratio - near != 0 (porque si no genera problemas) - far
 			projectionMatrix = glm::perspective(glm::radians(45.0f), (float)currentRenderer->getCurrentWindow()->getWidth() / (float)currentRenderer->getCurrentWindow()->getHeight(), 0.1f, 500.0f);
+			createFrustumFromCamera((float)currentRenderer->getCurrentWindow()->getWidth() / (float)currentRenderer->getCurrentWindow()->getHeight(), glm::radians(45.0f), 0.1f, 500.0f);
 			break;
 		default:
 			projectionMatrix = glm::ortho(-2.0f, +2.0f, -1.5f, +1.5f, 0.1f, 500.0f);
@@ -99,11 +105,11 @@ namespace engine
 	}
 	glm::vec3 camera::getFront()
 	{
-		return look;
+		return Front;
 	}
 	glm::vec3 camera::getUp()
 	{
-		return up;
+		return Up;
 	}
 	glm::vec3 camera::getPos()
 	{
@@ -126,4 +132,30 @@ namespace engine
 		currentRenderer->setViewPosition(pos);
 	}
 
+	void camera::updateCameraVectors()
+	{
+		// calculate the new Front vector
+		glm::vec3 front;
+		front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+		front.y = sin(glm::radians(pitch));
+		front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+		Front = glm::normalize(front);
+		// also re-calculate the Right and Up vector
+		Right = glm::normalize(glm::cross(Front, { 0,1,0 }));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+		Up = glm::normalize(glm::cross(Right, Front));
+	}
+
+	void camera::createFrustumFromCamera(float aspect, float fovY, float zNear, float zFar)
+	{
+		const float halfVSide = zFar * tanf(fovY * .5f);
+		const float halfHSide = halfVSide * aspect;
+		const glm::vec3 frontMultFar = zFar * Front;
+
+		frustum.nearFace = { Front + zNear * Front, Front };
+		frustum.farFace = { getPos() + frontMultFar, Front };
+		frustum.rightFace = { getPos(),	glm::cross(Up,frontMultFar + Right * halfHSide) };
+		frustum.leftFace = { getPos(), glm::cross(frontMultFar - Right * halfHSide, Up) };
+		frustum.topFace = { getPos(), glm::cross(Right, frontMultFar - Up * halfVSide) };
+		frustum.bottomFace = { getPos(), glm::cross(frontMultFar + Up * halfVSide, Right) };
+	}
 }

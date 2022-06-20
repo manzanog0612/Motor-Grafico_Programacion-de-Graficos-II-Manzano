@@ -101,7 +101,7 @@ void game::draw()
 	//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
 	//model = glm::scale4(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 	//backpackModel->Draw(currentRenderer->shaderPro, model, currentRenderer->GetViewMatrix(), currentRenderer->GetProjMatrix());
-	testModel->draw();
+	testModel->drawAsParent(actualCam->getFrustrum());
 	//triangle->draw();
 	//triangle2->draw();
 	//triangle3->draw();

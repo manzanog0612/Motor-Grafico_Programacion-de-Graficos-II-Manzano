@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CAMERA_H
+#define CAMERA_H
+
 #include "exports.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -10,6 +12,39 @@ namespace engine
 	enum class MOVEMENT_TYPE { FPS, THIRD_PERSON };
 	enum class MOVEMENT_DIRECTION { FRONT, BACK, RIGHT, LEFT};
 	class renderer;
+
+	struct Plan
+	{
+		// unit vector
+		glm::vec3 normal = { 0.f, 1.f, 0.f };
+
+		// distance from origin to the nearest point in the plan
+		float     distance = 0.f;
+
+		Plan() = default;
+
+		Plan(const glm::vec3 & p1, const glm::vec3 & norm)
+			: normal(glm::normalize(norm)),
+			distance(glm::dot(normal, p1))
+		{}
+
+		float getSignedDistanceToPlan(glm::vec3 point)
+		{
+			return glm::dot(normal, point) - distance;
+		}
+	};
+
+	struct Frustum
+	{
+		Plan topFace;
+		Plan bottomFace;
+
+		Plan rightFace;
+		Plan leftFace;
+
+		Plan farFace;
+		Plan nearFace;
+	};
 
 	class ENGINE_API camera
 	{
@@ -25,6 +60,7 @@ namespace engine
 		glm::vec3 getFront();
 		glm::vec3 getUp();
 		glm::vec3 getPos();
+		Frustum getFrustrum() { return frustum; };
 		//void setCameraType(MOVEMENT_TYPE movementType);
 		//MOVEMENT_TYPE getCameraType();
 		~camera();
@@ -32,13 +68,19 @@ namespace engine
 		void setProjectionMatrix();
 		void setViewMatrix();
 		void setCameraPosToRenderer();
+		void updateCameraVectors();
+		void createFrustumFromCamera(float aspect, float fovY, float zNear, float zFar);
 		glm::vec3 getDirectionByMovement(glm::vec2 mouseMovement);
 		glm::mat4 viewMatrix;
 		glm::mat4 projectionMatrix;
 		glm::vec3 pos; //donde esta parada
 		glm::vec3 look; //a donde esta mirando
 		glm::vec3 up; //el up de la camara
+		glm::vec3 Front;
+		glm::vec3 Right;
+		glm::vec3 Up;
 		renderer* currentRenderer;
+		Frustum frustum;
 		//MOVEMENT_TYPE movementType;
 		float yaw;
 		float pitch;
@@ -47,12 +89,5 @@ namespace engine
 	//EJE X PITCH
 	//EJE Y YAW
 	//EJE Z ROLL
-
-	// Camara en primera persona (FPS) y en tercera persona (Over the shoulder)
-
-	//local - mundo - vista - perspectiva
-
-	// Tarea
-	// 1) hacer camara funcional
-	// 2) fps y 3ra persona
 }
+#endif

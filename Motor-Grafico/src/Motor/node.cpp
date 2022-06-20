@@ -1,11 +1,14 @@
 #include "node.h"
 //#include <list>
+
+
 #include <random>
 namespace engine
 {
 	node::node()
 	{
-		
+		drawnThisFrame = false;
+		lastChilds = new vector<node*>();
 	}
 
 	node::~node()
@@ -22,7 +25,7 @@ namespace engine
 		return children.size();
 	}
 
-	void node::draw()
+	void node::setTransformations(vector<node*> *lastChilds)
 	{
 		if (parent == NULL)
 		{
@@ -33,16 +36,18 @@ namespace engine
 		{
 			_renderer->setMVP(localModel);
 		}
-		
-		for (int i = 0; i < meshes.size(); i++)
+
+		if (getChildrenAmount() == 0)
 		{
-			_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
+			lastChilds->push_back(this);
 		}
+
+		drawnThisFrame = false;
 
 		for (int i = 0; i < getChildrenAmount(); i++)
 		{
 			children[i]->setLocalModel(localModel * children[i]->getModel());
-			children[i]->draw();
+			children[i]->setTransformations(lastChilds);
 		}
 
 		if (aabb.size() > 0)
@@ -60,6 +65,64 @@ namespace engine
 			{
 				aabbShapes[i]->setLocalModel(localModel * aabbShapes[i]->getModel());
 				aabbShapes[i]->draw(aabbShapes[i]->getLocalModel());
+			}
+		}
+	}
+
+	void node::draw()
+	{		
+		if (drawnThisFrame)
+		{
+			return;
+		}
+
+		for (int i = 0; i < meshes.size(); i++)
+		{
+			_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
+		}
+
+		drawnThisFrame = true;
+
+		//for (int i = 0; i < getChildrenAmount(); i++)
+		//{
+		//	children[i]->draw();
+		//}
+	}
+
+	void node::drawAsParent(Frustum frustum)
+	{
+		lastChilds->clear();
+
+		setTransformations(lastChilds);
+
+		for (int i = 0; i < lastChilds->size(); i++)
+		{
+			//lastChilds->at(i)
+			lastChilds->at(i)->checkIfDrawAsChild(frustum);
+		}
+	}
+
+	void node::drawAsChild()
+	{
+		draw();
+
+		if (parent != NULL)
+		{
+			parent->drawAsChild();
+		}
+	}
+
+	void node::checkIfDrawAsChild(Frustum frustum)
+	{
+		if (isInsideCamera(frustum))
+		{
+			drawAsChild();
+		}
+		else
+		{
+			if (parent != NULL)
+			{
+				parent->checkIfDrawAsChild(frustum);
 			}
 		}
 	}
@@ -139,6 +202,33 @@ namespace engine
 		}
 
 		return NULL;
+	}
+
+	bool node::isOnOrForwardPlan(Plan plan)
+	{
+		// Compute the projection interval radius of b onto L(t) = b.c + t * p.n
+		if (aabb.size() < 1)
+		{
+			return true;
+		}
+
+		glm::vec3 extents = glm::vec3(aabb[1].x - getPos().x, aabb[1].y - getPos().y, aabb[1].z - getPos().z);
+
+		const float r = extents.x * std::abs(plan.normal.x) +
+			extents.y * std::abs(plan.normal.y) + extents.z * std::abs(plan.normal.z);
+
+		return -r <= plan.getSignedDistanceToPlan(getPos());
+	}
+
+	bool node::isInsideCamera(Frustum frustum)
+	{
+		return (meshes.size() > 0 && 
+				isOnOrForwardPlan(frustum.leftFace) &&
+				isOnOrForwardPlan(frustum.rightFace) &&
+				isOnOrForwardPlan(frustum.topFace) &&
+				isOnOrForwardPlan(frustum.bottomFace) &&
+				isOnOrForwardPlan(frustum.nearFace) &&
+				isOnOrForwardPlan(frustum.farFace));
 	}
 
 	void node::setParent(node* parent)
