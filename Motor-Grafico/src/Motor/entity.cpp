@@ -108,6 +108,30 @@ namespace engine
 	{
 		this->localModel = localModel;
 	}
+	void entity::setModel(glm::mat4 model)
+	{
+		float magnitude0 = glm::sqrt(model[0].x * model[0].x + model[0].y * model[0].y + model[0].z * model[0].z);
+		float magnitude1 = glm::sqrt(model[1].x * model[1].x + model[1].y * model[1].y + model[1].z * model[1].z);
+		float magnitude2 = glm::sqrt(model[2].x * model[2].x + model[2].y * model[2].y + model[2].z * model[2].z);
+
+		setPos(model[3]);
+		model[3].x = 0;
+		model[3].y = 0;
+		model[3].z = 0;
+		setScale(glm::vec3(magnitude0, magnitude1, magnitude2));
+
+		float theta1 = glm::atan(model[2].y, model[2].z);
+		float c2 = glm::sqrt(model[0].x * model[0].x + model[1].x * model[1].x);
+		float theta2 = glm::atan(-model[2].x, c2);
+		float s1 = glm::sin(theta1);
+		float c1 = glm::cos(theta1);
+		float theta3 = glm::atan(s1 * model[0].z - c1 * model[0].y, c1 * model[1].y - s1 * model[1].z);
+		glm::vec3 rotation = { -theta1, -theta2, -theta3 };
+
+		setRot(rotation);
+
+		this->model = model;
+	}
 	glm::vec4 entity::getColor()
 	{
 		return color;

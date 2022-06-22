@@ -69,6 +69,18 @@ namespace engine
 		}
 	}
 
+	void node::addBoundsToAABB(vector<glm::vec3> childAABB)
+	{
+		localAABB = aabb;
+
+		if (childAABB[0].x < localAABB[0].x) localAABB[0].x = childAABB[0].x;
+		if (childAABB[1].x > localAABB[1].x) localAABB[1].x = childAABB[1].x;
+		if (childAABB[0].y < localAABB[0].y) localAABB[0].y = childAABB[0].y;
+		if (childAABB[1].y > localAABB[1].y) localAABB[1].y = childAABB[1].y;
+		if (childAABB[0].z < localAABB[0].z) localAABB[0].z = childAABB[0].z;
+		if (childAABB[1].z > localAABB[1].z) localAABB[1].z = childAABB[1].z;
+	}
+
 	void node::draw()
 	{		
 		if (drawnThisFrame)
@@ -174,6 +186,11 @@ namespace engine
 	string node::getName()
 	{
 		return name;
+	}
+
+	vector<glm::vec3> node::getAABB()
+	{
+		return aabb;
 	}
 
 	node* node::getChildWithName(string name)

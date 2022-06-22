@@ -25,6 +25,7 @@ namespace engine
 		void setColor(glm::vec4 color);
 		void setColor(float r, float g, float b, float a);
 		void setLocalModel(glm::mat4 localModel);
+		void setModel(glm::mat4 model);
 		void invertX();
 		void invertY();
 		void invertZ();

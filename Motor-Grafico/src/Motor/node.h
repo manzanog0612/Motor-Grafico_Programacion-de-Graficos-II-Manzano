@@ -30,6 +30,7 @@ namespace engine
 		void setParent(node* parent);
 
 		string getName();
+		vector<glm::vec3> getAABB(); 
 
 		float getRandomNumber(float min, float max);
 		node* getChildWithName(string name);
@@ -39,6 +40,7 @@ namespace engine
 
 		void checkIfDrawAsChild(Frustum frustum);
 		void setTransformations(vector<node*> *lastChilds);
+		void addBoundsToAABB(vector<glm::vec3> childAABB);
 		void draw();
 		void drawAsParent(Frustum frustum);
 		void drawAsChild();
@@ -56,6 +58,7 @@ namespace engine
 		void setAABB(vector<Mesh> meshes);
 
 		vector<glm::vec3> aabb;
+		vector<glm::vec3> localAABB;
 
 		shape* aabbShapes[AMOUNT_BOUNDS];
 
