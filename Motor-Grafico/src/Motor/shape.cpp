@@ -92,10 +92,10 @@ namespace engine
 
 		_renderer->shaderPro.use();
 		_renderer->setShaderInfo(color, textures, material);
-		_renderer->drawRequest(model, VAO, _vertices);
+		_renderer->drawRequest(worldModel, VAO, _vertices);
 	}
 
-	void shape::draw(glm::mat4 model)
+	void shape::draw(glm::mat4 worldModel)
 	{
 		glBindTexture(GL_TEXTURE_2D, texture->ID);
 
@@ -103,6 +103,6 @@ namespace engine
 
 		_renderer->shaderPro.use();
 		_renderer->setShaderInfo(color, textures, material);
-		_renderer->drawRequest(model, VAO, _vertices);
+		_renderer->drawRequest(worldModel, VAO, _vertices);
 	}
 }

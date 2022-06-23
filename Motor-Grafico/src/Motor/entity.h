@@ -20,15 +20,17 @@ namespace engine
 		void setPos(float x, float y, float z);
 		void setRot(glm::vec3 rot);
 		void setRot(float x, float y, float z);
-		void setScale(glm::vec3 scale);
+		void setScale(glm::vec3 localScale);
 		void setScale(float x, float y, float z);
 		void setColor(glm::vec4 color);
 		void setColor(float r, float g, float b, float a);
-		void setLocalModel(glm::mat4 localModel);
-		void setModel(glm::mat4 model);
+		void setWorldModelWithParentModel(glm::mat4 localModel);
+		void setLocalModel(glm::mat4 worldModel);
 		void invertX();
 		void invertY();
 		void invertZ();
+
+		void UseLocalMatrix();
 
 		glm::vec4 getColor();
 		glm::vec3 getPos();
@@ -43,18 +45,19 @@ namespace engine
 	protected:
 		renderer* _renderer;
 
-		glm::vec3 v3pos;
-		glm::vec3 v3rot;
-		glm::vec3 v3scale;
+		glm::vec3 v3localPos;
+		glm::vec3 v3localRot;
+		glm::vec3 v3localScale;
 
-		glm::mat4 model;
+		glm::mat4 worldModel;
 		glm::mat4 localModel;
+		glm::mat4 parentModel;
 
-		glm::mat4 translate;
-		glm::mat4 rotateX;
-		glm::mat4 rotateY;
-		glm::mat4 rotateZ;
-		glm::mat4 scale;
+		glm::mat4 localTranslate;
+		glm::mat4 localRotateX;
+		glm::mat4 localRotateY;
+		glm::mat4 localRotateZ;
+		glm::mat4 localScale;
 
 		glm::vec4 color;
 
@@ -65,6 +68,8 @@ namespace engine
 		void setRotX(float x);
 		void setRotY(float y);
 		void setRotZ(float z);
+
+		bool useLocalMatrix;
 	};
 }
 #endif // !ENTITY

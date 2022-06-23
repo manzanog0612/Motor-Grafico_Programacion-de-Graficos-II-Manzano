@@ -29,49 +29,70 @@ namespace engine
 	{
 		if (parent == NULL)
 		{
-			_renderer->setMVP(model);
-			setLocalModel(model);
+			_renderer->setMVP(localModel);
+			//setWorldModelWithParentModel(localModel);
 		}
 		else
 		{
+			//_renderer->setMVP(localModel);
 			_renderer->setMVP(localModel);
 		}
 
-		if (getChildrenAmount() == 0)
-		{
-			lastChilds->push_back(this);
-		}
+		//if (getChildrenAmount() == 0)
+		//{
+		//	lastChilds->push_back(this);
+		//}
 
-		drawnThisFrame = false;
+		//drawnThisFrame = false;
 
 		for (int i = 0; i < getChildrenAmount(); i++)
 		{
-			children[i]->setLocalModel(localModel * children[i]->getModel());
+			children[i]->setWorldModelWithParentModel(localModel);
 			children[i]->setTransformations(lastChilds);
+			//addBoundsToAABB(children[i]->getLocalAABB());
 		}
 
-		if (aabb.size() > 0)
-		{
-			aabbShapes[0]->setPos(glm::vec3(aabb[0].x, aabb[1].y, aabb[1].z));
-			aabbShapes[1]->setPos(glm::vec3(aabb[1].x, aabb[1].y, aabb[1].z));
-			aabbShapes[2]->setPos(glm::vec3(aabb[0].x, aabb[0].y, aabb[1].z));
-			aabbShapes[3]->setPos(glm::vec3(aabb[1].x, aabb[0].y, aabb[1].z));
-			aabbShapes[4]->setPos(glm::vec3(aabb[0].x, aabb[1].y, aabb[0].z));
-			aabbShapes[5]->setPos(glm::vec3(aabb[1].x, aabb[1].y, aabb[0].z));
-			aabbShapes[6]->setPos(glm::vec3(aabb[0].x, aabb[0].y, aabb[0].z));
-			aabbShapes[7]->setPos(glm::vec3(aabb[1].x, aabb[0].y, aabb[0].z));
-
-			for (int i = 0; i < AMOUNT_BOUNDS; i++)
-			{
-				aabbShapes[i]->setLocalModel(localModel * aabbShapes[i]->getModel());
-				aabbShapes[i]->draw(aabbShapes[i]->getLocalModel());
-			}
-		}
+		//if (localAABB.size() > 0)
+		//{
+		//	aabbShapes[0]->setPos(glm::vec3(localAABB[0].x, localAABB[1].y, localAABB[1].z));
+		//	aabbShapes[1]->setPos(glm::vec3(localAABB[1].x, localAABB[1].y, localAABB[1].z));
+		//	aabbShapes[2]->setPos(glm::vec3(localAABB[0].x, localAABB[0].y, localAABB[1].z));
+		//	aabbShapes[3]->setPos(glm::vec3(localAABB[1].x, localAABB[0].y, localAABB[1].z));
+		//	aabbShapes[4]->setPos(glm::vec3(localAABB[0].x, localAABB[1].y, localAABB[0].z));
+		//	aabbShapes[5]->setPos(glm::vec3(localAABB[1].x, localAABB[1].y, localAABB[0].z));
+		//	aabbShapes[6]->setPos(glm::vec3(localAABB[0].x, localAABB[0].y, localAABB[0].z));
+		//	aabbShapes[7]->setPos(glm::vec3(localAABB[1].x, localAABB[0].y, localAABB[0].z));
+		//
+		//	for (int i = 0; i < AMOUNT_BOUNDS; i++)
+		//	{
+		//		aabbShapes[i]->setLocalModel(localModel * aabbShapes[i]->getModel());
+		//		aabbShapes[i]->draw(aabbShapes[i]->getLocalModel());
+		//	}
+		//}
 	}
 
 	void node::addBoundsToAABB(vector<glm::vec3> childAABB)
 	{
-		localAABB = aabb;
+		if (childAABB.size() < 1)
+		{
+			return;
+		}
+		else if (localAABB.size() < 1)
+		{
+			localAABB.clear();
+			localAABB.push_back(childAABB[0]);
+			localAABB.push_back(childAABB[1]);
+
+			aabb.clear();
+			aabb.push_back(childAABB[0]);
+			aabb.push_back(childAABB[1]);
+
+			return;
+		}
+
+		localAABB.clear();
+		localAABB.push_back(aabb[0]);
+		localAABB.push_back(aabb[1]);
 
 		if (childAABB[0].x < localAABB[0].x) localAABB[0].x = childAABB[0].x;
 		if (childAABB[1].x > localAABB[1].x) localAABB[1].x = childAABB[1].x;
@@ -83,34 +104,36 @@ namespace engine
 
 	void node::draw()
 	{		
-		if (drawnThisFrame)
-		{
-			return;
-		}
+		//if (drawnThisFrame)
+		//{
+		//	return;
+		//}
 
 		for (int i = 0; i < meshes.size(); i++)
 		{
 			_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
 		}
 
-		drawnThisFrame = true;
+		//drawnThisFrame = true;
 
-		//for (int i = 0; i < getChildrenAmount(); i++)
-		//{
-		//	children[i]->draw();
-		//}
+		for (int i = 0; i < getChildrenAmount(); i++)
+		{
+			children[i]->draw();
+		}
 	}
 
 	void node::drawAsParent(Frustum frustum)
 	{
-		lastChilds->clear();
+		//lastChilds->clear();
 
 		setTransformations(lastChilds);
 
+		draw();
 		for (int i = 0; i < lastChilds->size(); i++)
 		{
+			
 			//lastChilds->at(i)
-			lastChilds->at(i)->checkIfDrawAsChild(frustum);
+			//lastChilds->at(i)->checkIfDrawAsChild(frustum);
 		}
 	}
 
@@ -188,9 +211,9 @@ namespace engine
 		return name;
 	}
 
-	vector<glm::vec3> node::getAABB()
+	vector<glm::vec3> node::getLocalAABB()
 	{
-		return aabb;
+		return localAABB;
 	}
 
 	node* node::getChildWithName(string name)
@@ -278,6 +301,9 @@ namespace engine
 				if (meshes[i].vertices[j].Position.z > aabb[1].z) aabb[1].z = meshes[i].vertices[j].Position.z;
 			}
 		}
+
+		localAABB.push_back(aabb[0]);
+		localAABB.push_back(aabb[1]);
 	}
 
 	void node::deinit()

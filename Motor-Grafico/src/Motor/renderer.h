@@ -52,7 +52,7 @@ namespace engine
 		void bindBaseBufferRequest(unsigned int VAO, unsigned int VBO, unsigned int EBO, float* vertices, unsigned int sizeOfVertices, unsigned int* indices, unsigned int sizeOfIndices);
 		void bindExtraBuffer(unsigned int buffer, float* data, unsigned int sizeOfData, unsigned int bufferType);
 		void setShaderInfo(glm::vec4 color, unsigned int textures[], MATERIAL material);
-		void drawRequest(glm::mat4 model, unsigned int VAO, unsigned int vertices);
+		void drawRequest(glm::mat4 worldModel, unsigned int VAO, unsigned int vertices);
 		void setMVP(glm::mat4 modelMatrix);
 		void drawMesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, unsigned int VAO, glm::vec3 color);
 		void processLight(glm::vec3 lightColor, glm::vec3 lightPos);

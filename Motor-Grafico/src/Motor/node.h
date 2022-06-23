@@ -30,7 +30,7 @@ namespace engine
 		void setParent(node* parent);
 
 		string getName();
-		vector<glm::vec3> getAABB(); 
+		vector<glm::vec3> getLocalAABB(); 
 
 		float getRandomNumber(float min, float max);
 		node* getChildWithName(string name);
