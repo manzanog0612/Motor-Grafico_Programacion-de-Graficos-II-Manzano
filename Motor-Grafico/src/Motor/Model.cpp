@@ -31,10 +31,14 @@ namespace engine
 			return;
 		}
 		directory = path.substr(0, path.find_last_of('/'));
-
-		baseNode = new node();
-		processNode(scene->mRootNode, scene, baseNode);
-		baseNode->setParent(NULL);
+		//if (path[path.size() - 3] == 'f' && path[path.size() - 2] == 'b' && path[path.size() - 1] == 'x')
+		//{
+			baseNode = new node();
+			processNode(scene->mRootNode, scene, baseNode);
+			baseNode->setParent(NULL);
+		//}
+		//else
+		//{ }
 	}
 	void Model::processNode(aiNode* node, const aiScene* scene, engine::node* myNode)
 	{
@@ -59,7 +63,7 @@ namespace engine
 		mat[0].z = node->mTransformation.a3; mat[1].z = node->mTransformation.b3; mat[2].z = node->mTransformation.c3; mat[3].z = node->mTransformation.d3;
 		mat[0].w = node->mTransformation.a4; mat[1].w = node->mTransformation.b4; mat[2].w = node->mTransformation.c4; mat[3].w = node->mTransformation.d4;
 
-		myNode->setLocalModel(mat);
+		//myNode->setLocalModel(mat);
 
 		// then do the same for each of its children
 		vector<engine::node*> childrenNodes;

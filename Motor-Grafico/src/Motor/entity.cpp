@@ -35,11 +35,12 @@ namespace engine
 	{
 		if (useLocalMatrix)
 		{
-			localModel = parentModel * localTranslate * localRotateX * localRotateY * localRotateZ * localScale;
+			localModel = localTranslate * localRotateY * localRotateX * localRotateZ * localScale;
+			worldModel = parentModel * localModel;
 		}
 		else
 		{
-			worldModel = localTranslate * localRotateX * localRotateY * localRotateZ * localScale;
+			worldModel = localTranslate * localRotateY * localRotateX * localRotateZ * localScale;
 		}
 	}
 	void entity::setPos(glm::vec3 pos)
@@ -118,9 +119,8 @@ namespace engine
 	{
 		this->parentModel = parentModel;
 
-		localModel = parentModel * localModel;
-
-		setLocalModel(localModel);
+		updateModelMatrix();
+		//setLocalModel(parentModel * localModel);
 
 		//this->localModel = parentModel;
 	}

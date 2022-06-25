@@ -38,6 +38,9 @@ namespace engine
 		bool isOnOrForwardPlan(Plan plan);
 		bool isInsideCamera(Frustum frustum);
 
+		void dontDraw();
+		void drawDebug();
+
 		void checkIfDrawAsChild(Frustum frustum);
 		void setTransformations(vector<node*> *lastChilds);
 		void addBoundsToAABB(vector<glm::vec3> childAABB);
@@ -63,6 +66,7 @@ namespace engine
 		shape* aabbShapes[AMOUNT_BOUNDS];
 
 		bool drawnThisFrame;
+		bool drawFirstParent;
 	};
 }
 

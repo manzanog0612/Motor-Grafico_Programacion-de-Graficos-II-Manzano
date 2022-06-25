@@ -255,6 +255,7 @@ void game::update()
 	{
 		selectedEntity = conteiner2;
 		nodeName = "pCylinder4";
+		
 	}
 	
 	glm::vec3 rotation = glm::vec3(0, 0, 0);
@@ -262,7 +263,7 @@ void game::update()
 	glm::vec3 front = glm::vec3(0, 0, -1);
 	glm::vec3 up = glm::vec3(0, 1, 0);
 	
-	float movementSpeed = 0.001f;
+	float movementSpeed = 0.01f;
 	float rotationSpeed = 1.f;
 	
 	front.y = 0;
@@ -324,6 +325,8 @@ void game::update()
 	}
 	
 	entityPos += movement;
+
+	cout << "x = " << entityPos.x << " y = " << entityPos.y << " z = " << entityPos.z << endl;
 	
 	//selectedEntity->setPos(entityPos);
 	//testModel->getChildren()[0]->setPos(entityPos);
@@ -546,7 +549,9 @@ void game::init()
 	spotLightBox->setScale(glm::vec3(0.5f, 0.5f, 0.5f));
 	spotLightBox->setPos({ 0,5,3 });
 	
-	selectedEntity = directionalLight;// spotLight;
+	selectedEntity = spotLight;
+
+	//entityPos = { 0,5,3 };
 	
 	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
 	floor->setScale(glm::vec3(10, 10, 1));
