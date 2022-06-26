@@ -23,7 +23,6 @@ private:
 	float rotationSpeed = 0;
 	float timeBetweenChanges = 0;
 	bool managingDirectionalLight = false;
-	//engine::sprite* imageCampus;
 	
 	engine::sprite* floor;
 	engine::sprite* conteiner2;
@@ -33,7 +32,6 @@ private:
 	engine::directionalLight* directionalLight;
 	engine::spotLight* spotLight;
 	engine::shape* spotLightBox;
-	//engine::pointLight* lightSourse;
 	engine::shape* cubeEmerald;
 	engine::shape* cubePearl;
 	engine::shape* cubeBronze;
@@ -45,9 +43,6 @@ private:
 	engine::entity* selectedEntity;
 	//engine::sprite* archer;
 	//engine::shape* triangle;
-	//engine::shape* triangle2;
-	//engine::shape* triangle3;
-	//engine::shape* quad;
 	engine::camera* actualCam;
 	engine::firstPersonCamera* firstPersonCam;
 	engine::thirdPersonCamera* thirdPersonCam;

@@ -120,9 +120,6 @@ namespace engine
 		this->parentModel = parentModel;
 
 		updateModelMatrix();
-		//setLocalModel(parentModel * localModel);
-
-		//this->localModel = parentModel;
 	}
 	void entity::setLocalModel(glm::mat4 localModel)
 	{

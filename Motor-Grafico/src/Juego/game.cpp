@@ -6,8 +6,6 @@ std::string nodeName = "RootNode";
 bool scale = false;
 game::game()
 {
-	//imageCampus = nullptr;
-
 	testModel = nullptr;
 
 	conteiner2 = nullptr;
@@ -28,9 +26,6 @@ game::game()
 
 	//archer = nullptr;
 	//triangle = nullptr;
-	//triangle2 = nullptr;
-	//triangle3 = nullptr;
-	//quad = nullptr;
 	actualCam = nullptr;
 	//tileMap = nullptr;
 	colors[0] = glm::vec4(0, 0, 0, 0);
@@ -65,27 +60,9 @@ game::~game()
 void game::draw()
 {
 	//tileMap->draw();
-	//imageCampus->draw();
-
-	//for (short i = 0; i < 6; i++)
-	//{
-	//	container[i]->draw();
-	//}
-	//awesomeface->draw();
 	floor->draw();
 	conteiner2->draw();
-	////////////////////
-	////////////////////cubeEmerald->draw();
-	////////////////////cubePearl->draw();
-	////////////////////cubeBronze->draw();
-	////////////////////cubeGold->draw();
-	////////////////////cubeCyanPlastic->draw();
-	////////////////////cubeRedPlastic->draw();
-	////////////////////cubeGreenRubber->draw();
-	////////////////////cubeYellowRubber->draw();
-	////////////////////conteiner2->draw();
-	////////////////////
-	
+
 	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
 	{
 		pointLight[i]->draw();
@@ -96,17 +73,9 @@ void game::draw()
 	spotLightBox->draw();
 	directionalLight->draw();
 
-	//currentRenderer->shaderPro.use();
-	//glm::mat4 model = glm::mat4(1.0f);
-	//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-	//model = glm::scale4(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-	//backpackModel->Draw(currentRenderer->shaderPro, model, currentRenderer->GetViewMatrix(), currentRenderer->GetProjMatrix());
 	testModel->drawAsParent();
+
 	//triangle->draw();
-	//triangle2->draw();
-	//triangle3->draw();
-	//quad->draw();
-	
 	//archer->draw();
 }
 
@@ -114,33 +83,8 @@ void game::update()
 {
 	engine::OcclusionCulling::Update();
 	/*t += engine::time::getDeltaTime();
-	if(t < timeBetweenChanges)
-	{
-		imageCampus->setColor(lerp(imageCampus->getColor(), nextColor, t));
-	}
-	else
-	{
-		t = 0;
-	
-		currentColorIndex++;
-		if (currentColorIndex == colorsArraySize)
-		{
-			currentColorIndex = 0;
-		}
-		nextColor = colors[currentColorIndex];
-	}
-	if(isKeyPressed(ENGINE_KEY_R))
-	{
-		float rot = imageCampus->getRot().y + rotationSpeed * engine::time::getDeltaTime();
-		imageCampus->setRot(glm::vec3(0, rot, 0));
-	}
-	if (isKeyPressed(ENGINE_KEY_T))
-	{
-		float rot = imageCampus->getRot().y - rotationSpeed * engine::time::getDeltaTime();
-		imageCampus->setRot(glm::vec3(0, rot, 0));
-	}*/
 
-	/*if (isKeyPressed(ENGINE_KEY_W) && isKeyPressed(ENGINE_KEY_A))
+	if (isKeyPressed(ENGINE_KEY_W) && isKeyPressed(ENGINE_KEY_A))
 	{
 		glm::vec3 pos = archer->getPos();
 		archer->setPos(pos.x - engine::time::getDeltaTime() * runSpeed / 2, pos.y + engine::time::getDeltaTime() * runSpeed / 2, pos.z);
@@ -191,38 +135,6 @@ void game::update()
 	else
 	{
 		archer->stopAllAnimations();
-	}*/
-
-	/*if (isKeyPressed(ENGINE_KEY_LEFT))
-	{
-		glm::vec3 movement = { engine::time::getDeltaTime() * -cameraSpeed, 0, 0 };
-		cam->moveCamera(movement);
-	}
-	else if (isKeyPressed(ENGINE_KEY_RIGHT))
-	{
-		glm::vec3 movement = { engine::time::getDeltaTime() * cameraSpeed, 0, 0 };
-		cam->moveCamera(movement);
-	}
-	if (isKeyPressed(ENGINE_KEY_UP))
-	{
-		glm::vec3 movement = { 0, engine::time::getDeltaTime() * cameraSpeed , 0 };
-		cam->moveCamera(movement);
-	}
-	else if (isKeyPressed(ENGINE_KEY_DOWN))
-	{
-		glm::vec3 movement = { 0, engine::time::getDeltaTime() * -cameraSpeed , 0 };
-		cam->moveCamera(movement);
-	}
-	else if (isKeyPressed(ENGINE_KEY_U))
-	{
-		glm::vec3 movement = { 0, 0, engine::time::getDeltaTime() * cameraSpeed };
-		cam->moveCamera(movement);
-	}
-	else if (isKeyPressed(ENGINE_KEY_I))
-	{
-		
-		glm::vec3 movement = { 0, 0, engine::time::getDeltaTime() * -cameraSpeed };
-		cam->moveCamera(movement);
 	}*/
 
 	//box movement
@@ -339,7 +251,6 @@ void game::update()
 	//cout << "x = " << entityPos.x << " y = " << entityPos.y << " z = " << entityPos.z << endl;
 	
 	//selectedEntity->setPos(entityPos);
-	//testModel->getChildren()[0]->setPos(entityPos);
 	
 	if (managingDirectionalLight)
 	{
@@ -409,7 +320,6 @@ void game::update()
 	{
 		thirdPersonCam->updateTargetPos(conteiner2->getPos());
 	}
-	//std::cout << "x: " << front.x << " - y: " << front.y << " - z: " << front.z << std::endl;
 
 	//spotLight->setDirection(actualCam->getFront());
 	//if (isKeyDown(ENGINE_KEY_ENTER))
@@ -450,16 +360,14 @@ void game::update()
 
 void game::init()
 {
-	//backpackModel = new engine::Model("../res/assets/backpack/backpack.obj");
 	testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/j/tanke2.fbx");
-	//testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/mario-obj/Mario.obj");
 	testModel->setRenderer(currentRenderer);
 	testModel->setRot(glm::vec3(0, 0, 0));
 	testModel->setScale(glm::vec3(1, 1, 1));
+
 	glm::vec3 camPos = { 0, 3, 2 };
 	glm::vec3 camView = { 0, -1, 0 };
 	glm::vec3 camUp = { 0, 1, 0 };
-	//renderer* currentRenderer, glm::vec3 position, glm::vec3 lookPosition, glm::vec3 upVector, PROJECTION projectionType
 	firstPersonCam = new engine::firstPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	thirdPersonCam = new engine::thirdPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	actualCam = firstPersonCam;
@@ -514,24 +422,7 @@ void game::init()
 	conteiner2->setPos(glm::vec3(0, 1, 3));
 	conteiner2->setScale(glm::vec3(2, 2, 2));
 	conteiner2->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
-	////////////
-	////////////cubeEmerald = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::EMERALD);
-	////////////cubeEmerald->setPos(glm::vec3(-3, 2, 0));
-	////////////cubePearl = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
-	////////////cubePearl->setPos(glm::vec3(-1, 2, 0));
-	////////////cubeBronze = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::BRONZE);
-	////////////cubeBronze->setPos(glm::vec3(1, 2, 0));
-	////////////cubeGold = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::GOLD);
-	////////////cubeGold->setPos(glm::vec3(3, 2, 0));
-	////////////cubeCyanPlastic = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::CYAN_PLASTIC);
-	////////////cubeCyanPlastic->setPos(glm::vec3(-3, 0.5f, 0));
-	////////////cubeRedPlastic = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::RED_PLASTIC);
-	////////////cubeRedPlastic->setPos(glm::vec3(-1, 0.5f, 0));
-	////////////cubeGreenRubber = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::GREEN_RUBBER);
-	////////////cubeGreenRubber->setPos(glm::vec3(1, 0.5f, 0));
-	////////////cubeYellowRubber = new engine::shape(currentRenderer, engine::SHAPE::CUBE, engine::MATERIAL::YELLOW_RUBBER);
-	////////////cubeYellowRubber->setPos(glm::vec3(3, 0.5f, 0));
-	////////////
+
 	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
 	{
 		pointLight[i] = new engine::pointLight(currentRenderer);
@@ -619,7 +510,7 @@ void game::init()
 	archer->setScale(32, 32, 1);
 	archer->setPos(-80, 20, 0);*/
 
-	///////changeClearColor(glm::vec4(0.5f, 0.5f, 1, 1));
+	
 	//changeClearColor(glm::vec4(.25, .25, .5, 1));
 	//addCollider(archer, false);
 	//addCollider(awesomeface, false);
@@ -632,15 +523,6 @@ void game::init()
 
 void game::deInit()
 {
-	////////////delete cubeEmerald;
-	////////////delete cubePearl;
-	////////////delete cubeBronze;
-	////////////delete cubeGold;
-	////////////delete cubeCyanPlastic;
-	////////////delete cubeRedPlastic;
-	////////////delete cubeGreenRubber;
-	////////////delete cubeYellowRubber;
-	////////////
 	delete firstPersonCam;
 	delete thirdPersonCam;
 
@@ -667,7 +549,4 @@ void game::deInit()
 	//archer->deinit();
 	//delete archer;
 	//delete triangle;
-	//delete triangle2;
-	//delete triangle3;
-	//delete quad;
 }

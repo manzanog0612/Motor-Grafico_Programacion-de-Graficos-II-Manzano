@@ -29,7 +29,6 @@ namespace engine
 
 	void node::setTransformations(vector<node*> *lastChilds)
 	{
-		//_renderer->setMVP(worldModel);
 		drawThisFrame = false;
 
 		for (int i = 0; i < getChildrenAmount(); i++)
@@ -38,6 +37,7 @@ namespace engine
 			children[i]->setTransformations(lastChilds);
 			addBoundsToAABB(children[i]->getLocalAABB());
 			updateAABBPositions();
+
 			if (children[i]->canDrawThisFrame())
 			{
 				allowDrawThisFrame();
@@ -47,8 +47,6 @@ namespace engine
 		if (getChildrenAmount() == 0)
 		{
 			updateAABBPositions();
-			vector<glm::vec3> a;
-			addBoundsToAABB(a);
 		}
 
 		if (!drawThisFrame && OcclusionCulling::IsOnView(aabbPositions))
