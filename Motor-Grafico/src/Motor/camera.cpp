@@ -95,8 +95,12 @@ namespace engine
 			break;
 		case engine::PROJECTION::PERSPECTIVE:
 			//fov - aspect ratio - near != 0 (porque si no genera problemas) - far
-			projectionMatrix = glm::perspective(glm::radians(45.0f), (float)currentRenderer->getCurrentWindow()->getWidth() / (float)currentRenderer->getCurrentWindow()->getHeight(), 0.1f, 500.0f);
-			createFrustumFromCamera((float)currentRenderer->getCurrentWindow()->getWidth() / (float)currentRenderer->getCurrentWindow()->getHeight(), glm::radians(45.0f), 0.1f, 500.0f);
+			fov = glm::radians(45.0f);
+			aspect = (float)currentRenderer->getCurrentWindow()->getWidth() / (float)currentRenderer->getCurrentWindow()->getHeight();
+			near = 0.1f;
+			far = 500.0f;
+
+			projectionMatrix = glm::perspective(fov, aspect, near, far);
 			break;
 		default:
 			projectionMatrix = glm::ortho(-2.0f, +2.0f, -1.5f, +1.5f, 0.1f, 500.0f);
@@ -107,6 +111,10 @@ namespace engine
 	{
 		return Front;
 	}
+	glm::vec3 camera::getRight()
+	{
+		return Right;
+	}
 	glm::vec3 camera::getUp()
 	{
 		return Up;
@@ -114,6 +122,22 @@ namespace engine
 	glm::vec3 camera::getPos()
 	{
 		return pos;
+	}
+	float camera::getFOV()
+	{
+		return fov;
+	}
+	float camera::getNear()
+	{
+		return near;
+	}
+	float camera::getFar()
+	{
+		return far;
+	}
+	float camera::getAspect()
+	{
+		return aspect;
 	}
 	camera::~camera()
 	{
@@ -143,19 +167,5 @@ namespace engine
 		// also re-calculate the Right and Up vector
 		Right = glm::normalize(glm::cross(Front, { 0,1,0 }));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
 		Up = glm::normalize(glm::cross(Right, Front));
-	}
-
-	void camera::createFrustumFromCamera(float aspect, float fovY, float zNear, float zFar)
-	{
-		const float halfVSide = zFar * tanf(fovY * .5f);
-		const float halfHSide = halfVSide * aspect;
-		const glm::vec3 frontMultFar = zFar * Front;
-
-		frustum.nearFace = { Front + zNear * Front, Front };
-		frustum.farFace = { getPos() + frontMultFar, Front };
-		frustum.rightFace = { getPos(),	glm::cross(Up,frontMultFar + Right * halfHSide) };
-		frustum.leftFace = { getPos(), glm::cross(frontMultFar - Right * halfHSide, Up) };
-		frustum.topFace = { getPos(), glm::cross(Right, frontMultFar - Up * halfVSide) };
-		frustum.bottomFace = { getPos(), glm::cross(frontMultFar + Up * halfVSide, Right) };
 	}
 }

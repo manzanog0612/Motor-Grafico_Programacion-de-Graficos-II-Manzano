@@ -1,4 +1,5 @@
 #include "node.h"
+#include "occlusionCulling.h"
 //#include <list>
 
 
@@ -38,7 +39,7 @@ namespace engine
 		//	//_renderer->setMVP(localModel);
 		//	_renderer->setMVP(worldModel);
 		//}
-
+		_renderer->setMVP(worldModel);
 		if (getChildrenAmount() == 0)
 		{
 			lastChilds->push_back(this);
@@ -115,34 +116,32 @@ namespace engine
 		//{
 		//	return;
 		//}
-
-		//if (drawFirstParent)
-		//{
-			for (int i = 0; i < meshes.size(); i++)
-			{
-				_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
-			}
-		//}
+		
+		for (int i = 0; i < meshes.size(); i++)
+		{
+			_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
+		}
+		
 
 		//drawnThisFrame = true;
 
-		for (int i = 0; i < getChildrenAmount(); i++)
-		{
-			children[i]->draw();
-		}
+		//for (int i = 0; i < getChildrenAmount(); i++)
+		//{
+		//	children[i]->draw();
+		//}
 	}
 
-	void node::drawAsParent(Frustum frustum)
+	void node::drawAsParent()
 	{
 		lastChilds->clear();
 
 		setTransformations(lastChilds);
 
-		draw();
+		//draw();
 		for (int i = 0; i < lastChilds->size(); i++)
 		{
 			//lastChilds->at(i);
-			//lastChilds->at(i)->checkIfDrawAsChild(frustum);
+			lastChilds->at(i)->checkIfDrawAsChild();
 		}
 	}
 
@@ -156,17 +155,21 @@ namespace engine
 		}
 	}
 
-	void node::checkIfDrawAsChild(Frustum frustum)
+	void node::checkIfDrawAsChild()
 	{
-		if (isInsideCamera(frustum))
+		if (OcclusionCulling::IsOnView(localAABB))
 		{
 			drawAsChild();
 		}
 		else
 		{
+			if (name == "pCylinder4" || name == "pCylinder2" || name == "pCylinder1" || name == "group1" || name == "pCube2")
+			{
+				cout << name << " node not drawn" << endl;
+			}
 			if (parent != NULL)
 			{
-				parent->checkIfDrawAsChild(frustum);
+				parent->checkIfDrawAsChild();
 			}
 		}
 	}
@@ -254,33 +257,6 @@ namespace engine
 		}
 
 		return NULL;
-	}
-
-	bool node::isOnOrForwardPlan(Plan plan)
-	{
-		// Compute the projection interval radius of b onto L(t) = b.c + t * p.n
-		if (aabb.size() < 1)
-		{
-			return true;
-		}
-
-		glm::vec3 extents = glm::vec3(aabb[1].x - getPos().x, aabb[1].y - getPos().y, aabb[1].z - getPos().z);
-
-		const float r = extents.x * std::abs(plan.normal.x) +
-			extents.y * std::abs(plan.normal.y) + extents.z * std::abs(plan.normal.z);
-
-		return -r <= plan.getSignedDistanceToPlan(getPos());
-	}
-
-	bool node::isInsideCamera(Frustum frustum)
-	{
-		return (meshes.size() > 0 && 
-				isOnOrForwardPlan(frustum.leftFace) &&
-				isOnOrForwardPlan(frustum.rightFace) &&
-				isOnOrForwardPlan(frustum.topFace) &&
-				isOnOrForwardPlan(frustum.bottomFace) &&
-				isOnOrForwardPlan(frustum.nearFace) &&
-				isOnOrForwardPlan(frustum.farFace));
 	}
 
 	void node::dontDraw()

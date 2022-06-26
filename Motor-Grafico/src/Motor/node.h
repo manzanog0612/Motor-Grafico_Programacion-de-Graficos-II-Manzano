@@ -35,17 +35,14 @@ namespace engine
 		float getRandomNumber(float min, float max);
 		node* getChildWithName(string name);
 
-		bool isOnOrForwardPlan(Plan plan);
-		bool isInsideCamera(Frustum frustum);
-
 		void dontDraw();
 		void drawDebug();
 
-		void checkIfDrawAsChild(Frustum frustum);
+		void checkIfDrawAsChild();
 		void setTransformations(vector<node*> *lastChilds);
 		void addBoundsToAABB(vector<glm::vec3> childAABB);
 		void draw();
-		void drawAsParent(Frustum frustum);
+		void drawAsParent();
 		void drawAsChild();
 		void deinit();
 	private:

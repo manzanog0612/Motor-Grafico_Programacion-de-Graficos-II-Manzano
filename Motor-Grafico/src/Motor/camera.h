@@ -13,39 +13,6 @@ namespace engine
 	enum class MOVEMENT_DIRECTION { FRONT, BACK, RIGHT, LEFT};
 	class renderer;
 
-	struct Plan
-	{
-		// unit vector
-		glm::vec3 normal = { 0.f, 1.f, 0.f };
-
-		// distance from origin to the nearest point in the plan
-		float     distance = 0.f;
-
-		Plan() = default;
-
-		Plan(const glm::vec3 & p1, const glm::vec3 & norm)
-			: normal(glm::normalize(norm)),
-			distance(glm::dot(normal, p1))
-		{}
-
-		float getSignedDistanceToPlan(glm::vec3 point)
-		{
-			return glm::dot(normal, point) - distance;
-		}
-	};
-
-	struct Frustum
-	{
-		Plan topFace;
-		Plan bottomFace;
-
-		Plan rightFace;
-		Plan leftFace;
-
-		Plan farFace;
-		Plan nearFace;
-	};
-
 	class ENGINE_API camera
 	{
 	public:
@@ -58,9 +25,13 @@ namespace engine
 		void setView(glm::vec3 lookPosition);
 		void setProjetion(PROJECTION projectionType);
 		glm::vec3 getFront();
+		glm::vec3 getRight();
 		glm::vec3 getUp();
 		glm::vec3 getPos();
-		Frustum getFrustrum() { return frustum; };
+		float getFOV();
+		float getNear();
+		float getFar();
+		float getAspect();
 		//void setCameraType(MOVEMENT_TYPE movementType);
 		//MOVEMENT_TYPE getCameraType();
 		~camera();
@@ -69,7 +40,6 @@ namespace engine
 		void setViewMatrix();
 		void setCameraPosToRenderer();
 		void updateCameraVectors();
-		void createFrustumFromCamera(float aspect, float fovY, float zNear, float zFar);
 		glm::vec3 getDirectionByMovement(glm::vec2 mouseMovement);
 		glm::mat4 viewMatrix;
 		glm::mat4 projectionMatrix;
@@ -80,10 +50,13 @@ namespace engine
 		glm::vec3 Right;
 		glm::vec3 Up;
 		renderer* currentRenderer;
-		Frustum frustum;
 		//MOVEMENT_TYPE movementType;
 		float yaw;
 		float pitch;
+		float fov;
+		float aspect;
+		float near;
+		float far;
 	};
 
 	//EJE X PITCH

@@ -124,6 +124,12 @@
     <ClCompile Include="..\src\Motor\aabb.cpp">
       <Filter>Miscellaneous</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Motor\occlusionCulling.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\plane.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lib\assimp\include\ai_assert.h">
@@ -323,6 +329,12 @@
     </ClInclude>
     <ClInclude Include="..\src\Motor\aabb.h">
       <Filter>Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\occlusionCulling.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\plane.h">
+      <Filter>Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -31,14 +31,10 @@ namespace engine
 			return;
 		}
 		directory = path.substr(0, path.find_last_of('/'));
-		//if (path[path.size() - 3] == 'f' && path[path.size() - 2] == 'b' && path[path.size() - 1] == 'x')
-		//{
-			baseNode = new node();
-			processNode(scene->mRootNode, scene, baseNode);
-			baseNode->setParent(NULL);
-		//}
-		//else
-		//{ }
+
+		baseNode = new node();
+		processNode(scene->mRootNode, scene, baseNode);
+		baseNode->setParent(NULL);
 	}
 	void Model::processNode(aiNode* node, const aiScene* scene, engine::node* myNode)
 	{

@@ -20,6 +20,7 @@
 #include "directionalLight.h"
 #include "spotLight.h"
 #include "Model.h"
+#include "occlusionCulling.h"
 
 namespace engine
 {

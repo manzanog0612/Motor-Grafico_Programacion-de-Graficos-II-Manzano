@@ -34,6 +34,8 @@
     <ClCompile Include="..\src\Motor\Model.cpp" />
     <ClCompile Include="..\src\Motor\modelImporter.cpp" />
     <ClCompile Include="..\src\Motor\node.cpp" />
+    <ClCompile Include="..\src\Motor\occlusionCulling.cpp" />
+    <ClCompile Include="..\src\Motor\plane.cpp" />
     <ClCompile Include="..\src\Motor\pointLight.cpp" />
     <ClCompile Include="..\src\Motor\renderer.cpp" />
     <ClCompile Include="..\src\Motor\shader.cpp" />
@@ -101,6 +103,8 @@
     <ClInclude Include="..\src\Motor\Model.h" />
     <ClInclude Include="..\src\Motor\modelImporter.h" />
     <ClInclude Include="..\src\Motor\node.h" />
+    <ClInclude Include="..\src\Motor\occlusionCulling.h" />
+    <ClInclude Include="..\src\Motor\plane.h" />
     <ClInclude Include="..\src\Motor\pointLight.h" />
     <ClInclude Include="..\src\Motor\renderer.h" />
     <ClInclude Include="..\src\Motor\shader.h" />

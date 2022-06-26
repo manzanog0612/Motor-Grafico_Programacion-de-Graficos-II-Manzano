@@ -101,7 +101,7 @@ void game::draw()
 	//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
 	//model = glm::scale4(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 	//backpackModel->Draw(currentRenderer->shaderPro, model, currentRenderer->GetViewMatrix(), currentRenderer->GetProjMatrix());
-	testModel->drawAsParent(actualCam->getFrustrum());
+	testModel->drawAsParent();
 	//triangle->draw();
 	//triangle2->draw();
 	//triangle3->draw();
@@ -112,6 +112,7 @@ void game::draw()
 
 void game::update()
 {
+	engine::OcclusionCulling::Update();
 	/*t += engine::time::getDeltaTime();
 	if(t < timeBetweenChanges)
 	{
@@ -326,7 +327,7 @@ void game::update()
 	
 	entityPos += movement;
 
-	cout << "x = " << entityPos.x << " y = " << entityPos.y << " z = " << entityPos.z << endl;
+	//cout << "x = " << entityPos.x << " y = " << entityPos.y << " z = " << entityPos.z << endl;
 	
 	//selectedEntity->setPos(entityPos);
 	//testModel->getChildren()[0]->setPos(entityPos);
@@ -389,7 +390,7 @@ void game::update()
 	{
 		thirdPersonCam->updateTargetPos(conteiner2->getPos());
 	}
-	std::cout << "x: " << front.x << " - y: " << front.y << " - z: " << front.z << std::endl;
+	//std::cout << "x: " << front.x << " - y: " << front.y << " - z: " << front.z << std::endl;
 
 	//spotLight->setDirection(actualCam->getFront());
 	//if (isKeyDown(ENGINE_KEY_ENTER))
@@ -444,6 +445,7 @@ void game::init()
 	thirdPersonCam = new engine::thirdPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	actualCam = firstPersonCam;
 
+	engine::OcclusionCulling::Init(firstPersonCam);
 	//currentRenderer->shaderPro.use();
 	//glm::mat4 model = glm::mat4(1.0f);
 	//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
