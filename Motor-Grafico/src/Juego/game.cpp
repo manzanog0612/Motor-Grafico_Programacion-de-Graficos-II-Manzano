@@ -3,7 +3,7 @@
 #include "Motor/modelImporter.h"
 
 std::string nodeName = "RootNode";
-
+bool scale = false;
 game::game()
 {
 	//imageCampus = nullptr;
@@ -324,6 +324,15 @@ void game::update()
 		managingDirectionalLight = false;
 		pointLight[0]->setColor(glm::vec4(1, 0, 0, 1));
 	}
+
+	if (isKeyPressed(ENGINE_KEY_Z))
+	{
+		scale = true;
+	}
+	else if (isKeyPressed(ENGINE_KEY_X))
+	{
+		scale = false;
+	}
 	
 	entityPos += movement;
 
@@ -339,23 +348,32 @@ void game::update()
 		if (child != NULL)
 		{
 			std::cout << "childFound" << std::endl;
-			child->setRot(child->getRot() + rotation);
+
+			if (scale)
+			{
+				child->setScale(child->getScale() + rotation);
+			}
+			else
+			{
+				child->setRot(child->getRot() + rotation);;
+			}
+
 			child->setPos(entityPos);
 		}
-
-		//testModel->getChildren()[testModel->getChildrenAmount() - 1]->setRot(testModel->getChildren()[testModel->getChildrenAmount() - 1]->getRot() + rotation);
-		//directionalLight->setDirection(rotation, false);
-		//testModel->getChildren()[testModel->getChildrenAmount() - 1]->setPos(entityPos);
 	}
 	else
 	{
-		testModel->setRot(testModel->getRot() + rotation);
-		//testModel->setScale(testModel->getScale() + rotation);
-		//spotLight->setDirection(front, false);
+		if (scale)
+		{
+			testModel->setScale(testModel->getScale() + rotation);
+		}
+		else
+		{
+			testModel->setRot(testModel->getRot() + rotation);
+		}
+
 		testModel->setPos(entityPos);
 	}
-	
-	//camera movement
 	
 	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
 	{
@@ -364,6 +382,7 @@ void game::update()
 
 	spotLightBox->setPos(spotLight->getPos());
 
+	//camera movement
 	float cameraMovementAmount = engine::time::getDeltaTime() * cameraSpeed;
 	
 	if (isKeyPressed(ENGINE_KEY_W))

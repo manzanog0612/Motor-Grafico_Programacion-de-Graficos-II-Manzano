@@ -8,7 +8,7 @@ namespace engine
 {
 	node::node()
 	{
-		drawnThisFrame = false;
+		drawThisFrame = false;
 		drawFirstParent = true;
 		lastChilds = new vector<node*>();
 	}
@@ -29,51 +29,38 @@ namespace engine
 
 	void node::setTransformations(vector<node*> *lastChilds)
 	{
-		//if (parent == NULL)
-		//{
-		//	_renderer->setMVP(worldModel);
-		//	//setWorldModelWithParentModel(localModel);
-		//}
-		//else
-		//{
-		//	//_renderer->setMVP(localModel);
-		//	_renderer->setMVP(worldModel);
-		//}
-		_renderer->setMVP(worldModel);
-		if (getChildrenAmount() == 0)
-		{
-			lastChilds->push_back(this);
-		}
-
-		for (int i = 0; i < meshes.size(); i++)
-		{
-			_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
-		}
-
-		//drawnThisFrame = false;
+		//_renderer->setMVP(worldModel);
+		drawThisFrame = false;
 
 		for (int i = 0; i < getChildrenAmount(); i++)
 		{
 			children[i]->setWorldModelWithParentModel(worldModel);
 			children[i]->setTransformations(lastChilds);
 			addBoundsToAABB(children[i]->getLocalAABB());
+			updateAABBPositions();
+			if (children[i]->canDrawThisFrame())
+			{
+				allowDrawThisFrame();
+			}
 		}
 
-		if (localAABB.size() > 0)
+		if (getChildrenAmount() == 0)
 		{
-			aabbShapes[0]->setPos(glm::vec3(localAABB[0].x, localAABB[1].y, localAABB[1].z));
-			aabbShapes[1]->setPos(glm::vec3(localAABB[1].x, localAABB[1].y, localAABB[1].z));
-			aabbShapes[2]->setPos(glm::vec3(localAABB[0].x, localAABB[0].y, localAABB[1].z));
-			aabbShapes[3]->setPos(glm::vec3(localAABB[1].x, localAABB[0].y, localAABB[1].z));
-			aabbShapes[4]->setPos(glm::vec3(localAABB[0].x, localAABB[1].y, localAABB[0].z));
-			aabbShapes[5]->setPos(glm::vec3(localAABB[1].x, localAABB[1].y, localAABB[0].z));
-			aabbShapes[6]->setPos(glm::vec3(localAABB[0].x, localAABB[0].y, localAABB[0].z));
-			aabbShapes[7]->setPos(glm::vec3(localAABB[1].x, localAABB[0].y, localAABB[0].z));
-		
-			for (int i = 0; i < AMOUNT_BOUNDS; i++)
+			updateAABBPositions();
+			vector<glm::vec3> a;
+			addBoundsToAABB(a);
+		}
+
+		if (!drawThisFrame && OcclusionCulling::IsOnView(aabbPositions))
+		{
+			allowDrawThisFrame();
+		}
+
+		if (!drawThisFrame)
+		{
+			if (name == "pCylinder4" || name == "pCylinder2" || name == "pCylinder1" || name == "group1" || name == "pCube2")
 			{
-				aabbShapes[i]->setWorldModelWithParentModel(worldModel);
-				aabbShapes[i]->draw(aabbShapes[i]->getModel());
+				cout << name << " node not drawn" << endl;
 			}
 		}
 	}
@@ -111,24 +98,23 @@ namespace engine
 
 	void node::draw()
 	{		
-		_renderer->setMVP(worldModel);
-		//if (drawnThisFrame)
-		//{
-		//	return;
-		//}
+		if (drawThisFrame)
+		{	
+			_renderer->setMVP(worldModel);
 		
-		for (int i = 0; i < meshes.size(); i++)
-		{
-			_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
+			for (int i = 0; i < meshes.size(); i++)
+			{
+				_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
+			}
+
+			if (localAABB.size() > 0)
+			{
+				for (int i = 0; i < AMOUNT_BOUNDS; i++)
+				{
+					aabbShapes[i]->draw(aabbShapes[i]->getModel());
+				}
+			}
 		}
-		
-
-		//drawnThisFrame = true;
-
-		//for (int i = 0; i < getChildrenAmount(); i++)
-		//{
-		//	children[i]->draw();
-		//}
 	}
 
 	void node::drawAsParent()
@@ -136,13 +122,6 @@ namespace engine
 		lastChilds->clear();
 
 		setTransformations(lastChilds);
-
-		//draw();
-		for (int i = 0; i < lastChilds->size(); i++)
-		{
-			//lastChilds->at(i);
-			lastChilds->at(i)->checkIfDrawAsChild();
-		}
 	}
 
 	void node::drawAsChild()
@@ -163,10 +142,7 @@ namespace engine
 		}
 		else
 		{
-			if (name == "pCylinder4" || name == "pCylinder2" || name == "pCylinder1" || name == "group1" || name == "pCube2")
-			{
-				cout << name << " node not drawn" << endl;
-			}
+			
 			if (parent != NULL)
 			{
 				parent->checkIfDrawAsChild();
@@ -259,9 +235,9 @@ namespace engine
 		return NULL;
 	}
 
-	void node::dontDraw()
+	bool node::canDrawThisFrame()
 	{
-		drawFirstParent = false;
+		return drawThisFrame;
 	}
 
 	void node::drawDebug()
@@ -281,6 +257,36 @@ namespace engine
 			//addBoundsToAABB(children[i]->getLocalAABB());
 		}
 
+	}
+
+	void node::allowDrawThisFrame()
+	{
+		drawThisFrame = true;
+		draw();
+	}
+
+	void node::updateAABBPositions()
+	{
+		if (localAABB.size() > 0)
+		{
+			aabbPositions.clear();
+
+			aabbShapes[0]->setPos(glm::vec3(localAABB[0].x, localAABB[1].y, localAABB[1].z));
+			aabbShapes[1]->setPos(glm::vec3(localAABB[1].x, localAABB[1].y, localAABB[1].z));
+			aabbShapes[2]->setPos(glm::vec3(localAABB[0].x, localAABB[0].y, localAABB[1].z));
+			aabbShapes[3]->setPos(glm::vec3(localAABB[1].x, localAABB[0].y, localAABB[1].z));
+			aabbShapes[4]->setPos(glm::vec3(localAABB[0].x, localAABB[1].y, localAABB[0].z));
+			aabbShapes[5]->setPos(glm::vec3(localAABB[1].x, localAABB[1].y, localAABB[0].z));
+			aabbShapes[6]->setPos(glm::vec3(localAABB[0].x, localAABB[0].y, localAABB[0].z));
+			aabbShapes[7]->setPos(glm::vec3(localAABB[1].x, localAABB[0].y, localAABB[0].z));
+
+			for (int i = 0; i < AMOUNT_BOUNDS; i++)
+			{
+				aabbShapes[i]->setWorldModelWithParentModel(worldModel);
+
+				aabbPositions.push_back(aabbShapes[i]->getPosFromTransformMatrix());
+			}
+		}
 	}
 
 	void node::setParent(node* parent)

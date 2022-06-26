@@ -35,8 +35,10 @@ namespace engine
 		float getRandomNumber(float min, float max);
 		node* getChildWithName(string name);
 
-		void dontDraw();
+		bool canDrawThisFrame();
 		void drawDebug();
+		void allowDrawThisFrame();
+		void updateAABBPositions();
 
 		void checkIfDrawAsChild();
 		void setTransformations(vector<node*> *lastChilds);
@@ -59,10 +61,11 @@ namespace engine
 
 		vector<glm::vec3> aabb;
 		vector<glm::vec3> localAABB;
+		vector<glm::vec3> aabbPositions;
 
 		shape* aabbShapes[AMOUNT_BOUNDS];
 
-		bool drawnThisFrame;
+		bool drawThisFrame;
 		bool drawFirstParent;
 	};
 }

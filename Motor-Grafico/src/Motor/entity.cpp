@@ -99,8 +99,8 @@ namespace engine
 	}
 	void entity::setScale(glm::vec3 localScale)
 	{
-		localScale = localScale;
-		this->localScale = glm::scale4(glm::mat4(1.0f), localScale);
+		v3localScale = localScale;
+		this->localScale = glm::scale4(glm::mat4(1.0f), v3localScale);
 		updateModelMatrix();
 	}
 	void entity::setScale(float x, float y, float z)
@@ -155,6 +155,11 @@ namespace engine
 	glm::vec3 entity::getPos()
 	{
 		return v3localPos;
+		//return worldModel[3];
+	}
+	glm::vec3 entity::getPosFromTransformMatrix()
+	{
+		return worldModel[3];
 	}
 	glm::vec3 entity::getRot()
 	{

@@ -47,6 +47,7 @@ namespace engine
 
 		glm::vec4 getColor();
 		glm::vec3 getPos();
+		glm::vec3 getPosFromTransformMatrix();
 		glm::vec3 getRot();
 		glm::vec3 getScale();
 

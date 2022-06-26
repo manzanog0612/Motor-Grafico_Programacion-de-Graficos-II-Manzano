@@ -64,29 +64,41 @@ namespace engine
 	}
 
 
-	bool OcclusionCulling::IsOnView(std::vector<glm::vec3> aabb)
+	bool OcclusionCulling::IsOnView(std::vector<glm::vec3> aabbPositions)
 	{
-		std::vector<glm::vec3> positions;
+		//std::vector<glm::vec3> positions;
+		//
+		//positions.push_back(glm::vec3(aabb[0].x, aabb[1].y, aabb[1].z));
+		//positions.push_back(glm::vec3(aabb[1].x, aabb[1].y, aabb[1].z));
+		//positions.push_back(glm::vec3(aabb[0].x, aabb[0].y, aabb[1].z));
+		//positions.push_back(glm::vec3(aabb[1].x, aabb[0].y, aabb[1].z));
+		//positions.push_back(glm::vec3(aabb[0].x, aabb[1].y, aabb[0].z));
+		//positions.push_back(glm::vec3(aabb[1].x, aabb[1].y, aabb[0].z));
+		//positions.push_back(glm::vec3(aabb[0].x, aabb[0].y, aabb[0].z));
+		//positions.push_back(glm::vec3(aabb[1].x, aabb[0].y, aabb[0].z));
 
-		positions.push_back(glm::vec3(aabb[0].x, aabb[1].y, aabb[1].z));
-		positions.push_back(glm::vec3(aabb[1].x, aabb[1].y, aabb[1].z));
-		positions.push_back(glm::vec3(aabb[0].x, aabb[0].y, aabb[1].z));
-		positions.push_back(glm::vec3(aabb[1].x, aabb[0].y, aabb[1].z));
-		positions.push_back(glm::vec3(aabb[0].x, aabb[1].y, aabb[0].z));
-		positions.push_back(glm::vec3(aabb[1].x, aabb[1].y, aabb[0].z));
-		positions.push_back(glm::vec3(aabb[0].x, aabb[0].y, aabb[0].z));
-		positions.push_back(glm::vec3(aabb[1].x, aabb[0].y, aabb[0].z));
+		//for (short i = 0; i < positions.size(); i++)
+		//{
+		//	if (!back.GetSide(positions[i]) || !front.GetSide(positions[i]) || !right.GetSide(positions[i])
+		//		|| !left.GetSide(positions[i]) || !up.GetSide(positions[i]) || !down.GetSide(positions[i]))
+		//	{
+		//		return false;
+		//	}
+		//}
+		//
+		//return true;
 
-		for (short i = 0; i < positions.size(); i++)
+
+		for (short i = 0; i < aabbPositions.size(); i++)
 		{
-			if (!back.GetSide(positions[i]) || !front.GetSide(positions[i]) || !right.GetSide(positions[i])
-				|| !left.GetSide(positions[i]) || !up.GetSide(positions[i]) || !down.GetSide(positions[i]))
+			if (back.GetSide(aabbPositions[i]) && front.GetSide(aabbPositions[i]) && right.GetSide(aabbPositions[i])
+				&& left.GetSide(aabbPositions[i]) && up.GetSide(aabbPositions[i]) && down.GetSide(aabbPositions[i]))
 			{
-				return false;
+				return true;
 			}
 		}
-
-		return true;
+		
+		return false;
 	}
 
 	void OcclusionCulling::SetCamera(camera* camera)
