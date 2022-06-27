@@ -9,7 +9,6 @@ namespace engine
 	node::node()
 	{
 		drawThisFrame = false;
-		drawFirstParent = true;
 	}
 
 	node::~node()
@@ -26,20 +25,21 @@ namespace engine
 		return children.size();
 	}
 
-	void node::setTransformations(Frustum frustum)
+	void node::setDraw()
 	{
 		drawThisFrame = false;
 
 		for (int i = 0; i < getChildrenAmount(); i++)
 		{
 			children[i]->setWorldModelWithParentModel(worldModel);
-			children[i]->setTransformations(frustum);
+			children[i]->setDraw();
 			addBoundsToAABB(children[i]->getLocalAABB());
 			updateAABBPositions();
 
 			if (children[i]->canDrawThisFrame())
 			{
-				allowDrawThisFrame();
+				drawThisFrame = true;
+				draw();
 			}
 		}
 
@@ -50,7 +50,8 @@ namespace engine
 
 		if (!drawThisFrame && meshes.size()>0 && volume->isOnFrustum(worldModel))
 		{
-			allowDrawThisFrame();
+			drawThisFrame = true;
+			draw();
 		}
 
 		if (!drawThisFrame)
@@ -95,29 +96,27 @@ namespace engine
 
 	void node::draw()
 	{		
-		if (drawThisFrame)
-		{	
-			_renderer->setMVP(worldModel);
+		_renderer->setMVP(worldModel);
 		
-			for (int i = 0; i < meshes.size(); i++)
-			{
-				_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
-			}
+		for (int i = 0; i < meshes.size(); i++)
+		{
+			_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
+		}
 
-			if (localAABB.size() > 0)
+		//draw of aabb view
+		if (localAABB.size() > 0)
+		{
+			for (int i = 0; i < AMOUNT_BOUNDS; i++)
 			{
-				for (int i = 0; i < AMOUNT_BOUNDS; i++)
-				{
-					aabbShapes[i]->draw(aabbShapes[i]->getModel());
-				}
+				aabbShapes[i]->draw(aabbShapes[i]->getModel());
 			}
 		}
 	}
 
-	void node::drawAsParent(Frustum frustum)
-	{
-		setTransformations(frustum);
-	}
+	//void node::drawAsParent(Frustum frustum)
+	//{
+	//	setTransformations(frustum);
+	//}
 
 	float node::getRandomNumber(float min, float max)
 	{
@@ -149,14 +148,14 @@ namespace engine
 			aabbShapes[i]->setColor(color);
 		}
 
-		generateVolumeAABB();
+		generateAABB();
 	}
 
 	void node::setMeshes(vector<Mesh> meshes)
 	{
 		this->meshes = meshes;
 
-		setAABB(this->meshes);
+		setAABBView(this->meshes);
 	}
 
 	void node::setName(string name)
@@ -212,30 +211,11 @@ namespace engine
 		return drawThisFrame;
 	}
 
-	//void node::drawDebug()
+	//void node::allowDrawThisFrame()
 	//{
-	//	_renderer->setMVP(worldModel);
-	//
-	//
-	//	for (int i = 0; i < meshes.size(); i++)
-	//	{
-	//		_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
-	//	}
-	//
-	//	for (int i = 0; i < getChildrenAmount(); i++)
-	//	{
-	//		children[i]->setWorldModelWithParentModel(worldModel);
-	//		children[i]->drawDebug();
-	//		//addBoundsToAABB(children[i]->getLocalAABB());
-	//	}
-	//
+	//	drawThisFrame = true;
+	//	draw();
 	//}
-
-	void node::allowDrawThisFrame()
-	{
-		drawThisFrame = true;
-		draw();
-	}
 
 	void node::updateAABBPositions()
 	{
@@ -255,8 +235,6 @@ namespace engine
 			for (int i = 0; i < AMOUNT_BOUNDS; i++)
 			{
 				aabbShapes[i]->setWorldModelWithParentModel(worldModel);
-
-				aabbPositions.push_back(aabbShapes[i]->getPosFromTransformMatrix());
 			}
 		}
 	}
@@ -266,7 +244,7 @@ namespace engine
 		this->parent = parent;
 	}
 
-	void node::generateVolumeAABB()
+	void node::generateAABB()
 	{
 		if (meshes.size() > 0)
 		{
@@ -294,7 +272,7 @@ namespace engine
 		}
 	}
 
-	void node::setAABB(vector<Mesh> meshes)
+	void node::setAABBView(vector<Mesh> meshes)
 	{
 		if (meshes.size() < 1)
 		{
@@ -323,52 +301,6 @@ namespace engine
 		localAABB.push_back(aabb[0]);
 		localAABB.push_back(aabb[1]);
 	}
-
-	//bool node::isOnOrForwardPlan(Plan plan, )
-	//{
-	//	// Compute the projection interval radius of b onto L(t) = b.c + t * p.n
-	//	if (aabb.size() < 1)
-	//	{
-	//		return true;
-	//	}
-	//
-	//	glm::vec3 extents = glm::vec3(localAABB[1].x - localAABBPos.x, localAABB[1].y - localAABBPos.y, localAABB[1].z - localAABBPos.z);
-	//
-	//	const float r = extents.x * std::abs(plan.normal.x) +
-	//		extents.y * std::abs(plan.normal.y) + extents.z * std::abs(plan.normal.z);
-	//
-	//	return -r <= plan.getSignedDistanceToPlan(getPos());
-	//}
-	//
-	//bool node::isInsideCamera(Frustum frustum)
-	//{
-	//	const glm::vec3 globalCenter{ transform.getModelMatrix() * glm::vec4(center, 1.f) };
-	//
-	//	// Scaled orientation
-	//	const glm::vec3 right = transform.getRight() * extents.x;
-	//	const glm::vec3 up = transform.getUp() * extents.y;
-	//	const glm::vec3 forward = transform.getForward() * extents.z;
-	//
-	//	const float newIi = std::abs(glm::dot(glm::vec3{ 1.f, 0.f, 0.f }, right)) +
-	//		std::abs(glm::dot(glm::vec3{ 1.f, 0.f, 0.f }, up)) +
-	//		std::abs(glm::dot(glm::vec3{ 1.f, 0.f, 0.f }, forward));
-	//
-	//	const float newIj = std::abs(glm::dot(glm::vec3{ 0.f, 1.f, 0.f }, right)) +
-	//		std::abs(glm::dot(glm::vec3{ 0.f, 1.f, 0.f }, up)) +
-	//		std::abs(glm::dot(glm::vec3{ 0.f, 1.f, 0.f }, forward));
-	//
-	//	const float newIk = std::abs(glm::dot(glm::vec3{ 0.f, 0.f, 1.f }, right)) +
-	//		std::abs(glm::dot(glm::vec3{ 0.f, 0.f, 1.f }, up)) +
-	//		std::abs(glm::dot(glm::vec3{ 0.f, 0.f, 1.f }, forward));
-	//
-	//	return (meshes.size() > 0 &&
-	//		isOnOrForwardPlan(frustum.leftFace) &&
-	//		isOnOrForwardPlan(frustum.rightFace) &&
-	//		isOnOrForwardPlan(frustum.topFace) &&
-	//		isOnOrForwardPlan(frustum.bottomFace) &&
-	//		isOnOrForwardPlan(frustum.nearFace) &&
-	//		isOnOrForwardPlan(frustum.farFace));
-	//}
 
 	void node::deinit()
 	{
