@@ -73,7 +73,7 @@ void game::draw()
 	spotLightBox->draw();
 	directionalLight->draw();
 
-	testModel->drawAsParent();
+	testModel->drawAsParent(actualCam->getFrustum());
 
 	//triangle->draw();
 	//archer->draw();

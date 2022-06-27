@@ -50,6 +50,23 @@ namespace engine
 		glm::vec3 getPosFromTransformMatrix();
 		glm::vec3 getRot();
 		glm::vec3 getScale();
+		glm::mat4 getModelConst() const
+		{
+			return worldModel;
+		}
+		glm::vec3 getRightConst() const
+		{
+			return worldModel[0];
+		}
+		glm::vec3 getUpConst() const
+		{
+			return worldModel[1];
+		}
+		glm::vec3 getForwardConst() const
+		{
+			return worldModel[2];
+		}
+
 
 		glm::mat4 getModel();
 		glm::mat4 getLocalModel();

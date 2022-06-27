@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MESH_H
+#define MESH_H
 #include <vector>
 #include <string>
 #include "shader.h"
@@ -39,3 +40,5 @@ namespace engine
         void setupMesh();
     };
 }
+
+#endif // MESH_H

@@ -5,6 +5,8 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+//#include <array> 
+//#include <memory> //std::unique_ptr
 
 namespace engine
 {
@@ -12,6 +14,37 @@ namespace engine
 	enum class MOVEMENT_TYPE { FPS, THIRD_PERSON };
 	enum class MOVEMENT_DIRECTION { FRONT, BACK, RIGHT, LEFT};
 	class renderer;
+
+	struct Plan
+	{
+		glm::vec3 normal = { 0.f, 1.f, 0.f }; // unit vector
+		float     distance = 0.f;        // Distance with origin
+
+		Plan() = default;
+
+		Plan(const glm::vec3 & p1, const glm::vec3 & norm)
+			: normal(glm::normalize(norm)),
+			distance(glm::dot(normal, p1))
+		{}
+
+		float getSignedDistanceToPlan(const glm::vec3 & point) const
+		{
+			return glm::dot(normal, point) - distance;
+		}
+	};
+
+	struct Frustum
+	{
+		Plan topFace;
+		Plan bottomFace;
+
+		Plan rightFace;
+		Plan leftFace;
+
+		Plan farFace;
+		Plan nearFace;
+	};
+
 
 	class ENGINE_API camera
 	{
@@ -28,10 +61,13 @@ namespace engine
 		glm::vec3 getRight();
 		glm::vec3 getUp();
 		glm::vec3 getPos();
+		Frustum getFrustum() { return createFrustumFromCamera(aspect, fov, near, far); }
 		float getFOV();
 		float getNear();
 		float getFar();
 		float getAspect();
+		Frustum createFrustumFromCamera(float aspect, float fovY, float zNear, float zFar);
+	
 		//void setCameraType(MOVEMENT_TYPE movementType);
 		//MOVEMENT_TYPE getCameraType();
 		~camera();

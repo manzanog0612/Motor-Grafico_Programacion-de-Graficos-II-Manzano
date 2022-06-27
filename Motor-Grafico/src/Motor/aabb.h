@@ -4,22 +4,38 @@
 #include "exports.h"
 #include <GLM/glm.hpp>
 #include <vector>
+#include "occlusionCulling.h"
 
 using namespace std;
 
 namespace engine
 {
-	class ENGINE_API aabb
+	class ENGINE_API volume
+	{
+	public:
+		volume() { };
+		~volume() { };
+
+		virtual bool isOnFrustum(glm::mat4 worldModel) = 0;
+
+	protected:
+		virtual bool isOnPlane(plane plane) = 0;
+	};
+
+	class ENGINE_API aabb : public volume
 	{
 	public:
 		aabb();
+		aabb(glm::vec3 min, glm::vec3 max);
+		aabb(glm::vec3 center, float extX, float extY, float extZ);
 		~aabb();
 
-		void setBounds(vector<glm::vec3> vertices);
+		bool isOnFrustum(glm::mat4 worldModel) override;
 
-		void draw();
+		glm::vec3 center;
+		glm::vec3 extents;
 	private:
-		vector<glm::vec3> vertices;
+		bool isOnPlane(plane plane) override;
 	};
 }
 

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RENDER_H
+#define RENDER_H
 #include "exports.h"
 #include "window.h"
 #include "shader.h"
@@ -86,3 +87,4 @@ namespace engine
 		glm::mat4 projectionMatrix;
 	};
 }
+#endif

@@ -18,7 +18,7 @@ namespace engine
 		void SetNormal(glm::vec3 normal);
 		void SetDistance(float distance);
 
-		glm::vec3 GetNormal();
+		glm::vec3 GetNormal() const;
 		float GetDistance();
 
 		void SetPositionAndNormal(glm::vec3 point, glm::vec3 normal);

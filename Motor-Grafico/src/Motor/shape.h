@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SHAPE_H
+#define SHAPE_H
 #include "exports.h"
 #include "entity2D.h"
 #include "renderer.h"
@@ -21,3 +22,4 @@ namespace engine
 		textureData* texture;
 	};
 }
+#endif

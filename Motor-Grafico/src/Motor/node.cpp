@@ -1,5 +1,5 @@
 #include "node.h"
-#include "occlusionCulling.h"
+//#include "occlusionCulling.h"
 //#include <list>
 
 
@@ -10,7 +10,6 @@ namespace engine
 	{
 		drawThisFrame = false;
 		drawFirstParent = true;
-		lastChilds = new vector<node*>();
 	}
 
 	node::~node()
@@ -27,14 +26,14 @@ namespace engine
 		return children.size();
 	}
 
-	void node::setTransformations(vector<node*> *lastChilds)
+	void node::setTransformations(Frustum frustum)
 	{
 		drawThisFrame = false;
 
 		for (int i = 0; i < getChildrenAmount(); i++)
 		{
 			children[i]->setWorldModelWithParentModel(worldModel);
-			children[i]->setTransformations(lastChilds);
+			children[i]->setTransformations(frustum);
 			addBoundsToAABB(children[i]->getLocalAABB());
 			updateAABBPositions();
 
@@ -49,7 +48,7 @@ namespace engine
 			updateAABBPositions();
 		}
 
-		if (!drawThisFrame && OcclusionCulling::IsOnView(aabbPositions))
+		if (!drawThisFrame && meshes.size()>0 && volume->isOnFrustum(worldModel))
 		{
 			allowDrawThisFrame();
 		}
@@ -115,37 +114,9 @@ namespace engine
 		}
 	}
 
-	void node::drawAsParent()
+	void node::drawAsParent(Frustum frustum)
 	{
-		lastChilds->clear();
-
-		setTransformations(lastChilds);
-	}
-
-	void node::drawAsChild()
-	{
-		draw();
-
-		if (parent != NULL)
-		{
-			parent->drawAsChild();
-		}
-	}
-
-	void node::checkIfDrawAsChild()
-	{
-		if (OcclusionCulling::IsOnView(localAABB))
-		{
-			drawAsChild();
-		}
-		else
-		{
-			
-			if (parent != NULL)
-			{
-				parent->checkIfDrawAsChild();
-			}
-		}
+		setTransformations(frustum);
 	}
 
 	float node::getRandomNumber(float min, float max)
@@ -169,6 +140,7 @@ namespace engine
 		}
 
 		glm::vec4 color = glm::vec4(getRandomNumber(0, 1), getRandomNumber(0, 1), getRandomNumber(0, 1), 1);
+
 		for (int i = 0; i < AMOUNT_BOUNDS; i++)
 		{
 			aabbShapes[i] = new engine::shape(renderer, engine::SHAPE::CUBE, engine::MATERIAL::PEARL);
@@ -176,6 +148,8 @@ namespace engine
 			aabbShapes[i]->setScale(glm::vec3(0.05f, 0.05f, 0.05f));
 			aabbShapes[i]->setColor(color);
 		}
+
+		generateVolumeAABB();
 	}
 
 	void node::setMeshes(vector<Mesh> meshes)
@@ -238,24 +212,24 @@ namespace engine
 		return drawThisFrame;
 	}
 
-	void node::drawDebug()
-	{
-		_renderer->setMVP(worldModel);
-
-
-		for (int i = 0; i < meshes.size(); i++)
-		{
-			_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
-		}
-
-		for (int i = 0; i < getChildrenAmount(); i++)
-		{
-			children[i]->setWorldModelWithParentModel(worldModel);
-			children[i]->drawDebug();
-			//addBoundsToAABB(children[i]->getLocalAABB());
-		}
-
-	}
+	//void node::drawDebug()
+	//{
+	//	_renderer->setMVP(worldModel);
+	//
+	//
+	//	for (int i = 0; i < meshes.size(); i++)
+	//	{
+	//		_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
+	//	}
+	//
+	//	for (int i = 0; i < getChildrenAmount(); i++)
+	//	{
+	//		children[i]->setWorldModelWithParentModel(worldModel);
+	//		children[i]->drawDebug();
+	//		//addBoundsToAABB(children[i]->getLocalAABB());
+	//	}
+	//
+	//}
 
 	void node::allowDrawThisFrame()
 	{
@@ -292,6 +266,34 @@ namespace engine
 		this->parent = parent;
 	}
 
+	void node::generateVolumeAABB()
+	{
+		if (meshes.size() > 0)
+		{
+			glm::vec3 minAABB = glm::vec3(std::numeric_limits<float>::max());
+			glm::vec3 maxAABB = glm::vec3(std::numeric_limits<float>::min());
+
+			for (int i = 0; i < meshes.size(); i++)
+			{
+				Mesh mesh = meshes[i];
+				for (int j = 0; j < mesh.vertices.size(); j++)
+				{
+					Vertex vertex = mesh.vertices[j];
+
+					minAABB.x = glm::min(minAABB.x, vertex.Position.x);
+					minAABB.y = glm::min(minAABB.y, vertex.Position.y);
+					minAABB.z = glm::min(minAABB.z, vertex.Position.z);
+
+					maxAABB.x = glm::max(maxAABB.x, vertex.Position.x);
+					maxAABB.y = glm::max(maxAABB.y, vertex.Position.y);
+					maxAABB.z = glm::max(maxAABB.z, vertex.Position.z);
+				}
+			}
+
+			volume = new engine::aabb(minAABB, maxAABB);
+		}
+	}
+
 	void node::setAABB(vector<Mesh> meshes)
 	{
 		if (meshes.size() < 1)
@@ -321,6 +323,52 @@ namespace engine
 		localAABB.push_back(aabb[0]);
 		localAABB.push_back(aabb[1]);
 	}
+
+	//bool node::isOnOrForwardPlan(Plan plan, )
+	//{
+	//	// Compute the projection interval radius of b onto L(t) = b.c + t * p.n
+	//	if (aabb.size() < 1)
+	//	{
+	//		return true;
+	//	}
+	//
+	//	glm::vec3 extents = glm::vec3(localAABB[1].x - localAABBPos.x, localAABB[1].y - localAABBPos.y, localAABB[1].z - localAABBPos.z);
+	//
+	//	const float r = extents.x * std::abs(plan.normal.x) +
+	//		extents.y * std::abs(plan.normal.y) + extents.z * std::abs(plan.normal.z);
+	//
+	//	return -r <= plan.getSignedDistanceToPlan(getPos());
+	//}
+	//
+	//bool node::isInsideCamera(Frustum frustum)
+	//{
+	//	const glm::vec3 globalCenter{ transform.getModelMatrix() * glm::vec4(center, 1.f) };
+	//
+	//	// Scaled orientation
+	//	const glm::vec3 right = transform.getRight() * extents.x;
+	//	const glm::vec3 up = transform.getUp() * extents.y;
+	//	const glm::vec3 forward = transform.getForward() * extents.z;
+	//
+	//	const float newIi = std::abs(glm::dot(glm::vec3{ 1.f, 0.f, 0.f }, right)) +
+	//		std::abs(glm::dot(glm::vec3{ 1.f, 0.f, 0.f }, up)) +
+	//		std::abs(glm::dot(glm::vec3{ 1.f, 0.f, 0.f }, forward));
+	//
+	//	const float newIj = std::abs(glm::dot(glm::vec3{ 0.f, 1.f, 0.f }, right)) +
+	//		std::abs(glm::dot(glm::vec3{ 0.f, 1.f, 0.f }, up)) +
+	//		std::abs(glm::dot(glm::vec3{ 0.f, 1.f, 0.f }, forward));
+	//
+	//	const float newIk = std::abs(glm::dot(glm::vec3{ 0.f, 0.f, 1.f }, right)) +
+	//		std::abs(glm::dot(glm::vec3{ 0.f, 0.f, 1.f }, up)) +
+	//		std::abs(glm::dot(glm::vec3{ 0.f, 0.f, 1.f }, forward));
+	//
+	//	return (meshes.size() > 0 &&
+	//		isOnOrForwardPlan(frustum.leftFace) &&
+	//		isOnOrForwardPlan(frustum.rightFace) &&
+	//		isOnOrForwardPlan(frustum.topFace) &&
+	//		isOnOrForwardPlan(frustum.bottomFace) &&
+	//		isOnOrForwardPlan(frustum.nearFace) &&
+	//		isOnOrForwardPlan(frustum.farFace));
+	//}
 
 	void node::deinit()
 	{

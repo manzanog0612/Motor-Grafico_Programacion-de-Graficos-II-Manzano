@@ -40,7 +40,7 @@ namespace engine
 		this->distance = distance;
 	}
 
-	glm::vec3 plane::GetNormal()
+	glm::vec3 plane::GetNormal() const
 	{
 		return normal;
 	}

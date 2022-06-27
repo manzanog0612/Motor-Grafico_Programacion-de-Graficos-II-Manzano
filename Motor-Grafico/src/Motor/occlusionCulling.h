@@ -19,7 +19,8 @@ namespace engine
 		 
 		static bool IsOnView(std::vector<glm::vec3> aabb);
 		static void SetCamera(camera* camera);
-		
+
+
 		static plane up;
 		static plane down;
 		static plane left;
