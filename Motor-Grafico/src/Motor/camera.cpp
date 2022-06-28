@@ -100,8 +100,6 @@ namespace engine
 			near = 0.1f;
 			far = 500.0f;
 
-			createFrustumFromCamera(aspect, fov, near, far);
-
 			projectionMatrix = glm::perspective(fov, aspect, near, far);
 			break;
 		default:
@@ -156,23 +154,6 @@ namespace engine
 	void camera::setCameraPosToRenderer()
 	{
 		currentRenderer->setViewPosition(pos);
-	}
-
-	Frustum camera::createFrustumFromCamera(float aspect, float fovY, float zNear, float zFar)
-	{
-		Frustum frustum;
-		const float halfVSide = zFar * tanf(fovY * .5f);
-		const float halfHSide = halfVSide * aspect;
-		const glm::vec3 frontMultFar = zFar * Front;
-
-		frustum.nearFace = { Front + zNear * Front, Front };
-		frustum.farFace = { getPos() + frontMultFar, Front };
-		frustum.rightFace = { getPos(),	glm::cross(Up,frontMultFar + Right * halfHSide) };
-		frustum.leftFace = { getPos(), glm::cross(frontMultFar - Right * halfHSide, Up) };
-		frustum.topFace = { getPos(), glm::cross(Right, frontMultFar - Up * halfVSide) };
-		frustum.bottomFace = { getPos(), glm::cross(frontMultFar + Up * halfVSide, Right) };
-
-		return frustum;
 	}
 
 	void camera::updateCameraVectors()
