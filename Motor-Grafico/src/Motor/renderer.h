@@ -85,6 +85,9 @@ namespace engine
 		glm::vec4 clearColor;
 		glm::mat4 viewMatrix;
 		glm::mat4 projectionMatrix;
+		textureData* defaultDiffuseMap;
+		textureData* defaultSpecularMap;
+
 	};
 }
 #endif

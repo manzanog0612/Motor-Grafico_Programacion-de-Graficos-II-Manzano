@@ -5,6 +5,7 @@
 //#include "glfw3.h"
 #include "GLEW/glew.h"
 #include "GLFW/glfw3.h"
+#include "textureImporter.h"
 
 using namespace std;
 using namespace glm;
@@ -30,9 +31,8 @@ namespace engine
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		//glEnable(GL_CULL_FACE);
-		//glCullFace(GL_FRONT);
-		//glFrontFace(GL_CCW);
+		defaultDiffuseMap = new textureData(textureImporter::loadTexture("../res/assets/textures/defaultTexture.png", true));
+		defaultSpecularMap = new textureData(textureImporter::loadTexture("../res/assets/textures/defaultTexture.png", true));
 	}
 	renderer::~renderer()
 	{
@@ -134,6 +134,25 @@ namespace engine
 			shaderPro.setFloat(("material." + name + number).c_str(), i);
 			glBindTexture(GL_TEXTURE_2D, textures[i].id);
 		}
+
+		if (textures.size() == 0)
+		{
+			glActiveTexture(GL_TEXTURE0);
+
+			string number = std::to_string(1);
+			string name = "diffuse";
+
+			shaderPro.setFloat(("material." + name + number).c_str(), 0);
+			glBindTexture(GL_TEXTURE_2D, defaultDiffuseMap->ID);
+
+			glActiveTexture(GL_TEXTURE0 + 1);
+
+			name = "specular";
+
+			shaderPro.setFloat(("material." + name + number).c_str(), 1);
+			glBindTexture(GL_TEXTURE_2D, defaultSpecularMap->ID);
+		}
+
 		glActiveTexture(GL_TEXTURE0);
 
 		// draw mesh

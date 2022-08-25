@@ -30,21 +30,22 @@ namespace engine
 		void setChildren(vector<node*> children);
 		void setParent(node* parent);
 		void setDrawThisFrame(bool drawThosFrame);
+
 		void generateAABB();
 		void updateAABBWithChildren(node* child);
 		engine::aabb* getVolume();
 
 		string getName();
-		vector<glm::vec3> getLocalAABB(); 
+		//vector<glm::vec3> getLocalAABB(); 
 
 		float getRandomNumber(float min, float max);
 		node* getChildWithName(string name);
 
 		bool canDrawThisFrame();
-		void updateVisualAABBPositions();
+		//void updateVisualAABBPositions();
 
 		void setTransformations();
-		void addBoundsToVisualAABB(vector<glm::vec3> childAABB);
+		//void addBoundsToVisualAABB(vector<glm::vec3> childAABB);
 		void draw();
 		void deinit();
 	private:
@@ -54,16 +55,16 @@ namespace engine
 		vector<Mesh> meshes;
 		string name;
 
-		void setAABBView(vector<Mesh> meshes);
+		//void setAABBView(vector<Mesh> meshes);
 
-		vector<glm::vec3> aabb;
-		vector<glm::vec3> localAABB;
-		vector<glm::vec3> aabbPositions;
+		//vector<glm::vec3> aabb;
+		//vector<glm::vec3> localAABB;
+		//vector<glm::vec3> aabbPositions;
 
 		engine::aabb* localVolume;
 		engine::aabb* volume;
 
-		shape* aabbShapes[AMOUNT_BOUNDS];
+		//shape* aabbShapes[AMOUNT_BOUNDS];
 
 		bool drawThisFrame;
 	};
