@@ -26,6 +26,9 @@ private:
 	
 	engine::sprite* floor;
 	engine::sprite* conteiner2;
+	engine::sprite* planeLeft;
+	engine::sprite* planeCenter;
+	engine::sprite* planeRight;
 	engine::node* testModel;
 	engine::pointLight* pointLight[AMOUNT_POINT_LIGHTS];
 	engine::shape* pointLightBox[AMOUNT_POINT_LIGHTS];

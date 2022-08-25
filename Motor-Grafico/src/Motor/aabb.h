@@ -31,9 +31,12 @@ namespace engine
 		~aabb();
 
 		bool isOnFrustum(glm::mat4 worldModel) override;
+		void update(glm::vec3 min, glm::vec3 max);
 
 		glm::vec3 center;
 		glm::vec3 extents;
+		glm::vec3 min;
+		glm::vec3 max;
 	private:
 		bool isOnPlane(plane plane) override;
 	};

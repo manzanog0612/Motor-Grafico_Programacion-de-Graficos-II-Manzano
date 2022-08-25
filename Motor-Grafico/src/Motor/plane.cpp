@@ -93,6 +93,6 @@ namespace engine
 	{
 		float d0 = GetDistanceToPoint(point1);
 		float d1 = GetDistanceToPoint(point2);
-		return (d0 > 0.0f && d1 > 0.0f) || (d0 <= 0.0f && d1 <= 0.0f);;
+		return (d0 > 0.0f && d1 > 0.0f) || (d0 <= 0.0f && d1 <= 0.0f);
 	}
 }

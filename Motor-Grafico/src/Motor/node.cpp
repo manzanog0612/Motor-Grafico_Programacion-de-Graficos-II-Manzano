@@ -25,33 +25,39 @@ namespace engine
 		return children.size();
 	}
 
-	void node::setDraw()
+	void node::setTransformations()
 	{
 		drawThisFrame = false;
+
+		if (meshes.size() > 0)
+		{
+			volume->update(localVolume->min, localVolume->max);
+		}
 
 		for (int i = 0; i < getChildrenAmount(); i++)
 		{
 			children[i]->setWorldModelWithParentModel(worldModel);
-			children[i]->setDraw();
-			addBoundsToAABB(children[i]->getLocalAABB());
-			updateAABBPositions();
+			children[i]->setTransformations();
+
+			updateAABBWithChildren(children[i]);
+
+			addBoundsToVisualAABB(children[i]->getLocalAABB());
+			updateVisualAABBPositions();
 
 			if (children[i]->canDrawThisFrame())
 			{
 				drawThisFrame = true;
-				draw();
 			}
 		}
 
 		if (getChildrenAmount() == 0)
 		{
-			updateAABBPositions();
+			updateVisualAABBPositions();
 		}
 
-		if (!drawThisFrame && meshes.size()>0 && volume->isOnFrustum(worldModel))
+		if (!drawThisFrame && meshes.size() > 0 && volume->isOnFrustum(worldModel))
 		{
 			drawThisFrame = true;
-			draw();
 		}
 
 		if (!drawThisFrame)
@@ -63,7 +69,7 @@ namespace engine
 		}
 	}
 
-	void node::addBoundsToAABB(vector<glm::vec3> childAABB)
+	void node::addBoundsToVisualAABB(vector<glm::vec3> childAABB)
 	{
 		if (childAABB.size() < 1)
 		{
@@ -96,27 +102,30 @@ namespace engine
 
 	void node::draw()
 	{		
-		_renderer->setMVP(worldModel);
-		
-		for (int i = 0; i < meshes.size(); i++)
+		if (drawThisFrame)
 		{
-			_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
-		}
+			_renderer->setMVP(worldModel);
 
-		//draw of aabb view
-		if (localAABB.size() > 0)
-		{
-			for (int i = 0; i < AMOUNT_BOUNDS; i++)
+			for (int i = 0; i < meshes.size(); i++)
 			{
-				aabbShapes[i]->draw(aabbShapes[i]->getModel());
+				_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
+			}
+
+			//draw of aabb view
+			if (localAABB.size() > 0)
+			{
+				for (int i = 0; i < AMOUNT_BOUNDS; i++)
+				{
+					aabbShapes[i]->draw(aabbShapes[i]->getModel());
+				}
 			}
 		}
-	}
 
-	//void node::drawAsParent(Frustum frustum)
-	//{
-	//	setTransformations(frustum);
-	//}
+		for (int i = 0; i < children.size(); i++)
+		{
+			children[i]->draw();
+		}
+	}
 
 	float node::getRandomNumber(float min, float max)
 	{
@@ -211,13 +220,7 @@ namespace engine
 		return drawThisFrame;
 	}
 
-	//void node::allowDrawThisFrame()
-	//{
-	//	drawThisFrame = true;
-	//	draw();
-	//}
-
-	void node::updateAABBPositions()
+	void node::updateVisualAABBPositions()
 	{
 		if (localAABB.size() > 0)
 		{
@@ -244,6 +247,11 @@ namespace engine
 		this->parent = parent;
 	}
 
+	void node::setDrawThisFrame(bool drawThisFrame)
+	{
+		this->drawThisFrame = drawThisFrame;
+	}
+
 	void node::generateAABB()
 	{
 		if (meshes.size() > 0)
@@ -268,8 +276,49 @@ namespace engine
 				}
 			}
 
+			localVolume = new engine::aabb(minAABB, maxAABB);
 			volume = new engine::aabb(minAABB, maxAABB);
 		}
+	}
+
+	void node::updateAABBWithChildren(node* child)
+	{
+		if (child->meshes.size() > 0)
+		{
+			engine::aabb* childVolume = child->getVolume();
+
+			glm::vec3 minAABB = glm::vec3(std::numeric_limits<float>::max());
+			glm::vec3 maxAABB = glm::vec3(std::numeric_limits<float>::min());
+
+			if (meshes.size() > 0)
+			{
+				minAABB.x = glm::min(volume->min.x, childVolume->min.x);
+				minAABB.y = glm::min(volume->min.y, childVolume->min.y);
+				minAABB.z = glm::min(volume->min.z, childVolume->min.z);
+
+				maxAABB.x = glm::max(volume->max.x, childVolume->max.x);
+				maxAABB.y = glm::max(volume->max.y, childVolume->max.y);
+				maxAABB.z = glm::max(volume->max.z, childVolume->max.z);
+
+				volume->update(minAABB, maxAABB);
+			}
+			else
+			{ 
+				if (volume == NULL)
+				{
+					volume = new engine::aabb(childVolume->min, childVolume->max);
+				}
+				else
+				{
+					volume->update(childVolume->min, childVolume->max);
+				}
+			}
+		}
+	}
+
+	engine::aabb* node::getVolume()
+	{
+		return localVolume;
 	}
 
 	void node::setAABBView(vector<Mesh> meshes)
@@ -314,5 +363,8 @@ namespace engine
 			children[i]->deinit();
 			delete children[i];
 		}
+
+		delete volume;
+		delete localVolume;
 	}
 }

@@ -42,6 +42,10 @@ game::game()
 	t = 0;
 	currentColorIndex = 5;
 
+	planeLeft = nullptr;
+	planeCenter = nullptr;
+	planeRight = nullptr;
+
 	//archerRunLeftAnimationID = 0;
 	//archerRunRightAnimationID = 0;
 	//archerRunUpAnimationID = 0;
@@ -73,7 +77,11 @@ void game::draw()
 	spotLightBox->draw();
 	directionalLight->draw();
 
-	testModel->setDraw();
+	planeLeft->draw();
+	planeCenter->draw();
+	planeRight->draw();
+
+	testModel->draw();
 
 	//triangle->draw();
 	//archer->draw();
@@ -286,6 +294,8 @@ void game::update()
 		testModel->setPos(entityPos);
 	}
 	
+	testModel->setTransformations();
+
 	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
 	{
 		pointLightBox[i]->setPos(pointLight[i]->getPos());
@@ -320,6 +330,7 @@ void game::update()
 	{
 		thirdPersonCam->updateTargetPos(conteiner2->getPos());
 	}
+
 
 	//spotLight->setDirection(actualCam->getFront());
 	//if (isKeyDown(ENGINE_KEY_ENTER))
@@ -470,6 +481,21 @@ void game::init()
 	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 	floor->setPos(glm::vec3(0,0,0));
 
+	planeLeft = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
+	planeLeft->setScale(glm::vec3(3, 3, 1));
+	planeLeft->setRot(glm::vec3(0, glm::radians(-90.0f), 0));
+	planeLeft->setPos(glm::vec3(-3, 1.5f, -2));
+
+	planeCenter = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
+	planeCenter->setScale(glm::vec3(3, 3, 1));
+	planeCenter->setRot(glm::vec3(0, 0, 0));
+	planeCenter->setPos(glm::vec3(0, 1.5f, -5));
+	
+	planeRight = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
+	planeRight->setScale(glm::vec3(3, 3, 1));
+	planeRight->setRot(glm::vec3(0, glm::radians(90.0f), 0));
+	planeRight->setPos(glm::vec3(3, 1.5f, -2));
+
 	/*archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
 	
 	engine::atlasCutConfig archerRunAtlasConfig;
@@ -545,6 +571,15 @@ void game::deInit()
 
 	testModel->deinit();
 	delete testModel;
+
+	planeLeft->deinit();
+	delete planeLeft;
+
+	planeCenter->deinit();
+	delete planeCenter;
+
+	planeRight->deinit();
+	delete planeRight;
 
 	//archer->deinit();
 	//delete archer;

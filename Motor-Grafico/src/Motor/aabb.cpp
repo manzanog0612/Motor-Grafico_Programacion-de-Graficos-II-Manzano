@@ -12,9 +12,13 @@ namespace engine
 
 	aabb::aabb(glm::vec3 min, glm::vec3 max)
 	{
+		this->min = min;
+		this->max = max;
 		center = glm::vec3((max + min) * .5f);
 		extents = glm::vec3(max.x - center.x, max.y - center.y, max.z - center.z);
 	}
+
+
 
 	aabb::aabb(glm::vec3 center, float extX, float extY, float extZ)
 	{
@@ -56,12 +60,18 @@ namespace engine
 			globalAABB.isOnPlane(OcclusionCulling::front));
 	}
 
+	void aabb::update(glm::vec3 min, glm::vec3 max)
+	{
+		this->min = min;
+		this->max = max;
+		center = glm::vec3((max + min) * .5f);
+		extents = glm::vec3(max.x - center.x, max.y - center.y, max.z - center.z);
+	}
+
 	bool aabb::isOnPlane(plane plane)
 	{
 		float r = extents.x * std::abs(plane.GetNormal().x) + extents.y * std::abs(plane.GetNormal().y) + extents.z * std::abs(plane.GetNormal().z);
 
 		return -r <= plane.GetDistanceToPoint(center);
 	}
-
-	
 }

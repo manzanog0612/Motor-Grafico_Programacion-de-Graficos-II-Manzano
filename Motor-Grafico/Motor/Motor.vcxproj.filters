@@ -35,6 +35,9 @@
     <Filter Include="MyImporter">
       <UniqueIdentifier>{8b02ec84-f4a7-4f76-a119-248d83317f8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BSP">
+      <UniqueIdentifier>{0689b607-b59c-4c1c-8b81-35d58faaede4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Motor\baseGame.cpp">
@@ -129,6 +132,9 @@
     </ClCompile>
     <ClCompile Include="..\src\Motor\plane.cpp">
       <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Motor\Shaders\BSPManager.cpp">
+      <Filter>BSP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -335,6 +341,9 @@
     </ClInclude>
     <ClInclude Include="..\src\Motor\plane.h">
       <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Motor\BSPManager.h">
+      <Filter>BSP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
