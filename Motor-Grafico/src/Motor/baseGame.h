@@ -21,6 +21,8 @@
 #include "spotLight.h"
 #include "Model.h"
 #include "occlusionCulling.h"
+#include "plane.h"
+#include "BSPManager.h"
 
 namespace engine
 {

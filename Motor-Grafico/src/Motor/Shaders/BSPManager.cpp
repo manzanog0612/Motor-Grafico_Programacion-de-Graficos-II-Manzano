@@ -2,21 +2,29 @@
 
 namespace engine
 {
-	void BSPManager::setCameraEntityForCheck(entity* camera)
+	void BSPManager::setCameraEntityForCheck(engine::camera* camera)
 	{
-		this->camera = camera;
+		this->_camera = camera;
 	}
 
-	void BSPManager::addEnityToTackList(node* entity)
+	void BSPManager::addEnityToTrackList(node* entity)
 	{
 		entities.push_back(entity);
 	}
 
+	void BSPManager::addPlaneToTrackList(plane* plane)
+	{
+		planes.push_back(plane);
+	}
+
 	void BSPManager::flagAllTrackEntities()
 	{
-		for (int i = 0; i < entities.size(); i++)
+		for (int i = 0; i < planes.size(); i++)
 		{
-
+			for (int j = 0; j < entities.size(); j++)
+			{
+				entities[j]->setDrawThisFrame(planes[i]->SameSide(entities[j]->getPos(), this->_camera->getPos()));
+			}
 		}
 	}
 }

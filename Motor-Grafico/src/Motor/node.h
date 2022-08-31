@@ -33,6 +33,7 @@ namespace engine
 
 		void generateAABB();
 		void updateAABBWithChildren(node* child);
+		engine::aabb* getLocalVolume();
 		engine::aabb* getVolume();
 
 		string getName();

@@ -29,6 +29,10 @@ private:
 	engine::sprite* planeLeft;
 	engine::sprite* planeCenter;
 	engine::sprite* planeRight;
+	engine::plane* planeL;
+	engine::plane* planeC;
+	engine::plane* planeR;
+	engine::BSPManager* bpsManager;
 	engine::node* testModel;
 	engine::pointLight* pointLight[AMOUNT_POINT_LIGHTS];
 	engine::shape* pointLightBox[AMOUNT_POINT_LIGHTS];

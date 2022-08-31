@@ -8,7 +8,7 @@ namespace engine
 {
 	node::node()
 	{
-		drawThisFrame = false;
+		drawThisFrame = true;
 	}
 
 	node::~node()
@@ -27,8 +27,6 @@ namespace engine
 
 	void node::setTransformations()
 	{
-		drawThisFrame = false;
-
 		if (meshes.size() > 0)
 		{
 			volume->update(localVolume->min, localVolume->max);
@@ -44,10 +42,10 @@ namespace engine
 			//addBoundsToVisualAABB(children[i]->getLocalAABB());
 			//updateVisualAABBPositions();
 
-			if (children[i]->canDrawThisFrame())
-			{
-				drawThisFrame = true;
-			}
+			/////if (children[i]->canDrawThisFrame())
+			/////{
+			/////	drawThisFrame = true;
+			/////}
 		}
 
 		//if (getChildrenAmount() == 0)
@@ -55,18 +53,10 @@ namespace engine
 		//	updateVisualAABBPositions();
 		//}
 
-		if (!drawThisFrame && meshes.size() > 0 && volume->isOnFrustum(worldModel))
-		{
-			drawThisFrame = true;
-		}
-
-		if (!drawThisFrame)
-		{
-			if (name == "pCylinder4" || name == "pCylinder2" || name == "pCylinder1" || name == "group1" || name == "pCube2")
-			{
-				cout << name << " node not drawn" << endl;
-			}
-		}
+		/////if (!drawThisFrame && meshes.size() > 0 && volume->isOnFrustum(worldModel))
+		/////{
+		/////	drawThisFrame = true;
+		/////}
 	}
 
 	//void node::addBoundsToVisualAABB(vector<glm::vec3> childAABB)
@@ -102,13 +92,21 @@ namespace engine
 
 	void node::draw()
 	{		
-		if (drawThisFrame)
+		if (drawThisFrame && volume != NULL && volume->isOnFrustum(worldModel))
 		{
-			_renderer->setMVP(worldModel);
+			if (meshes.size() > 0)
+			{ 
+				_renderer->setMVP(worldModel);
 
-			for (int i = 0; i < meshes.size(); i++)
+				for (int i = 0; i < meshes.size(); i++)
+				{
+					_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
+				}
+			}
+
+			for (int i = 0; i < children.size(); i++)
 			{
-				_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
+				children[i]->draw();
 			}
 
 			//draw of aabb view
@@ -120,10 +118,12 @@ namespace engine
 			//	}
 			//}
 		}
-
-		for (int i = 0; i < children.size(); i++)
+		else		
 		{
-			children[i]->draw();
+			if (name == "pCylinder4" || name == "pCylinder2" || name == "pCylinder1" || name == "group1" || name == "pCube2")
+			{
+				cout << name << " node not drawn" << endl;
+			}
 		}
 	}
 
@@ -250,6 +250,11 @@ namespace engine
 	void node::setDrawThisFrame(bool drawThisFrame)
 	{
 		this->drawThisFrame = drawThisFrame;
+
+		for (int i = 0; i < children.size(); i++)
+		{
+			children[i]->setDrawThisFrame(drawThisFrame);
+		}
 	}
 
 	void node::generateAABB()
@@ -283,7 +288,7 @@ namespace engine
 
 	void node::updateAABBWithChildren(node* child)
 	{
-		if (child->meshes.size() > 0)
+		if (child->getVolume() != NULL)
 		{
 			engine::aabb* childVolume = child->getVolume();
 
@@ -316,9 +321,14 @@ namespace engine
 		}
 	}
 
-	engine::aabb* node::getVolume()
+	engine::aabb* node::getLocalVolume()
 	{
 		return localVolume;
+	}
+
+	engine::aabb* node::getVolume()
+	{
+		return volume;
 	}
 
 	//void node::setAABBView(vector<Mesh> meshes)

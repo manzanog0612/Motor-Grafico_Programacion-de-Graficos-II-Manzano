@@ -46,6 +46,10 @@ game::game()
 	planeCenter = nullptr;
 	planeRight = nullptr;
 
+	planeL = nullptr;
+
+	bpsManager = nullptr;
+
 	//archerRunLeftAnimationID = 0;
 	//archerRunRightAnimationID = 0;
 	//archerRunUpAnimationID = 0;
@@ -63,6 +67,7 @@ game::~game()
 
 void game::draw()
 {
+	bpsManager->flagAllTrackEntities();
 	//tileMap->draw();
 	floor->draw();
 	conteiner2->draw();
@@ -175,8 +180,7 @@ void game::update()
 	else if (isKeyPressed(ENGINE_KEY_5))
 	{
 		selectedEntity = conteiner2;
-		nodeName = "pCylinder4";
-		
+		nodeName = "pCylinder4";		
 	}
 	
 	glm::vec3 rotation = glm::vec3(0, 0, 0);
@@ -485,6 +489,7 @@ void game::init()
 	planeLeft->setScale(glm::vec3(3, 3, 1));
 	planeLeft->setRot(glm::vec3(0, glm::radians(-90.0f), 0));
 	planeLeft->setPos(glm::vec3(-3, 1.5f, -2));
+	planeL = new engine::plane(glm::vec3(-1, 0, 0), planeLeft->getPos());
 
 	planeCenter = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
 	planeCenter->setScale(glm::vec3(3, 3, 1));
@@ -495,6 +500,11 @@ void game::init()
 	planeRight->setScale(glm::vec3(3, 3, 1));
 	planeRight->setRot(glm::vec3(0, glm::radians(90.0f), 0));
 	planeRight->setPos(glm::vec3(3, 1.5f, -2));
+
+	bpsManager = new engine::BSPManager();
+	bpsManager->setCameraEntityForCheck(actualCam);
+	bpsManager->addEnityToTrackList(testModel);
+	bpsManager->addPlaneToTrackList(planeL);
 
 	/*archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
 	
@@ -536,7 +546,6 @@ void game::init()
 	archer->setScale(32, 32, 1);
 	archer->setPos(-80, 20, 0);*/
 
-	
 	//changeClearColor(glm::vec4(.25, .25, .5, 1));
 	//addCollider(archer, false);
 	//addCollider(awesomeface, false);
@@ -580,6 +589,10 @@ void game::deInit()
 
 	planeRight->deinit();
 	delete planeRight;
+
+	delete planeL;
+
+	delete bpsManager;
 
 	//archer->deinit();
 	//delete archer;
