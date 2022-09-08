@@ -489,7 +489,7 @@ void game::init()
 	planeLeft->setScale(glm::vec3(3, 3, 1));
 	planeLeft->setRot(glm::vec3(0, glm::radians(-90.0f), 0));
 	planeLeft->setPos(glm::vec3(-3, 1.5f, -2));
-	planeL = new engine::plane(glm::vec3(-1, 0, 0), planeLeft->getPos());
+	planeL = new engine::plane(glm::vec3(1, 0, 0), planeLeft->getPos());
 
 	planeCenter = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
 	planeCenter->setScale(glm::vec3(3, 3, 1));

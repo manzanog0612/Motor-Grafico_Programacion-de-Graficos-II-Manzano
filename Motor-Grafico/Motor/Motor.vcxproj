@@ -22,6 +22,7 @@
     <ClCompile Include="..\src\Motor\aabb.cpp" />
     <ClCompile Include="..\src\Motor\animation.cpp" />
     <ClCompile Include="..\src\Motor\baseGame.cpp" />
+    <ClCompile Include="..\src\Motor\BSPManager.cpp" />
     <ClCompile Include="..\src\Motor\camera.cpp" />
     <ClCompile Include="..\src\Motor\collisionManager.cpp" />
     <ClCompile Include="..\src\Motor\directionalLight.cpp" />
@@ -39,7 +40,6 @@
     <ClCompile Include="..\src\Motor\pointLight.cpp" />
     <ClCompile Include="..\src\Motor\renderer.cpp" />
     <ClCompile Include="..\src\Motor\shader.cpp" />
-    <ClCompile Include="..\src\Motor\Shaders\BSPManager.cpp" />
     <ClCompile Include="..\src\Motor\shape.cpp" />
     <ClCompile Include="..\src\Motor\spotLight.cpp" />
     <ClCompile Include="..\src\Motor\sprite.cpp" />

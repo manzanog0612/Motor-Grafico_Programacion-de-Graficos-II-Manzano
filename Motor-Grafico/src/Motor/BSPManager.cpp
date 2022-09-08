@@ -1,4 +1,4 @@
-#include "../BSPManager.h"
+#include "BSPManager.h"
 
 namespace engine
 {
@@ -21,10 +21,15 @@ namespace engine
 	{
 		for (int i = 0; i < planes.size(); i++)
 		{
-			for (int j = 0; j < entities.size(); j++)
+			if (!planes[i]->GetSide(_camera->getPos()))
 			{
-				entities[j]->setDrawThisFrame(planes[i]->SameSide(entities[j]->getPos(), this->_camera->getPos()));
+				planes[i]->Flip();
 			}
+		}
+
+		for (int i = 0; i < entities.size(); i++)
+		{
+			entities[i]->checkBSP(planes, this->_camera->getPos());
 		}
 	}
 }

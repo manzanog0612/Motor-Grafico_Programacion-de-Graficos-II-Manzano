@@ -133,7 +133,7 @@
     <ClCompile Include="..\src\Motor\plane.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Motor\Shaders\BSPManager.cpp">
+    <ClCompile Include="..\src\Motor\BSPManager.cpp">
       <Filter>BSP</Filter>
     </ClCompile>
   </ItemGroup>
