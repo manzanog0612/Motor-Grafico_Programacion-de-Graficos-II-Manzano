@@ -5,21 +5,6 @@
 
 namespace engine
 {
-	void Model::Draw(Shader& shader, glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix)
-	{
-		
-		unsigned int modelLoc = glGetUniformLocation(shader.ID, "model");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-
-		unsigned int viewLoc = glGetUniformLocation(shader.ID, "view");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
-
-		unsigned int projectionLoc = glGetUniformLocation(shader.ID, "projection");
-		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
-
-		for (unsigned int i = 0; i < meshes.size(); i++)
-			meshes[i].Draw(shader);
-	}
 	void Model::loadModel(string path)
 	{
 		Assimp::Importer import;
@@ -32,51 +17,101 @@ namespace engine
 		}
 		directory = path.substr(0, path.find_last_of('/'));
 
-		baseNode = new node();
-		processNode(scene->mRootNode, scene, baseNode);
-		baseNode->setParent(NULL);
+		sceneNode = new node();
+		processNode(scene->mRootNode, scene, sceneNode, glm::mat4(1.f));
+		sceneNode->setParent(NULL);
 	}
-	void Model::processNode(aiNode* node, const aiScene* scene, engine::node* myNode)
+	void Model::processNode(aiNode* node, const aiScene* scene, engine::node* parent, glm::mat4 mat)
 	{
+		engine::node* myNode = new engine::node();
+		std::string name = node->mName.C_Str();		
+
 		// process all the node's meshes (if any)
-		vector<Mesh> nodeMeshes;
-
-		for (unsigned int i = 0; i < node->mNumMeshes; i++)
+		if (name.find("$AssimpFbx$") == -1 && node->mNumMeshes == 0)
 		{
-			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-			Mesh newMesh = processMesh(mesh, scene);
-			meshes.push_back(newMesh);
-			nodeMeshes.push_back(newMesh);
-		}//_$AssimpFbx$_RotationPivot pCube1
+			aiMatrix4x4 matrix = node->mTransformation;
+
+			mat[0][0] = (float)matrix.a1; mat[0][1] = (float)matrix.b1;  mat[0][2] = (float)matrix.c1; mat[0][3] = (float)matrix.d1;
+			mat[1][0] = (float)matrix.a2; mat[1][1] = (float)matrix.b2;  mat[1][2] = (float)matrix.c2; mat[1][3] = (float)matrix.d2;
+			mat[2][0] = (float)matrix.a3; mat[2][1] = (float)matrix.b3;  mat[2][2] = (float)matrix.c3; mat[2][3] = (float)matrix.d3;
+			mat[3][0] = (float)matrix.a4; mat[3][1] = (float)matrix.b4;  mat[3][2] = (float)matrix.c4; mat[3][3] = (float)matrix.d4;
 		
-		myNode->setMeshes(nodeMeshes);
-		myNode->setName(node->mName.C_Str());
+			myNode->setMatrix(mat);
+			//if (name.find("RotationPivot") != -1 && name.find("Inverse") == -1)
+			//{
+			//	aiMatrix4x4 matrix = node->mTransformation;
+			//
+			//	mat[0][0] = (float)matrix.a1; mat[0][1] = (float)matrix.b1;  mat[0][2] = (float)matrix.c1; mat[0][3] = (float)matrix.d1;
+			//	mat[1][0] = (float)matrix.a2; mat[1][1] = (float)matrix.b2;  mat[1][2] = (float)matrix.c2; mat[1][3] = (float)matrix.d2;
+			//	mat[2][0] = (float)matrix.a3; mat[2][1] = (float)matrix.b3;  mat[2][2] = (float)matrix.c3; mat[2][3] = (float)matrix.d3;
+			//	mat[3][0] = (float)matrix.a4; mat[3][1] = (float)matrix.b4;  mat[3][2] = (float)matrix.c4; mat[3][3] = (float)matrix.d4;
+			//}
+			//if (name.find("Pivot") == -1)
+			//{
+			//	glm::mat4 m;
+			//	aiMatrix4x4 matrix = node->mTransformation;
+			//
+			//	m[0][0] = (float)matrix.a1; m[0][1] = (float)matrix.b1;  m[0][2] = (float)matrix.c1; m[0][3] = (float)matrix.d1;
+			//	m[1][0] = (float)matrix.a2; m[1][1] = (float)matrix.b2;  m[1][2] = (float)matrix.c2; m[1][3] = (float)matrix.d2;
+			//	m[2][0] = (float)matrix.a3; m[2][1] = (float)matrix.b3;  m[2][2] = (float)matrix.c3; m[2][3] = (float)matrix.d3;
+			//	m[3][0] = (float)matrix.a4; m[3][1] = (float)matrix.b4;  m[3][2] = (float)matrix.c4; m[3][3] = (float)matrix.d4;
+			//
+			//	mat *= m;
+			//}
+		}
+		else
+		{
+			if (node->mNumMeshes > 0)
+			{
+				vector<Mesh> nodeMeshes;
+				for (unsigned int i = 0; i < node->mNumMeshes; i++)
+				{
+					aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+					nodeMeshes.push_back(processMesh(mesh, scene));
+				}
 
-		glm::mat4 mat;
+				myNode->setMeshes(nodeMeshes);
+			}
+		}
 
-		mat[0].x = node->mTransformation.a1; mat[1].x = node->mTransformation.b1; mat[2].x = node->mTransformation.c1; mat[3].x = node->mTransformation.d1;
-		mat[0].y = node->mTransformation.a2; mat[1].y = node->mTransformation.b2; mat[2].y = node->mTransformation.c2; mat[3].y = node->mTransformation.d2;
-		mat[0].z = node->mTransformation.a3; mat[1].z = node->mTransformation.b3; mat[2].z = node->mTransformation.c3; mat[3].z = node->mTransformation.d3;
-		mat[0].w = node->mTransformation.a4; mat[1].w = node->mTransformation.b4; mat[2].w = node->mTransformation.c4; mat[3].w = node->mTransformation.d4;
+		if (name.find("bspPlane") != -1 || name.find("plane") != -1)
+		{
+			//myNode->setMatrix(mat);
 
-		//myNode->setLocalModel(mat);
+			if (name.find("bspPlane") != -1)
+			{
+				bspPlanes.push_back(myNode);
+			}
+		}
 
 		// then do the same for each of its children
 		vector<engine::node*> childrenNodes;
-		childrenNodes.clear();
 
-		for (unsigned int i = 0; i < node->mNumChildren; i++)
+		for (int i = 0; i < node->mNumChildren; i++)
 		{
-			engine::node* myNodeChild = new engine::node();
-			processNode(node->mChildren[i], scene, myNodeChild);
-
-			myNodeChild->setParent(myNode);
-			myNodeChild->UseLocalMatrix();
-			childrenNodes.push_back(myNodeChild);
+			processNode(node->mChildren[i], scene, myNode, mat);
 		}
 
-		if (childrenNodes.size() > 0)
-			myNode->setChildren(childrenNodes);
+		//if (name.find("$AssimpFbx$") == -1)
+		//{
+			//myNode->setMatrix(mat);
+			parent->addChild(myNode);
+			myNode->setName(name);
+			myNode->setParent(parent);
+		//}
+
+		//for (unsigned int i = 0; i < node->mNumChildren; i++)
+		//{
+		//	engine::node* myNodeChild = new engine::node();
+		//	processNode(node->mChildren[i], scene, myNodeChild);
+		//
+		//	myNodeChild->setParent(myNode);
+		//	myNodeChild->UseLocalMatrix();
+		//	childrenNodes.push_back(myNodeChild);
+		//}
+
+		//if (childrenNodes.size() > 0)
+		//	myNode->setChildren(childrenNodes);
 	}
 	Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	{

@@ -10,10 +10,10 @@ namespace engine
 	{
 	}
 
-	node* modelImporter::chargeBaseNodeInfo(std::string path)
+	Model* modelImporter::chargeBaseNodeInfo(std::string path)
 	{
 		Model* newModel = new engine::Model(path);
 
-		return newModel->GetBaseNode();
+		return newModel;
 	}
 }

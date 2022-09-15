@@ -27,18 +27,20 @@ namespace engine
         {
             loadModel(path);
         }
-        void Draw(Shader& shader, glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix);
-        vector<Mesh> GetMeshes() { return meshes; };
-        node* GetBaseNode() { return baseNode; };
+        node* GetBaseNode() { return sceneNode; };
+        vector<node*> GetNodes() { return nodes; };
+        vector<node*> GetBSPPlanes() { return bspPlanes; };
+
     private:
         // model data
         vector<Texture> textures_loaded;
-        vector<Mesh> meshes;
         string directory;
-        node* baseNode;
+        node* sceneNode;
+        vector <node*> nodes;
+        vector <node*> bspPlanes;
 
         void loadModel(string path);
-        void processNode(aiNode* node, const aiScene* scene, engine::node* myNode);
+        void processNode(aiNode* node, const aiScene* scene, engine::node* parent, glm::mat4 mat);
         Mesh processMesh(aiMesh* mesh, const aiScene* scene);
         vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type,
             string typeName);

@@ -29,10 +29,10 @@ namespace engine
 		void setMeshes(vector<Mesh> meshes);
 		void setName(string name);
 		void setChildren(vector<node*> children);
+		void addChild(node* child);
 		void setParent(node* parent);
 		void setDrawThisFrame(bool drawThosFrame);
 		void checkBSP(vector<plane*> planes, glm::vec3 camPos);
-		bool checkVolumeOnSameSide(plane* plane, glm::vec3 camPos, bool draw);
 		void drawPosition(glm::vec3 pos);
 
 		void generateAABB();
@@ -52,6 +52,8 @@ namespace engine
 		void setTransformations();
 		void addBoundsToVisualAABB(vector<glm::vec3> childAABB);
 		void draw();
+		void drawForced();
+
 		void deinit();
 	private:
 		vector<node*> children;

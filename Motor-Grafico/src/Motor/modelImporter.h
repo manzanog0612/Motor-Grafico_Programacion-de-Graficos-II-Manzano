@@ -13,7 +13,7 @@ namespace engine
 	public:
 		modelImporter();
 		~modelImporter();
-		static node* chargeBaseNodeInfo(std::string path);
+		static Model* chargeBaseNodeInfo(std::string path);
 	};
 }
 #endif

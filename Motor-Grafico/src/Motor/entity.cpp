@@ -3,6 +3,8 @@
 
 namespace engine
 {
+	const float deg2rad = (glm::pi<float>() * 2.0f) / 360.0f;
+
 	entity::entity()
 	{
 		_renderer = NULL;
@@ -31,16 +33,151 @@ namespace engine
 
 	}
 
+	glm::vec3 entity::getForward()
+	{
+		glm::quat rotation = eulerToQuat(v3localRot);
+
+		return quatToVec(rotation, glm::vec3(0.f, 0.f, 1.f));
+	}
+
+	glm::vec3 entity::toEulerRad(glm::quat rot)
+	{
+		float sqw = rot.w * rot.w;
+		float sqx = rot.x * rot.x;
+		float sqy = rot.y * rot.y;
+		float sqz = rot.z * rot.z;
+		float unit = sqx + sqy + sqz + sqw;
+		float test = rot.x * rot.w - rot.y * rot.z;
+
+		glm::vec3 v = glm::vec3();
+
+		if (test > 0.4995f * unit)
+		{
+			v.y = 2.f * atan2(rot.y, rot.x);
+			v.x = glm::pi<float>() / 2.f;
+			v.z = 0.f;
+
+			return normalizeAngles(v * 57.29578f);
+		}
+		if (test < -0.4995f * unit)
+		{
+			v.y = -2.f * atan2(rot.y, rot.x);
+			v.x = -glm::pi<float>() / 2.f;
+			v.z = 0.f;
+
+			return normalizeAngles(v * 57.29578f);
+		}
+
+		glm::vec4 q = glm::vec4(rot.w, rot.z, rot.x, rot.y);
+		v.y = atan2(2.f * q.x * q.w + 2.f * q.y * q.z, 1.f - 2.f * (q.z * q.z + q.w * q.w));
+		v.x = asin(2.f * (q.x * q.z - q.w * q.y));
+		v.z = atan2(2.f * q.x * q.y + 2.f * q.z * q.w, 1.f - 2.f * (q.y * q.y + q.z * q.z));
+
+		return normalizeAngles(v * 57.29578f);
+	}
+
+	glm::vec3 entity::normalizeAngles(glm::vec3 angles)
+	{
+		angles.x = normalizeAngle(angles.x);
+		angles.y = normalizeAngle(angles.y);
+		angles.z = normalizeAngle(angles.z);
+
+		return angles;
+	}
+
+	float entity::normalizeAngle(float angle)
+	{
+		while (angle > 360.f)
+			angle -= 360.f;
+		while (angle < 0.f)
+			angle += 360.f;
+
+		return angle;
+	}
+
+	glm::quat entity::getRotationByMatrix(glm::mat4 mat)
+	{
+		glm::vec3 s = getScale(mat);
+
+		float m00 = mat[0].x / s.x;
+		float m01 = mat[0].y / s.y;
+		float m02 = mat[0].z / s.z;
+		float m10 = mat[1].x / s.x;
+		float m11 = mat[1].y / s.y;
+		float m12 = mat[1].z / s.z;
+		float m20 = mat[2].x / s.x;
+		float m21 = mat[2].y / s.y;
+		float m22 = mat[2].z / s.z;
+
+		glm::quat q = glm::quat();
+		q.w = glm::sqrt(glm::max(0.f, 1.f + m00 + m11 + m22)) / 2.f;
+		q.x = glm::sqrt(glm::max(0.f, 1.f + m00 - m11 - m22)) / 2.f;
+		q.y = glm::sqrt(glm::max(0.f, 1.f - m00 + m11 - m22)) / 2.f;
+		q.z = glm::sqrt(glm::max(0.f, 1.f - m00 - m11 + m22)) / 2.f;
+		q.x *= glm::sign(q.x * (m21 - m12));
+		q.y *= glm::sign(q.y * (m02 - m20));
+		q.z *= glm::sign(q.z * (m10 - m01));
+
+		float qMagnitude = glm::sqrt(q.w * q.w + q.x * q.x + q.y * q.y + q.z * q.z);
+		q.w /= qMagnitude;
+		q.x /= qMagnitude;
+		q.y /= qMagnitude;
+		q.z /= qMagnitude;
+
+		return q;
+	}
+
+	glm::quat entity::eulerToQuat(glm::vec3 euler)
+	{
+		euler *= deg2rad;
+
+		float cy = cos(euler.z * 0.5f);
+		float sy = sin(euler.z * 0.5f);
+		float cp = cos(euler.x * 0.5f);
+		float sp = sin(euler.x * 0.5f);
+		float cr = cos(euler.y * 0.5f);
+		float sr = sin(euler.y * 0.5f);
+
+		glm::quat q;
+		q.w = cr * cp * cy + sr * sp * sy;
+		q.x = cr * sp * cy + sr * cp * sy;
+		q.y = sr * cp * cy - cr * sp * sy;
+		q.z = cr * cp * sy - sr * sp * cy;
+		return q;
+	}
+
+	glm::vec3 entity::quatToVec(glm::quat quat, glm::vec3 vec)
+	{
+		float x2 = quat.x * 2.f;
+		float y2 = quat.y * 2.f;
+		float z2 = quat.z * 2.f;
+		float xx2 = quat.x * x2;
+		float yy2 = quat.y * y2;
+		float zz2 = quat.z * z2;
+		float xy2 = quat.x * y2;
+		float xz2 = quat.x * z2;
+		float yz2 = quat.y * z2;
+		float wx2 = quat.w * x2;
+		float wy2 = quat.w * y2;
+		float wz2 = quat.w * z2;
+
+		glm::vec3 res;
+		res.x = (1.f - (yy2 + zz2)) * vec.x + (xy2 - wz2) * vec.y + (xz2 + wy2) * vec.z;
+		res.y = (xy2 + wz2) * vec.x + (1.f - (xx2 + zz2)) * vec.y + (yz2 - wx2) * vec.z;
+		res.z = (xz2 - wy2) * vec.x + (yz2 + wx2) * vec.y + (1.f - (xx2 + yy2)) * vec.z;
+		return res;
+	}
+
 	void entity::updateModelMatrix()
 	{
 		if (useLocalMatrix)
 		{
-			localModel = localTranslate * localRotateY * localRotateX * localRotateZ * localScale;
+			localModel = localTranslate * localRotateX * localRotateY * localRotateZ * localScale;
 			worldModel = parentModel * localModel;
 		}
 		else
 		{
-			worldModel = localTranslate * localRotateY * localRotateX * localRotateZ * localScale;
+			worldModel = localTranslate * localRotateX * localRotateY * localRotateZ * localScale;
 		}
 	}
 	void entity::setPos(glm::vec3 pos)
@@ -58,6 +195,13 @@ namespace engine
 		setRotX(rot.x);
 		setRotY(rot.y);
 		setRotZ(rot.z);
+		updateModelMatrix();
+	}
+	void entity::setRotRadians(glm::vec3 rot)
+	{
+		setRotX(glm::radians(rot.x));
+		setRotY(glm::radians(rot.y));
+		setRotZ(glm::radians(rot.z));
 		updateModelMatrix();
 	}
 	void entity::setRot(float x, float y, float z)
@@ -121,30 +265,6 @@ namespace engine
 
 		updateModelMatrix();
 	}
-	void entity::setLocalModel(glm::mat4 localModel)
-	{
-		float magnitude0 = glm::sqrt(localModel[0].x * localModel[0].x + localModel[0].y * localModel[0].y + localModel[0].z * localModel[0].z);
-		float magnitude1 = glm::sqrt(localModel[1].x * localModel[1].x + localModel[1].y * localModel[1].y + localModel[1].z * localModel[1].z);
-		float magnitude2 = glm::sqrt(localModel[2].x * localModel[2].x + localModel[2].y * localModel[2].y + localModel[2].z * localModel[2].z);
-
-		setPos(localModel[3]);
-		localModel[3].x = 0;
-		localModel[3].y = 0;
-		localModel[3].z = 0;
-		setScale(glm::vec3(magnitude0, magnitude1, magnitude2));
-
-		float theta1 = glm::atan(localModel[2].y, localModel[2].z);
-		float c2 = glm::sqrt(localModel[0].x * localModel[0].x + localModel[1].x * localModel[1].x);
-		float theta2 = glm::atan(-localModel[2].x, c2);
-		float s1 = glm::sin(theta1);
-		float c1 = glm::cos(theta1);
-		float theta3 = glm::atan(s1 * localModel[0].z - c1 * localModel[0].y, c1 * localModel[1].y - s1 * localModel[1].z);
-		glm::vec3 rotation = { -theta1, -theta2, -theta3 };
-
-		setRot(rotation);
-
-		this->localModel = localModel;
-	}
 	glm::vec4 entity::getColor()
 	{
 		return color;
@@ -165,6 +285,24 @@ namespace engine
 	glm::vec3 entity::getScale()
 	{
 		return v3localScale;
+	}
+	glm::vec3 entity::getPos(glm::mat4 mat)
+	{
+		return glm::vec3(mat[3][0], mat[3][1], mat[3][2]);
+	}
+
+	glm::vec3 entity::getRot(glm::mat4 mat)
+	{
+		return toEulerRad(getRotationByMatrix(mat));
+	}
+
+	glm::vec3 entity::getScale(glm::mat4 mat)
+	{
+		glm::vec4 m0 = glm::vec4(mat[0].x, mat[1].x, mat[2].x, mat[3].x);
+		glm::vec4 m1 = glm::vec4(mat[0].y, mat[1].y, mat[2].y, mat[3].y);
+		glm::vec4 m2 = glm::vec4(mat[0].z, mat[1].z, mat[2].z, mat[3].z);
+
+		return glm::vec3(glm::length(m0), glm::length(m1), glm::length(m2));
 	}
 	glm::mat4 entity::getModel()
 	{
@@ -188,6 +326,12 @@ namespace engine
 	{
 		setRotX(-3.14169265f);
 		updateModelMatrix();
+	}
+	void entity::setMatrix(glm::mat4 mat)
+	{
+		setPos(getPos(mat));
+		setRotRadians(getRot(mat));
+		setScale(getScale(mat));
 	}
 	void entity::UseLocalMatrix()
 	{

@@ -32,16 +32,17 @@ namespace engine
 		void setPos(glm::vec3 pos);
 		void setPos(float x, float y, float z);
 		void setRot(glm::vec3 rot);
+		void setRotRadians(glm::vec3 rot);
 		void setRot(float x, float y, float z);
 		void setScale(glm::vec3 localScale);
 		void setScale(float x, float y, float z);
 		void setColor(glm::vec4 color);
 		void setColor(float r, float g, float b, float a);
 		void setWorldModelWithParentModel(glm::mat4 localModel);
-		void setLocalModel(glm::mat4 worldModel);
 		void invertX();
 		void invertY();
 		void invertZ();
+		void setMatrix(glm::mat4 mat);
 
 		void UseLocalMatrix();
 
@@ -66,7 +67,17 @@ namespace engine
 		{
 			return worldModel[2];
 		}
+		glm::vec3 getForward();
+		glm::vec3 getPos(glm::mat4 mat);
+		glm::vec3 getRot(glm::mat4 mat);
+		glm::vec3 getScale(glm::mat4 mat);
 
+		glm::vec3 toEulerRad(glm::quat rot);
+		glm::vec3 normalizeAngles(glm::vec3 angles);
+		float normalizeAngle(float angle);
+		glm::quat getRotationByMatrix(glm::mat4 mat);
+		glm::quat eulerToQuat(glm::vec3 euler);
+		glm::vec3 quatToVec(glm::quat quat, glm::vec3 vec);
 
 		glm::mat4 getModel();
 		glm::mat4 getLocalModel();

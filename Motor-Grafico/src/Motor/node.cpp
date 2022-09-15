@@ -127,6 +127,25 @@ namespace engine
 		}
 	}
 
+	void node::drawForced()
+	{
+		if (meshes.size() > 0)
+		{
+			_renderer->setMVP(worldModel);
+
+			for (int i = 0; i < meshes.size(); i++)
+			{
+				_renderer->drawMesh(meshes[i].vertices, meshes[i].indices, meshes[i].textures, meshes[i].VAO, color);
+			}
+		}
+
+		for (int i = 0; i < children.size(); i++)
+		{
+			children[i]->setWorldModelWithParentModel(worldModel);
+			children[i]->drawForced();
+		}
+	}
+
 	float node::getRandomNumber(float min, float max)
 	{
 		std::random_device rd;
@@ -140,8 +159,9 @@ namespace engine
 		_renderer = renderer;
 		setColor(glm::vec4(1, 1, 1, 1));
 		UseLocalMatrix();
+		int childresn = getChildrenAmount();
 
-		for (int i = 0; i < getChildrenAmount(); i++)
+		for (int i = 0; i < childresn; i++)
 		{
 			children[i]->setRenderer(renderer);
 			children[i]->setColor(glm::vec4(1, 1, 1, 1));
@@ -175,6 +195,11 @@ namespace engine
 	void node::setChildren(vector<node*> children)
 	{
 		this->children = children;
+	}
+
+	void node::addChild(node* child)
+	{
+		children.push_back(child);
 	}
 
 	string node::getName()
@@ -260,6 +285,14 @@ namespace engine
 	void node::checkBSP(vector<plane*> planes, glm::vec3 camPos)
 	{
 		drawThisFrame = true;
+
+		if (volume == NULL)
+		{
+			for (int i = 0; i < getChildrenAmount(); i++)
+			{
+				updateAABBWithChildren(children[i]);
+			}
+		}
 
 		for (int i = 0; i < planes.size(); i++)
 		{			

@@ -6,7 +6,10 @@ std::string nodeName = "RootNode";
 bool scale = false;
 game::game()
 {
-	testModel = nullptr;
+	leftStaticModel = nullptr;
+	rightStaticModel = nullptr;
+	frontStaticModel = nullptr;
+	mobileModel = nullptr;
 
 	conteiner2 = nullptr;
 	floor = nullptr;
@@ -42,11 +45,11 @@ game::game()
 	t = 0;
 	currentColorIndex = 5;
 
-	planeLeft = nullptr;
-	planeCenter = nullptr;
-	planeRight = nullptr;
-
-	planeL = nullptr;
+	//planeLeft = nullptr;
+	//planeCenter = nullptr;
+	//planeRight = nullptr;
+	//
+	//planeL = nullptr;
 
 	bpsManager = nullptr;
 
@@ -68,6 +71,12 @@ game::~game()
 void game::draw()
 {
 	bpsManager->flagAllTrackEntities();
+
+	if (drawPlanes)
+	{
+		bpsManager->drawPlanes();
+	}
+	
 	//tileMap->draw();
 	floor->draw();
 	conteiner2->draw();
@@ -82,11 +91,16 @@ void game::draw()
 	spotLightBox->draw();
 	directionalLight->draw();
 
-	planeLeft->draw();
-	planeCenter->draw();
-	planeRight->draw();
+	mobileModel->draw();
+	leftStaticModel->draw();
+	rightStaticModel->draw();
+	frontStaticModel->draw();
 
-	testModel->draw();
+	//planeLeft->draw();
+	//planeCenter->draw();
+	//planeRight->draw();
+	//
+	//testModel->draw();
 
 	//triangle->draw();
 	//archer->draw();
@@ -172,15 +186,15 @@ void game::update()
 		selectedEntity = pointLight[3];
 		nodeName = "pCylinder1";
 	}
-	else if (isKeyPressed(ENGINE_KEY_4))
+
+
+	if (isKeyPressed(ENGINE_KEY_8))
 	{
-		selectedEntity = spotLight;
-		nodeName = "pCylinder2";
+		drawPlanes = true;
 	}
-	else if (isKeyPressed(ENGINE_KEY_5))
+	else if (isKeyPressed(ENGINE_KEY_9))
 	{
-		selectedEntity = conteiner2;
-		nodeName = "pCylinder4";		
+		drawPlanes = false;
 	}
 	
 	glm::vec3 rotation = glm::vec3(0, 0, 0);
@@ -266,7 +280,7 @@ void game::update()
 	
 	if (managingDirectionalLight)
 	{
-		engine::node* child = testModel->getChildWithName(nodeName);
+		engine::node* child = mobileModel->getChildWithName(nodeName);
 
 		if (child != NULL)
 		{
@@ -288,17 +302,20 @@ void game::update()
 	{
 		if (scale)
 		{
-			testModel->setScale(testModel->getScale() + rotation);
+			mobileModel->setScale(mobileModel->getScale() + rotation);
 		}
 		else
 		{
-			testModel->setRot(testModel->getRot() + rotation);
+			mobileModel->setRot(mobileModel->getRot() + rotation);
 		}
 
-		testModel->setPos(entityPos);
+		mobileModel->setPos(entityPos);
 	}
 	
-	testModel->setTransformations();
+	mobileModel->setTransformations();
+	leftStaticModel->setTransformations();
+	rightStaticModel->setTransformations();
+	frontStaticModel->setTransformations();
 
 	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
 	{
@@ -375,13 +392,24 @@ void game::update()
 
 void game::init()
 {
-	testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/j/tanke2.fbx");
-	testModel->setRenderer(currentRenderer);
-	testModel->setRot(glm::vec3(0, 0, 0));
-	testModel->setScale(glm::vec3(1, 1, 1));
+	static engine::Model* scene = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/j/scenefachera.fbx");//scenefachera
 
-	glm::vec3 camPos = { 0, 3, 2 };
-	glm::vec3 camView = { 0, -1, 0 };
+	//testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/j/scenefachera.fbx");
+	//testModel->setRenderer(currentRenderer);
+	//testModel->setRot(glm::vec3(0, 0, 0));
+	//testModel->setScale(glm::vec3(1, 1, 1));
+
+	mobileModel = scene->GetBaseNode()->getChildWithName("mobile");
+	mobileModel->setRenderer(currentRenderer);
+	leftStaticModel = scene->GetBaseNode()->getChildWithName("left");
+	leftStaticModel->setRenderer(currentRenderer);
+	rightStaticModel = scene->GetBaseNode()->getChildWithName("right");
+	rightStaticModel->setRenderer(currentRenderer);
+	frontStaticModel = scene->GetBaseNode()->getChildWithName("foward");
+	frontStaticModel->setRenderer(currentRenderer);
+
+	glm::vec3 camPos = { 0, 5, -3 };
+	glm::vec3 camView = { 0, 0, -1 };
 	glm::vec3 camUp = { 0, 1, 0 };
 	firstPersonCam = new engine::firstPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	thirdPersonCam = new engine::thirdPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
@@ -485,26 +513,31 @@ void game::init()
 	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 	floor->setPos(glm::vec3(0,0,0));
 
-	planeLeft = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
-	planeLeft->setScale(glm::vec3(3, 3, 1));
-	planeLeft->setRot(glm::vec3(0, glm::radians(-90.0f), 0));
-	planeLeft->setPos(glm::vec3(-3, 1.5f, -2));
-	planeL = new engine::plane(glm::vec3(1, 0, 0), planeLeft->getPos());
-
-	planeCenter = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
-	planeCenter->setScale(glm::vec3(3, 3, 1));
-	planeCenter->setRot(glm::vec3(0, 0, 0));
-	planeCenter->setPos(glm::vec3(0, 1.5f, -5));
-	
-	planeRight = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
-	planeRight->setScale(glm::vec3(3, 3, 1));
-	planeRight->setRot(glm::vec3(0, glm::radians(90.0f), 0));
-	planeRight->setPos(glm::vec3(3, 1.5f, -2));
+	//planeLeft = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
+	//planeLeft->setScale(glm::vec3(3, 3, 1));
+	//planeLeft->setRot(glm::vec3(0, glm::radians(-90.0f), 0));
+	//planeLeft->setPos(glm::vec3(-3, 1.5f, -2));
+	//planeL = new engine::plane(glm::vec3(1, 0, 0), planeLeft->getPos());
+	//
+	//planeCenter = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
+	//planeCenter->setScale(glm::vec3(3, 3, 1));
+	//planeCenter->setRot(glm::vec3(0, 0, 0));
+	//planeCenter->setPos(glm::vec3(0, 1.5f, -5));
+	//
+	//planeRight = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
+	//planeRight->setScale(glm::vec3(3, 3, 1));
+	//planeRight->setRot(glm::vec3(0, glm::radians(90.0f), 0));
+	//planeRight->setPos(glm::vec3(3, 1.5f, -2));
 
 	bpsManager = new engine::BSPManager();
 	bpsManager->setCameraEntityForCheck(actualCam);
-	bpsManager->addEnityToTrackList(testModel);
-	bpsManager->addPlaneToTrackList(planeL);
+	bpsManager->addEnityToTrackList(mobileModel);
+	bpsManager->addEnityToTrackList(leftStaticModel);
+	bpsManager->addEnityToTrackList(rightStaticModel);
+	bpsManager->addEnityToTrackList(frontStaticModel);
+	bpsManager->addPlanesToTrackList(scene->GetBSPPlanes());
+	bpsManager->setRendererForPlanes(currentRenderer);
+	
 
 	/*archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
 	
@@ -578,21 +611,12 @@ void game::deInit()
 	delete spotLight;
 	delete spotLightBox;
 
-	testModel->deinit();
-	delete testModel;
-
-	planeLeft->deinit();
-	delete planeLeft;
-
-	planeCenter->deinit();
-	delete planeCenter;
-
-	planeRight->deinit();
-	delete planeRight;
-
-	delete planeL;
-
 	delete bpsManager;
+
+	delete leftStaticModel;
+	delete rightStaticModel;
+	delete frontStaticModel;
+	delete mobileModel;
 
 	//archer->deinit();
 	//delete archer;

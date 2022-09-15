@@ -23,17 +23,21 @@ private:
 	float rotationSpeed = 0;
 	float timeBetweenChanges = 0;
 	bool managingDirectionalLight = false;
+	bool drawPlanes = true;
 	
 	engine::sprite* floor;
 	engine::sprite* conteiner2;
-	engine::sprite* planeLeft;
-	engine::sprite* planeCenter;
-	engine::sprite* planeRight;
-	engine::plane* planeL;
-	engine::plane* planeC;
-	engine::plane* planeR;
+	//engine::sprite* planeLeft;
+	//engine::sprite* planeCenter;
+	//engine::sprite* planeRight;
+	//engine::plane* planeL;
+	//engine::plane* planeC;
+	//engine::plane* planeR;
 	engine::BSPManager* bpsManager;
-	engine::node* testModel;
+	engine::node* leftStaticModel;
+	engine::node* rightStaticModel;
+	engine::node* frontStaticModel;
+	engine::node* mobileModel;
 	engine::pointLight* pointLight[AMOUNT_POINT_LIGHTS];
 	engine::shape* pointLightBox[AMOUNT_POINT_LIGHTS];
 	engine::directionalLight* directionalLight;

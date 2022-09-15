@@ -10,13 +10,17 @@ namespace engine
 	class ENGINE_API BSPManager
 	{
 	public:
+		~BSPManager();
 		void setCameraEntityForCheck(camera* camera);
 		void addEnityToTrackList(node* entity);
-		void addPlaneToTrackList(plane* plane);
+		void addPlanesToTrackList(vector<node*> bspPlanes);
+		void setRendererForPlanes(renderer* render);
 		void flagAllTrackEntities();
+		void drawPlanes();
 	private:
 		vector<node*> entities;
 		vector<plane*> planes;
+		vector<node*> planesEntities;
 		camera* _camera;
 	};
 }
