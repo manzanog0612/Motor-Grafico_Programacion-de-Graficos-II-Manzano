@@ -202,7 +202,7 @@ void game::update()
 	glm::vec3 front = glm::vec3(0, 0, -1);
 	glm::vec3 up = glm::vec3(0, 1, 0);
 	
-	float movementSpeed = 0.01f;
+	float movementSpeed = 0.05f;
 	float rotationSpeed = 1.f;
 	
 	front.y = 0;

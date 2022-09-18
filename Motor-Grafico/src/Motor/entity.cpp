@@ -298,9 +298,9 @@ namespace engine
 
 	glm::vec3 entity::getScale(glm::mat4 mat)
 	{
-		glm::vec4 m0 = glm::vec4(mat[0].x, mat[1].x, mat[2].x, mat[3].x);
-		glm::vec4 m1 = glm::vec4(mat[0].y, mat[1].y, mat[2].y, mat[3].y);
-		glm::vec4 m2 = glm::vec4(mat[0].z, mat[1].z, mat[2].z, mat[3].z);
+		glm::vec4 m0 = glm::vec4(mat[0].x, mat[0].y, mat[0].z, mat[0].w);
+		glm::vec4 m1 = glm::vec4(mat[1].x, mat[1].y, mat[1].z, mat[1].w);
+		glm::vec4 m2 = glm::vec4(mat[2].x, mat[2].y, mat[2].z, mat[2].w);
 
 		return glm::vec3(glm::length(m0), glm::length(m1), glm::length(m2));
 	}
