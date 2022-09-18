@@ -1,6 +1,5 @@
 #include "game.h"
 #include <iostream>
-#include "Motor/modelImporter.h"
 
 std::string nodeName = "RootNode";
 bool scale = false;
@@ -27,10 +26,8 @@ game::game()
 	cubePearl = nullptr;
 	cubeEmerald = nullptr;
 
-	//archer = nullptr;
-	//triangle = nullptr;
 	actualCam = nullptr;
-	//tileMap = nullptr;
+
 	colors[0] = glm::vec4(0, 0, 0, 0);
 	colors[1] = glm::vec4(1, 0, 0, 1);
 	colors[2] = glm::vec4(0, 1, 0, 1);
@@ -45,22 +42,7 @@ game::game()
 	t = 0;
 	currentColorIndex = 5;
 
-	//planeLeft = nullptr;
-	//planeCenter = nullptr;
-	//planeRight = nullptr;
-	//
-	//planeL = nullptr;
-
 	bpsManager = nullptr;
-
-	//archerRunLeftAnimationID = 0;
-	//archerRunRightAnimationID = 0;
-	//archerRunUpAnimationID = 0;
-	//archerRunUpLeftAnimationID = 0;
-	//archerRunUpRightAnimationID = 0;
-	//archerRunDownAnimationID = 0;
-	//archerRunDownLeftAnimationID = 0;
-	//archerRunDownRightAnimationID = 0;
 }
 
 game::~game()
@@ -95,76 +77,11 @@ void game::draw()
 	leftStaticModel->draw();
 	rightStaticModel->draw();
 	frontStaticModel->draw();
-
-	//planeLeft->draw();
-	//planeCenter->draw();
-	//planeRight->draw();
-	//
-	//testModel->draw();
-
-	//triangle->draw();
-	//archer->draw();
 }
 
 void game::update()
 {
 	engine::OcclusionCulling::Update();
-	/*t += engine::time::getDeltaTime();
-
-	if (isKeyPressed(ENGINE_KEY_W) && isKeyPressed(ENGINE_KEY_A))
-	{
-		glm::vec3 pos = archer->getPos();
-		archer->setPos(pos.x - engine::time::getDeltaTime() * runSpeed / 2, pos.y + engine::time::getDeltaTime() * runSpeed / 2, pos.z);
-		archer->playAnimation(archerRunUpLeftAnimationID);
-	}
-	else if (isKeyPressed(ENGINE_KEY_W) && isKeyPressed(ENGINE_KEY_D))
-	{
-		glm::vec3 pos = archer->getPos();
-		archer->setPos(pos.x + engine::time::getDeltaTime() * runSpeed / 2, pos.y + engine::time::getDeltaTime() * runSpeed / 2, pos.z);
-		archer->playAnimation(archerRunUpRightAnimationID);
-	}
-	else if (isKeyPressed(ENGINE_KEY_S) && isKeyPressed(ENGINE_KEY_A))
-	{
-		glm::vec3 pos = archer->getPos();
-		archer->setPos(pos.x - engine::time::getDeltaTime() * runSpeed / 2, pos.y - engine::time::getDeltaTime() * runSpeed / 2, pos.z);
-		archer->playAnimation(archerRunDownLeftAnimationID);
-	}
-	else if (isKeyPressed(ENGINE_KEY_S) && isKeyPressed(ENGINE_KEY_D))
-	{
-		glm::vec3 pos = archer->getPos();
-		archer->setPos(pos.x + engine::time::getDeltaTime() * runSpeed / 2, pos.y - engine::time::getDeltaTime() * runSpeed / 2, pos.z);
-		archer->playAnimation(archerRunDownRightAnimationID);
-	}
-	else if(isKeyPressed(ENGINE_KEY_A))
-	{
-		glm::vec3 pos = archer->getPos();
-		archer->setPos(pos.x - engine::time::getDeltaTime() * runSpeed, pos.y, pos.z);
-		archer->playAnimation(archerRunLeftAnimationID);
-	}
-	else if(isKeyPressed(ENGINE_KEY_D))
-	{
-		glm::vec3 pos = archer->getPos();
-		archer->setPos(pos.x + engine::time::getDeltaTime() * runSpeed, pos.y, pos.z);
-		archer->playAnimation(archerRunRightAnimationID);
-	}
-	else if (isKeyPressed(ENGINE_KEY_W))
-	{
-		glm::vec3 pos = archer->getPos();
-		archer->setPos(pos.x, pos.y + engine::time::getDeltaTime() * runSpeed, pos.z);
-		archer->playAnimation(archerRunUpAnimationID);
-	}
-	else if (isKeyPressed(ENGINE_KEY_S))
-	{
-		glm::vec3 pos = archer->getPos();
-		archer->setPos(pos.x, pos.y - engine::time::getDeltaTime() * runSpeed, pos.z);
-		archer->playAnimation(archerRunDownAnimationID);
-	}
-	else
-	{
-		archer->stopAllAnimations();
-	}*/
-
-	//box movement
 
 	if (isKeyPressed(ENGINE_KEY_0))
 	{
@@ -273,10 +190,6 @@ void game::update()
 	}
 	
 	entityPos += movement;
-
-	//cout << "x = " << entityPos.x << " y = " << entityPos.y << " z = " << entityPos.z << endl;
-	
-	//selectedEntity->setPos(entityPos);
 	
 	if (managingDirectionalLight)
 	{
@@ -351,53 +264,11 @@ void game::update()
 	{
 		thirdPersonCam->updateTargetPos(conteiner2->getPos());
 	}
-
-
-	//spotLight->setDirection(actualCam->getFront());
-	//if (isKeyDown(ENGINE_KEY_ENTER))
-	//{
-	//	if (cam->getCameraType() == engine::MOVEMENT_TYPE::FPS)
-	//	{
-	//		cam->setCameraType(engine::MOVEMENT_TYPE::THIRD_PERSON);
-	//	}
-	//	else
-	//	{
-	//		cam->setCameraType(engine::MOVEMENT_TYPE::FPS);
-	//	}
-	//}
-		
-	/* 
-	
-	PARA METER ROTACIÒN DE CAMARA PROXIMAMENTE
-
-	if (isKeyPressed(ENGINE_KEY_K))
-	{
-		glm::vec3 rotation = { 0, 0, engine::time::getDeltaTime() * cameraSpeed };
-	}
-	else if (isKeyPressed(ENGINE_KEY_L))
-	{
-		glm::vec3 rotation = { 0, 0, engine::time::getDeltaTime() * -cameraSpeed };
-	}
-	
-	*/
-
-	/*if (isKeyDown(ENGINE_KEY_ENTER))
-	{
-		if (hasCollider(archer)) removeCollider(archer);
-		else addCollider(archer, false);
-	}*/
-
-	//updateCollisions(tileMap);
 }
 
 void game::init()
 {
-	static engine::Model* scene = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/j/scenefachera.fbx");//scenefachera
-
-	//testModel = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/j/scenefachera.fbx");
-	//testModel->setRenderer(currentRenderer);
-	//testModel->setRot(glm::vec3(0, 0, 0));
-	//testModel->setScale(glm::vec3(1, 1, 1));
+	scene = engine::modelImporter::chargeBaseNodeInfo((string)"../res/assets/j/scenefachera.fbx");
 
 	mobileModel = scene->GetBaseNode()->getChildWithName("mobile");
 	mobileModel->setRenderer(currentRenderer);
@@ -416,50 +287,6 @@ void game::init()
 	actualCam = firstPersonCam;
 
 	engine::OcclusionCulling::Init(firstPersonCam);
-	//currentRenderer->shaderPro.use();
-	//glm::mat4 model = glm::mat4(1.0f);
-	//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-	//model = glm::scale4(model, glm::vec3(10.0f, 10.0f, 10.0f));	// it's a bit too big for our scene, so scale it down
-	//currentRenderer->shaderPro.setMat4("model", model);
-
-	//tileMap = new engine::tileMap(currentRenderer);
-
-	/*if (tileMap->importTileMap("../res/assets/tilemapreal.tmx"))
-	{
-		std::cout << "tilemap loaded";
-	}
-	else
-	{
-		std::cout << "tilemap failed to load";
-	}*/
-
-	/*triangle = new engine::shape(currentRenderer, 3);
-	triangle->setScale(3, 3, 3);
-	triangle->setPos(-14, -10, 0);
-	triangle->setColor(1, 1, 0, 1);
-
-	triangle2 = new engine::shape(currentRenderer, 3);
-	triangle2->setScale(3, 3, 3);
-	triangle2->setPos(-17, -10, 0);
-	triangle2->setColor(1, 1, 0, 1);
-
-	triangle3 = new engine::shape(currentRenderer, 3);
-	triangle3->setScale(3, 3, 3);
-	triangle3->setPos(-15.5, -7, 0);
-	triangle3->setColor(1, 1, 0, 1);
-
-	quad = new engine::shape(currentRenderer, 4);
-	quad->setScale(5, 5, 5);
-	quad->setPos(15, -10, 0);
-	quad->setColor(0, 1, 1, 1);
-
-	imageCampus = new engine::sprite(currentRenderer, "../res/assets/textures/Image Campus.png", true);
-	imageCampus->setScale(glm::vec3(30, 20, 10));
-	imageCampus->setPos(glm::vec3(0, -9.f, -.1f));
-
-	container = new engine::sprite(currentRenderer, "../res/assets/textures/container.jpg", true);
-	container->setScale(glm::vec3(10, 10, 10));
-	container->setPos(glm::vec3(-15, 0, 0));*/
 
 	conteiner2 = new engine::sprite(currentRenderer, "../res/assets/textures/container2.png", "../res/assets/textures/container2_specular.png", true, engine::MATERIAL::PEARL);
 	conteiner2->setPos(glm::vec3(0, 1, 3));
@@ -505,29 +332,11 @@ void game::init()
 	spotLightBox->setPos({ 0,5,3 });
 	
 	selectedEntity = spotLight;
-
-	//entityPos = { 0,5,3 };
 	
 	floor = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
 	floor->setScale(glm::vec3(10, 10, 1));
 	floor->setRot(glm::vec3(glm::radians(-90.0f), 0, 0));
 	floor->setPos(glm::vec3(0,0,0));
-
-	//planeLeft = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
-	//planeLeft->setScale(glm::vec3(3, 3, 1));
-	//planeLeft->setRot(glm::vec3(0, glm::radians(-90.0f), 0));
-	//planeLeft->setPos(glm::vec3(-3, 1.5f, -2));
-	//planeL = new engine::plane(glm::vec3(1, 0, 0), planeLeft->getPos());
-	//
-	//planeCenter = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
-	//planeCenter->setScale(glm::vec3(3, 3, 1));
-	//planeCenter->setRot(glm::vec3(0, 0, 0));
-	//planeCenter->setPos(glm::vec3(0, 1.5f, -5));
-	//
-	//planeRight = new engine::sprite(currentRenderer, "../res/assets/textures/papa.png", "../res/assets/textures/papa.png", true, engine::MATERIAL::YELLOW_RUBBER);
-	//planeRight->setScale(glm::vec3(3, 3, 1));
-	//planeRight->setRot(glm::vec3(0, glm::radians(90.0f), 0));
-	//planeRight->setPos(glm::vec3(3, 1.5f, -2));
 
 	bpsManager = new engine::BSPManager();
 	bpsManager->setCameraEntityForCheck(actualCam);
@@ -537,56 +346,6 @@ void game::init()
 	bpsManager->addEnityToTrackList(frontStaticModel);
 	bpsManager->addPlanesToTrackList(scene->GetBSPPlanes());
 	bpsManager->setRendererForPlanes(currentRenderer);
-	
-
-	/*archer = new engine::sprite(currentRenderer, "../res/assets/textures/Atlas Sprites/archerFullAtlas.png", false);
-	
-	engine::atlasCutConfig archerRunAtlasConfig;
-
-	archerRunAtlasConfig.CutByCount(10, 7, 6, 5, 8);
-	archerRunLeftAnimationID = archer->createAnimation(archerRunAtlasConfig);
-
-	archerRunAtlasConfig.CutByCount(10, 7, 0, 0, 8);
-	archerRunRightAnimationID = archer->createAnimation(archerRunAtlasConfig);
-
-	archerRunAtlasConfig.CutByCount(10, 7, 8, 0, 8);
-	archerRunUpAnimationID = archer->createAnimation(archerRunAtlasConfig);
-
-	archerRunAtlasConfig.CutByCount(10, 7, 2, 3, 8);
-	archerRunDownAnimationID = archer->createAnimation(archerRunAtlasConfig);
-
-	archerRunAtlasConfig.CutByCount(10, 7, 4, 2, 8);
-	archerRunUpLeftAnimationID = archer->createAnimation(archerRunAtlasConfig);
-	
-	archerRunAtlasConfig.CutByCount(10, 7, 8, 4, 8);
-	archerRunDownLeftAnimationID = archer->createAnimation(archerRunAtlasConfig);
-	
-	archerRunAtlasConfig.CutByCount(10, 7, 6, 1, 8);
-	archerRunUpRightAnimationID = archer->createAnimation(archerRunAtlasConfig);
-	
-	archerRunAtlasConfig.CutByCount(10, 7, 0, 4, 8);
-	archerRunDownRightAnimationID = archer->createAnimation(archerRunAtlasConfig);
-
-	archer->setAnimationFullTime(archerRunRightAnimationID, .5f);
-	archer->setAnimationFullTime(archerRunLeftAnimationID, .5f);
-	archer->setAnimationFullTime(archerRunUpAnimationID, .5f);
-	archer->setAnimationFullTime(archerRunUpLeftAnimationID, .5f);
-	archer->setAnimationFullTime(archerRunDownAnimationID, .5f);
-	archer->setAnimationFullTime(archerRunUpRightAnimationID, .5f);
-	archer->setAnimationFullTime(archerRunDownLeftAnimationID, .5f);
-	archer->setAnimationFullTime(archerRunDownRightAnimationID, .5f);
-
-	archer->setScale(32, 32, 1);
-	archer->setPos(-80, 20, 0);*/
-
-	//changeClearColor(glm::vec4(.25, .25, .5, 1));
-	//addCollider(archer, false);
-	//addCollider(awesomeface, false);
-	//addCollider(triangle, false);
-	//addCollider(triangle2, false);
-	//addCollider(triangle3, false);
-	//addCollider(quad, true);
-	//addCollider(container, true);
 }
 
 void game::deInit()
@@ -618,7 +377,5 @@ void game::deInit()
 	delete frontStaticModel;
 	delete mobileModel;
 
-	//archer->deinit();
-	//delete archer;
-	//delete triangle;
+	delete scene;
 }

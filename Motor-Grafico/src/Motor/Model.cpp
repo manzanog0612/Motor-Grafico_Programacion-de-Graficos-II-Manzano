@@ -26,7 +26,6 @@ namespace engine
 		engine::node* myNode = new engine::node();
 		std::string name = node->mName.C_Str();		
 
-		// process all the node's meshes (if any)
 		if (name.find("$AssimpFbx$") == -1 && node->mNumMeshes == 0 && mat == glm::mat4(1.f))
 		{
 			if (name.find("RotationPivot") != -1 && name.find("Inverse") == -1)
@@ -68,14 +67,9 @@ namespace engine
 			}
 		}
 
-		if (name.find("bspPlane") != -1 || name.find("plane") != -1)
+		if (name.find("bspPlane") != -1)
 		{
-			//myNode->setMatrix(mat);
-
-			if (name.find("bspPlane") != -1)
-			{
-				bspPlanes.push_back(myNode);
-			}
+			bspPlanes.push_back(myNode);
 		}
 
 		// then do the same for each of its children
@@ -86,26 +80,9 @@ namespace engine
 			processNode(node->mChildren[i], scene, myNode, mat);
 		}
 
-		//if (name.find("$AssimpFbx$") == -1)
-		//{
-			//myNode->setMatrix(mat);
-			parent->addChild(myNode);
-			myNode->setName(name);
-			myNode->setParent(parent);
-		//}
-
-		//for (unsigned int i = 0; i < node->mNumChildren; i++)
-		//{
-		//	engine::node* myNodeChild = new engine::node();
-		//	processNode(node->mChildren[i], scene, myNodeChild);
-		//
-		//	myNodeChild->setParent(myNode);
-		//	myNodeChild->UseLocalMatrix();
-		//	childrenNodes.push_back(myNodeChild);
-		//}
-
-		//if (childrenNodes.size() > 0)
-		//	myNode->setChildren(childrenNodes);
+		parent->addChild(myNode);
+		myNode->setName(name);
+		myNode->setParent(parent);
 	}
 	Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	{

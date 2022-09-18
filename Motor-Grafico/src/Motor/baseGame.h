@@ -23,6 +23,7 @@
 #include "occlusionCulling.h"
 #include "plane.h"
 #include "BSPManager.h"
+#include "Motor/modelImporter.h"
 
 namespace engine
 {
