@@ -35,6 +35,7 @@ private:
 	engine::node* leftStaticModel;
 	engine::node* rightStaticModel;
 	engine::node* frontStaticModel;
+	engine::node* centerStaticModel;
 	engine::node* mobileModel;
 	engine::pointLight* pointLight[AMOUNT_POINT_LIGHTS];
 	engine::shape* pointLightBox[AMOUNT_POINT_LIGHTS];

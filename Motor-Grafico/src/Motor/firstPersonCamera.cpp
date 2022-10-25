@@ -1,4 +1,5 @@
 #include "firstPersonCamera.h"
+#include <iostream>
 
 namespace engine
 {

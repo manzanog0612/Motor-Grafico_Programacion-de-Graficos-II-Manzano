@@ -122,7 +122,7 @@ namespace engine
 		{
 			//if (name == "pCylinder4" || name == "pCylinder2" || name == "pCylinder1" || name == "group1" || name == "pCube2")
 			//{
-				cout << name << " node not drawn" << endl;
+				//cout << name << " node not drawn" << endl;
 			//}
 		}
 	}

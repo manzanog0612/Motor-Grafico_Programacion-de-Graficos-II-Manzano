@@ -8,6 +8,7 @@ game::game()
 	leftStaticModel = nullptr;
 	rightStaticModel = nullptr;
 	frontStaticModel = nullptr;
+	centerStaticModel = nullptr;
 	mobileModel = nullptr;
 
 	conteiner2 = nullptr;
@@ -77,6 +78,7 @@ void game::draw()
 	leftStaticModel->draw();
 	rightStaticModel->draw();
 	frontStaticModel->draw();
+	centerStaticModel->draw();
 }
 
 void game::update()
@@ -229,6 +231,7 @@ void game::update()
 	leftStaticModel->setTransformations();
 	rightStaticModel->setTransformations();
 	frontStaticModel->setTransformations();
+	centerStaticModel->setTransformations();
 
 	for (int i = 0; i < AMOUNT_POINT_LIGHTS; i++)
 	{
@@ -278,9 +281,13 @@ void game::init()
 	rightStaticModel->setRenderer(currentRenderer);
 	frontStaticModel = scene->GetBaseNode()->getChildWithName("foward");
 	frontStaticModel->setRenderer(currentRenderer);
+	centerStaticModel = scene->GetBaseNode()->getChildWithName("center");
+	centerStaticModel->setRenderer(currentRenderer);
 
-	glm::vec3 camPos = { 0, 5, -3 };
-	glm::vec3 camView = { 0, 0, -1 };
+	entityPos = mobileModel->getPos();
+
+	glm::vec3 camPos = { 0, 8, 10 };
+	glm::vec3 camView = { 0, -0.5f, 0.8f};
 	glm::vec3 camUp = { 0, 1, 0 };
 	firstPersonCam = new engine::firstPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
 	thirdPersonCam = new engine::thirdPersonCamera(currentRenderer, camPos, camView, camUp, engine::PROJECTION::PERSPECTIVE);
@@ -344,6 +351,7 @@ void game::init()
 	bpsManager->addEnityToTrackList(leftStaticModel);
 	bpsManager->addEnityToTrackList(rightStaticModel);
 	bpsManager->addEnityToTrackList(frontStaticModel);
+	bpsManager->addEnityToTrackList(centerStaticModel);
 	bpsManager->addPlanesToTrackList(scene->GetBSPPlanes());
 	bpsManager->setRendererForPlanes(currentRenderer);
 }
@@ -375,6 +383,7 @@ void game::deInit()
 	delete leftStaticModel;
 	delete rightStaticModel;
 	delete frontStaticModel;
+	delete centerStaticModel;
 	delete mobileModel;
 
 	delete scene;
